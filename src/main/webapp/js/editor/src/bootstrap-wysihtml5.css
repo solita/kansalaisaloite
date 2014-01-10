@@ -1,0 +1,208 @@
+.editor-buttons {
+  float:right;
+  margin:-1em 0 1em 0;
+}
+.editor-buttons.left {
+  float: left;
+}
+
+/* Input for main heading */
+#subject {
+  font-family: 'PT Sans', "Trebuchet MS", Helvetica, sans-serif;
+  clear:both;
+  width:100%;
+  margin:0 0 0.67em 0;
+  padding:0;
+  border:0;
+  background:none;
+  color:#111;
+  font-weight:normal;
+  font-size:1.5em;
+  line-height: 1em;
+}
+#subject:focus {
+  background:#fff;
+  box-shadow: none;
+}
+
+textarea#wysihtml5-editor {
+  font-family: 'PT Sans', "Trebuchet MS", Helvetica, sans-serif;
+  line-height:1.375em;
+  width: 100%;
+  background: transparent;
+  height: 100%;
+  border: 0;
+  resize: none;
+  white-space: pre;
+  margin:1em 0;
+  padding:0;
+  display:block;
+
+
+  word-wrap: normal;
+  -ms-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+textarea#wysihtml5-editor:focus {
+  box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.3);
+  background: rgba(255, 255, 255, 0.4);
+  outline: 0;
+}
+
+a.fork {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: 0;
+}
+
+ul.wysihtml5-toolbar {
+	margin: 0;
+	padding: 0;
+	display: block;
+}
+
+ul.wysihtml5-toolbar::after {
+	clear: both;
+	display: table;
+	content: "";
+}
+
+ul.wysihtml5-toolbar > li {
+	float: left;
+	display: list-item;
+	list-style: none;
+	margin: 0 5px 10px 0;
+}
+
+ul.wysihtml5-toolbar a[data-wysihtml5-command=bold] {
+	font-weight: bold;
+}
+
+ul.wysihtml5-toolbar a[data-wysihtml5-command=italic] {
+	font-style: italic;
+}
+
+ul.wysihtml5-toolbar a[data-wysihtml5-command=underline] {
+	text-decoration: underline;
+}
+
+ul.wysihtml5-toolbar a.btn.wysihtml5-command-active {
+	background-image: none;
+	-webkit-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15),0 1px 2px rgba(0, 0, 0, 0.05);
+	-moz-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15),0 1px 2px rgba(0, 0, 0, 0.05);
+	box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15),0 1px 2px rgba(0, 0, 0, 0.05);
+	background-color: #E6E6E6;
+	background-color: #D9D9D9;
+	outline: 0;
+}
+
+/* Image chooser */
+.image-item-wrapper {
+  float:left;
+  width:24%;
+  margin-left:1%;
+  margin-bottom:1em;
+}
+.image-item-wrapper:first-child {
+  margin-left:0;
+}
+.image-item-wrapper:nth-child(4n+1) {
+  clear:left;
+}
+.image-item-wrapper:hover {
+  background: #f5f5f5;
+}
+.image-holder {
+  height:100px;
+  padding:3px;
+  background:#fff;
+  border:1px solid #ddd;
+  text-align: center;
+  border-radius:2px;
+}
+.image-item-wrapper:hover .image-holder {
+  border:1px solid #999;
+}
+.image-holder img {
+  max-height:100%;
+  max-width:100%;
+}
+.image-description {
+  font-size:0.9em;
+  padding:5px 0;
+}
+.image-name {
+  height:1.4em;
+  white-space: nowrap;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.image-actions {
+  padding:5px 5px 0 5px;
+  text-align: right;
+}
+
+.modal input[type="text"]{
+  margin-top: 0.2em;
+  padding:0.3em;
+}
+.modal .input-xlarge {
+  width:450px;
+  font-size: 0.9em;
+  margin-bottom:0.5em;
+}
+.modal label span {
+  font-size: 0.9em;
+  color:#999;
+}
+
+.modal-footer .left {
+  float:left;
+}
+.modal-footer label {
+  display:inline-block;
+  width:100px;
+  text-align: left;
+  margin-bottom:0.5em;
+}
+.modal-buttons {
+  margin-top:1em;
+}
+
+
+/* Modal overrides */
+.modal.large {
+  position: absolute; /* for smaller screens */
+  width: 800px;
+  margin: -250px 0 0 -400px;
+}
+.modal-header h4 {
+  margin:0;
+}
+
+/* Disable bootstrap default modal slide */
+.modal.fade {
+    -webkit-transition: opacity .1s linear, none;
+    -moz-transition: opacity .1s linear, none;
+    -ms-transition: opacity .1s linear, none;
+    -o-transition: opacity .1s linear, none;
+    transition: opacity .1s linear, none;
+    top: 50%;
+}
+
+/* Editor overrides for default system messages */
+.msg-editor {
+  margin:-1em 0 2em 0;
+}
+
+.modifier-details {
+  clear:both;
+  margin-bottom:1em;
+  font-size:0.9em;
+  color:#999;
+}

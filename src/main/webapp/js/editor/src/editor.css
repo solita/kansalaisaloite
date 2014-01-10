@@ -1,0 +1,98 @@
+/**
+ *  WYSIWYG EDITOR STYLES for Initiative web service
+ *
+ *  This file gets loaded in the sandbox iframe
+ *
+ **/
+
+
+html {
+    height:100%;
+    font-size:16px;
+}
+body {
+    height:100%;
+    font-family: 'PT Sans', "Trebuchet MS", Helvetica, sans-serif;
+    color:#444444;
+    background:#F0F0F0;
+}
+
+a {
+    text-decoration: none;
+    color: #0089f2;
+    outline:none;
+}
+
+a:hover {
+    color: #0070c5;
+    outline:none;
+}
+
+a:active {
+    outline:none;
+}
+
+a.external {
+    padding-right:15px;
+    background:url("/img/icon-external-link.png") right center no-repeat;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+    margin-top:0;
+}
+
+h1 {
+    font-size:1.5em;
+    line-height:1em;    
+    clear: both;
+    color: #111;
+    font-weight:normal;
+}
+
+h2 {
+    color: #111;
+    margin-bottom:0.5em;
+    font-weight:normal;
+}
+
+h3 {
+    color: #111;
+    margin-bottom:0.5em;
+    font-weight:normal;
+}
+
+h4 {
+    margin-bottom:0.5em;
+}
+
+
+p {
+    margin:0 0 1em 0;
+}
+
+ul, ol {
+    margin:0 0 1em 0;
+    padding:0 0 0 2em;
+}
+
+ul.no-style, ol.no-style {
+        margin:0; padding:0; list-style:none;
+    }    
+ul.alpha, ol.alpha {
+    list-style-type:lower-alpha;
+}
+ul.roman, ol.roman {
+    list-style-type:lower-roman;
+}
+
+blockquote {
+    margin-bottom:2em;
+    font-style:italic;
+}
+
+.wysiwyg-color-date {
+    display:block;
+    margin-bottom:1em;
+    font-weight:bold;
+    border-bottom:1px solid #ccc; 
+}
