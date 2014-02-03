@@ -1,3 +1,12 @@
+WHAT AND WHY
+
+The Ministry of Justice in Finland, together with Solita Oy, has implemented a web service to allow Finnish citizens to propose and sign civil initiatives. The software is implemented according to Finnish laws. If an initiative gets 50 000 statements of support the government has to handle it openly in the Parliament. The service went online on December 1st, 2012.
+
+The Ministry of Justice decided to publish the source code for the software together with Solita Oy after the service has been in use for one year.
+Commit history prior to the source code publication is not provided, but future commits will be viewable.
+
+Solita Oy is responsible for the future development of the software. Any pull-requests or suggestions for improvement to the source code are considered separately between the Ministry of Justice and Solita Oy. Reports for possible issues in the code might be rewarded. The Ministry of Justice will handle all the feedback sent to kansalaisaloite.om@om.fi.
+
 LICENSE
 
 Apache License 2.0, see COPYING.txt and LICENSE.txt
