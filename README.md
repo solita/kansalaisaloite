@@ -21,7 +21,7 @@ Apache License 2.0, see COPYING and LICENSE
 * Set configuration password in ~/.initpass for Jetty user with minimal visibility. File should contain only password.
 
 * Default configuration properties are in src/main/resources/default.properties
-	* Remember to change database password ( jdbc.password )!
+	* You can override the parameters by creating src/main/resources/app.properties with the overriding parameters
 
 * These can be overridden in classpath:app.properties (e.g. src/test/resources/app.properties)
 	* For passwords, sharedSecrets etc. you should use encrypt values (see DEVELOPMENT below and Jasypt)!
