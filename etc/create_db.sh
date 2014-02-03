@@ -1,7 +1,7 @@
 # Usage: sh ./create_db.sh <locale> <password for initiative>
 # NOTE: Set passwords in ~/.pgpass, e.g.
 # localhost:5432:*:postgres:postgres
-# localhost:5432:*:initiative:Eskim0
+# localhost:5432:*:initiative:<password>
 
 # Verify user dir
 if [ ! -f schema/01_schema.sql ]
