@@ -31,6 +31,7 @@ Apache License 2.0, see COPYING and LICENSE
 	* Default profile can be overridden by setting spring.profiles.active e.g. as environment variable 
    or as -D startup parameter
 	* dev profile uses dummy authentication
+	* vetumamock profile uses VetumaController but mocks the real Vetuma 
 	* prod profile uses VETUMA authentication 
 
 * Use initdb-xxx.sh to create local (unit) test and "production" databases (in Windows use Cygwin)
