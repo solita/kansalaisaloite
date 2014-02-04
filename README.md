@@ -1,6 +1,6 @@
 # WHAT AND WHY
 
-Kansalaisaloite.fi / Medborgarinitiative.fi is a web service for launching citizens’ initiatives and collecting statements of support for these initiatives.  If an initiative gets 50000 statements of support the initiative’s organizer may submit the initiative to the Parliament for consideration.
+Kansalaisaloite.fi / Medborgarinitiativ.fi is a web service for launching citizens’ initiatives and collecting statements of support for these initiatives.  If an initiative gets 50000 statements of support the initiative’s organizer may submit the initiative to the Parliament for consideration.
  
 The web service has been implemented by the Ministry of Justice Finland together with Solita Oy. The service went online on December 1st, 2012.
 
