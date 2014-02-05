@@ -19,11 +19,11 @@ import java.util.regex.Pattern;
 
 public class FileImageFinder implements ImageFinder {
 
-    public static final String[] FILE_TYPES = { "png", "jpg" };
-    public static final String[] CONTENT_TYPES = { "image/png", "image/jpg", "image/jpeg" };
+    private static final String[] FILE_TYPES = { "png", "jpg" };
+    private static final String[] CONTENT_TYPES = { "image/png", "image/jpg", "image/jpeg" };
 
-    public static final String FILE_PATTERN = "^[_A-Za-z0-9-]+$";
-    public static final String FILE_TIMESTAMP_FORMAT = "yyyy-MM-dd_HH-mm-ss";
+    private static final String FILE_PATTERN = "^[_A-Za-z0-9-]+$";
+    static final String FILE_TIMESTAMP_FORMAT = "yyyy-MM-dd_HH-mm-ss";
 
     private String path;
     private String baseUrl;
