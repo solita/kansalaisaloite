@@ -335,7 +335,7 @@ public class InitiativeController extends BaseController {
     }
     
     
-    @RequestMapping(value={ VIEW_HASH_FI, VIEW_HASH_FI }, method=POST, params=ACTION_DECLINE_INVITATION)
+    @RequestMapping(value={ VIEW_HASH_FI, VIEW_HASH_SV }, method=POST, params=ACTION_DECLINE_INVITATION)
     public String declineInvitationPost(@PathVariable("id") Long initiativeId,
                                         @PathVariable("hash") String hash,
                                         @RequestParam(PARAM_INVITATION_CODE) String invitationCode, Model model, Locale locale, HttpServletRequest request) {
