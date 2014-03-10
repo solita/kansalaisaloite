@@ -294,7 +294,7 @@
             <version>${spring.version}</version>
             <scope>test</scope>
         </dependency>
-        
+
         <!-- Jetty -->
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
@@ -376,6 +376,35 @@
                 <configuration>
                     <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>com.googlecode.jslint4java</groupId>
+                <artifactId>jslint4java-maven-plugin</artifactId>
+                <version>2.0.0</version>
+                <executions>
+                    <execution>
+                        <id>lint</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>lint</goal>
+                        </goals>
+                        <configuration>
+                            <failOnError>true</failOnError>
+                            <options>
+                                <browser>true</browser>
+                                <undef>true</undef>
+                                <confusion>true</confusion>
+                                <regexp>true</regexp>
+                                <devel>true</devel>
+                                <indent>2</indent>
+                            </options>
+                            <includes>
+                                <include>**/aloitepalvelu.js</include>
+                            </includes>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
 
             <plugin>
