@@ -1,5 +1,5 @@
 Kansalaisaloite is free software; you can redistribute it and/or modify it under the 
-terms of the Apache License Version 2.0. See LICENSE.txt. Note that the software depends on third party modules and packages listed below which come under various licenses respectively.
+terms of the Apache License Version 2.0. See LICENSE. Note that the software depends on third party modules and packages listed below which come under various licenses respectively.
 
     Name                            License                                 URL
     ------------------------------------------------------------------------------------------------------------------------
@@ -30,6 +30,7 @@ terms of the Apache License Version 2.0. See LICENSE.txt. Note that the software
     Jetty                           Apache 2.0
     Selenium                        Apache 2.0
     com.samaxes.maven               Apache 2.0
+    jslint4java                     BSD 3
     ----------------------
     Javascript libraries:
     ----------------------
