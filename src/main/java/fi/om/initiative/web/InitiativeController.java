@@ -192,31 +192,6 @@ public class InitiativeController extends BaseController {
     }
 
     /*
-     * OM Search for invitations with votes to be removed
-     */
-    @RequestMapping(value={ SEARCH_FI, SEARCH_SV }, method=GET, params=SEARCH_UNREMOVED_VOTES)
-    public String searchUnremovedVotes(@RequestParam(SEARCH_UNREMOVED_VOTES) String beforeDeadLine,  Model model, Locale locale) {
-        Urls urls = Urls.get(locale);
-
-        Period beforeDeadLinePeriod = null;
-        if (!Strings.isNullOrEmpty(beforeDeadLine)) {
-            try {
-                beforeDeadLinePeriod = ISOPeriodFormat.standard().parsePeriod(beforeDeadLine); 
-            } catch (IllegalArgumentException ex) {}
-        }
-
-        if (beforeDeadLinePeriod == null) {
-            return contextRelativeRedirect(urls.searchUnremovedVotes(initiativeSettings.getOmSearchBeforeVotesRemovalDuration().toString())); // use default param
-        }
-        else {
-            model.addAttribute(ALT_URI_ATTR, urls.alt().searchUnremovedVotes(beforeDeadLine));
-            model.addAttribute(SEARCH_UNREMOVED_VOTES, beforeDeadLine);
-            model.addAttribute("initiatives", initiativeService.findInitiativesWithUnremovedVotes(beforeDeadLinePeriod));
-            return SEARCH_VIEW;
-        }
-    }
-
-    /*
      * Search
      */
     @RequestMapping(value={ SEARCH_FI, SEARCH_SV }, method=GET)

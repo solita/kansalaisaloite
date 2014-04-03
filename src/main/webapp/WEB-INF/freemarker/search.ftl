@@ -5,10 +5,7 @@
 
 <#escape x as x?html> 
 
-<#if searchUnremovedVotes??>
-    <#assign searchMode>unremovedVotes</#assign>
-
-<#elseif currentSearch.viewPublic>
+<#if currentSearch.viewPublic>
     <#assign searchMode>public</#assign>
     
 <#elseif currentSearch.viewOwn>
@@ -199,7 +196,7 @@
                 </span>
                 </#if>
                 
-                <#if searchMode == "unremovedVotes" || searchMode == "public"><#assign showTitle="show"></#if>
+                <#if searchMode == "public"><#assign showTitle="show"></#if>
                 <span class="date trigger-tooltip" title="<@u.message "searchResults.initiative."+searchMode+".startDate" />" ><@u.localDate initiative.startDate /></span>
                 <span class="title"><span class="name"><@u.text initiative.name /></span></span>
                 <span class="info"><@flow.flowStateDescription initiative /></span>

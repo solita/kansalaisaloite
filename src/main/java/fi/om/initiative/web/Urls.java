@@ -135,8 +135,6 @@ public final class Urls {
     public static final String ENCODING = "UTF-8";
     
     public static final String PARAM_INVITATION_CODE = "invitation";
-    
-    public static final String SEARCH_UNREMOVED_VOTES = "searchUnremovedVotes";
 
     public static final String SEARCH_OWN_ONLY = "searchView="+ SearchView.own.name();
 
@@ -300,14 +298,6 @@ public final class Urls {
 
     public String vetumaError() {
         return getLocalizedPageUrl(VETUMA_ERROR_FI, VETUMA_ERROR_SV);
-    }
-
-    public String searchUnremovedVotes() {
-        return searchUnremovedVotes(""); // default search
-    }
-
-    public String searchUnremovedVotes(String periodBeforeDeadLine) {
-        return search() +  "?" + SEARCH_UNREMOVED_VOTES + "=" + periodBeforeDeadLine;
     }
 
     public String searchOwnOnly() {
