@@ -17,13 +17,6 @@ public class JobExecutor {
     @Resource
     private SupportVoteDao supportVoteDao;
 
-    public JobExecutor() {
-    }
-
-    JobExecutor(SupportVoteDao supportVoteDao) {
-        this.supportVoteDao = supportVoteDao;
-    }
-
     public void updateDenormalizedSupportCountForRunningInitiatives() {
 
         // Support counts are denormalized in one-day-delay (today we will denormalize history until yesterday).
