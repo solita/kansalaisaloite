@@ -14,6 +14,7 @@ import com.mysema.query.types.expr.Wildcard;
 import com.mysema.query.types.template.DateTemplate;
 import fi.om.initiative.dto.SupportVote;
 import fi.om.initiative.dto.SupportVoteBatch;
+import fi.om.initiative.dto.initiative.InitiativeState;
 import fi.om.initiative.sql.QInitiative;
 import fi.om.initiative.sql.QSupportVote;
 import fi.om.initiative.sql.QSupportVoteBatch;
@@ -202,5 +203,14 @@ public class SupportVoteDaoImpl implements SupportVoteDao {
         return queryFactory.from(qInitiative)
                 .where(qInitiative.id.eq(initiativeId))
                 .singleResult(qInitiative.supportCountData);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Long> getInitiativeIdsForRunningInitiatives(LocalDate tillDate) {
+        return queryFactory.from(qInitiative)
+                .where(qInitiative.state.eq(InitiativeState.ACCEPTED))
+                .where(qInitiative.enddate.goe(tillDate))
+                .list(qInitiative.id);
     }
 }

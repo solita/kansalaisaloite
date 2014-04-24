@@ -10,6 +10,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.Map;
 
 import static org.hamcrest.core.Is.is;
@@ -28,6 +29,9 @@ public class SupportVoteDaoImplTest {
 
     private Long userId;
     private LocalDate today;
+    private LocalDate yesterday;
+    private LocalDate twoDaysAgo;
+    private LocalDate tomorrow;
 
     @Before
     public void setup() {
@@ -35,13 +39,13 @@ public class SupportVoteDaoImplTest {
         userId = testHelper.createTestUser();
         //NOTE: testStartTime should use db server time so that comparisons to trigger updated fields don't fail
         today = testHelper.getDbCurrentTime().toLocalDate();
+        yesterday = today.minusDays(1);
+        twoDaysAgo = today.minusDays(2);
+        tomorrow = today.plusDays(1);
     }
 
     @Test
     public void counts_support_vote_amounts_per_day() {
-        LocalDate yesterday = today.minusDays(1);
-        LocalDate twoDaysAgo = today.minusDays(2);
-        LocalDate tomorrow = today.plusDays(1);
 
         Long initiativeId = testHelper.create(new TestHelper.InitiativeDraft(userId)
                 .withState(InitiativeState.ACCEPTED)
@@ -78,5 +82,25 @@ public class SupportVoteDaoImplTest {
         supportVoteDao.saveDenormalizedSupportCountData(initiativeId, denormalizedData);
 
         assertThat(supportVoteDao.getDernormalizedSupportCountData(initiativeId), is(denormalizedData));
+    }
+
+    @Test
+    public void get_running_initiatives_returns_initiatives_till_date() {
+        Long runningTillToday = testHelper.create(new TestHelper.InitiativeDraft(userId)
+                .isRunning(yesterday, today)
+                .withState(InitiativeState.ACCEPTED));
+
+        Long reviewTillToday = testHelper.create(new TestHelper.InitiativeDraft(userId)
+                .isRunning(yesterday, today)
+                .withState(InitiativeState.REVIEW));
+
+        List<Long> idsForRunningTillYesterday = supportVoteDao.getInitiativeIdsForRunningInitiatives(yesterday);
+        assertThat(idsForRunningTillYesterday.size(), is(1));
+        assertThat(idsForRunningTillYesterday.get(0), is(runningTillToday));
+
+        List<Long> idsForRunningTillToday = supportVoteDao.getInitiativeIdsForRunningInitiatives(today);
+        assertThat(idsForRunningTillToday.get(0), is(runningTillToday));
+
+        assertThat(supportVoteDao.getInitiativeIdsForRunningInitiatives(tomorrow).size(), is(0));
     }
 }
