@@ -42,7 +42,6 @@ import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 
 import javax.annotation.Resource;
 import javax.inject.Inject;
-
 import java.io.IOException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
@@ -355,6 +354,11 @@ public class AppConfiguration {
     @Bean
     public CacheHeaderFilter noCacheFilter() {
         return new CacheHeaderFilter(WebConfiguration.optimizeResources(env), 0);
+    }
+
+    @Bean
+    public JobExecutor jobService() {
+        return new JobExecutor();
     }
 
     @Bean
