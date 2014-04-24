@@ -1,5 +1,6 @@
 package fi.om.initiative.dao;
 
+import com.mysema.query.sql.dml.SQLInsertClause;
 import com.mysema.query.sql.postgres.PostgresQuery;
 import com.mysema.query.sql.postgres.PostgresQueryFactory;
 import com.mysema.query.types.Expression;
@@ -13,13 +14,14 @@ import fi.om.initiative.dto.initiative.InitiativeManagement;
 import fi.om.initiative.dto.initiative.InitiativeState;
 import fi.om.initiative.service.EncryptionService;
 import fi.om.initiative.sql.*;
+import org.apache.commons.lang.RandomStringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
+import org.joda.time.LocalTime;
 import org.joda.time.ReadablePeriod;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static fi.om.initiative.util.Locales.asLocalizedString;
@@ -30,8 +32,6 @@ public class TestHelper {
     PostgresQueryFactory queryFactory;
     @Resource
     EncryptionService encryptionService;
-
-    public static final LocalDate LOCAL_DATE = new LocalDate();
 
     private static final QInitiative qInitiative = QInitiative.initiative;
 
@@ -237,6 +237,17 @@ public class TestHelper {
                 .set(QInfoText.infoText.modifier, modifierName)
                 .set(QInfoText.infoText.footerDisplay, footerDisplay)
                 .executeWithKey(QInfoText.infoText.id);
+    }
+
+    @Transactional(readOnly = false)
+    public void createSupport(Long initiativeId, LocalDate supportVoteDate) {
+        SQLInsertClause insert = queryFactory.insert(QSupportVote.supportVote)
+                .set(QSupportVote.supportVote.created, supportVoteDate.toDateTime(LocalTime.now()))
+                .set(QSupportVote.supportVote.details, "anyDetails")
+                .set(QSupportVote.supportVote.initiativeId, initiativeId)
+                .set(QSupportVote.supportVote.supportid, RandomStringUtils.random(64));
+        insert.execute();
+
     }
 
     public static class InitiativeDraft {

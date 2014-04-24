@@ -7,18 +7,23 @@ import com.mysema.query.sql.dml.SQLUpdateClause;
 import com.mysema.query.sql.postgres.PostgresQuery;
 import com.mysema.query.sql.postgres.PostgresQueryFactory;
 import com.mysema.query.types.Expression;
+import com.mysema.query.types.ExpressionUtils;
 import com.mysema.query.types.MappingProjection;
+import com.mysema.query.types.expr.DateExpression;
+import com.mysema.query.types.expr.Wildcard;
+import com.mysema.query.types.template.DateTemplate;
 import fi.om.initiative.dto.SupportVote;
 import fi.om.initiative.dto.SupportVoteBatch;
 import fi.om.initiative.sql.QInitiative;
 import fi.om.initiative.sql.QSupportVote;
 import fi.om.initiative.sql.QSupportVoteBatch;
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-
 import java.util.List;
+import java.util.Map;
 
 public class SupportVoteDaoImpl implements SupportVoteDao {
     
@@ -167,4 +172,18 @@ public class SupportVoteDaoImpl implements SupportVoteDao {
         .execute();
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public Map<LocalDate, Long> getSupportVoteCountByDateUntil(Long initiativeId, LocalDate tillDay) {
+
+        DateExpression<LocalDate> createDate = DateTemplate.create(LocalDate.class, "date({0})", qSupportVote.created);
+        Expression<LocalDate> createDateAlias = ExpressionUtils.as(createDate, "createDate");
+
+        return queryFactory
+                .from(qSupportVote)
+                .where(qSupportVote.initiativeId.eq(initiativeId))
+                .where(createDate.loe(tillDay))
+                .groupBy(createDateAlias)
+                .map(createDateAlias, Wildcard.count);
+    }
 }

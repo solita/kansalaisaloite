@@ -1,11 +1,12 @@
 package fi.om.initiative.dao;
 
-import java.util.List;
-
-import org.joda.time.DateTime;
-
 import fi.om.initiative.dto.SupportVote;
 import fi.om.initiative.dto.SupportVoteBatch;
+import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
+
+import java.util.List;
+import java.util.Map;
 
 public interface SupportVoteDao {
 
@@ -23,4 +24,5 @@ public interface SupportVoteDao {
 
     void removeSupportVotes(Long initiativeId, DateTime supportStatementsRemoved, Long userId);
 
+    Map<LocalDate,Long> getSupportVoteCountByDateUntil(Long initiativeId, LocalDate tillDay);
 }
