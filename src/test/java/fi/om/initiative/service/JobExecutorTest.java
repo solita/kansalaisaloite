@@ -46,7 +46,7 @@ public class JobExecutorTest {
         testHelper.createSupport(testInitiative, longTimeAgo.minusDays(2));
         testHelper.createSupport(testInitiative, longTimeAgo.minusDays(1));
 
-        jobExecutor.updateDenormalizedSupportCountForRunningInitiatives();
+        jobExecutor.updateDenormalizedSupportCountForInitiatives();
 
         assertThat(supportVoteDao.getDernormalizedSupportCountData(testInitiative), is(
                 "[{\"d\":\"2000-01-13\",\"n\":1},{\"d\":\"2000-01-14\",\"n\":1},{\"d\":\"2000-01-15\",\"n\":2}]"

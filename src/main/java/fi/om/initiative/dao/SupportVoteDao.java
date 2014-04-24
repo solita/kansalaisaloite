@@ -30,5 +30,5 @@ public interface SupportVoteDao {
 
     String getDernormalizedSupportCountData(Long initiativeId);
 
-    List<Long> getInitiativeIdsForRunningInitiatives(LocalDate tillDate);
+    List<Long> getInitiativeIdsForSupportVoteDenormalization(LocalDate runningTillDate);
 }

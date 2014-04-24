@@ -17,14 +17,14 @@ public class JobExecutor {
     @Resource
     private SupportVoteDao supportVoteDao;
 
-    public void updateDenormalizedSupportCountForRunningInitiatives() {
+    public void updateDenormalizedSupportCountForInitiatives() {
 
         // Support counts are denormalized in one-day-delay (today we will denormalize history until yesterday).
         // Therefore the last time we'll denormalize supports for initiative is the day after it's ended.
         LocalDate tomorrow = LocalDate.now().plusDays(1);
         LocalDate yesterday = LocalDate.now().minusDays(1);
 
-        List<Long> initiativeIdsForRunningInitiatives = supportVoteDao.getInitiativeIdsForRunningInitiatives(tomorrow);
+        List<Long> initiativeIdsForRunningInitiatives = supportVoteDao.getInitiativeIdsForSupportVoteDenormalization(tomorrow);
 
         log.info("About to denormalize supportcount for " + initiativeIdsForRunningInitiatives.size() + " initiatives.");
         for (Long initiativeForUpdating : initiativeIdsForRunningInitiatives) {

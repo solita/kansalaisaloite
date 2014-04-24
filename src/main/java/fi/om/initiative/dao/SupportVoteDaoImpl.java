@@ -207,10 +207,10 @@ public class SupportVoteDaoImpl implements SupportVoteDao {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Long> getInitiativeIdsForRunningInitiatives(LocalDate tillDate) {
+    public List<Long> getInitiativeIdsForSupportVoteDenormalization(LocalDate runningTillDate) {
         return queryFactory.from(qInitiative)
-                .where(qInitiative.state.eq(InitiativeState.ACCEPTED))
-                .where(qInitiative.enddate.goe(tillDate))
+                .where(qInitiative.state.in(InitiativeState.ACCEPTED, InitiativeState.DONE),
+                        qInitiative.enddate.goe(runningTillDate).or(qInitiative.supportCountData.isNull()))
                 .list(qInitiative.id);
     }
 }

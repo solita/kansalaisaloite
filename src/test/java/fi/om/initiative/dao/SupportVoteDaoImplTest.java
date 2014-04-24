@@ -85,22 +85,37 @@ public class SupportVoteDaoImplTest {
     }
 
     @Test
-    public void get_running_initiatives_returns_initiatives_till_date() {
+    public void get_initiative_ids_for_support_vote_denormalization_returns_running_initiatives() {
         Long runningTillToday = testHelper.create(new TestHelper.InitiativeDraft(userId)
                 .isRunning(yesterday, today)
                 .withState(InitiativeState.ACCEPTED));
+        supportVoteDao.saveDenormalizedSupportCountData(runningTillToday, "some previously saved supportvotedata");
 
         Long reviewTillToday = testHelper.create(new TestHelper.InitiativeDraft(userId)
                 .isRunning(yesterday, today)
                 .withState(InitiativeState.REVIEW));
 
-        List<Long> idsForRunningTillYesterday = supportVoteDao.getInitiativeIdsForRunningInitiatives(yesterday);
+        List<Long> idsForRunningTillYesterday = supportVoteDao.getInitiativeIdsForSupportVoteDenormalization(yesterday);
         assertThat(idsForRunningTillYesterday.size(), is(1));
         assertThat(idsForRunningTillYesterday.get(0), is(runningTillToday));
 
-        List<Long> idsForRunningTillToday = supportVoteDao.getInitiativeIdsForRunningInitiatives(today);
+        List<Long> idsForRunningTillToday = supportVoteDao.getInitiativeIdsForSupportVoteDenormalization(today);
         assertThat(idsForRunningTillToday.get(0), is(runningTillToday));
 
-        assertThat(supportVoteDao.getInitiativeIdsForRunningInitiatives(tomorrow).size(), is(0));
+        assertThat(supportVoteDao.getInitiativeIdsForSupportVoteDenormalization(tomorrow).size(), is(0));
+    }
+
+    @Test
+    public void get_initiative_ids_for_support_vote_denormalization_returns_initiatives_with_empty_supportCountData() {
+        Long endedInitiative = testHelper.create(new TestHelper.InitiativeDraft(userId)
+                .isRunning(twoDaysAgo, twoDaysAgo)
+                .withState(InitiativeState.DONE));
+
+        assertThat(supportVoteDao.getInitiativeIdsForSupportVoteDenormalization(tomorrow).size(), is(1));
+
+        supportVoteDao.saveDenormalizedSupportCountData(endedInitiative, "some data");
+
+        assertThat(supportVoteDao.getInitiativeIdsForSupportVoteDenormalization(tomorrow).size(), is(0));
+
     }
 }
