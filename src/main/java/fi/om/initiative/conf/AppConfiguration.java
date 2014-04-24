@@ -36,6 +36,7 @@ import org.springframework.jdbc.support.SQLErrorCodeSQLExceptionTranslator;
 import org.springframework.jdbc.support.SQLExceptionTranslator;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
@@ -54,6 +55,7 @@ import java.util.concurrent.Executors;
 @EnableAspectJAutoProxy(proxyTargetClass=false)
 @Import({ProdPropertiesConfiguration.class, TestPropertiesConfigurer.class, JdbcConfiguration.class, AppDevConfiguration.class})
 @EnableCaching
+@EnableScheduling
 public class AppConfiguration {
 
     @Inject Environment env;
@@ -357,7 +359,7 @@ public class AppConfiguration {
     }
 
     @Bean
-    public JobExecutor jobService() {
+    public JobExecutor jobExecutor() {
         return new JobExecutor();
     }
 

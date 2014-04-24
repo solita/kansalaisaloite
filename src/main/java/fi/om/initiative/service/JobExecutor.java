@@ -4,6 +4,7 @@ import fi.om.initiative.dao.SupportVoteDao;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.Scheduled;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -12,11 +13,14 @@ import java.util.TreeMap;
 
 public class JobExecutor {
 
+    private static final String EVERY_DAY_AT_MIDNIGHT = "0 0 0 * * ?";
+
     private final Logger log = LoggerFactory.getLogger(JobExecutor.class);
 
     @Resource
     private SupportVoteDao supportVoteDao;
 
+    @Scheduled(cron = EVERY_DAY_AT_MIDNIGHT)
     public void updateDenormalizedSupportCountForInitiatives() {
 
         // Support counts are denormalized in one-day-delay (today we will denormalize history until yesterday).
