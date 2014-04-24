@@ -25,4 +25,8 @@ public interface SupportVoteDao {
     void removeSupportVotes(Long initiativeId, DateTime supportStatementsRemoved, Long userId);
 
     Map<LocalDate,Long> getSupportVoteCountByDateUntil(Long initiativeId, LocalDate tillDay);
+
+    void saveDenormalizedSupportCountData(Long initiativeid, String denormalizedData);
+
+    String getDernormalizedSupportCountData(Long initiativeId);
 }

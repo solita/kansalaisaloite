@@ -68,4 +68,15 @@ public class SupportVoteDaoImplTest {
 
         assertThat(supportVoteDao.getSupportVoteCountByDateUntil(initiativeId, twoDaysAgo.minusDays(1)).size(), is(0));
     }
+
+    @Test
+    public void save_and_get_denormalized_support_count_data() {
+        Long initiativeId = testHelper.create(new TestHelper.InitiativeDraft(userId));
+
+        String denormalizedData = "some denormalized data";
+
+        supportVoteDao.saveDenormalizedSupportCountData(initiativeId, denormalizedData);
+
+        assertThat(supportVoteDao.getDernormalizedSupportCountData(initiativeId), is(denormalizedData));
+    }
 }

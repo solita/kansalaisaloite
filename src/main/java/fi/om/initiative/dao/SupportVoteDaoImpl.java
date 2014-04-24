@@ -186,4 +186,21 @@ public class SupportVoteDaoImpl implements SupportVoteDao {
                 .groupBy(createDateAlias)
                 .map(createDateAlias, Wildcard.count);
     }
+
+    @Override
+    @Transactional(readOnly = false)
+    public void saveDenormalizedSupportCountData(Long initiativeid, String denormalizedData) {
+        queryFactory.update(qInitiative)
+                .set(qInitiative.supportCountData, denormalizedData)
+                .where(qInitiative.id.eq(initiativeid))
+                .execute();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public String getDernormalizedSupportCountData(Long initiativeId) {
+        return queryFactory.from(qInitiative)
+                .where(qInitiative.id.eq(initiativeId))
+                .singleResult(qInitiative.supportCountData);
+    }
 }

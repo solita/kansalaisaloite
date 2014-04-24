@@ -1,14 +1,13 @@
 package fi.om.initiative.sql;
 
-import static com.mysema.query.types.PathMetadataFactory.*;
-
+import com.mysema.query.sql.ColumnMetadata;
+import com.mysema.query.types.Path;
+import com.mysema.query.types.PathMetadata;
 import com.mysema.query.types.path.*;
 
-import com.mysema.query.types.PathMetadata;
 import javax.annotation.Generated;
-import com.mysema.query.types.Path;
 
-import com.mysema.query.sql.ColumnMetadata;
+import static com.mysema.query.types.PathMetadataFactory.forVariable;
 
 
 /**
@@ -70,6 +69,8 @@ public class QInitiative extends com.mysema.query.sql.RelationalPathBase<QInitia
     public final DateTimePath<org.joda.time.DateTime> statedate = createDateTime("statedate", org.joda.time.DateTime.class);
 
     public final NumberPath<Integer> supportcount = createNumber("supportcount", Integer.class);
+
+    public final StringPath supportCountData = createString("supportCountData");
 
     public final StringPath supportstatementaddress = createString("supportstatementaddress");
 
@@ -142,6 +143,7 @@ public class QInitiative extends com.mysema.query.sql.RelationalPathBase<QInitia
         addMetadata(statecomment, ColumnMetadata.named("statecomment").ofType(12).withSize(4096));
         addMetadata(statedate, ColumnMetadata.named("statedate").ofType(93).withSize(29).withDigits(6).notNull());
         addMetadata(supportcount, ColumnMetadata.named("supportcount").ofType(4).withSize(10).notNull());
+        addMetadata(supportCountData, ColumnMetadata.named("support_count_data").ofType(12).withSize(2147483647));
         addMetadata(supportstatementaddress, ColumnMetadata.named("supportstatementaddress").ofType(12).withSize(1024));
         addMetadata(supportstatementpdf, ColumnMetadata.named("supportstatementpdf").ofType(-7).withSize(1));
         addMetadata(supportstatementsinweb, ColumnMetadata.named("supportstatementsinweb").ofType(-7).withSize(1).notNull());
