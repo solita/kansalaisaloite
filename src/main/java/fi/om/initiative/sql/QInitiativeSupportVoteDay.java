@@ -27,6 +27,8 @@ public class QInitiativeSupportVoteDay extends com.mysema.query.sql.RelationalPa
 
     public final DatePath<org.joda.time.LocalDate> supportDate = createDate("supportDate", org.joda.time.LocalDate.class);
 
+    public final com.mysema.query.sql.PrimaryKey<QInitiativeSupportVoteDay> supportVoteDayPk = createPrimaryKey(initiativeId, supportDate);
+
     public final com.mysema.query.sql.ForeignKey<QInitiative> supportVoteDayInitiativeIdFk = createForeignKey(initiativeId, "id");
 
     public QInitiativeSupportVoteDay(String variable) {
