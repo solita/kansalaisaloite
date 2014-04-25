@@ -8,3 +8,5 @@ create table initiative_support_vote_day (
 );
 
 create index support_vote_day_initiative_id_fk on initiative_support_vote_day(initiative_id);
+
+insert into schema_version (script) values ('06_denormalize_support_votes_table.sql');
