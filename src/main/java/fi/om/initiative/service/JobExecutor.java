@@ -13,7 +13,7 @@ import java.util.TreeMap;
 
 public class JobExecutor {
 
-    private static final String EVERY_DAY_AT_MIDNIGHT = "0 0 0 * * ?";
+    private static final String EVERY_DAY_AT_MIDNIGHT = "0 0 0 * * *";
 
     private final Logger log = LoggerFactory.getLogger(JobExecutor.class);
 
@@ -34,7 +34,11 @@ public class JobExecutor {
         for (Long initiativeForUpdating : initiativeIdsForRunningInitiatives) {
 
             Map<LocalDate, Long> supportVoteCountByDateUntil = supportVoteDao.getSupportVoteCountByDateUntil(initiativeForUpdating, yesterday);
-            supportVoteDao.saveDenormalizedSupportCountData(initiativeForUpdating, toJson(supportVoteCountByDateUntil));
+
+            supportVoteDao.saveDenormalizedSupportCountDataJson(initiativeForUpdating, toJson(supportVoteCountByDateUntil));
+
+            supportVoteDao.saveDenormalizedSupportCountData(initiativeForUpdating, supportVoteCountByDateUntil);
+
         }
         log.info("Supportcounts denormalized.");
 

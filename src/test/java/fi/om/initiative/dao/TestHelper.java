@@ -59,6 +59,7 @@ public class TestHelper {
         queryFactory.delete(QSupportVote.supportVote).execute();
         queryFactory.delete(QSupportVoteBatch.supportVoteBatch).execute();
         queryFactory.delete(QInitiativeAuthor.initiativeAuthor).execute();
+        queryFactory.delete(QInitiativeSupportVoteDay.initiativeSupportVoteDay).execute();
         queryFactory.delete(QInitiative.initiative).execute();
         queryFactory.delete(QInituser.inituser).execute();
         queryFactory.delete(QInfoText.infoText).execute();

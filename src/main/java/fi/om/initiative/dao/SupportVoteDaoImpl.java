@@ -26,6 +26,8 @@ import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 
+import static fi.om.initiative.sql.QInitiativeSupportVoteDay.initiativeSupportVoteDay;
+
 public class SupportVoteDaoImpl implements SupportVoteDao {
     
     private static final QInitiative qInitiative = QInitiative.initiative;
@@ -190,7 +192,7 @@ public class SupportVoteDaoImpl implements SupportVoteDao {
 
     @Override
     @Transactional(readOnly = false)
-    public void saveDenormalizedSupportCountData(Long initiativeid, String denormalizedData) {
+    public void saveDenormalizedSupportCountDataJson(Long initiativeid, String denormalizedData) {
         queryFactory.update(qInitiative)
                 .set(qInitiative.supportCountData, denormalizedData)
                 .where(qInitiative.id.eq(initiativeid))
@@ -198,8 +200,37 @@ public class SupportVoteDaoImpl implements SupportVoteDao {
     }
 
     @Override
+    @Transactional(readOnly = false)
+    public void saveDenormalizedSupportCountData(Long initiativeId, Map<LocalDate, Long> denormalizedData) {
+
+        if (!denormalizedData.isEmpty()) {
+
+            queryFactory.delete(initiativeSupportVoteDay).where(initiativeSupportVoteDay.initiativeId.eq(initiativeId)).execute();
+
+            SQLInsertClause insert = queryFactory.insert(initiativeSupportVoteDay);
+            for (Map.Entry<LocalDate, Long> localDateLongEntry : denormalizedData.entrySet()) {
+                insert.set(initiativeSupportVoteDay.initiativeId, initiativeId)
+                        .set(initiativeSupportVoteDay.supportCount, localDateLongEntry.getValue().intValue())
+                        .set(initiativeSupportVoteDay.supportDate, localDateLongEntry.getKey())
+                        .addBatch();
+            }
+
+            insert.execute();
+        }
+    }
+
+    @Override
     @Transactional(readOnly = true)
-    public String getDernormalizedSupportCountData(Long initiativeId) {
+    public Map<LocalDate, Integer> getDenormalizedSupportCountData(Long initiativeId) {
+        return queryFactory.from(initiativeSupportVoteDay)
+                .where(initiativeSupportVoteDay.initiativeId.eq(initiativeId))
+                .map(initiativeSupportVoteDay.supportDate, initiativeSupportVoteDay.supportCount);
+
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public String getDenormalizedSupportCountDataJson(Long initiativeId) {
         return queryFactory.from(qInitiative)
                 .where(qInitiative.id.eq(initiativeId))
                 .singleResult(qInitiative.supportCountData);

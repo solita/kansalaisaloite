@@ -10,6 +10,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -74,14 +75,14 @@ public class SupportVoteDaoImplTest {
     }
 
     @Test
-    public void save_and_get_denormalized_support_count_data() {
+    public void save_and_get_denormalized_support_count_json_data() {
         Long initiativeId = testHelper.create(new TestHelper.InitiativeDraft(userId));
 
         String denormalizedData = "some denormalized data";
 
-        supportVoteDao.saveDenormalizedSupportCountData(initiativeId, denormalizedData);
+        supportVoteDao.saveDenormalizedSupportCountDataJson(initiativeId, denormalizedData);
 
-        assertThat(supportVoteDao.getDernormalizedSupportCountData(initiativeId), is(denormalizedData));
+        assertThat(supportVoteDao.getDenormalizedSupportCountDataJson(initiativeId), is(denormalizedData));
     }
 
     @Test
@@ -89,7 +90,7 @@ public class SupportVoteDaoImplTest {
         Long runningTillToday = testHelper.create(new TestHelper.InitiativeDraft(userId)
                 .isRunning(yesterday, today)
                 .withState(InitiativeState.ACCEPTED));
-        supportVoteDao.saveDenormalizedSupportCountData(runningTillToday, "some previously saved supportvotedata");
+        supportVoteDao.saveDenormalizedSupportCountDataJson(runningTillToday, "some previously saved supportvotedata");
 
         Long reviewTillToday = testHelper.create(new TestHelper.InitiativeDraft(userId)
                 .isRunning(yesterday, today)
@@ -113,9 +114,36 @@ public class SupportVoteDaoImplTest {
 
         assertThat(supportVoteDao.getInitiativeIdsForSupportVoteDenormalization(tomorrow).size(), is(1));
 
-        supportVoteDao.saveDenormalizedSupportCountData(endedInitiative, "some data");
+        supportVoteDao.saveDenormalizedSupportCountDataJson(endedInitiative, "some data");
 
         assertThat(supportVoteDao.getInitiativeIdsForSupportVoteDenormalization(tomorrow).size(), is(0));
+    }
+
+    @Test
+    public void rewrite_and_get_denormalized_support_count_data() {
+
+
+        Long initiativeId = testHelper.createRunningPublicInitiative(userId, "Initiative name");
+
+        Map<LocalDate, Long> supportCounts = new HashMap<>();
+        supportCounts.put(new LocalDate(2010, 1, 1), 10L);
+        supportCounts.put(new LocalDate(2010, 1, 2), 15L);
+        supportVoteDao.saveDenormalizedSupportCountData(initiativeId, supportCounts);
+
+        Map<LocalDate, Integer> denormalizedSupportCountData = supportVoteDao.getDenormalizedSupportCountData(initiativeId);
+        assertThat(denormalizedSupportCountData.size(), is(2));
+        assertThat(denormalizedSupportCountData.get(new LocalDate(2010, 1, 1)), is(10));
+        assertThat(denormalizedSupportCountData.get(new LocalDate(2010, 1, 2)), is(15));
+
+        supportCounts.put(new LocalDate(2010, 1, 3), 20L);
+        supportVoteDao.saveDenormalizedSupportCountData(initiativeId, supportCounts);
+
+        denormalizedSupportCountData = supportVoteDao.getDenormalizedSupportCountData(initiativeId);
+        assertThat(denormalizedSupportCountData.size(), is(3));
+        assertThat(denormalizedSupportCountData.get(new LocalDate(2010, 1, 1)), is(10));
+        assertThat(denormalizedSupportCountData.get(new LocalDate(2010, 1, 2)), is(15));
+        assertThat(denormalizedSupportCountData.get(new LocalDate(2010, 1, 3)), is(20));
+
 
     }
 }

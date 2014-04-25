@@ -94,6 +94,8 @@ public class QInitiative extends com.mysema.query.sql.RelationalPathBase<QInitia
 
     public final com.mysema.query.sql.ForeignKey<QInitiativeLink> _linkInitiativeIdFk = createInvForeignKey(id, "initiative_id");
 
+    public final com.mysema.query.sql.ForeignKey<QInitiativeSupportVoteDay> _supportVoteDayInitiativeIdFk = createInvForeignKey(id, "initiative_id");
+
     public final com.mysema.query.sql.ForeignKey<QSupportVote> _supportVoteInitiativeIdFk = createInvForeignKey(id, "initiative_id");
 
     public final com.mysema.query.sql.ForeignKey<QInitiativeInvitation> _invitationInitiativeIdFk = createInvForeignKey(id, "initiative_id");

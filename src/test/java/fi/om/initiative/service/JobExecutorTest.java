@@ -48,9 +48,11 @@ public class JobExecutorTest {
 
         jobExecutor.updateDenormalizedSupportCountForInitiatives();
 
-        assertThat(supportVoteDao.getDernormalizedSupportCountData(testInitiative), is(
+        assertThat(supportVoteDao.getDenormalizedSupportCountDataJson(testInitiative), is(
                 "[{\"d\":\"2000-01-13\",\"n\":1},{\"d\":\"2000-01-14\",\"n\":1},{\"d\":\"2000-01-15\",\"n\":2}]"
         ));
+
+        assertThat(supportVoteDao.getDenormalizedSupportCountData(testInitiative).size(), is(3));
 
     }
 

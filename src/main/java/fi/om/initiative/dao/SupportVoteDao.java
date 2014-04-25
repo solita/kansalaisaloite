@@ -26,9 +26,13 @@ public interface SupportVoteDao {
 
     Map<LocalDate,Long> getSupportVoteCountByDateUntil(Long initiativeId, LocalDate tillDay);
 
-    void saveDenormalizedSupportCountData(Long initiativeid, String denormalizedData);
+    void saveDenormalizedSupportCountDataJson(Long initiativeid, String denormalizedData);
 
-    String getDernormalizedSupportCountData(Long initiativeId);
+    String getDenormalizedSupportCountDataJson(Long initiativeId);
+
+    void saveDenormalizedSupportCountData(Long initiativeId, Map<LocalDate, Long> denormalizedData);
+
+    Map<LocalDate, Integer> getDenormalizedSupportCountData(Long initiativeId);
 
     List<Long> getInitiativeIdsForSupportVoteDenormalization(LocalDate runningTillDate);
 }
