@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +22,7 @@ public class JobExecutor {
     private SupportVoteDao supportVoteDao;
 
     @Scheduled(cron = EVERY_DAY_AT_MIDNIGHT)
+    @PostConstruct
     public void updateDenormalizedSupportCountForInitiatives() {
 
         // Support counts are denormalized in one-day-delay (today we will denormalize history until yesterday).

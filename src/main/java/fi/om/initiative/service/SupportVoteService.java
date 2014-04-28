@@ -23,6 +23,8 @@ public interface SupportVoteService {
 
     List<SupportVoteBatch> getSupportVoteBatches(InitiativeManagement initiative);
 
+    String getSupportVotesPerDateJson(Long initiativeId);
+
     void removeSupportVotes(Long initiativeId);
 
 }

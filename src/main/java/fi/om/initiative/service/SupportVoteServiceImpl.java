@@ -1,5 +1,6 @@
 package fi.om.initiative.service;
 
+import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.mysema.commons.lang.Assert;
 import fi.om.initiative.dao.SupportVoteDao;
@@ -16,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Nullable;
 import javax.annotation.Resource;
-
 import java.util.List;
 import java.util.Locale;
 
@@ -180,6 +180,16 @@ public class SupportVoteServiceImpl implements SupportVoteService {
         userService.requireUserInRole(Role.REGISTERED);
         // SupportVoteBatch doesn't contain any critical information - trust given parameter for efficiency
         return supportVoteDao.getSupportVoteBatches(initiative.getId());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public String getSupportVotesPerDateJson(Long initiativeId) {
+        String supportCountDataJson = supportVoteDao.getDenormalizedSupportCountDataJson(initiativeId);
+        if (Strings.isNullOrEmpty(supportCountDataJson)) {
+            return "[]";
+        }
+        return supportCountDataJson;
     }
 
     @Override

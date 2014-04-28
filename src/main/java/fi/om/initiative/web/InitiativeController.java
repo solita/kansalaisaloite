@@ -1,5 +1,7 @@
 package fi.om.initiative.web;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Optional;
 import com.google.common.base.Strings;
 import com.lowagie.text.DocumentException;
@@ -9,11 +11,12 @@ import fi.om.initiative.dto.initiative.*;
 import fi.om.initiative.dto.search.*;
 import fi.om.initiative.json.SupportCount;
 import fi.om.initiative.pdf.SupportStatementPdfGenerator;
-import fi.om.initiative.service.*;
+import fi.om.initiative.service.AuthenticationRequiredException;
+import fi.om.initiative.service.InitiativeService;
+import fi.om.initiative.service.Role;
+import fi.om.initiative.service.SupportVoteService;
 import fi.om.initiative.util.Locales;
 import org.joda.time.LocalDate;
-import org.joda.time.Period;
-import org.joda.time.format.ISOPeriodFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
@@ -52,11 +55,13 @@ public class InitiativeController extends BaseController {
     private static final String ATTR_INVITATION_CODE = "invitationCode";
 
     private static final String ATTR_VOTING_INFO = "votingInfo";
-    
+
+    private ObjectMapper objectMapper = new ObjectMapper();
+
     @Resource InitiativeService initiativeService;
-    
+
     @Resource SupportVoteService supportVoteService;
-    
+
     @Resource InitiativeSettings initiativeSettings;
 
     @Resource MessageSource messageSource;
@@ -469,7 +474,7 @@ public class InitiativeController extends BaseController {
                                                                      @RequestParam(value = JSON_OFFSET, required = false) Integer offset,
                                                                      @RequestParam(value = JSON_LIMIT, required = false) Integer limit,
                                                                      @RequestParam(value = JSON_MINSUPPORTCOUNT, required = false) Integer minSupportCount) {
-        return new JsonpObject<List<InitiativeInfo>>(callback, jsonList(offset, limit, minSupportCount));
+        return new JsonpObject<>(callback, jsonList(offset, limit, minSupportCount));
     }
 
     @RequestMapping(value = SUPPORT_COUNT, method = GET, produces = JSON)
@@ -483,7 +488,17 @@ public class InitiativeController extends BaseController {
     }
     @RequestMapping(value=INITIATIVE, method=GET, produces=JSONP, params=JSONP_CALLBACK)
     public @ResponseBody JsonpObject<InitiativePublic> jsonGet(@PathVariable Long id, @RequestParam(JSONP_CALLBACK) String callback) {
-        return new JsonpObject<InitiativePublic>(callback, jsonGet(id));
+        return new JsonpObject<>(callback, jsonGet(id));
+    }
+
+    @RequestMapping(value = SUPPORTS_BY_DATE, method=GET, produces=JSON)
+    public @ResponseBody JsonNode jsonSupportsByDate(@PathVariable Long id) throws IOException {
+        return objectMapper.readTree(supportVoteService.getSupportVotesPerDateJson(id));
+    }
+
+    @RequestMapping(value=SUPPORTS_BY_DATE, method=GET, produces=JSONP, params=JSONP_CALLBACK)
+    public @ResponseBody JsonpObject<JsonNode> jsonSupportsByDate(@PathVariable Long id, @RequestParam(JSONP_CALLBACK) String callback) throws IOException {
+        return new JsonpObject<>(callback, jsonSupportsByDate(id));
     }
 
     @RequestMapping(value=KEEPALIVE, method=POST, produces=JSON)

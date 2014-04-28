@@ -27,9 +27,13 @@ The list includes only initiatives with at least 50 support counts by default. T
 
 <p><a href="#properties">Details</a> of the initiative in <a href="http://www.json.org/">JSON</a> format.</p>
 
+<h3>Initiative support counts per date</h3>
+<p>${urls.baseUrl}${UrlConstants.SUPPORTS_BY_DATE}</p>
+<p>List holding date-value pairs presenting the amounts of statements of support the initiative has gathered until yesterday. Is updated nightly.</p>
+
 <h3>JSONP</h3>
 
-<p>Both interfaces support also <a href="http://en.wikipedia.org/wiki/JSONP">JSONP</a> format. Callback is given with <tt>${UrlConstants.JSONP_CALLBACK}</tt> parameter. E.g.<br/>
+<p>All interfaces support also <a href="http://en.wikipedia.org/wiki/JSONP">JSONP</a> format. Callback is given with <tt>${UrlConstants.JSONP_CALLBACK}</tt> parameter. E.g.<br/>
 <a href="${urls.initiatives()}?${UrlConstants.JSONP_CALLBACK}=myCallback">${urls.initiatives()}?${UrlConstants.JSONP_CALLBACK}=myCallback</a>.</p>
 
 

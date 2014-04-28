@@ -103,6 +103,8 @@ public final class Urls {
 
     public static final String SUPPORT_COUNT = API+"/v1/supports/" + ID_PARAMETER;
 
+    public static final String SUPPORTS_BY_DATE = API+"/v1/supports-by-date/" + ID_PARAMETER;
+
     public static final String STATUS =  "/status";
     
     public static final String SERVICES = "/services";
