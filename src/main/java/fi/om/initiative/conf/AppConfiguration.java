@@ -173,7 +173,9 @@ public class AppConfiguration {
                     WebConfiguration.optimizeResources(env),
                 WebConfiguration.resourcesVersion(env),
                 WebConfiguration.omPiwicId(env),
-                WebConfiguration.appVersion(env));
+                WebConfiguration.appVersion(env),
+                WebConfiguration.commitHash(env)
+                );
     }
     
     @Bean

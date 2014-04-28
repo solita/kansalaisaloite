@@ -28,7 +28,6 @@ import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
 
 import javax.inject.Inject;
-
 import java.util.List;
 import java.util.Locale;
 
@@ -41,7 +40,7 @@ public class WebConfiguration extends WebMvcConfigurationSupport {
 
     @Inject Environment env;
 
-    /**
+        /**
      * DEVELOPMENT AND TEST WEB CONTROLLERS
      */
     @Configuration
@@ -96,6 +95,10 @@ public class WebConfiguration extends WebMvcConfigurationSupport {
 
     public static String appVersion(Environment env) {
         return env.getProperty(PropertyNames.appVersion, "<no version>");
+    }
+
+    public static String commitHash(Environment env) {
+        return env.getProperty(PropertyNames.commitHash);
     }
 
     public static Optional<Integer> omPiwicId(Environment env) {

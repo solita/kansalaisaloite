@@ -16,7 +16,6 @@ import org.joda.time.format.DateTimeFormat;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-
 import java.lang.management.ManagementFactory;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
@@ -46,6 +45,7 @@ public class StatusServiceImpl implements StatusService {
     private final String resourcesVersion;
     private final Optional<Integer> omPiwicId;
     private final String appVersion;
+    private final String commitHash;
 
     public class KeyValueInfo {
         private String key;
@@ -66,7 +66,10 @@ public class StatusServiceImpl implements StatusService {
 
     public StatusServiceImpl(String testEmailSendTo, boolean testEmailConsoleOutput,
                              int messageSourceCacheSeconds, boolean testFreemarkerShowErrorsOnPage,
-                             Boolean optimizeResources, String resourcesVersion, Optional<Integer> omPiwicId, String appVersion) throws KeyManagementException, NoSuchAlgorithmException {
+                             Boolean optimizeResources, String resourcesVersion,
+                             Optional<Integer> omPiwicId,
+                             String appVersion,
+                             String commitHash) throws KeyManagementException, NoSuchAlgorithmException {
         this.testEmailSendTo = testEmailSendTo;
         this.testEmailConsoleOutput = testEmailConsoleOutput; 
         this.messageSourceCacheSeconds = messageSourceCacheSeconds;
@@ -75,6 +78,7 @@ public class StatusServiceImpl implements StatusService {
         this.resourcesVersion = resourcesVersion;
         this.omPiwicId = omPiwicId;
         this.appVersion = appVersion;
+        this.commitHash = commitHash;
     }
 
     @Override
@@ -84,6 +88,7 @@ public class StatusServiceImpl implements StatusService {
 
         list.add(new KeyValueInfo("appStartTime", appStartTime.toString(DATETIME_FORMAT)));
         list.add(new KeyValueInfo("appVersion", appVersion));
+        list.add(new KeyValueInfo("commitHash", commitHash));
         list.add(new KeyValueInfo("appBuildTimeStamp", getFormattedBuildTimeStamp(resourcesVersion)));
         list.add(new KeyValueInfo("initiativeCount", initiativeDao.getInitiativeCount()));
         list.add(new KeyValueInfo("taskQueueLength", taskExecutorAspect.getQueueLength()));
