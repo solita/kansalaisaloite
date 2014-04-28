@@ -21,7 +21,7 @@ git push origin version-${RELEASE_VERSION}
 # Release
 rm -rf target/root.war # ensure that the old war does not exist
 rm -rf ${WAR_FILE} # double check
-${MAVEN_BIN} clean verify -DskipTests
+${MAVEN_BIN} clean verify -DskipTests -Dcommit.hash=${GIT_COMMIT}
 mv target/root.war ${WAR_FILE}
 
 # Next increment
