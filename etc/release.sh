@@ -21,14 +21,14 @@ git push origin version-${RELEASE_VERSION}
 # Release
 rm -rf target/root.war # ensure that the old war does not exist
 rm -rf ${WAR_FILE} # double check
-${MAVEN_BIN} clean verify -DskipTests -Dcommit.hash=${GIT_COMMIT}
+${MAVEN_BIN} clean verify -DskipTests -Dcommit.hash=$(git rev-parse HEAD)
 mv target/root.war ${WAR_FILE}
 
 # Next increment
 ${MAVEN_BIN} versions:set -DgenerateBackupPoms=false -DnewVersion="$NEXT_VERSION-SNAPSHOT"
 
 git add pom.xml
-git commit -m "Prepare ${RELEASE_VERSION}-SNAPSHOT"
+git commit -m "Prepare ${NEXT_VERSION}-SNAPSHOT"
 set +x
 git push origin HEAD:refs/heads/master
 
