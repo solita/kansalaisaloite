@@ -242,6 +242,9 @@ public class SupportVoteServiceImpl implements SupportVoteService {
     @Transactional(readOnly = true)
     // TODO: Cache
     public SortedMap<LocalDate, Integer> getDenormalizedSupportCountData(Long initiativeId) {
+        if (initiativeId == null) {
+            return new TreeMap<>();
+        }
         return new TreeMap<>(supportVoteDao.getDenormalizedSupportCountData(initiativeId));
     }
 
