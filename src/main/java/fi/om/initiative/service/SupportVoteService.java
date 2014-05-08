@@ -5,9 +5,11 @@ import fi.om.initiative.dto.VotingInfo;
 import fi.om.initiative.dto.initiative.InitiativeBase;
 import fi.om.initiative.dto.initiative.InitiativeManagement;
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.SortedMap;
 
 public interface SupportVoteService {
     
@@ -26,5 +28,8 @@ public interface SupportVoteService {
     String getSupportVotesPerDateJson(Long initiativeId);
 
     void removeSupportVotes(Long initiativeId);
+
+    SortedMap<LocalDate, Integer> getDenormalizedSupportCountData(Long initiativeId);
+
 
 }

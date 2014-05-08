@@ -9,6 +9,7 @@ import fi.om.initiative.dto.initiative.InitiativeBase;
 import fi.om.initiative.dto.initiative.InitiativeManagement;
 import fi.om.initiative.dto.initiative.InitiativePublic;
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
@@ -19,6 +20,8 @@ import javax.annotation.Nullable;
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Locale;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 public class SupportVoteServiceImpl implements SupportVoteService {
     
@@ -233,6 +236,13 @@ public class SupportVoteServiceImpl implements SupportVoteService {
         emailService.sendStatusInfoToVEVs(initiative, EmailMessageType.REMOVED_SUPPORT_VOTES);
 
         log(METHOD_NAME, initiativeId, user, true);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    // TODO: Cache
+    public SortedMap<LocalDate, Integer> getDenormalizedSupportCountData(Long initiativeId) {
+        return new TreeMap<>(supportVoteDao.getDenormalizedSupportCountData(initiativeId));
     }
 
     private void log(final String method, final Long id, final User user, final boolean ok) {

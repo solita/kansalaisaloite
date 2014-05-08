@@ -605,6 +605,7 @@ public class InitiativeController extends BaseController {
     
     private void addVotingInfo(InitiativeBase initiative, Model model) {
         model.addAttribute(ATTR_VOTING_INFO, supportVoteService.getVotingInfo(initiative));
+        model.addAttribute("supportCountData", supportVoteService.getDenormalizedSupportCountData(initiative.getId()));
     }
     
     private String acceptInvitationView(Long initiativeId, Invitation invitation, Author author, Model model, String hash) {
