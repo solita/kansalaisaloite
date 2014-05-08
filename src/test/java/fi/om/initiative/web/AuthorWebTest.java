@@ -33,7 +33,6 @@ public class AuthorWebTest extends WebTestBase {
     private static final String MSG_SITE_NAME = "siteName";
     private static final String MSG_DATE_FORMAT = "date.format";
     private static final String MSG_LOGIN = "common.login";
-    private static final String MSG_LOGOUT = "common.logout";
     private static final String MSG_CLOSE = "action.close";
     private static final String MSG_CONTINUE_BROWSING = "modal.continueBrowsing";
     private static final String MSG_PAGE_FRONTPAGE = "page.frontpage";
@@ -255,7 +254,7 @@ public class AuthorWebTest extends WebTestBase {
         
         // Click logout-button in modal
         if (logout){
-            clickLinkContaining(getMessage(MSG_LOGOUT)); // "Kirjaudu ulos"
+        	logoutUser();
         
         // Close modal without an action
         } else {
@@ -279,7 +278,7 @@ public class AuthorWebTest extends WebTestBase {
         
         assertMsgContainedByClass("msg-warning", MSG_WARNING_VOTING_NOT_ALLOWED); // "Kannattaminen epäonnistui. Tämä voi johtua siitä, että et ole äänioikeutettu Suomen kansalainen tai aloitetta ei voi kannattaa."
 
-        clickLinkContaining(getMessage(MSG_LOGOUT)); // "Kirjaudu ulos"
+        logoutUser();
     }
 
     private void startNewInitiative(String userName) {
@@ -391,7 +390,7 @@ public class AuthorWebTest extends WebTestBase {
         // ---
 
         String userName = firstName + " " + lastName;
-        assertTextContainedByClass("logged-in-info", userName);
+        assertTextContainedByClass("user-name", userName);
         return userName;
     }
     
@@ -409,7 +408,7 @@ public class AuthorWebTest extends WebTestBase {
 
     private void logoutUser() {
         System.out.println("--- logoutUser");
-        clickLinkContaining(getMessage(MSG_LOGOUT)); // "Kirjaudu ulos"
+        open(urls.logout());
         wait100(); // mikkole needs this wait
         assertTitle(getMessage(MSG_PAGE_FRONTPAGE)+" - "+getMessage(MSG_SITE_NAME)); // "Etusivu - Kansalaisaloitepalvelu"
     }

@@ -12,8 +12,8 @@ import fi.om.initiative.dto.initiative.InitiativeInfo;
 import fi.om.initiative.dto.initiative.InitiativeState;
 import fi.om.initiative.dto.search.InitiativeSearch;
 import fi.om.initiative.dto.search.Show;
-import org.apache.commons.lang.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
@@ -56,7 +56,6 @@ public class InitiativeServiceFindPageTest {
     private static LocalDate today = testStartTime.toLocalDate();
     private static LocalDate tomorrow = today.plusDays(1);
     private static LocalDate yesterday = today.minusDays(1);
-    private static LocalDate day_before_yesterday = yesterday.minusDays(1);
     private static LocalDate far_in_the_future = yesterday.plusYears(1000);
 
     final InitiativeSettings INITIATIVE_SETTINGS = new InitiativeSettings(0, 50, 0, Days.days(30), null, null, null, Months.months(2), Months.months(1));
@@ -73,7 +72,6 @@ public class InitiativeServiceFindPageTest {
         today = testStartTime.toLocalDate();
         tomorrow = today.plusDays(1);
         yesterday = today.minusDays(1);
-        day_before_yesterday = yesterday.minusDays(1);
     }
 
     // CHECK ALL STATES

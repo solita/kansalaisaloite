@@ -45,8 +45,9 @@
 
 @gradientDark:          #0ece27;
 @borderGray:            #cccccc;
+@borderGrayLight:       #e2e2e2;
 @secondaryTextColor:    #686868;
-@black:                 #000000; 
+@black:                 #000000;
 
 @greenGradient1:        #76b522;
 @greenGradient2:        #387d0e;
@@ -77,7 +78,7 @@
 
 // Mixing
 //
-// Rounded corners 
+// Rounded corners
 //
 // Styleguide 2.1
 
@@ -109,7 +110,7 @@
 
 // Mixing
 //
-// .transition 
+// .transition
 //
 // Styleguide 2.2
 .transition (@property, @delay, @easing) {
@@ -136,7 +137,13 @@
     background: -o-linear-gradient(left,  @start, @stop);
 }
 
-
+.makeEllipsis(){
+    white-space:nowrap;
+    overflow:hidden;
+    -ms-text-overflow:ellipsis;
+    -o-text-overflow:ellipsis;
+    text-overflow:ellipsis;
+}
 
 // Fonts
 // TODO: implement later
@@ -146,7 +153,7 @@
 
 html {
     height:100%;
-    font-size:16px; // Using absolute size as Opera gets default font-adjustment from users Computer 
+    font-size:16px; // Using absolute size as Opera gets default font-adjustment from users Computer
 }
 body {
     height:100%;
@@ -171,7 +178,7 @@ body {
 }
 
 .two-column-content .content-column {
-    width: 640px;   
+    width: 640px;
     float: left;
     margin-right: 20px;
 }
@@ -184,7 +191,7 @@ body {
 // NOTE: This is only for the demo-site
 .debug-ribbon, .info-ribbon {
     position:relative; z-index:9999;
-    left:0; 
+    left:0;
     width:100%;
     padding: 0.7em 0;
     background: #64aad0;
@@ -197,11 +204,11 @@ body {
     font-size:16px;
     text-shadow: 0 1px 0 rgba(0,0,0,0.1);
     color: #fff;
-    
+
     &.static {
         position:static;
     }
-    
+
     &.ribbon-red {
         background: @redGradient1;
         background: linear-gradient(top,  @redGradient1,  @redGradient2);
@@ -209,12 +216,12 @@ body {
         background: -webkit-gradient(linear, left top, left bottom, from(@redGradient1), to(@redGradient2));
         background: -moz-linear-gradient(top,  @redGradient1, @redGradient2);
         background: -o-linear-gradient(top,  @redGradient1, @redGradient2);
-        
+
         a {
             color: #eee;
         }
     }
-    
+
     &.ribbon-turquoise {
         background: @mainColor;
         background: linear-gradient(top,  #018999,  @mainColor);
@@ -223,25 +230,25 @@ body {
         background: -moz-linear-gradient(top,  #018999, @mainColor);
         background: -o-linear-gradient(top, #018999, @mainColor);
     }
-    
+
     &.top {
         top:0;
         box-shadow:0px 2px 3px rgba(0,0,0,0.2)
     }
-    
+
     &.bottom {
         position:absolute;
         bottom:0;
     }
-    
+
     a {
         color: #cde6f3;
         text-decoration:underline;
         font-style:italic;
-        
+
         .transition(color, 0.3s, ease-in);
     }
-    
+
     a:hover {
         color:#fff;
     }
@@ -254,7 +261,7 @@ body {
     width:180px;
     height:97px;
     background:url("../img/test-padge.png?version=${timestamp}") repeat-x bottom left;
-    
+
     &.has-info-ribbon {
         top:90px;
     }
@@ -266,7 +273,7 @@ body {
     background: #f1f1f1 url("../img/other-services-bg.png?version=${timestamp}") repeat-x bottom left;
     position: relative;
     z-index:2;
-    
+
     .logged-in-info {
         font-size: 0.9em;
         border-left: 1px solid black;
@@ -275,35 +282,44 @@ body {
 
         .header-tool-link, .header-tool-text {
             position:relative;
-            color: @lightGray;
-            padding:0 38px 0 15px; 
-            line-height:40px;
             float: left;
-            display: block;
+            max-width: 300px;
+            margin: 0px;
+            padding:0 38px 0 15px;
+            line-height:40px;
+
             border-left: 1px solid #5a5a5a;
             border-right: 1px solid black;
-            margin: 0px;
+
+            color: @lightGray;
 
             &.login {
                 padding:0 15px 0 15px;
+            }
+
+            .makeEllipsis();
+
+            .ie8 & {
+                white-space: normal;
+                height: 40px;
             }
         }
 
         .header-tool-link:hover {
             color: white;
         }
-        
+
         .header-tool-text {
-            padding:0 15px; 
+            padding:0 15px;
         }
     }
 
     #header-tools-content {
-        text-align: right;
+        // text-align: right;
         width: 960px;
         margin: 0 auto;
         position: relative;
-        
+
         #aloite-links {
             float: left;
             overflow: hidden;
@@ -311,14 +327,22 @@ body {
 
             a {
                 display: inline-block;
-                padding: 7px 20px 30px 20px;
-                background: @lightGray; 
-                margin: 8px 10px 0px 0px;
+                // padding: 7px 20px 30px 20px;
+                padding: 8px 10px 30px 10px;
+                background: @lightGray;
+                // margin: 8px 10px 0px 0px;
+                margin: 8px 0 0 0;
                 color: #393939;
-                z-index: 999;       
-                font-size: 0.9em;
+                z-index: 999;
+                font-size: 14px;
 
-                .rounded-corners;
+                .transition(background, 0.2s, linear);
+
+                .rounded-corners();
+
+                &:hover {
+                    background: @borderGrayLight;
+                }
             }
 
             a.active {
@@ -356,11 +380,11 @@ body {
             margin: 9px 0px 0px 6px;
             padding: 5px 3px 10px 10px;
             z-index: 998;
-            
+
             &:hover {
                 color:#fff;
             }
-            
+
             .icon-small {
                 margin:0 0 -2px 3px;
             }
@@ -372,11 +396,11 @@ body {
             z-index: 999;
             color: #444;
             background: #fff;
-            
-            
-            
+
+
+
             .icon-small.dropdown-icon { background-position:-96px -13px; }
-        }        
+        }
     }
 }
 
@@ -400,7 +424,7 @@ body {
     font-size: 80%;
     width: 13em;
     box-shadow: 2px 2px 2px rgba(0,0,0,0.1);
-    
+
     &.user-menu {
         left:auto;
         right:0;
@@ -449,7 +473,7 @@ body {
     padding-top:18px;
     margin-bottom:2.3em;
     background:#fff;
-    
+
     border-bottom: 1px solid @borderGray;
 
     #header-content {
@@ -491,7 +515,7 @@ body {
             font-size: 1.1em;
             padding:0.2em 0.9em 0.5em 0.9em;
             border-right:1px solid @borderGray;
-            
+
             .transition(color, 0.2s, ease-in);
         }
 
@@ -507,12 +531,12 @@ body {
     }
 }
 
-// Exceptions for swedish page 
+// Exceptions for swedish page
 .sv {
     &.font-size-large #header #main-navigation a {
         padding:0.2em 0.5em 0.5em 0.5em;
     }
-    
+
     #header #logo {
         width: 406px;
         background:url("../img/logo-sv.png?version=${timestamp}") 0 0 no-repeat;
@@ -525,14 +549,14 @@ body {
     padding:0;
 
     &.block-style {
-    
+
         li {
             display:block;
-            
+
             &.separator {
-                
+
             }
-            
+
             a {
                 display:block;
                 margin-bottom:1em;
@@ -554,9 +578,9 @@ body {
     ul {
 
         li {
-    
+
             margin: 0px;
-        } 
+        }
     }
 
     a, span {
@@ -647,7 +671,7 @@ html.no-js {
     opacity:0;
 }
 
-.loader { 
+.loader {
     position:absolute;
     left:50%; top:50%;
     display:inline-block;
@@ -655,16 +679,16 @@ html.no-js {
     height:16px;
     margin:-8px;
     background:url("../img/ajax-loader.gif?version=${timestamp}") center center no-repeat;
-    
+
     &.gray-loader {
         background:url("../img/ajax-loader-f7f7f7.gif?version=${timestamp}") center center no-repeat;
     }
-    
+
     &.inline {
         position:static;
         margin:0;
     }
-    
+
 }
 
 .expose-mask {
@@ -735,7 +759,7 @@ a:active {
 
 a.external {
     padding-right:15px;
-    background:url("../img/icon-external-link.png?version=${timestamp}") right center no-repeat;   
+    background:url("../img/icon-external-link.png?version=${timestamp}") right center no-repeat;
 }
 .ellipsis {
     display:inline-block;
@@ -753,13 +777,13 @@ a.block-link {
     background:@mainColor url("../img/icons-sprite.png?version=${timestamp}") right -149px no-repeat;
     color:#fff;
     font-weight:bold;
-    
+
     .transition(background-color, 0.2s, ease-in);
-    
+
     &:hover {
         background-color:#015c66;
     }
-    
+
 }
 .sv.font-size-large a.block-link { font-size:16px; } // Quick fix for SV large-text-size
 
@@ -768,7 +792,7 @@ a.block-link {
     display:block;
     margin-bottom:1em;
     font-weight:bold;
-    border-bottom:1px solid @borderGray; 
+    border-bottom:1px solid @borderGray;
 }
 
 // Frontpage
@@ -777,12 +801,12 @@ a.block-link {
     margin:-10px -60px 0px -66px;
     padding:325px 0 0 66px;
     background:url("../img/bg-front.jpg?version=${timestamp}") -2px 0 no-repeat;
-    
+
     .faux-columns {
         width:960px;
         margin-bottom:50px;
         background:url("../img/faux-columns.png?version=${timestamp}") 0 0 repeat-y;
-        
+
         .col-1 {
             width:470px;
             float:left;
@@ -790,14 +814,14 @@ a.block-link {
         .col-2 {
             width:470px;
             float:right;
-        }    
+        }
     }
-    
+
     .front-block {
         padding:0 50px 20px 100px;
-        
+
         background:url("../img/block-icons.png?version=${timestamp}") 30px 0 no-repeat;
-        
+
         &.block-2 {
             background-position:-970px 0;
             border-bottom:20px solid @bodyBackground;
@@ -806,7 +830,7 @@ a.block-link {
             padding-top:30px;
             background-position:-1970px 30px;
         }
-        
+
         h1 {
             margin-right:-1.5em;
         }
@@ -822,13 +846,13 @@ a.block-link {
         float:left;
         width:320px;
         padding:20px 40px 0 40px;
-        
+
         &.right { float:right; }
         &.last { padding:0 40px 20px 40px; }
-        
+
         li { margin-bottom:1em; }
     }
-    
+
     // Faux columns bg without bg-image
     .bg {
         position:absolute;
@@ -836,9 +860,9 @@ a.block-link {
         bottom:0;
         z-index:-1;
         width:400px;
-        
+
         background:#fff;
-        
+
         &.left { left:0; }
         &.right { right:0; }
     }
@@ -854,19 +878,19 @@ a.block-link {
     //z-index: 3;
     background: #fff url("../img/input-block-extra-bg.png?version=${timestamp}") repeat-y top right;
     border-left: 4px solid @mainColor;
-    
+
     padding:0 35px 30px 55px;
-    
+
     &.vote {
         padding-top:20px;
         background:#fff;
     }
-    
+
     &.faq-item {
         margin-bottom:0;
         padding-top:0;
     }
-    
+
     .system-msg {
         margin:5px 0;
         border:0;
@@ -878,7 +902,7 @@ a.block-link {
 .view-block {
     padding-top:35px;
     background:#fff;
-    
+
     &.last { margin-bottom:2em; }
 }
 .input-block {
@@ -891,17 +915,17 @@ a.block-link {
     padding:10px 20px;
     background:#f1f1f1;
     border-radius:3px;
-    
+
     &.margin { margin:0.5em 0 1em 0; }
-    
+
     .table { margin:0; }
 }
 
 .expose {
-    position:relative; 
+    position:relative;
     z-index:1000;
-    
-    .msg-summary, .content-block-header{    
+
+    .msg-summary, .content-block-header{
         box-shadow:0px 0px 5px rgba(0,0,0,0.2);
     }
     .input-block {
@@ -941,7 +965,7 @@ a.block-link {
         padding: 1.9em 7em 1.9em 2em;
         strong {
             text-transform: uppercase;
-            display: block; 
+            display: block;
             margin-bottom: 0.3em;
         }
     }
@@ -1016,33 +1040,33 @@ a.block-link {
     }
     &.disabled {
        opacity:@dimmed;
-       cursor:default;     
+       cursor:default;
     }
-    
+
     &.icon-button {
         height:28px;
         line-height:30px;
         width:28px;
         min-width:0;
         padding:0;
-        
+
         .gradient(#4f9ca5, @mainColor);
         border:0;
     }
-    
+
     .transition(opacity, 0.1s, ease-in);
-    
+
     &.js-disabled {
         cursor:default;
         opacity:0.3;
     }
-    
+
     &.rounded { border-radius:1em; }
-    
+
     strong {
         display: block;
     }
-    
+
 }
 
 .small-button {
@@ -1053,7 +1077,7 @@ a.block-link {
     text-align:center;
     //line-height: 1em;
     //padding: 10px 12px;
-    
+
 }
 
 
@@ -1120,7 +1144,7 @@ a.block-link {
 // Styleguide 4.2.1
 .large-icon {
     padding-left: 40px;
-    
+
     background: transparent url("../img/button-large-sprite.png?version=${timestamp}") no-repeat 0 2px;
 
     &.save-and-send {       background-position: 0 2px;      }
@@ -1159,7 +1183,7 @@ a.block-link {
 // Styleguide 4.2.2
 .small-icon {
     padding-left: 30px;
-    
+
     background: transparent url("../img/button-small-sprite.png?version=${timestamp}") no-repeat 0 12px;
 
     &.save-and-send {       background-position: 0 12px;     }
@@ -1183,16 +1207,16 @@ a.block-link {
     width:32px;
     height:32px;
     margin:0 0.5em -0.5em 0;
-    
+
     &.pdf {
-        background:url("../img/pdficon_large.png?version=${timestamp}") no-repeat 0 0; 
+        background:url("../img/pdficon_large.png?version=${timestamp}") no-repeat 0 0;
     }
 }
 
 // Known positioning issue in IE7.
 .more {
     float:right;
-    padding-bottom:1px;    
+    padding-bottom:1px;
     color:#444;
 
     &:hover {
@@ -1209,8 +1233,8 @@ a.block-link {
 // Exception for link-area. Use more generic solution if needed elsewhere also.
 .initiative-links-area .instruction-text {
     margin-bottom:1em;
-    
-   
+
+
 }
 
 .initiative-links-area {
@@ -1219,7 +1243,7 @@ a.block-link {
         line-height:30px;
         margin-bottom:0;
         padding:0 0.3em;
-    } 
+    }
 }
 
 // Input fields
@@ -1231,15 +1255,15 @@ a.block-link {
 //
 // Styleguide 3.2
 input[type="text"] {
-    
+
     border: 1px solid @borderGray;
     background: #fefefe;
     font-size: 1em;
     padding: 0.3em;
     margin: 0.2em 0em 1em 0em;
-    
+
     .transition(box-shadow, 0.2s, ease-in);
-    
+
     &.large {
         //width:581px;
         width:98%;
@@ -1270,11 +1294,11 @@ textarea {
     height: 6em;
     border: 1px solid @borderGray;
     resize:vertical;
-    
+
     .transition(box-shadow, 0.2s, ease-in);
-    
+
     &.noresize { resize:none; }
-    
+
     &.textarea-tall {
         min-height: 17em;
     }
@@ -1287,7 +1311,7 @@ textarea:focus, input[type="text"]:focus, .email-input.focus {
 
 input:-moz-placeholder, textarea:-moz-placeholder { color:#999; }
 ::-webkit-input-placeholder, ::-webkit-textarea-placeholder { color:#999; }
-input:-ms-input-placeholder, input:-ms-textarea-placeholder { color:#999;  }// for IE10 
+input:-ms-input-placeholder, input:-ms-textarea-placeholder { color:#999;  }// for IE10
 
 
 textarea, input[type="text"] {
@@ -1314,9 +1338,9 @@ label  {
         margin: 2px 8px 0 0;
         float: left;
     }
-    
+
     &.inline { display:inline; }
-    
+
     input[type="text"]{
         display:block;
     }
@@ -1357,7 +1381,7 @@ label  {
 // .logout          - Logout
 // .dropdown-icon   - Dropdown
 // .external        - External link
-// .more            - Show more 
+// .more            - Show more
 // .less            - Hide more
 // .arrow-right-1   - Arrow right 1
 // .arrow-right-2   - Arrow right 2
@@ -1375,31 +1399,31 @@ label  {
     width:12px;
     height:12px;
     background: transparent url("../img/icons-sprite.png?version=${timestamp}") 0 0 no-repeat;
-    
+
     &.pull-down {
         position:relative;
         bottom:-0.15em;
     }
-    
+
     &.settings, &.logout {
         position:absolute;
         right:15px;
         top:50%;
         margin-top:-6px;
     }
-    
+
     &.settings {
         background-position:-48px 0;
     }
     &.logout {
         background-position:-80px 0;
     }
-    
+
     &.dropdown-icon {
         margin-left:3px;
         background-position:-96px 3px;
     }
-    
+
     &.required { background-position:0 0; }         // Required field
     &.unconfirmed { background-position:-16px 0; }  // Unconfirmed author
     &.confirmed { background-position:-32px 0; }    // Confirmed author
@@ -1412,7 +1436,7 @@ label  {
         height:16px;
         margin:1px 0 0 4px;
         background-position:-112px 0;
-    
+
         &.less { background-position:-128px 0; }
     }
     &.arrow-right {
@@ -1423,7 +1447,7 @@ label  {
     }
     &.arrow-right-3 {
         background-position:-179px -15px;
-        
+
         &.floated {                                 // For info system-messages
             float:left;
             margin:0.2em 0 0 -16px;
@@ -1454,19 +1478,19 @@ label  {
         height:26px;
         background-position:-64px -96px;
     }
-    
+
     .transition(opacity, 0.1s, ease-in);
-    
+
     &.js-disabled {
         cursor:default;
         opacity:0.3;
     }
-    
+
 }
 
 
 .front-page-intro {
-    
+
     font-size: 0.9em;
     position: relative;
 
@@ -1489,15 +1513,15 @@ label  {
         float: left;
         width:50%;
         padding-bottom:1em;
-        
+
         label {
             position:relative;
         }
     }
-    
+
     label span {
         font-size:0.9em;
-        
+
     }
     .input-header {
         margin-bottom:0;
@@ -1515,15 +1539,15 @@ label  {
     width:16px;
     height:30px;
     line-height:30px;
-    
+
     font-size:11px;
     text-align:center;
     color:#333;
-    
+
     border:1px solid @borderGray;
     border-top-right-radius:0.4em;
     border-bottom-right-radius:0.4em;
-    
+
     background: @grayGradient2;
     background: linear-gradient(top,  @grayGradient1,  @grayGradient2);
     background: -ms-linear-gradient(top,  @grayGradient1,  @grayGradient2);
@@ -1540,7 +1564,7 @@ label  {
         background: -webkit-gradient(linear, left top, left bottom, from(@redGradientHover1), to(@redGradientHover2));
         background: -moz-linear-gradient(top,  @redGradientHover1,  @redGradientHover2);
         background: -o-linear-gradient(top,  @redGradientHover1,  @redGradientHover2);
-    
+
     }
 }
 
@@ -1557,7 +1581,7 @@ label  {
         height: 10em;
         font-size: 0.8em;
     }
-    
+
     &.wide { width:66%; }
     &.col-1of2 {
         width:48%;
@@ -1581,7 +1605,7 @@ label  {
 
 
 // Help and required
-// 
+//
 // .help        - For help button
 
 .help {
@@ -1629,7 +1653,7 @@ label  {
 
 #footer {
     position:absolute;
-    left:0; bottom:0; 
+    left:0; bottom:0;
     width:100%;
     background:#fff;
     border-top:1px solid #ccc;
@@ -1650,11 +1674,11 @@ label  {
     }
 
     .oikeusministerio {
-        
+
     }
 
     .viestintavirasto {
-        background-position:0 -400px;   
+        background-position:0 -400px;
     }
 
     ul {
@@ -1705,15 +1729,15 @@ label  {
     background: #fff url("../img/input-block-extra-bg.png?version=${timestamp}") repeat-y top right;
     border-left: 4px solid @mainColor;
     padding:20px 25px 0 55px;
-    
+
     &.view {
         z-index:3;
         background:#fff;
     }
-    
+
     &.faq {
         margin-top:3em;
-        
+
         h2 {
             padding-bottom:35px;
         }
@@ -1773,8 +1797,8 @@ label  {
     right:-25px;
     float:right;
     width:235px;
-    
-    // Floating position for NOSCRIPT 
+
+    // Floating position for NOSCRIPT
     .input-block-extra {
         position: static;
         height:auto;
@@ -1788,12 +1812,12 @@ label  {
     border-bottom: 1px solid @borderGray;
     margin-bottom: 0.7em;
     padding-bottom: 0.7em;
-    
+
     .header {
         display: block;
         font-weight: bold;
     }
-    
+
     &.last{
         margin:0;
         padding:0;
@@ -1825,7 +1849,7 @@ label  {
 }
 
 // Modal
-// 
+//
 // Styleguide 5.1
 .initiative-modal {
     display:none;
@@ -1834,35 +1858,35 @@ label  {
     max-width:95%;
     background:#fff;
     .rounded-corners(2px);
-    
+
     box-shadow:3px 3px 3px rgba(0,0,0,0.1);
     -moz-box-shadow:3px 3px 3px rgba(0,0,0,0.1);
     -webkit-box-shadow:3px 3px 3px rgba(0,0,0,0.1);
-    
+
     &.full {
         width:700px;
     }
-    
+
     .modal-head {
         position:relative;
         padding:10px 20px;
-        
+
         border-top-left-radius:@cornerRadiusSmall;
         -moz-border-top-left-radius:@cornerRadiusSmall;
         -webkit-border-top-left-radius:@cornerRadiusSmall;
         border-top-right-radius:@cornerRadiusSmall;
         -moz-border-top-right-radius:@cornerRadiusSmall;
         -webkit-border-top-right-radius:@cornerRadiusSmall;
-        
+
         background: @grayGradient2;
         background: linear-gradient(top,  @grayGradient1,  @grayGradient2);
         background: -ms-linear-gradient(top,  @grayGradient1,  @grayGradient2);
         background: -webkit-gradient(linear, left top, left bottom, from(@grayGradient1), to(@grayGradient2));
         background: -moz-linear-gradient(top,  @grayGradient1,  @grayGradient2);
         background: -o-linear-gradient(top,  @grayGradient1,  @grayGradient2);
-        
+
         text-shadow:1px 1px 0 @grayGradient1;
-        
+
         .close {
             position:absolute;
             right:0;
@@ -1871,13 +1895,13 @@ label  {
             border-left:1px solid #f1f1f1;
             color: @bodyColor;
             font-weight:bold;
-            
+
             &:hover {
                 color:@black;
                 border-top-right-radius:@cornerRadiusSmall;
                 -moz-border-top-right-radius:@cornerRadiusSmall;
                 -webkit-border-top-right-radius:@cornerRadiusSmall;
-            
+
                 background: @grayGradientHover2;
                 background: linear-gradient(top, @grayGradientHover1, @grayGradientHover2);
                 background: -ms-linear-gradient(top, @grayGradientHover1, @grayGradientHover2);
@@ -1887,11 +1911,11 @@ label  {
             }
         }
     }
-    
+
     .modal-title {
         font-weight:bold;
     }
- 
+
     .modal-content {
         overflow:auto;
         padding:20px 30px 30px 30px;
@@ -1903,12 +1927,12 @@ label  {
         -moz-border-bottom-right-radius:@cornerRadiusSmall;
         -webkit-border-bottom-right-radius:@cornerRadiusSmall;
     }
-    
+
     input[type="text"], textarea {
         margin:0.2em 0 0.5em 0;
     }
     .address-field { height:5.3em; }
-    
+
     .system-msg { margin-top:0; }
     form {
         .system-msg {
@@ -1923,7 +1947,7 @@ label  {
 // Tooltip
 //
 // Element class "trigger-tooltip" triggers JS tooltip with the content of the title-attribute.
-// 
+//
 // Styleguide 5.2
 .tooltip {
     max-width:300px;
@@ -1934,7 +1958,7 @@ label  {
     color:#fff;
     //border-radius:@cornerRadiusSmall;
     box-shadow:0px 3px 2px -3px rgba(0,0,0,0.5);
-    
+
     // For modern browsers and IE 8+
     &:before {
         width:0; height:0;
@@ -1949,15 +1973,15 @@ label  {
         bottom:-5px;
         z-index:999;
     }
-    
-    // Dynamic tooltips 
+
+    // Dynamic tooltips
     &.right {
         margin:30px 0 0 10px;
 
         &:before {
             border-top: 6px solid transparent;
-            border-bottom: 6px solid transparent; 
-            border-right: 6px solid @mainColor; 
+            border-bottom: 6px solid transparent;
+            border-right: 6px solid @mainColor;
             left:-5px;
             margin-bottom:-6px;
             bottom:50%;
@@ -1968,8 +1992,8 @@ label  {
 
         &:before {
             border-top: 6px solid transparent;
-            border-right: none; 
-            border-bottom: 6px solid transparent; 
+            border-right: none;
+            border-bottom: 6px solid transparent;
             border-left: 6px solid @mainColor;
             left:auto;
             right:-5px;
@@ -1982,20 +2006,20 @@ label  {
 
         &:before {
             border-top: none;
-            border-right:6px solid transparent; 
-            border-bottom: 6px solid @mainColor; 
+            border-right:6px solid transparent;
+            border-bottom: 6px solid @mainColor;
             border-left: 6px solid transparent;
             left:50%;
             margin-bottom:-6px;
             top:-5px;
         }
     }
-    
+
     strong { display:block; }
 }
 
 // Dateinput
-// 
+//
 //
 #calroot {
     /* place on top of other elements. set a higher value if nessessary */
@@ -2146,7 +2170,7 @@ a.caldisabled {
 // .msg-warning     - Warning, yellow
 // .msg-error       - Error, red
 // .msg-success     - Success, green
-// 
+//
 // Styleguide 6.
 
 .system-msg {
@@ -2159,7 +2183,7 @@ a.caldisabled {
 
     font-size:0.9em;
     text-align:left;
-    
+
     &.msg-summary {
         min-height:67px;
         margin-bottom:2em;
@@ -2167,7 +2191,7 @@ a.caldisabled {
         border-left:4px solid @secondaryColor;
         padding-left:126px;
         background:#fff url("../img/icon-msg-summary.png?version=${timestamp}") no-repeat 32px 27px;
-        
+
         // Using nested messages so that it'd be easier to use wether combined or singular system-messages
         .msg-info {
             background:#fff;
@@ -2181,7 +2205,7 @@ a.caldisabled {
     &.msg-info {
         border-color:@borderGray;
         background: @grayGradient2 url("../img/icon-msg-info.png?version=${timestamp}") no-repeat 20px 15px;
-        
+
         .close-msg {
             background:@borderGray;
         }
@@ -2200,7 +2224,7 @@ a.caldisabled {
         color:#fff;
         border-color:@redGradient2;
         background: #fa353d url("../img/icon-msg-error.png?version=${timestamp}") no-repeat 15px 15px;
-        
+
         a {
             color:#fff;
         }
@@ -2208,7 +2232,7 @@ a.caldisabled {
             color:#fff;
             text-decoration:underline;
         }
-                
+
         .close-msg {
             background:@redGradient2;
         }
@@ -2218,20 +2242,20 @@ a.caldisabled {
         border: 1px solid #7aa63f;
         background: #b6eb7c url("../img/icon-msg-success.png?version=${timestamp}") no-repeat 15px 15px;
         color:#254000;
-        
+
         .close-msg {
             background:#58831d;
             color: #b6eb7c;
         }
     }
-    
+
     // General message style for narrow columns
     &.small {
         background-image:none;
         padding:5px;
         margin:5px 5px 5px 0;
     }
-    
+
     .close-msg {
         position:absolute;
         right:15px;
@@ -2243,18 +2267,18 @@ a.caldisabled {
         //border-radius:0.2em;
         text-align: center;
         font-size:0.85em;
-        
+
         color:#fff;
         opacity:0.5;
         cursor:pointer;
-        
-        
+
+
     }
     &:hover {
         .close-msg {
             opacity:1;
         }
-    }    
+    }
 }
 .front .system-msg { top:-10px; } // Exception for frontpage
 
@@ -2271,7 +2295,7 @@ a.caldisabled {
 // .vote-count  - Vote count
 // .vote-count-small     - Vote count small text
 // .internal-vote-count  - Internal vote count
-// 
+//
 // Styleguide 7.
 
 h1, h2, h3, h4, h5, h6, p {
@@ -2279,25 +2303,25 @@ h1, h2, h3, h4, h5, h6, p {
 }
 
 // H1
-// 
+//
 // Styleguide 7.1
 h1 {
     font-size:1.5em;
-    line-height:1.2em;    
+    line-height:1.2em;
     clear: both;
     color: #111;
     font-weight:normal;
-    
+
     &.inline-header { display:inline-block; }
 }
 .extra-info {
     display:block;
-    margin:-1em 0 1em 0;   
+    margin:-1em 0 1em 0;
 }
 
 
 // H2
-// 
+//
 // Styleguide 7.2
 h2 {
     color: #111;
@@ -2306,13 +2330,13 @@ h2 {
 }
 
 // H3
-// 
+//
 // Styleguide 7.3
 h3 {
     color: #111;
     margin-bottom:0.5em;
     font-weight:normal;
-    
+
     &.navi-title {
         margin-right:1em;
         border-bottom:1px solid @borderGray;
@@ -2320,11 +2344,11 @@ h3 {
 }
 
 // H4
-// 
+//
 // Styleguide 7.4
 h4 {
     margin-bottom:0.5em;
-    
+
     &.header { margin-bottom:0; }
     &.subtle {
         margin:0;
@@ -2333,7 +2357,7 @@ h4 {
 }
 
 // Paragraph
-// 
+//
 // Styleguide 7.5
 p {
     margin:0 0 1em 0;
@@ -2344,7 +2368,7 @@ p {
 // .no-style    - default styles overrided
 // .alpha       - alphabetical
 // .roman       - roman numbers
-// 
+//
 // Styleguide 7.6
 ul, ol {
     margin:0 0 1em 0;
@@ -2353,7 +2377,7 @@ ul, ol {
     &.no-style {
         margin:0; padding:0; list-style:none;
     }
-    
+
     &.alpha {
         list-style-type:lower-alpha;
     }
@@ -2363,7 +2387,7 @@ ul, ol {
 }
 
 // Blockquote
-// 
+//
 // Styleguide 7.7
 blockquote {
     margin-bottom:2em;
@@ -2377,7 +2401,7 @@ blockquote {
 }
 
 // Vote counts
-// 
+//
 // .vote-count          - Summed vote count
 // .vote-count-small     - Vote count small text
 // .internal-vote-count - Internal vote count
@@ -2390,7 +2414,7 @@ blockquote {
 .vote-count {
     font-size:1.7em;
     font-style:italic;
-    
+
     &.internal {
         font-size:1.2em;
     }
@@ -2404,22 +2428,22 @@ blockquote {
 
 // Tables
 // FIXME: Does not work on IE7. Use float for IE7.
-// 
+//
 // Styleguide 8.
 .table {
     display: table;
     margin-bottom:1em;
-    
+
     .row { display: table-row; }
     .cell {
         display: table-cell;
         padding:0.3em 0;
         width:250px;
-        
+
         input[type="text"] {
             margin:0;
         }
-        
+
         &.title {
             font-weight:bold;
         }
@@ -2427,12 +2451,12 @@ blockquote {
     .cell:first-child {
         width:150px;
     }
-    
+
     .cell-1of3 { width:33.3%; }
     .cell-2of3 { width:66.6%; }
     .cell-1of4 { width:25%; }
     .cell-3of4 { width:75%; }
-    
+
     &.full {
         width:100%;
     }
@@ -2440,11 +2464,11 @@ blockquote {
 }
 
 // Search results
-// 
+//
 // Styleguide 9.
 
 .switch-view {
-    border-left: 1px solid @borderGray; 
+    border-left: 1px solid @borderGray;
     margin-left: 0.5em;
     padding-left: 1.3em;
     font-size:0.725em;
@@ -2459,30 +2483,30 @@ blockquote {
         list-style:none;
         border-top:1px solid #ddd;
         border-bottom:1px solid #f3f3f3;
-        
+
         color:@secondaryTextColor;
     }
-    
+
     li {
         overflow:hidden; // clearfix
         position:relative;
         display:block;
         border-bottom:1px solid #ddd;
         border-top:1px solid #f3f3f3;
-        
-        &.first { 
+
+        &.first {
             border-top:1px solid #f3f3f3;
         }
-        
+
         &:hover { background:#eaeaea; }
-        
+
         a {
             overflow:hidden;
             display:block;
             padding:0.7em 0.3em;
         }
     }
-    
+
     .date {
         float:left;
         color:@secondaryTextColor;
@@ -2497,13 +2521,13 @@ blockquote {
         margin-left:100px;
         color:@secondaryTextColor;
     }
-    
+
     .support-votes-details {
         float:right;
         width:13em;
         text-align:right;
         color:@secondaryTextColor;
-        
+
         .support-votes-container {
             position:relative;
             display:block;
@@ -2513,7 +2537,7 @@ blockquote {
             border:1px solid @borderGray;
             border-radius:0.3em;
         }
-        
+
         .support-votes {
             padding-right:0.1em;
             font-size:1.3em;
@@ -2521,9 +2545,9 @@ blockquote {
             line-height:1em;
             color:@bodyColor;
         }
-        
-        
-        
+
+
+
         .internal-support-votes {
             display:block;
             margin-top:-0.2em;
@@ -2535,7 +2559,7 @@ blockquote {
             font-size:1.2em;
             font-weight:bold;
         }
-        
+
     }
 
 }
@@ -2543,7 +2567,7 @@ blockquote {
 // Progress bars for support vote counts and time remaining
 .progress-bars {
     display:block;
-    
+
     &:hover {
         box-shadow:0px 1px 2px -1px rgba(0,0,0,0.2);
     }
@@ -2553,15 +2577,15 @@ blockquote {
     position:relative;
     display:block;
     overflow:hidden;
-    
+
     width:100%;
     min-widht:1px;
     margin-bottom:1px;
-    
+
     &.count {
         height:8px;
         .gradientHorizontal(@mainColorLight, @mainColor);
-        
+
         &.completed {
             background:@mainColor;
         }
@@ -2580,7 +2604,7 @@ blockquote {
     max-width:99.5%;
     height:10px;
     background: #dadada;
-    
+
     .transition(width, 0.5s, cubic-bezier(1.000, 0.000, 0.000, 1.000));
 }
 
@@ -2595,23 +2619,23 @@ blockquote {
 }
 
 // Search filtering
-// 
+//
 // Styleguide 9.1
 .search-parameters-title {
     float:left;
     width:100px;
-    
+
     &.filter {
         line-height:35px;
     }
-    
+
     &.sort {
         padding:0.1em 0;
     }
 }
 
 // Search filtering
-// 
+//
 //  .active     - Active link
 //  :hover      - Hovered link
 //
@@ -2619,14 +2643,14 @@ blockquote {
 .search-parameters-container {
     margin-left:100px;
     margin-bottom:1em;
-    
+
     /*
     .search-parameters {
-        
+
         &:first-child {
             margin-bottom:0.2em;
         }
-    
+
         a {
             padding:0 10px;
         }
@@ -2640,16 +2664,16 @@ blockquote {
     text-align:right;
     border:1px solid @borderGray;
     .rounded-corners(@cornerRadiusXtraSmall);
-    
+
     .gradient (#fff, #f5f5f5);
-    
+
     a {
         display:inline-block;
         padding:5px 20px;
         //line-height:35px;
         color:#444;
         text-align:center;
-        
+
         &:first-child {
             .rounded-corners-top-left (@cornerRadiusXtraSmall);
             .rounded-corners-bottom-left (@cornerRadiusXtraSmall);
@@ -2658,18 +2682,18 @@ blockquote {
             .rounded-corners-top-right (@cornerRadiusXtraSmall);
             .rounded-corners-bottom-right (@cornerRadiusXtraSmall);
         }
-        
+
         &:hover {
             .gradient (#fff, #ddd);
             color:#000;
         }
-        
+
         &.active {
             .gradient (@mainColorLight, @mainColor);
             color:#fff;
             text-shadow:0px 1px 1px rgba(0,0,0,0.3);
         }
-        
+
         .count {
             display:block; margin:0 auto;
             font-weight:bold;
@@ -2693,7 +2717,7 @@ blockquote {
     a {
         display:inline-block;
         padding:0.1em 0.5em;
-        
+
         &.active {
             .gradient (#09a3b4, #067582);
             .rounded-corners(@cornerRadiusXtraSmall);
@@ -2704,7 +2728,7 @@ blockquote {
 }
 
 // Search filtering
-// 
+//
 //  .by-support-statements      - Sort by support statements
 //
 // Styleguide 9.2
@@ -2712,16 +2736,16 @@ blockquote {
     width:370px;
 }
 .icon-search-sort {
-    background:url("../img/icons-search-sort.png?version=${timestamp}") no-repeat 0 0; 
-    
+    background:url("../img/icons-search-sort.png?version=${timestamp}") no-repeat 0 0;
+
     &.by-support-statements {
         background-position:0 -31px;
     }
 }
 
 // Toggle initiatives that have under 50 support votes
-// 
-// 
+//
+//
 .toggle-under-50 {
     margin: 2em 0 -1em 0;
     text-align: right;
@@ -2730,11 +2754,11 @@ blockquote {
 }
 
 // Pagination
-// 
+//
 // Styleguide 9.3
 .pagination {
     margin:2em 0 1em;
-    
+
     &.top {
         margin-bottom:-1em;
         padding-bottom:0.5em;
@@ -2745,21 +2769,21 @@ blockquote {
         //padding-top:0.5em;
         //border-top: 1px solid @borderGray;
     }
-    
+
     .pagination-limiter {
         float:right;
-        
+
         * { margin-left:1em; }
-        
+
         .active {
             font-weight:bold;
         }
     }
-    
+
     .pagination-links {
         float:left;
     }
-    
+
     .separator {
         margin:0 0.5em;
         color:@lightGray;
@@ -2769,7 +2793,7 @@ blockquote {
     text-align:center;
 }
 .pagination-numbers {
-    
+
     a {
         margin:0 0.2em;
         padding:0.2em 0.5em;
@@ -2777,12 +2801,12 @@ blockquote {
         color:#444;
         .gradient (#fff, #f5f5f5);
         border:1px solid @borderGray;
-        
+
         &:hover {
             .gradient (#fff, #ddd);
             color:#000;
         }
-        
+
         &.next, &.prev {
             background:none;
             border:none;
@@ -2796,7 +2820,7 @@ blockquote {
         border:1px solid @borderGray;
         color:#fff;
     }
-    
+
 }
 .page-numbers {
     margin:0 1em;
@@ -2820,7 +2844,7 @@ span.next, span.prev {
     background:#fff;
     min-height:6em;
     font-size:0.9em;
-    
+
     .transition(box-shadow, 0.1s, ease-in);
 
     li {
@@ -2832,17 +2856,17 @@ span.next, span.prev {
         border-radius:2px;
         -moz-border-radius:2px;
         -webkit-border-radius:2px;
-        
+
         &.invalid {
             color:#fff;
             background:@redGradient1;
         }
-        
+
         &.disabled {
             color:#fff;
             background:@grayGradientActive2;
         }
-        
+
         a {
             position:absolute;
             top:0; right:5px;
@@ -2856,12 +2880,12 @@ span.next, span.prev {
         margin:0;
         height:auto;
         resize: none;
-        
+
         &:focus {
             box-shadow:none;
         }
     }
-    
+
     .email-place-holder {
         position:absolute;
         top:3px;
@@ -2875,7 +2899,7 @@ span.next, span.prev {
 
 
 
-// Flow state indicator 
+// Flow state indicator
 //
 // .active - Active step
 // .checked - Checked step
@@ -2895,40 +2919,40 @@ span.next, span.prev {
         vertical-align:middle;
         height:70px;
         padding:0 65px 0 40px;
-    
-        background:url("../img/flow-state-indicator.png?version=${timestamp}") no-repeat right -75px;    
+
+        background:url("../img/flow-state-indicator.png?version=${timestamp}") no-repeat right -75px;
     }
-    
+
 
     .flow-state-step {
         display: table;
         float: left;
         width: 319px;
         position: relative;
-        
+
         background:url("../img/flow-state-indicator.png?version=${timestamp}") no-repeat left 0;
 
         &.active {
             background-position:left -150px;
             color:#fff;
-        
+
             .flow-state-content {
                 background-position:right -225px;
             }
         }
-        
+
         &.checked {
             background-position:left -300px;
-        
+
             .flow-state-content {
                 background-position:right -375px;
             }
         }
-        
+
         &.failed {
             background-position:left -450px;
             color:#000;
-        
+
             .flow-state-content {
                 background-position:right -525px;
             }
@@ -2942,14 +2966,14 @@ span.next, span.prev {
             text-align: center;
             font-size:1.2em;
             background:#fff;
-    
+
             .flow-state-content {
                 display:block;
                 height:auto;
                 padding:1em 0;
                 background:none;
                 line-height:26px;
-                
+
                 .info {
                     display:block;
                     margin-top:0.5em;
@@ -2965,9 +2989,9 @@ span.next, span.prev {
 // .facebook    - Facebook
 // .google      - Google
 // .twitter     - Twitter
-// 
+//
 // Styleguide 11.
-.some-links { 
+.some-links {
     text-align:center;
 
     .some-title {
@@ -2976,7 +3000,7 @@ span.next, span.prev {
         line-height:32px;
         margin-right:1em;
     }
-    
+
     .icon-some {
         display:inline-block;
         height:48px;
@@ -2984,13 +3008,13 @@ span.next, span.prev {
         margin-right:1em;
         opacity:0.9;
         .transition(opacity, 0.1s, ease-in);
-        
+
         background:url("../img/icons-sprite.png?version=${timestamp}") no-repeat 0 -196px;
-        
+
         &.facebook  { background-position:0 -196px; }
         &.google    { background-position:-64px -196px; }
         &.twitter   { background-position:-128px -196px; }
-        
+
         &:hover { opacity:1; }
     }
 }
@@ -3021,7 +3045,7 @@ table.data {
   }
 }
 .status {
-    min-width:600px; 
-    
+    min-width:600px;
+
     td:first-child { width:300px; }
 }

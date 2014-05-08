@@ -14,7 +14,7 @@ import fi.om.initiative.dto.initiative.InitiativeManagement;
 import fi.om.initiative.dto.initiative.InitiativeState;
 import fi.om.initiative.service.EncryptionService;
 import fi.om.initiative.sql.*;
-import org.apache.commons.lang.RandomStringUtils;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
