@@ -1,15 +1,16 @@
 package fi.om.initiative.web;
 
 import com.google.common.base.Optional;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.Locale;
 
 import static fi.om.initiative.web.Urls.*;
 import static fi.om.initiative.web.Views.INDEX_VIEW;
-import static fi.om.initiative.web.Views.contextRelativeRedirect;
 
 @Controller
 public class StaticPageController extends BaseController {
@@ -22,8 +23,10 @@ public class StaticPageController extends BaseController {
      * Front page
      */
     @RequestMapping(FRONT)
-    public String frontpage() {
-        return contextRelativeRedirect(Urls.FRONT_FI);
+    public RedirectView frontpage() {
+        RedirectView redirectView = new RedirectView(Urls.FRONT_FI, true, true, false);
+        redirectView.setStatusCode(HttpStatus.MOVED_PERMANENTLY);
+        return redirectView;
     }
     
     @RequestMapping({ FRONT_FI, FRONT_SV })
