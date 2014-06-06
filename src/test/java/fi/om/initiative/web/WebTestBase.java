@@ -5,6 +5,7 @@ import fi.om.initiative.conf.PropertyNames;
 import fi.om.initiative.conf.WebTestConfiguration;
 import fi.om.initiative.dao.TestHelper;
 import fi.om.initiative.util.Locales;
+
 import org.eclipse.jetty.server.Server;
 import org.joda.time.ReadablePeriod;
 import org.joda.time.format.ISOPeriodFormat;
@@ -26,6 +27,8 @@ import org.springframework.context.MessageSource;
 import org.springframework.core.env.Environment;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import com.gargoylesoftware.htmlunit.BrowserVersion;
 
 import javax.annotation.Resource;
 import javax.inject.Inject;
@@ -96,7 +99,9 @@ public abstract class WebTestBase {
 //            driver = new SafariDriver();
 //        }
         else {
-            driver = new HtmlUnitDriver(true);
+        	HtmlUnitDriver htmlUnitDriver =	new HtmlUnitDriver(BrowserVersion.FIREFOX_3_6);
+            htmlUnitDriver.setJavascriptEnabled(true);
+        	driver = htmlUnitDriver;
         }
 
         driver.manage().timeouts().implicitlyWait(50, TimeUnit.SECONDS); // default is 0!!!

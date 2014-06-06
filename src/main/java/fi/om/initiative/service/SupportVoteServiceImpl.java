@@ -188,6 +188,9 @@ public class SupportVoteServiceImpl implements SupportVoteService {
     @Override
     @Transactional(readOnly = true)
     public String getSupportVotesPerDateJson(Long initiativeId) {
+        if (initiativeId == null) {
+            return "[]";
+        }
         String supportCountDataJson = supportVoteDao.getDenormalizedSupportCountDataJson(initiativeId);
         if (Strings.isNullOrEmpty(supportCountDataJson)) {
             return "[]";

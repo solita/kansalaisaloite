@@ -325,8 +325,17 @@
                     <groupId>commons-logging</groupId>
                     <artifactId>commons-logging</artifactId>
                 </exclusion>
+                <exclusion>
+                	<groupId>org.apache.commons</groupId>
+					<artifactId>commons-lang3</artifactId>
+				</exclusion>
             </exclusions>
         </dependency>
+        <dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.0</version>
+		</dependency>
     </dependencies>
 
     <build>
@@ -399,8 +408,10 @@
                                 <regexp>true</regexp>
                                 <devel>true</devel>
                                 <indent>2</indent>
+                                <plusplus>true</plusplus>
                             </options>
                             <includes>
+                            	<!--<include>**/jquery.supportvotegraph.js</include>-->
                                 <include>**/aloitepalvelu.js</include>
                             </includes>
                         </configuration>
@@ -454,6 +465,9 @@
                                 <jsSourceFile>jquery.cookie.js</jsSourceFile>
                                 <jsSourceFile>jquery.dirtyforms.min.js</jsSourceFile>
                                 <jsSourceFile>jsrender.min.js</jsSourceFile>
+                                <jsSourceFile>moment.min.js</jsSourceFile>
+                                <jsSourceFile>raphael.min.js</jsSourceFile>
+                                <jsSourceFile>jquery.supportvotegraph.js</jsSourceFile>
                                 <jsSourceFile>aloitepalvelu.js</jsSourceFile>
                             </jsSourceFiles>
                             <jsFinalFile>script.js</jsFinalFile>

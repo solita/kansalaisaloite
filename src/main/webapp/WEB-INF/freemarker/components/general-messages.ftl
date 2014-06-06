@@ -3,7 +3,27 @@
 <#import "utils.ftl" as u />
 
 <#escape x as x?html> 
- 
+
+<#-- 
+ * initiativeVoteInfo
+ * 
+ * Displays support vote Raphael.js graph
+ *
+-->
+<#macro supportCountGraph data>
+    <div class="support-vote-graph">
+    	<div id="supportVotesGraph">
+    		<noscript>Kannatusilmoitus graafi vaatii JavaScript-tuen.</noscript>
+    	</div>
+    </div>
+        
+     <script type="text/javascript">
+        (function(window) {
+        	window.graphData = <#noescape>${data}</#noescape>;
+        })(window);
+     </script>
+</#macro>
+
 <#-- 
  * initiativeVoteInfo
  * 
@@ -15,7 +35,6 @@
  * - Must have at least 1 vote all together
 -->
 <#macro initiativeVoteInfo>
-
     <#if votingInfo?? && votingInfo.votingInProggress || initiative.totalSupportCount gt 0>
         <p>
         
@@ -42,8 +61,7 @@
         </#if>
         
         </p>
-    </#if>
-
+	</#if>
 </#macro>
 
 <#-- 

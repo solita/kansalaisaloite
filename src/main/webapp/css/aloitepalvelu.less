@@ -903,6 +903,7 @@ a.block-link {
     padding-top:35px;
     background:#fff;
 
+    &.small-pad { padding-top: 15px; }
     &.last { margin-bottom:2em; }
 }
 .input-block {
@@ -3048,4 +3049,37 @@ table.data {
     min-width:600px;
 
     td:first-child { width:300px; }
+}
+
+// Support vote graph
+.support-vote-graph {
+
+    .graph-actions {
+        text-align: right;
+
+        a.act {
+            display: none;
+        }
+
+        span {
+            margin-right: .5em;
+            padding: .5em 1em;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            font-size: .9em;
+            background: #fff;
+
+            .transition(background, 0.2s, ease-in);
+
+            &:hover {
+                background: #f1f1f1;
+            }
+
+            &.act {
+                display: none;
+                background: #ddd;
+                cursor: default;
+            }
+        }
+    }
 }

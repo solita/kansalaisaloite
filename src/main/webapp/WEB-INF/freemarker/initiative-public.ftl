@@ -60,8 +60,19 @@
         <#assign showInfoMsg = true />
     </#if>
 
+	
+
     <#-- TOP CONTRIBUTION -->
-    <@m.initiativeVoteInfo />
+    <#if votingInfo?? && votingInfo.votingInProggress || initiative.totalSupportCount gt 0>
+	    <div class="content-block-header view">
+	        <h2>Kannatusilmoitukset</h2>
+	    </div>
+	    <div class="view-block small-pad">
+		    <@m.initiativeVoteInfo />
+		    <#if supportCountData??><@m.supportCountGraph supportCountData /></#if>
+		</div>
+	</#if>
+    
     <#if showInfoMsg>
         <div class="system-msg msg-summary">
             <@m.initiativeVote />

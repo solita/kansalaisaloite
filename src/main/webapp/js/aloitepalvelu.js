@@ -118,6 +118,22 @@
       }
     };
 
+    // Fire supportVoteGraph
+    if (window.graphData && window.graphData.length > 0) {
+      $('#supportVotesGraph').supportVoteGraph({
+        data: window.graphData,
+        color: '#087480',
+        width : $('#supportVotesGraph').parent().width() || 960,
+        height : 250,
+        leftgutter : 50,
+        rightgutter : 30,
+        bottomgutter : 20,
+        topgutter : 20,
+        cumulative : true,
+        max : 50000
+      });
+    }
+
     /**
      *  Prevent double clicks
      */
