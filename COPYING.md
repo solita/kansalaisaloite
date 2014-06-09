@@ -38,7 +38,9 @@ terms of the Apache License Version 2.0. See LICENSE. Note that the software dep
     Jsrender                        MIT
     Jquery-cookie                   MIT
     Wysiwyghtml5                    MIT
-    Bootstrap-wysiwyghtml5          MIT   
+    Bootstrap-wysiwyghtml5          MIT
+    Moment.js                       MIT
+    Raphaël                         MIT
     Jquery easing                   BSD
     ------------------------------------------------------------------------------------------------------------------------
 
