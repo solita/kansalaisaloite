@@ -30,7 +30,7 @@ public class JobExecutor {
         LocalDate tomorrow = LocalDate.now().plusDays(1);
         LocalDate yesterday = LocalDate.now().minusDays(1);
 
-        List<Long> initiativeIdsForRunningInitiatives = supportVoteDao.getInitiativeIdsForSupportVoteDenormalization(tomorrow);
+        List<Long> initiativeIdsForRunningInitiatives = supportVoteDao.getInitiativeIdsForSupportVoteDenormalization(yesterday);
 
         log.info("About to denormalize supportcount for " + initiativeIdsForRunningInitiatives.size() + " initiatives.");
         for (Long initiativeForUpdating : initiativeIdsForRunningInitiatives) {

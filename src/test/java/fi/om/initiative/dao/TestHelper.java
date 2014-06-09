@@ -183,9 +183,9 @@ public class TestHelper {
             endDate = startDate.plusDays(2);
         }
 
-        return queryFactory.insert(qInitiative)
+        SQLInsertClause insert = queryFactory.insert(qInitiative)
                 .set(qInitiative.startdate, startDate)
-                .set(qInitiative.acceptanceidentifier,initiativeDraft.acceptedByOm ? "acceptance number" : null)
+                .set(qInitiative.acceptanceidentifier, initiativeDraft.acceptedByOm ? "acceptance number" : null)
                 .set(qInitiative.enddate, endDate)
                 .set(qInitiative.state, initiativeDraft.state)
                 .set(qInitiative.modifierId, initiativeDraft.userId)
@@ -194,8 +194,13 @@ public class TestHelper {
                 .set(qInitiative.nameFi, initiativeDraft.name)
                 .set(qInitiative.rationaleFi, "rationale")
                 .set(qInitiative.proposalFi, "proposal")
-                .set(qInitiative.primarylanguage, LanguageCode.FI)
-                .executeWithKey(qInitiative.id);
+                .set(qInitiative.primarylanguage, LanguageCode.FI);
+
+        if (initiativeDraft.hasDenormalizedSupportCounts) {
+            insert.set(qInitiative.supportCountData, InitiativeDraft.DEFAULT_DENORMALIZED_SUPPORTCOUNT_DATA);
+        }
+
+        return insert.executeWithKey(qInitiative.id);
 
     }
 
@@ -253,14 +258,18 @@ public class TestHelper {
 
     public static class InitiativeDraft {
 
+        public static final String DEFAULT_NAME = "dummy name";
+        public static final String DEFAULT_DENORMALIZED_SUPPORTCOUNT_DATA = "some-uninitialized-data";
+
         private Long userId;
-        private String name = "dummy name";
+        private String name = DEFAULT_NAME;
         private InitiativeState state = InitiativeState.ACCEPTED;
         private Boolean running = true;
         private Integer supportCount = 0;
         private boolean acceptedByOm;
         private LocalDate startTime;
         private LocalDate endTime;
+        private boolean hasDenormalizedSupportCounts = false;
 
         public InitiativeDraft(Long userId) {
             this.userId = userId;
@@ -305,6 +314,11 @@ public class TestHelper {
 
         public InitiativeDraft withSupportCount(int supportCount) {
             this.supportCount = supportCount;
+            return this;
+        }
+
+        public InitiativeDraft withRandomDenormalizedSupportCount() {
+            this.hasDenormalizedSupportCounts = true;
             return this;
         }
     }
