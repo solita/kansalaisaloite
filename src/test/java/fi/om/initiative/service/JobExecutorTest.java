@@ -92,14 +92,14 @@ public class JobExecutorTest {
     @Test
     public void does_not_update_initiatives_ended_before_yesterday() {
 
-        Long endedYesterday = testHelper.create(new TestHelper.InitiativeDraft(testUserId)
+        Long endedTwoDaysAgo = testHelper.create(new TestHelper.InitiativeDraft(testUserId)
                 .isRunning(longTimeAgo, twoDaysAgo)
                 .withState(InitiativeState.ACCEPTED)
-                .withRandomDenormalizedSupportCount());
+                .withRandomDenormalizedSupportCount());            Fiu
 
-        assertThat(supportVoteDao.getDenormalizedSupportCountDataJson(endedYesterday), is(DEFAULT_DENORMALIZED_SUPPORTCOUNT_DATA));
+        assertThat(supportVoteDao.getDenormalizedSupportCountDataJson(endedTwoDaysAgo), is(DEFAULT_DENORMALIZED_SUPPORTCOUNT_DATA));
         jobExecutor.updateDenormalizedSupportCountForInitiatives();
-        assertThat(supportVoteDao.getDenormalizedSupportCountDataJson(endedYesterday), is(DEFAULT_DENORMALIZED_SUPPORTCOUNT_DATA));
+        assertThat(supportVoteDao.getDenormalizedSupportCountDataJson(endedTwoDaysAgo), is(DEFAULT_DENORMALIZED_SUPPORTCOUNT_DATA));
     }
 
 }
