@@ -95,7 +95,7 @@ public class JobExecutorTest {
         Long endedTwoDaysAgo = testHelper.create(new TestHelper.InitiativeDraft(testUserId)
                 .isRunning(longTimeAgo, twoDaysAgo)
                 .withState(InitiativeState.ACCEPTED)
-                .withRandomDenormalizedSupportCount());            Fiu
+                .withRandomDenormalizedSupportCount());
 
         assertThat(supportVoteDao.getDenormalizedSupportCountDataJson(endedTwoDaysAgo), is(DEFAULT_DENORMALIZED_SUPPORTCOUNT_DATA));
         jobExecutor.updateDenormalizedSupportCountForInitiatives();
