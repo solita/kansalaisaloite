@@ -19,6 +19,7 @@
  *  VRK_RESOLUTION
 -->
 
+<#macro endlinesToHtml text>${text?replace('\n','<br/>')}</#macro>
 
 <#if emailMessageType == EmailMessageType.INVITATION_REJECTED>
     <#-- TEXT -->
@@ -194,14 +195,15 @@
     <#-- HTML -->
     <#assign statusTitleHTMLFi>${statusTitleFi}</#assign>
     <#assign statusTitleHTMLSv>${statusTitleSv}</#assign>
+    <#assign stateCommentHtml><@endlinesToHtml stateComment/></#assign>
     <#assign statusInfoHTMLFi>
         <p>Oikeusministeriö on tarkastanut kansalaisaloitteen ja hyväksynyt sen julkaistavaksi kansalaisaloite.fi -palveluun. Aloitteen kannatusilmoitusten kerääminen alkaa yllä mainitusta päivämäärästä alkaen.</p>
-        <p><strong>Oikeusministeriön saate:</strong><br>${stateComment!"Ei saatetta"}</p>
+        <p><strong>Oikeusministeriön saate:</strong><br>${stateCommentHtml!"Ei saatetta"}</p>
         <p><strong>Oikeusministeriön asianumero:</strong><br>${acceptanceIdentifier!"Ei asianumeroa"}</p>
     </#assign>
     <#assign statusInfoHTMLSv>
         <p>Justitieministeriet har granskat medborgarinitiativet och godkänt det för publicering på webbtjänsten medborgarinitiativ.fi. Insamlingen av stödförklaringar för initiativet börjar från och med det datum som nämns ovan.</p>
-        <p><strong>Justitieministeriets följebrev:</strong><br>${stateComment!"Ingen följebrev"}</p>
+        <p><strong>Justitieministeriets följebrev:</strong><br>${stateCommentHtml!"Ingen följebrev"}</p>
         <p><strong>Justitieministeriets ärendenummer:</strong><br>${acceptanceIdentifier!"Ingen ärendenummer"}</p>
     </#assign>
     
@@ -223,15 +225,16 @@
     </#assign>
     
     <#-- HTML -->
+    <#assign stateCommentHtml><@endlinesToHtml stateComment/></#assign>
     <#assign statusTitleHTMLFi>${statusTitleFi}</#assign>
     <#assign statusTitleHTMLSv>${statusTitleSv}</#assign>
     <#assign statusInfoHTMLFi>
         <p>Oikeusministeriö on tarkastanut kansalaisaloitteen ja palauttanut sen täydennettäväksi.</p>
-        <p><strong>Oikeusministeriön saate:</strong><br>${stateComment!"Ei saatetta"}</p>
+        <p><strong>Oikeusministeriön saate:</strong><br>${stateCommentHtml!"Ei saatetta"}</p>
     </#assign>
     <#assign statusInfoHTMLSv>
         <p>Justitieministeriet har granskat medborgarinitiativet  och skickat tillbaka det för komplettering.</p>
-        <p><strong>Justitieministeriets följebrev:</strong><br> ${stateComment!"Ingen följebrev"}</p>
+        <p><strong>Justitieministeriets följebrev:</strong><br> ${stateCommentHtml!"Ingen följebrev"}</p>
     </#assign>
     
 <#elseif emailMessageType == EmailMessageType.SENT_TO_VRK>
