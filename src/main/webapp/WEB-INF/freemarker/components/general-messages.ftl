@@ -13,16 +13,23 @@
 <#macro supportCountGraph data>
     <div class="support-vote-graph">
     	<div id="supportVotesGraph">
-    		<noscript>Kannatusilmoitus graafi vaatii JavaScript-tuen.</noscript>
+    		<noscript><@u.message key="graph.javaScriptSupport" /></noscript>
     	</div>
+        <div class="update-info"><@u.message key="graph.updateInfo" /></div>
     </div>
 
      <script type="text/javascript">
         (function(window) {
             window.supportVoteGraph = {
-                votes: <#noescape>${data}</#noescape>,
-                startDate: <#if initiative.startDate??>'${initiative.startDate}'<#else>null</#if>,
-                endDate: <#if initiative.endDate??>'${initiative.endDate}'<#else>null</#if>
+                votes : <#noescape>${data}</#noescape>,
+                startDate : <#if initiative.startDate??>'${initiative.startDate}'<#else>null</#if>,
+                endDate : <#if initiative.endDate??>'${initiative.endDate}'<#else>null</#if>,
+                lang : {
+                    btnCumul: '<@u.message key="graph.btnCumul" />',
+                    btnDaily : '<@u.message key="graph.btnDaily" />',
+                    btnZoomIn : '<@u.message key="graph.btnZoomIn" />',
+                    btnZoomOut : '<@u.message key="graph.btnZoomOut" />'
+                }
             };
         })(window);
      </script>

@@ -33,12 +33,20 @@
     // settings.data.endDate = '2014-12-04';
 
     return this.each(function (index, element) {
+      // var r,
+      //   btnCumul = $('<a><i class="icon cumulative"></i>' + settings.data.lang.btnCumul + '</a>'),
+      //   btnDaily = $('<a><i class="icon daily"></i>' + settings.data.lang.btnDaily + '</a>'),
+      //   buttons = $('<div class="graph-actions" />'),
+      //   btnZoomIn = $('<a><i class="icon zoom-in"></i>' + settings.data.lang.btnZoomIn + '</a>'),
+      //   btnZoomOut = $('<a><i class="icon zoom-out"></i>' + settings.data.lang.btnZoomOut + '</a>'),
+      //   zoomHolder = $('<div class="graph-zoom" />');
+
       var r,
-        btnCumul = $('<a>Näytä kokonaiskertymä</a>'),
-        btnDaily = $('<a>Näytä päivittäinen kertymä</a>'),
+        btnCumul = $('<a title="' + settings.data.lang.btnCumul + '" class="trigger-tooltip"><i class="icon cumulative"></i></a>'),
+        btnDaily = $('<a title="' + settings.data.lang.btnDaily + '" class="trigger-tooltip"><i class="icon daily"></i></a>'),
         buttons = $('<div class="graph-actions" />'),
-        btnZoomIn = $('<a>Tarkenna kuvaajaa</a>'),
-        btnZoomOut = $('<a>Palaa kokonaiskuvaajaan</a>'),
+        btnZoomIn = $('<a title="' + settings.data.lang.btnZoomIn + '" class="trigger-tooltip"><i class="icon zoom-in"></i></a>'),
+        btnZoomOut = $('<a title="' + settings.data.lang.btnZoomOut + '" class="trigger-tooltip"><i class="icon zoom-out"></i></a>'),
         zoomHolder = $('<div class="graph-zoom" />');
 
       function refreshGraph() {
@@ -47,9 +55,9 @@
 
       function showZoomHolder(show){
         if (show) {
-          zoomHolder.show();
+          zoomHolder.css('display', 'inline-block');
         } else {
-          zoomHolder.hide();
+          zoomHolder.css('display','none');
         }
       }
 
@@ -58,8 +66,6 @@
       buttons.append(btnCumul);
       buttons.append(btnDaily);
       $(element).before(buttons);
-
-      $(element).before(zoomHolder);
 
       if (settings.cumulative) {
         showZoomHolder(true);
@@ -95,7 +101,8 @@
       // Zoom
       zoomHolder.append(btnZoomIn);
       zoomHolder.append(btnZoomOut);
-      $(element).before(zoomHolder);
+      // $(element).before(zoomHolder);
+      buttons.prepend(zoomHolder);
       btnZoomOut.addClass('act');
 
       btnZoomIn.click(function () {
