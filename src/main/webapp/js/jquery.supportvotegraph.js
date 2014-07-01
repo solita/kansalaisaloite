@@ -7,8 +7,9 @@
 
   $.fn.supportVoteGraph = function (options) {
     var settings = $.extend({
-      data : [],
+      data : {},
       color: '#087480',
+      colorHl: '#bc448e',
       width : 960,
       height : 250,
       leftgutter : 50,
@@ -16,27 +17,52 @@
       bottomgutter : 20,
       topgutter : 20,
       cumulative : true,
+      zoomed : false,
       max : 50000
     }, options);
+
+
+
+    // Override data with random data for developing purposes
+    // settings.data.votes = testDataGererator('2014-06-04', '2014-12-04', 25, 50);
+    // settings.data.votes = testDataGererator('2014-06-04', '2014-12-04', 300, 0);
+    // settings.data.votes = testDataGererator('2014-06-04', '2014-10-04', 25, 50);
+    // settings.data.votes = testDataGererator('2014-06-04', '2014-10-04', 1, 10);
+    // settings.data.votes = testDataGererator('2014-08-04', '2014-10-05', 1, 10);
+    // settings.data.startDate = '2014-06-04';
+    // settings.data.endDate = '2014-12-04';
 
     return this.each(function (index, element) {
       var r,
         btnCumul = $('<a>Näytä kokonaiskertymä</a>'),
         btnDaily = $('<a>Näytä päivittäinen kertymä</a>'),
-        buttons = $('<div class="graph-actions" />');
+        buttons = $('<div class="graph-actions" />'),
+        btnZoomIn = $('<a>Tarkenna kuvaajaa</a>'),
+        btnZoomOut = $('<a>Palaa kokonaiskuvaajaan</a>'),
+        zoomHolder = $('<div class="graph-zoom" />');
 
       function refreshGraph() {
         r = initGraph(element, settings);
+      }
+
+      function showZoomHolder(show){
+        if (show) {
+          zoomHolder.show();
+        } else {
+          zoomHolder.hide();
+        }
       }
 
       refreshGraph();
 
       buttons.append(btnCumul);
       buttons.append(btnDaily);
-
       $(element).before(buttons);
 
+      $(element).before(zoomHolder);
+
       if (settings.cumulative) {
+        showZoomHolder(true);
         btnCumul.addClass('act');
       } else {
         btnDaily.addClass('act');
@@ -47,6 +73,7 @@
           $(this).addClass('act');
           btnDaily.removeClass('act');
           settings.cumulative = true;
+          showZoomHolder(true);
 
           clearChart(r, element);
           refreshGraph();
@@ -58,11 +85,41 @@
           $(this).addClass('act');
           btnCumul.removeClass('act');
           settings.cumulative = false;
+          showZoomHolder(false);
 
           clearChart(r, element);
           refreshGraph();
         }
       });
+
+      // Zoom
+      zoomHolder.append(btnZoomIn);
+      zoomHolder.append(btnZoomOut);
+      $(element).before(zoomHolder);
+      btnZoomOut.addClass('act');
+
+      btnZoomIn.click(function () {
+        if (!$(this).hasClass('act')) {
+          $(this).addClass('act');
+          btnZoomOut.removeClass('act');
+          settings.zoomed = true;
+
+          clearChart(r, element);
+          refreshGraph();
+        }
+      });
+
+      btnZoomOut.click(function () {
+        if (!$(this).hasClass('act')) {
+          $(this).addClass('act');
+          btnZoomIn.removeClass('act');
+          settings.zoomed = false;
+
+          clearChart(r, element);
+          refreshGraph();
+        }
+      });
+
     });
   };
 
@@ -90,18 +147,19 @@
     var labels = [],
       rawData = [],
       value,
-      firstDate = data[0].d,
-      lastDate = data[data.length - 1].d,
+      firstDate = data.votes[0].d,
+      lastDate = data.votes[data.votes.length - 1].d,
       curDate = moment(firstDate),
       days = moment(lastDate).diff(firstDate, 'days'),
+      votingDays = moment(data.endDate).diff(moment(data.startDate), 'days'),
       i = 0,
       n = 0;
 
     for (i = 0; i <= days; i++) {
       value = 0;
 
-      if (curDate.diff(data[n].d, 'days') === 0) {
-        value = data[n].n;
+      if (curDate.diff(data.votes[n].d, 'days') === 0) {
+        value = data.votes[n].n;
         n++;
       }
 
@@ -112,7 +170,8 @@
 
     return {
       labels : labels,
-      data : rawData
+      data : rawData,
+      votingDays : votingDays
     };
   }
 
@@ -142,29 +201,44 @@
 
   function getCumulativeData(data) {
     var i,
-      result = [],
+      res = [],
       c = 0;
 
     for (i = 0; i < data.length; i++) {
       c += data[i];
-      result.push(c);
+      res.push(c);
     }
-    return result;
+    return res;
   }
 
-  function getMax(data, cumulative, maxSupportCount) {
+  function getMax(data, settings) {
     var max = Math.max.apply(Math, data);
-    if (cumulative) {
-      return max < maxSupportCount ? maxSupportCount : max;
+    if (settings.cumulative && !settings.zoomed) {
+      return max < settings.max ? settings.max : max;
     } else {
       return max;
     }
   }
 
+  function getBreakpoints(factors){
+    var i, j,
+      res = [],
+      // base = [1, 2.5, 5, 7.5];
+      base = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+    for (i = 0; i < factors.length; i++) {
+      for (j = 0; j < base.length; j++) {
+        res.push(base[j] * factors[i]);
+      }
+    }
+
+    return res;
+  }
+
   function getScale(max, size) {
     var i,
-      array = [],
-      breakpoints = [10, 100, 500, 1000, 5000, 10000, 50000, 100000, 150000, 200000, 300000, 500000],
+      res = [],
+      breakpoints = getBreakpoints([10, 100, 1000, 10000, 100000]),
       scaleMax = function (max) {
         var j;
         for (j = 0; j < breakpoints.length; j++) {
@@ -175,41 +249,71 @@
       };
 
     for (i = 0; i <= size; i++) {
-      array.push(scaleMax(max) * (i / size));
+      res.push(scaleMax(max) * (i / size));
     }
 
-    return array;
+    return res;
+  }
+
+  function fitToSelectedView(settings, rawData, labels, votingDays){
+    var data, dX, Y, max, scale;
+
+    if (settings.cumulative) {
+      data = getCumulativeData(rawData);
+      dX = (settings.width - settings.leftgutter) / votingDays;
+    } else {
+      data = rawData;
+      dX = (settings.width - settings.leftgutter) / labels.length;
+    }
+
+    if (settings.cumulative && settings.zoomed) {
+      data = getCumulativeData(rawData);
+      dX = (settings.width - settings.leftgutter) / labels.length;
+    }
+
+    max = getMax(data, settings);
+    scale = getScale(max, 10);
+    Y = (settings.height - settings.bottomgutter - settings.topgutter) / scale[scale.length - 1];
+
+    return {
+      data: data,
+      max : max,
+      scale : scale,
+      dX: dX,
+      Y: Y
+    };
+  }
+
+  function testDataGererator(firstDate, lastDate, daily, tolerance){
+    var data = [],
+      days = moment(lastDate).diff(firstDate, 'days'),
+      curDate = firstDate,
+      rnd;
+
+    for (var i = 0; i <= days; i++) {
+      rnd = Math.floor((Math.random() - 0.5) * 2 * tolerance + daily);
+
+      data.push({
+        d: moment(curDate).format('YYYY-MM-DD'),
+        n: rnd > 0 ? rnd : 0
+      });
+      curDate = moment(curDate).add('days', 1);
+    }
+
+    return data;
   }
 
   initGraph = function (element, settings) {
     var labels = [],
       rawData = [],
       data = [],
+      votingDays = 0,
+      dX,
       iteratedData = iterateData(settings.data);
 
     labels = iteratedData.labels;
     rawData = iteratedData.data;
-
-    // var randomData = function () {
-    //   var d = new Date();
-    //   var curr_date = d.getDate();
-    //   var curr_month = d.getMonth() + 1; //Months are zero based
-    //   var curr_year = d.getFullYear();
-    //   var date = curr_date + "." + curr_month + "." + curr_year;
-
-    //   for (var i = 0; i < 180; i++) {
-    //     var n = Math.floor(Math.random() * 1000);
-    //     labels.push(date);
-    //     rawData.push(n);
-    //   }
-    // };
-    // randomData();
-
-    if (settings.cumulative) {
-      data = getCumulativeData(rawData);
-    } else {
-      data = rawData;
-    }
+    votingDays = iteratedData.votingDays;
 
     // Draw
     var width = settings.width,
@@ -219,22 +323,41 @@
       bottomgutter = settings.bottomgutter,
       topgutter = settings.topgutter,
       colorhue = 0.6,
-      // color = 'hsl(' + [colorhue, 0.5, 0.5] + ')',
       color = settings.color,
+      colorHl = settings.colorHl,
       r = new Raphael(element, width, height),
       fontFamily = '"PT Sans", "Trebuchet MS", Helvetica, sans-serif',
       txt = {font: '12px ' + fontFamily, fill: '#fff'},
       txt1 = {font: '10px ' + fontFamily, fill: '#fff'},
       txtLabel = {font: '12px ' + fontFamily, fill: '#000'},
       txtLabelY = {font: '12px ' + fontFamily, fill: '#000', 'text-anchor': 'end'},
-      X = (width - leftgutter) / labels.length,
-      max = getMax(data, settings.cumulative, settings.max),
-      Y = (height - bottomgutter - topgutter) / max,
-      scale = getScale(max, 10);
+      fitted = fitToSelectedView(settings, rawData, labels, votingDays),
+      data = fitted.data,
+      X = fitted.dX,
+      max = fitted.max,
+      scale = fitted.scale,
+      Y = fitted.Y,
+      y50 = height - bottomgutter + 0.5 - Y * 50,
+      y50000 = height - bottomgutter + 0.5 - Y * settings.max;
 
-    Y = (height - bottomgutter - topgutter) / scale[scale.length - 1];
 
+    // Background grid
     r.drawGrid(leftgutter + X * 0.5 + 0.5, topgutter + 0.5, width - leftgutter - X, height - topgutter - bottomgutter, 6, 10, '#000', 0.05);
+
+    if (settings.cumulative) {
+      // Diagonal line from 0 to 50 000
+      if (scale[scale.length-1] >= 50000 ){
+        r.path( ["M", leftgutter + X - 0.5, height - bottomgutter + 0.5, "L", width - 0.5, y50000 ] ).attr({fill: '#333', opacity: 0.1});
+      }
+
+      // Horizontal line in 50 000
+      r.path( ["M", leftgutter + X - 0.5, y50000, "L", width - 0.5, y50000 ] ).attr({stroke: colorHl, 'stroke-width': 1});
+    }
+
+    // Horizontal line in 50
+    if (settings.cumulative && scale[scale.length-1] <= 1000){
+      r.path( ["M", leftgutter + X/2 - 0.5, y50, "L", width - X/2 + 0.5, y50 ] ).attr({stroke: colorHl, 'stroke-width': 1, opacity: 0.5});
+    }
 
     var path = r.path().attr({stroke: color, 'stroke-width': 1, 'stroke-linejoin': 'round'}),
       bgp = r.path().attr({stroke: 'none', opacity: 0.3, fill: color}),
@@ -286,11 +409,13 @@
         bgpp0 = bgpp0.concat([a.x1, height - bottomgutter, x, height - bottomgutter, a.x2, height - bottomgutter]);
       }
 
-      var dot = r.circle(x, y, 2).attr({fill: '#333', stroke: color, 'stroke-width': 0, opacity: 0});
+      var dot = r.circle(x, y, 2).attr({fill: colorHl, stroke: color, 'stroke-width': 0, opacity: 0});
+      var hoverLine = r.path( ["M", x, topgutter + 0.5, "L", x, height - bottomgutter + 0.5 ] ).attr({fill: '#333', opacity: 0});
+
       blanket.push(r.rect(leftgutter + X * i, 0, X, height - bottomgutter).attr({stroke: 'none', fill: '#fff', opacity: 0}));
       var rect = blanket[blanket.length - 1];
 
-      (function (x, y, data, lbl, dot) {
+      (function (x, y, data, lbl, dot, hoverLine) {
         var timer, i = 0;
         rect.hover(function () {
           clearTimeout(leave_timer);
@@ -309,9 +434,11 @@
           label[0].attr({text: formatNumber(data)}).show().stop().animateWith(frame, anim, {transform: ['t', lx + 15, ly + 5]}, 200 * is_label_visible);
           label[1].attr({text: lbl}).show().stop().animateWith(frame, anim, {transform: ['t', lx + 15, ly + 5]}, 200 * is_label_visible);
           dot.attr({opacity: 1});
+          hoverLine.attr({opacity: 0.2});
           is_label_visible = true;
         }, function () {
           dot.attr({opacity: 0});
+          hoverLine.attr({opacity: 0});
           leave_timer = setTimeout(function () {
             frame.hide();
             label[0].hide();
@@ -319,7 +446,7 @@
             is_label_visible = false;
           }, 1);
         });
-      }(x, y, data[i], labels[i], dot));
+      }(x, y, data[i], labels[i], dot, hoverLine));
     }
 
     p = p.concat([x, y, x, y]);

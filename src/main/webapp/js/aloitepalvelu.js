@@ -119,10 +119,11 @@
     };
 
     // Fire supportVoteGraph
-    if (window.graphData && window.graphData.length > 0) {
+    if (window.supportVoteGraph && window.supportVoteGraph.votes.length > 0) {
       $('#supportVotesGraph').supportVoteGraph({
-        data: window.graphData,
+        data: window.supportVoteGraph,
         color: '#087480',
+        colorHl: '#bc448e',
         width : $('#supportVotesGraph').parent().width() || 960,
         height : 250,
         leftgutter : 50,
