@@ -21,14 +21,14 @@
       max : 50000
     }, options);
 
-
-
     // Override data with random data for developing purposes
     // settings.data.votes = testDataGererator('2014-06-04', '2014-12-04', 25, 50);
-    // settings.data.votes = testDataGererator('2014-06-04', '2014-12-04', 300, 0);
+    // settings.data.votes = testDataGererator('2014-06-04', '2014-12-04', 300, 100);
     // settings.data.votes = testDataGererator('2014-06-04', '2014-10-04', 25, 50);
     // settings.data.votes = testDataGererator('2014-06-04', '2014-10-04', 1, 10);
     // settings.data.votes = testDataGererator('2014-08-04', '2014-10-05', 1, 10);
+    // settings.data.votes = testDataGererator('2014-06-04', '2014-12-04', 25, 50);
+    // settings.data.votes = testDataGererator('2014-06-07', '2014-06-15', 25, 50);
     // settings.data.startDate = '2014-06-04';
     // settings.data.endDate = '2014-12-04';
 
@@ -146,7 +146,7 @@
     return this.path(path.join(",")).attr({stroke: color, opacity: opacity});
   };
 
-  function formatNumber(value) {
+  function separateThousands(value) {
     return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
   }
 
@@ -156,13 +156,13 @@
       value,
       firstDate = data.votes[0].d,
       lastDate = data.votes[data.votes.length - 1].d,
-      curDate = moment(firstDate),
-      days = moment(lastDate).diff(firstDate, 'days'),
-      votingDays = moment(data.endDate).diff(moment(data.startDate), 'days'),
+      curDate = moment(data.startDate),
+      days = moment(lastDate).diff(data.startDate, 'days') + 1,
+      votingDays = moment(data.endDate).diff(moment(data.startDate), 'days') + 1,
       i = 0,
       n = 0;
 
-    for (i = 0; i <= days; i++) {
+    for (i = 0; i < days; i++) {
       value = 0;
 
       if (curDate.diff(data.votes[n].d, 'days') === 0) {
@@ -262,20 +262,46 @@
     return res;
   }
 
+  // FIXME: days don't correspond with the chart value
+  function getXaxisDates(votes, divider) {
+    var i,
+      res = [],
+      firstDate = votes[0].d,
+      lastDate = votes[votes.length - 1].d,
+      curDate = firstDate,
+      days = moment(lastDate).diff(firstDate, 'days') + 1,
+      // diff = Math.round(days/divider);
+      diff = Math.round(days/divider);
+      if (diff < 1){
+        diff = 1;
+      }
+
+      console.log(days);
+
+      for (i = 0; i < divider; i++){
+        curDate = moment(curDate).add('days', diff);
+        res.push(curDate.format('D.M.YYYY'));
+      }
+
+      return res;
+  }
+
   function fitToSelectedView(settings, rawData, labels, votingDays){
-    var data, dX, Y, max, scale;
+    var data, dX, Y, max, scale, xLabels;
+
+    xLabels = labels.length < 7 ? 7 : labels.length;
 
     if (settings.cumulative) {
       data = getCumulativeData(rawData);
       dX = (settings.width - settings.leftgutter) / votingDays;
     } else {
       data = rawData;
-      dX = (settings.width - settings.leftgutter) / labels.length;
+      dX = (settings.width - settings.leftgutter) / xLabels;
     }
 
     if (settings.cumulative && settings.zoomed) {
       data = getCumulativeData(rawData);
-      dX = (settings.width - settings.leftgutter) / labels.length;
+      dX = (settings.width - settings.leftgutter) / xLabels;
     }
 
     max = getMax(data, settings);
@@ -293,11 +319,11 @@
 
   function testDataGererator(firstDate, lastDate, daily, tolerance){
     var data = [],
-      days = moment(lastDate).diff(firstDate, 'days'),
+      days = moment(lastDate).diff(firstDate, 'days') + 1,
       curDate = firstDate,
       rnd;
 
-    for (var i = 0; i <= days; i++) {
+    for (var i = 0; i < days; i++) {
       rnd = Math.floor((Math.random() - 0.5) * 2 * tolerance + daily);
 
       data.push({
@@ -315,7 +341,6 @@
       rawData = [],
       data = [],
       votingDays = 0,
-      dX,
       iteratedData = iterateData(settings.data);
 
     labels = iteratedData.labels;
@@ -337,7 +362,8 @@
       txt = {font: '12px ' + fontFamily, fill: '#fff'},
       txt1 = {font: '10px ' + fontFamily, fill: '#fff'},
       txtLabel = {font: '12px ' + fontFamily, fill: '#000'},
-      txtLabelY = {font: '12px ' + fontFamily, fill: '#000', 'text-anchor': 'end'},
+      txtLabelRight = {font: '12px ' + fontFamily, fill: '#000', 'text-anchor': 'end'},
+      txtLabelLeft = {font: '12px ' + fontFamily, fill: '#000', 'text-anchor': 'start'},
       fitted = fitToSelectedView(settings, rawData, labels, votingDays),
       data = fitted.data,
       X = fitted.dX,
@@ -347,14 +373,13 @@
       y50 = height - bottomgutter + 0.5 - Y * 50,
       y50000 = height - bottomgutter + 0.5 - Y * settings.max;
 
-
     // Background grid
     r.drawGrid(leftgutter + X * 0.5 + 0.5, topgutter + 0.5, width - leftgutter - X, height - topgutter - bottomgutter, 6, 10, '#000', 0.05);
 
     if (settings.cumulative) {
       // Diagonal line from 0 to 50 000
       if (scale[scale.length-1] >= 50000 ){
-        r.path( ["M", leftgutter + X - 0.5, height - bottomgutter + 0.5, "L", width - 0.5, y50000 ] ).attr({fill: '#333', opacity: 0.1});
+        r.path( ["M", leftgutter + X - 0.5, height - bottomgutter + 0.5, "L", width - 0.5, y50000 ] ).attr({fill: '#333', opacity: 0.1, 'stroke-dasharray': '--.'});
       }
 
       // Horizontal line in 50 000
@@ -378,7 +403,6 @@
     label.push(r.text(60, 27, labels[0]).attr(txt1).attr({fill: '#fff'}));
     label.hide();
 
-    // var frame = r.popup(100, 100, label, 'right').attr({fill: '#000', stroke: '#666', 'stroke-width': 2, 'fill-opacity': .7}).hide();
     var frame = r.popup(100, 100, label, 'right').attr({fill: color, 'stroke-width': 0, 'fill-opacity': 1}).hide();
     var p, bgpp, p0, bgpp0, i, ii;
 
@@ -386,25 +410,33 @@
     for (i = 0, ii = 10; i <= ii; i++) {
       var rowHeight = (height - topgutter - bottomgutter) / 10;
       if (i % 2 === 0) {
-        r.text(leftgutter, height - Math.round(topgutter + i * rowHeight), formatNumber(scale[i])).attr(txtLabelY).toBack();
+        r.text(leftgutter, height + topgutter - bottomgutter - Math.round(topgutter + i * rowHeight), separateThousands(scale[i])).attr(txtLabelRight).toBack();
+      }
+    }
+
+    // Draw X labels
+    if (settings.cumulative && !settings.zoomed){
+      for (i = 0; i < 7; i++){
+        r.text(leftgutter + 2 + ((width - leftgutter - X)/6) * i, height - 6, moment(settings.data.startDate).add('months', i).format('D.M.YYYY')).attr((i < 6) ? (i === 0 ? txtLabelLeft : txtLabel) : txtLabelRight).toBack();
+      }
+    } else {
+      var xAxisDates = getXaxisDates(settings.data.votes, 7);
+      for (i = 0; i < xAxisDates.length; i++){
+        r.text(leftgutter + 2 + ((width - leftgutter - X)/6) * i, height - 6, xAxisDates[i]).attr((i < 6) ? (i === 0 ? txtLabelLeft : txtLabel) : txtLabelRight).toBack();
       }
     }
 
     for (i = 0, ii = labels.length; i < ii; i++) {
-      var y = Math.round(height - bottomgutter - Y * data[i]),
+      var y = Math.round(height - bottomgutter - Y * data[i] -1),
         x = Math.round(leftgutter + X * (i + 0.5));
 
-      if (i % Math.floor(labels.length / 7) === 0) {
-      // if (i % Math.floor(labels.length / 7) === 0 || i === labels.length - 1) {
-        r.text(x, height - 6, labels[i]).attr(txtLabel).toBack();
-      }
       if (!i) {
         p = ['M', x, y, 'C', x, y];
         p0 = ['M', x, height - bottomgutter, 'C', x, height - bottomgutter];
-        bgpp = ['M', leftgutter + X * 0.5, height - bottomgutter, 'L', x, y, 'C', x, y];
-        bgpp0 = ['M', leftgutter + X * 0.5, height - bottomgutter, 'L', x, height - bottomgutter, 'C', x, height - bottomgutter];
+        bgpp = ['M', leftgutter + X * 0.5, height - bottomgutter + 1, 'L', x, y, 'C', x, y];
+        bgpp0 = ['M', leftgutter + X * 0.5, height - bottomgutter, 'L', x, height - bottomgutter + 1, 'C', x, height - bottomgutter];
       }
-      if (i && i < ii - 1) {
+      if (i && i < ii -1 ) {
         var Y0 = Math.round(height - bottomgutter - Y * data[i - 1]),
           X0 = Math.round(leftgutter + X * (i - 0.5)),
           Y2 = Math.round(height - bottomgutter - Y * data[i + 1]),
@@ -438,7 +470,7 @@
           lx = label[0].transform()[0][1] + ppp.dx;
           ly = label[0].transform()[0][2] + ppp.dy;
           frame.show().stop().animate(anim);
-          label[0].attr({text: formatNumber(data)}).show().stop().animateWith(frame, anim, {transform: ['t', lx + 15, ly + 5]}, 200 * is_label_visible);
+          label[0].attr({text: separateThousands(data)}).show().stop().animateWith(frame, anim, {transform: ['t', lx + 15, ly + 5]}, 200 * is_label_visible);
           label[1].attr({text: lbl}).show().stop().animateWith(frame, anim, {transform: ['t', lx + 15, ly + 5]}, 200 * is_label_visible);
           dot.attr({opacity: 1});
           hoverLine.attr({opacity: 0.2});
@@ -458,7 +490,7 @@
 
     p = p.concat([x, y, x, y]);
     p0 = p0.concat([x, height - bottomgutter, x, height - bottomgutter]);
-    bgpp = bgpp.concat([x, y, x, y, 'L', x, height - bottomgutter, 'z']);
+    bgpp = bgpp.concat([x, y, x, y, 'L', x, height - bottomgutter + 1, 'z']);
     bgpp0 = bgpp0.concat([x, height - bottomgutter, x, height - bottomgutter, 'L', x, height - bottomgutter, 'z']);
 
     path.attr({path: p0});

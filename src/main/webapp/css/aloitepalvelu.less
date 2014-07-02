@@ -3057,7 +3057,6 @@ table.data {
 
 // Support vote graph
 .support-vote-graph {
-
     .icon {
         display: inline-block;
         width: 20px;
@@ -3084,13 +3083,17 @@ table.data {
         }
     }
 
-
     .graph-actions {
+        position: relative;
+        z-index: 10;
         float: right;
+        margin-bottom: -15px;
 
         a {
             margin-left: 1em;
             display: inline-block;
+            width: 20px;
+            height: 20px;
 
             &.act {
                 display: none;
