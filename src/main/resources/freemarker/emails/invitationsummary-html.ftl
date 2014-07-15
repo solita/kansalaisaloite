@@ -25,7 +25,7 @@
             <li style="margin-bottom:0.5em;">Oikeusministeriön tarkastuksen jälkeen kannatusilmoitusten kerääminen kansalaisaloite.fi-palvelussa alkaa automaattisesti. Huomioi, että kerääminen alkaa aikaisintaan antamanasi päivänä <@eu.localDate initiative.startDate "fi" /></li>
         </ol>
     
-        <h4 style="font-size:12px; margin:1em 0 0.5em 0;">Näkyykö aloitteeni jokansalaisaloite.fi-palvelussa?</h4>
+        <h4 style="font-size:12px; margin:1em 0 0.5em 0;">Näkyykö aloitteeni jo kansalaisaloite.fi-palvelussa?</h4>
         <p style="margin-top:0.5em;">Aloite löytyy toistaiseksi vain linkin kautta, eli jos tiedät sen osoitteen. Kun oikeusministeriö on tarkastanut aloitteen tulee se näkyviin myös Kansalaisaloite.fi-palvelun hakuihin.</p>
         
         <h4 style="font-size:12px; margin:1em 0 0.5em 0;">Mistä osoitteesta aloite nyt löytyy?</h4>
