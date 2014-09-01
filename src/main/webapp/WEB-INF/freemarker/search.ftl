@@ -93,12 +93,12 @@
         <div class="column search-sort">
             <#if currentSearch.show == "running">
                 <span class="small-icon icon-search-sort by-time-left"><@u.message "searchOptions.runningTimeLeft" /></span>
-                <div class="search-sort-links">
+                <div class="switch-buttons">
                     <@u.searchLink parameter="withOrderByMostTimeLeft" cssClass=(currentSearch.orderBy == "mostTimeLeft")?string('active','') tooltip=false />
                     <@u.searchLink parameter="withOrderByLeastTimeLeft" cssClass=(currentSearch.orderBy == "leastTimeLeft")?string('active','') tooltip=false />
                 </div>
             <#else>
-                <span class="small-icon icon-search-sort by-date-accepted">&#160;</span><div class="search-sort-links">
+                <span class="small-icon icon-search-sort by-date-accepted">&#160;</span><div class="switch-buttons">
                     <@u.searchLink parameter="withOrderByCreatedNewest" cssClass=(currentSearch.orderBy == "createdNewest")?string('active','') tooltip=false />
                     <@u.searchLink parameter="withOrderByCreatedOldest" cssClass=(currentSearch.orderBy == "createdOldest")?string('active','') tooltip=false />
                 </div>
@@ -106,7 +106,7 @@
         </div>
         <div class="column search-sort">
             <span class="small-icon icon-search-sort by-support-statements"><@u.message "searchOptions.supportStatements" /></span>
-            <div class="search-sort-links">
+            <div class="switch-buttons">
                 <@u.searchLink parameter="withOrderByMostSupports" cssClass=(currentSearch.orderBy == "mostSupports")?string('active','') tooltip=false />
                 <@u.searchLink parameter="withOrderByLeastSupports" cssClass=(currentSearch.orderBy == "leastSupports")?string('active','') tooltip=false />
             </div>
@@ -134,12 +134,12 @@
         <div class="toggle-under-50">
         <span><@u.message "searchParameters.showUnder50.title" /></span>
         <#if currentSearch.minSupportCount == 0>
-            <div class="search-sort-links">
+            <div class="switch-buttons">
                 <a class="" href="${urls.search()}${searchParameters.getWithHideLooserInitiatives()}"><@u.message "searchParameters.showUnder50.hide" /></a>
                 <a class="active" href="${urls.search()}${searchParameters.getWithShowLooserInitiatives()}"><@u.message "searchParameters.showUnder50.show" /></a>
             </div>
         <#else>
-            <div class="search-sort-links">
+            <div class="switch-buttons">
                 <a class="active" href="${urls.search()}${searchParameters.getWithHideLooserInitiatives()}"><@u.message "searchParameters.showUnder50.hide" /></a>
                 <a class="" href="${urls.search()}${searchParameters.getWithShowLooserInitiatives()}"><@u.message "searchParameters.showUnder50.show" /></a>
             </div>

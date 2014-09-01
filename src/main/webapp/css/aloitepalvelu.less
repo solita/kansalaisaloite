@@ -1085,6 +1085,23 @@ a.block-link {
 
 }
 
+.switch-buttons {
+    display:inline;
+    margin-left:0.5em;
+
+    a {
+        display:inline-block;
+        padding:0.1em 0.5em;
+
+        &.active {
+            .gradient (#09a3b4, #067582);
+            .rounded-corners(@cornerRadiusXtraSmall);
+            color:#fff;
+            text-shadow:0px 1px 1px rgba(0,0,0,0.3);
+        }
+    }
+}
+
 
 // Gray and disabled button
 //
@@ -2316,8 +2333,6 @@ h1 {
     clear: both;
     color: #111;
     font-weight:normal;
-
-    &.inline-header { display:inline-block; }
 }
 .extra-info {
     display:block;
@@ -2360,6 +2375,8 @@ h4 {
         font-weight:normal;
     }
 }
+
+.inline-header { display:inline-block; }
 
 // Paragraph
 //
@@ -2715,22 +2732,6 @@ blockquote {
     }
 }*/
 
-.search-sort-links {
-    display:inline;
-    margin-left:0.5em;
-
-    a {
-        display:inline-block;
-        padding:0.1em 0.5em;
-
-        &.active {
-            .gradient (#09a3b4, #067582);
-            .rounded-corners(@cornerRadiusXtraSmall);
-            color:#fff;
-            text-shadow:0px 1px 1px rgba(0,0,0,0.3);
-        }
-    }
-}
 
 // Search filtering
 //

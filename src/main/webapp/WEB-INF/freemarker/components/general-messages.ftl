@@ -12,6 +12,8 @@
 -->
 <#macro supportCountGraph data>
     <div class="support-vote-graph">
+    	<h3 class="inline-header"><@u.message key="graph.title" /></h3>
+
     	<div id="supportVotesGraph">
     		<noscript><@u.message key="graph.javaScriptSupport" /></noscript>
     	</div>

@@ -57,10 +57,7 @@
     
     <#-- TOP CONTRIBUTION --> 
     <#if showInfoMsg && (votingInfo?? && votingInfo.votingInProggress || initiative.totalSupportCount gt 0)>
-        <div class="content-block-header view">
-	        <h2>Kannatusilmoitukset</h2>
-	    </div>
-	    <div class="view-block small-pad">
+	    <div class="view-block">
 		    <@m.initiativeVoteInfo />
 		    <@m.supportCountGraph supportCountData />
 		</div>

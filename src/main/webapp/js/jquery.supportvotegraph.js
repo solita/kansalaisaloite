@@ -35,17 +35,10 @@
     // settings.data.endDate = '2014-12-04';
 
     return this.each(function (index, element) {
-      // var r,
-      //   btnCumul = $('<a><i class="icon cumulative"></i>' + settings.data.lang.btnCumul + '</a>'),
-      //   btnDaily = $('<a><i class="icon daily"></i>' + settings.data.lang.btnDaily + '</a>'),
-      //   buttons = $('<div class="graph-actions" />'),
-      //   btnZoomIn = $('<a><i class="icon zoom-in"></i>' + settings.data.lang.btnZoomIn + '</a>'),
-      //   btnZoomOut = $('<a><i class="icon zoom-out"></i>' + settings.data.lang.btnZoomOut + '</a>'),
-      //   zoomHolder = $('<div class="graph-zoom" />');
-
       var r,
-        btnCumul = $('<a title="' + settings.data.lang.btnCumul + '" class="trigger-tooltip"><i class="icon cumulative"></i></a>'),
-        btnDaily = $('<a title="' + settings.data.lang.btnDaily + '" class="trigger-tooltip"><i class="icon daily"></i></a>'),
+        btnCumul = $('<a>' + settings.data.lang.btnCumul + '</a>'),
+        btnDaily = $('<a>' + settings.data.lang.btnDaily + '</a>'),
+        buttonsLeft = $('<span class="switch-buttons" />'),
         buttons = $('<div class="graph-actions" />'),
         btnZoomIn = $('<a title="' + settings.data.lang.btnZoomIn + '" class="trigger-tooltip"><i class="icon zoom-in"></i></a>'),
         btnZoomOut = $('<a title="' + settings.data.lang.btnZoomOut + '" class="trigger-tooltip"><i class="icon zoom-out"></i></a>'),
@@ -65,21 +58,24 @@
 
       refreshGraph();
 
-      buttons.append(btnCumul);
-      buttons.append(btnDaily);
-      $(element).before(buttons);
+      buttonsLeft.append(btnCumul);
+      buttonsLeft.append(btnDaily);
+      
+      $(element)
+      .before(buttonsLeft)
+      .before(buttons);
 
       if (settings.cumulative) {
         showZoomHolder(true);
-        btnCumul.addClass('act');
+        btnCumul.addClass('active');
       } else {
-        btnDaily.addClass('act');
+        btnDaily.addClass('active');
       }
 
       btnCumul.click(function () {
-        if (!$(this).hasClass('act')) {
-          $(this).addClass('act');
-          btnDaily.removeClass('act');
+        if (!$(this).hasClass('active')) {
+          $(this).addClass('active');
+          btnDaily.removeClass('active');
           settings.cumulative = true;
           showZoomHolder(true);
 
@@ -89,9 +85,9 @@
       });
 
       btnDaily.click(function () {
-        if (!$(this).hasClass('act')) {
-          $(this).addClass('act');
-          btnCumul.removeClass('act');
+        if (!$(this).hasClass('active')) {
+          $(this).addClass('active');
+          btnCumul.removeClass('active');
           settings.cumulative = false;
           showZoomHolder(false);
 
@@ -103,7 +99,6 @@
       // Zoom
       zoomHolder.append(btnZoomIn);
       zoomHolder.append(btnZoomOut);
-      // $(element).before(zoomHolder);
       buttons.prepend(zoomHolder);
       btnZoomOut.addClass('act');
 
