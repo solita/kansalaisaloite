@@ -12,7 +12,7 @@
 -->
 <#macro supportCountGraph data>
     <div class="support-vote-graph">
-    	<h3 class="inline-header"><@u.message key="graph.title" /></h3>
+    	<h3 class="inline-header"><@u.message key="graph.title" /> ${initiative.supportCount!""}</h3>
 
     	<div id="supportVotesGraph">
     		<noscript><@u.message key="graph.javaScriptSupport" /></noscript>
@@ -49,30 +49,22 @@
 -->
 <#macro initiativeVoteInfo>
     <#if votingInfo?? && votingInfo.votingInProggress || initiative.totalSupportCount gt 0>
+    	<#assign externalSupportCount = initiative.totalSupportCount - initiative.supportCount />
+    	
         <p>
-
-        <#if initiative.supportCount != initiative.totalSupportCount && initiative.supportCount gt 0>
-            <@u.message key="initiative.totalSupportCount.chunk-1" />
-            <span id="support-count-${initiative.id}" class="vote-count-container">
+        	<span id="support-count-${initiative.id}" class="vote-count-container">
                 <span class="vote-count">${initiative.totalSupportCount}</span>
             </span>
-            <@u.message key="initiative.totalSupportCount.chunk-2" args=[initiative.totalSupportCount] />
-            <span id="internal-support-count-${initiative.id}" class="vote-count-container">
-                <span class="vote-count internal">${initiative.supportCount}</span>
-            </span><@u.message key="initiative.totalSupportCount.chunk-3" />
+        	<@u.message key="initiative.totalSupportCount" args=[initiative.totalSupportCount] /><#if externalSupportCount gt 0>,</#if>
+        	
+        	<#if externalSupportCount gt 0>
+        		<@u.message key="initiative.supportCountExternal" args=[externalSupportCount] />
+        	</#if>
 
-        <#else>
-            <@u.message key="initiative.supportCount.chunk-1" />
-            <span id="support-count-${initiative.id}" class="vote-count-container">
-                <span class="vote-count">${initiative.totalSupportCount}</span>
-            </span> <@u.message key="initiative.supportCount.chunk-2" args=[initiative.totalSupportCount] />
-        </#if>
-
-        <#-- Show refresh-button only when voting is in progress -->
-        <#if votingInfo?? && votingInfo.votingInProggress>
-            <span class="js-update-support-count icon-small refresh push pull-down rounded trigger-tooltip hidden" data-id="${initiative.id}" data-target-total="support-count-${initiative.id}" data-target-internal="internal-support-count-${initiative.id}" title="<@u.message "initiative.supportCount.refresh" />"></span>
-        </#if>
-
+	        <#-- Show refresh-button only when voting is in progress -->
+	        <#if votingInfo?? && votingInfo.votingInProggress>
+	            <span class="js-update-support-count icon-small refresh push rounded trigger-tooltip hidden" data-id="${initiative.id}" data-target-total="support-count-${initiative.id}" data-target-internal="internal-support-count-${initiative.id}" title="<@u.message "initiative.supportCount.refresh" />"></span>
+	        </#if>
         </p>
 	</#if>
 </#macro>
