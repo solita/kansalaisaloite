@@ -164,7 +164,7 @@
 
                     <#if (initiative.supportCount > 0)>
                         <#assign args><span class="internal-count">${initiative.supportCount}</span></#assign>
-                        <span class="internal-support-votes"><@u.messageHTML key="initiative.internalSupportCount" args=[args] /></span>
+                        <span class="internal-support-votes"><@u.messageHTML key="initiative.search.internalSupportCount" args=[args] /></span>
                     </#if>
                     
                     
