@@ -303,7 +303,7 @@
             <div class="column ${((organizer_index + 1) % 3 == 0)?string("last","")}">
                 <p>
                     <#if initiative.currentAuthor?? && !organizer.confirmed??><@icon type="unconfirmed" size="small" /> </#if>${organizer.firstNames!""} ${organizer.lastName!""}
-                    <#if (votingInfo.votingInProggress && votingInfo?? && votingInfo.allowVotingAction) || (currentUser.om || (initiative.state != 'ACCEPTED' && initiative.state != 'DONE'))>
+                    <#if (votingInfo?? && votingInfo.votingInProggress) || (currentUser.om || (initiative.state != 'ACCEPTED' && initiative.state != 'DONE'))>
                         <#if (organizer.dateOfBirth)??><@localDate organizer.dateOfBirth/>, </#if>
                         <@text organizer.homeMunicipality />
                         <br/>
