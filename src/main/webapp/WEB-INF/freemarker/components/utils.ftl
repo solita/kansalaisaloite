@@ -302,14 +302,15 @@
         <#list organizerList as organizer>
             <div class="column ${((organizer_index + 1) % 3 == 0)?string("last","")}">
                 <p>
-                    <#if initiative.currentAuthor?? && !organizer.confirmed??><@icon type="unconfirmed" size="small" /> </#if>${organizer.firstNames!""} ${organizer.lastName!""},
-                    <#if (organizer.dateOfBirth)??><@localDate organizer.dateOfBirth/>, </#if>
-                    <@text organizer.homeMunicipality />
-                    <br/>
-                    <#if (organizer.contactInfo.address)??>${organizer.contactInfo.address}<br/></#if>
-                    <#if (organizer.contactInfo.email)??><@scrambleEmail organizer.contactInfo.email!"" /><br/></#if>
-                    <#if (organizer.contactInfo.phone)??>${organizer.contactInfo.phone!""}<br/></#if>
-                    
+                    <#if initiative.currentAuthor?? && !organizer.confirmed??><@icon type="unconfirmed" size="small" /> </#if>${organizer.firstNames!""} ${organizer.lastName!""}
+                    <#if (votingInfo.votingInProggress && votingInfo?? && votingInfo.allowVotingAction) || (currentUser.om || (initiative.state != 'ACCEPTED' && initiative.state != 'DONE'))>
+                        <#if (organizer.dateOfBirth)??><@localDate organizer.dateOfBirth/>, </#if>
+                        <@text organizer.homeMunicipality />
+                        <br/>
+                        <#if (organizer.contactInfo.address)??>${organizer.contactInfo.address}<br/></#if>
+                        <#if (organizer.contactInfo.email)??><@scrambleEmail organizer.contactInfo.email!"" /><br/></#if>
+                        <#if (organizer.contactInfo.phone)??>${organizer.contactInfo.phone!""}<br/></#if>
+                    </#if>
                 </p>  
             </div>
             <#if !organizer_has_next><br class="clear" /></#if>
