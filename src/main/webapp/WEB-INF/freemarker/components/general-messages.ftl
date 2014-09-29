@@ -33,7 +33,7 @@
                     btnZoomOut : '<@u.message key="graph.btnZoomOut" />'
                 }
             };
-        })(window);
+        }(window));
      </script>
 </#macro>
 

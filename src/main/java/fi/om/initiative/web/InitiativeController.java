@@ -539,6 +539,21 @@ public class InitiativeController extends BaseController {
 
     }
     
+    @RequestMapping(value={ IFRAME_FI, IFRAME_SV }, method=GET)
+    public String iFrame(@PathVariable("id") Long initiativeId, Model model, Locale locale, HttpServletRequest request) {
+    	InitiativePublic initiative = initiativeService.getInitiativeForPublic(initiativeId, null);
+
+        model.addAttribute("initiative", initiative);
+        addVotingInfo(initiative, model);
+
+        return IFRAME_VIEW;
+    }
+    
+    @RequestMapping(value={ IFRAME_GENERATOR_FI, IFRAME_GENERATOR_SV }, method=GET)
+    public String iFrameGenerator(Model model, Locale locale) {
+    	return IFRAME_GENERATOR_VIEW;
+    }
+    
     @InitBinder
     public void initBinder(WebDataBinder binder, Locale locale) {
         binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));

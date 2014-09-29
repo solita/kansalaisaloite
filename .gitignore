@@ -20,6 +20,7 @@ src/main/resources/app.properties
 
 src/main/webapp/css/aloitepalvelu-ie.css
 src/main/webapp/css/aloitepalvelu.css
+src/main/webapp/css/aloitepalvelu-iframe.css
 src/main/webapp/css/style.css
 src/main/webapp/css/style.min.css
 src/main/webapp/js/script.js

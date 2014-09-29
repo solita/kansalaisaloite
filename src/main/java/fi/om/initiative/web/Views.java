@@ -57,6 +57,10 @@ public final class Views {
     
     public static final String CONTENT_EDITOR_HELP_VIEW = "pages/content-editor-help";
     
+    public static final String IFRAME_GENERATOR_VIEW = "iframe-generator";
+    
+    public static final String IFRAME_VIEW = "iframe-view";
+    
     /**
      * Context relative redirect: context is prefixed to relative URLs.
      * 

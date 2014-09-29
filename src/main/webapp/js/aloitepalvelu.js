@@ -3,7 +3,7 @@
 (function () {
   'use strict';
 
-  var generateModal, localization, validateForm, modalContent, modalType;
+  var generateModal, localization, validateForm, modalContent, modalType, delay;
 
   /**
    *
@@ -56,10 +56,23 @@
       }
     }
   };
+  
+  /**
+   * Common delay
+   * ============
+   *
+   * */
+  delay = (function () {
+    var timer = 0;
+    return function (callback, ms) {
+      clearTimeout(timer);
+      timer = setTimeout(callback, ms);
+    };
+  }());
 
   $(document).ready(function () {
     // Define general variables
-    var $body, speedFast, speedSlow, speedVeryFast, speedAutoHide, vpHeight, vpWidth, validateEmail, isIE7, $topRibbon, myConsole;
+    var $body, speedFast, speedSlow, speedVeryFast, speedAutoHide, vpHeight, vpWidth, validateEmail, locale, isIE7, $topRibbon, myConsole;
 
     $body = $('body');
     speedFast = '200'; // General speeds for animations
@@ -68,6 +81,7 @@
     speedAutoHide = '2000'; // Delay for hiding success-messages (if enabled)
     vpHeight = $(window).height(); // Viewport height
     vpWidth = $(window).width(); // Viewport width
+    locale = Init.getLocale();     // Current locale: fi, sv
     isIE7 = $('html').hasClass('ie7'); // Boolean for IE7. Used browser detection instead of jQuery.support().
 
     // Console fix for IE
@@ -1307,6 +1321,117 @@
       });
 
     }());
+    
+    /**
+    * Generate iFrame
+    * ==================
+    */
+    if (window.hasIFrame) {
+
+      (function () {
+        var reset =       $('.js-reset-iframe'),
+          refresh =     $('.js-update-iframe'),
+          iframeContainer = $("#iframe-container"),
+          initiativeId =    $('#initiativeId'),
+          lang =        $('input[name="language"]'),
+          defaultLang =   $('input[name="language"][value="' + locale + '"]'),
+          showTitle = $('input[name="showTitle"]'),
+          width =       $('#width'),
+          height =      $('#height'),
+          currentLang =   locale,
+          bounds =      window.bounds,
+  
+          generateIframe = function (params) {
+            iframeContainer.html($("#iframe-template").render(params));
+            return false;
+          },
+  
+          checkBounds = function (elem) {
+            var min, max, def;
+    
+            switch (elem.attr('id')) {
+            case width.attr('id'):
+              min = bounds.min.width;
+              max = bounds.max.width;
+              break;
+            case height.attr('id'):
+              min = bounds.min.height;
+              max = bounds.max.height;
+              break;
+            default:
+              // nop
+            }
+    
+            if (!/^\d+$/.test(elem.val())) {
+              elem.val(min); // set to min if not even a number
+            }
+            if (elem.val() < min) {
+              elem.val(min);
+            }
+            if (elem.val() > max) {
+              elem.val(max);
+            }
+          },
+    
+          params = function () {
+            return [{
+              initiativeId: initiativeId.val(),
+              lang:     $('input[name="language"]:checked').val(),
+              showTitle: $('input[name="showTitle"]:checked').val() === 'on',
+              width:      width.val(),
+              height:     height.val()
+            }];
+          },
+    
+          refreshFields = function (data) {
+            initiativeId.val(data.initiativeId).trigger('liszt:updated');
+            lang.removeAttr('checked');
+            showTitle.removeAttr('checked');
+            defaultLang.attr('checked', 'checked');
+            width.val(data.width);
+            height.val(data.height);
+          };
+  
+        generateIframe(params());
+  
+        initiativeId.change(function () {
+          generateIframe(params());
+        });
+
+        width.add(height).keyup(function () {
+          var thisObj = $(this);
+
+          delay(function () {
+            checkBounds(thisObj);
+            generateIframe(params());
+          }, 1000);
+        });
+        
+        showTitle.change(function () {
+          generateIframe(params());
+        });
+        
+        lang.change(function () {
+          generateIframe(params());
+        });
+  
+        reset.click(function (e) {
+          e.preventDefault();
+  
+          if (window.defaultData) {
+            refreshFields(window.defaultData);
+            generateIframe(window.defaultData);
+          }
+        });
+  
+        refresh.click(function (e) {
+          e.preventDefault();
+  
+          generateIframe(params());
+        });
+  
+      }());
+    }
   });
 
 }());
