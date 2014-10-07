@@ -1006,19 +1006,20 @@ a.block-link {
 
 
 
-// iFrame - Leijuke 
+// iFrame - Leijuke
 #iframe-placeholder {
     position:relative;
-    background:@bodyBackground;
-    border:1px solid @borderGray;
-    margin-bottom:2em;
+    background: @bodyBackground;
+    border: 1px solid @borderGray;
+    margin-bottom: 2em;
 }
 #iframe-container {
-    overflow:auto;
+    // overflow: auto;
 
     iframe {
-        display:none; // showed with JS
-        margin-bottom:2em;
+        display: none; // showed with JS
+        margin-bottom: 2em;
+        border: 5px solid #ddd;
     }
 }
 // Column exceptions
@@ -1352,7 +1353,7 @@ input[type="text"] {
     margin:0.2em 0em 1em 0em;
     font-size: 1em;
     line-height:1.8em;
-    
+
     &.disabled {
         background:@bodyBackground;
     }
@@ -1415,7 +1416,7 @@ label  {
     input[type="radio"], input[type="checkbox"] {
         margin: 2px 8px 0 0;
         float: left;
-        
+
         &.no-float { float: none; }
     }
 

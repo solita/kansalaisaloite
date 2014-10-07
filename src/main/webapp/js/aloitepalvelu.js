@@ -56,7 +56,7 @@
       }
     }
   };
-  
+
   /**
    * Common delay
    * ============
@@ -1321,7 +1321,7 @@
       });
 
     }());
-    
+
     /**
     * Generate iFrame
     * ==================
@@ -1329,26 +1329,59 @@
     if (window.hasIFrame) {
 
       (function () {
-        var reset =       $('.js-reset-iframe'),
-          refresh =     $('.js-update-iframe'),
+        var reset =         $('.js-reset-iframe'),
+          refresh =         $('.js-update-iframe'),
           iframeContainer = $("#iframe-container"),
           initiativeId =    $('#initiativeId'),
-          lang =        $('input[name="language"]'),
-          defaultLang =   $('input[name="language"][value="' + locale + '"]'),
-          showTitle = $('input[name="showTitle"]'),
-          width =       $('#width'),
-          height =      $('#height'),
-          currentLang =   locale,
-          bounds =      window.bounds,
-  
+          lang =            $('input[name="language"]'),
+          defaultLang =     $('input[name="language"][value="' + locale + '"]'),
+          showTitle =       $('input[name="showTitle"]'),
+          width =           $('#width'),
+          height =          $('#height'),
+          currentLang =     locale,
+          bounds =          window.bounds,
+          api =             window.defaultData.api,
+
+          getInitiative = function (api, initiativeId, callback) {
+            if (initiativeId !== '') {
+              $.getJSON(api + '/' + initiativeId).done(function (data) {
+                if (callback) {
+                  callback(data);
+                }
+              }).fail(function (e) {
+                if (callback) {
+                  callback(null);
+                }
+                myConsole.log('Error loading data: ' + e.status + ' - ' + e.statusText);
+              });
+            } else {
+              if (callback) {
+                callback(null);
+              }
+            }
+
+          },
+          populateInitiativeDetails = function (params) {
+            getInitiative(api, params.initiativeId, function (data) {
+              var initiativeName = '';
+
+              if (data) {
+                initiativeName = data.name[params.lang] || data.name.fi || '';
+              }
+
+              $('#initiative-name').text(initiativeName);
+            });
+          },
           generateIframe = function (params) {
+            populateInitiativeDetails(params);
             iframeContainer.html($("#iframe-template").render(params));
             return false;
           },
-  
+
           checkBounds = function (elem) {
-            var min, max, def;
-    
+            var min, max, def,
+              val = parseInt(elem.val(), 10);
+
             switch (elem.attr('id')) {
             case width.attr('id'):
               min = bounds.min.width;
@@ -1361,28 +1394,29 @@
             default:
               // nop
             }
-    
-            if (!/^\d+$/.test(elem.val())) {
+
+            if (!/^\d+$/.test(val)) {
               elem.val(min); // set to min if not even a number
             }
-            if (elem.val() < min) {
+            if (val < min) {
               elem.val(min);
             }
-            if (elem.val() > max) {
+            if (val > max) {
+
               elem.val(max);
             }
           },
-    
-          params = function () {
-            return [{
+
+          getParams = function () {
+            return {
               initiativeId: initiativeId.val(),
               lang:     $('input[name="language"]:checked').val(),
               showTitle: $('input[name="showTitle"]:checked').val() === 'on',
               width:      width.val(),
               height:     height.val()
-            }];
+            };
           },
-    
+
           refreshFields = function (data) {
             initiativeId.val(data.initiativeId).trigger('liszt:updated');
             lang.removeAttr('checked');
@@ -1391,11 +1425,11 @@
             width.val(data.width);
             height.val(data.height);
           };
-  
-        generateIframe(params());
-  
+
+        generateIframe(getParams());
+
         initiativeId.change(function () {
-          generateIframe(params());
+          generateIframe(getParams());
         });
 
         width.add(height).keyup(function () {
@@ -1403,33 +1437,33 @@
 
           delay(function () {
             checkBounds(thisObj);
-            generateIframe(params());
+            generateIframe(getParams());
           }, 1000);
         });
-        
+
         showTitle.change(function () {
-          generateIframe(params());
+          generateIframe(getParams());
         });
-        
+
         lang.change(function () {
-          generateIframe(params());
+          generateIframe(getParams());
         });
-  
+
         reset.click(function (e) {
           e.preventDefault();
-  
+
           if (window.defaultData) {
             refreshFields(window.defaultData);
             generateIframe(window.defaultData);
           }
         });
-  
+
         refresh.click(function (e) {
           e.preventDefault();
-  
-          generateIframe(params());
+
+          generateIframe(getParams());
         });
-  
+
       }());
     }
   });

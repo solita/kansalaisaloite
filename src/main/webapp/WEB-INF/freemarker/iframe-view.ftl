@@ -16,7 +16,7 @@
         <#recover>
             <#assign viewportWidth = 250 />
         </#attempt>
-    
+
         <#if (viewportWidth < 300)>
             <#assign bodyWidthClass="small" />
         <#elseif (viewportWidth < 480)>
@@ -27,19 +27,19 @@
     <#else>
         <#assign bodyWidthClass="small" />
     </#if>
-    
+
     <#assign showTitle = false />
     <#if RequestParameters['showTitle']?? && RequestParameters['showTitle'] == "true">
     	<#assign showTitle = true />
     </#if>
-    
+
     <#--
      * Set current municipality
-    
+
     <#if currentMunicipality.present>
         <#assign pageTitle><@u.message "iframe.initiatives" /> ${currentMunicipality.value.getName(locale)}</#assign>
     <#else>
-        
+
     </#if>
     -->
     <#if initiative??>
@@ -50,7 +50,7 @@
 	        <#assign page="page.initiative.unnamed" />
 	        <#assign pageTitle="" />
 	    </#if>
-	</#if>   
+	</#if>
 
 <!DOCTYPE HTML>
 <!--[if lt IE 7 ]> <html lang="${locale}" class="ie6"> <![endif]-->
@@ -65,32 +65,18 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title><#noescape>${pageTitle}</#noescape> - <@u.message "siteName" /></title> 
-    
-    <link href="${urls.baseUrl}/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" />
-    
-    <#if optimizeResources>
-        <link rel="stylesheet" type="text/css" media="screen" href="${urls.baseUrl}/css/style.min.css?version=${resourcesVersion}" />
-        <!--[if IE ]>
-        <link rel="stylesheet" type="text/css" media="screen" href="${urls.baseUrl}/css/aloitepalvelu-ie.css?version=${resourcesVersion}" />
-        <![endif]-->
+    <title><#noescape>${pageTitle}</#noescape> - <@u.message "siteName" /></title>
 
-        <link rel="stylesheet" type="text/css" media="print" href="${urls.baseUrl}/css/print.css?version=${resourcesVersion}" />
+    <link href="${urls.baseUrl}/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" />
+
+    <#if optimizeResources>
+        <link rel="stylesheet" type="text/css" media="screen" href="${urls.baseUrl}/css/style-iframe.min.css?version=${resourcesVersion}" />
     <#else>
         <link rel="stylesheet" type="text/css" media="screen" href="${urls.baseUrl}/css/normalize.css?version=${resourcesVersion}" />
         <noscript>
             <link rel="stylesheet" type="text/css" media="screen" href="${urls.baseUrl}/css/aloitepalvelu.css" />
-            <!--[if IE ]>
-                <link rel="stylesheet" type="text/css" media="screen" href="${urls.baseUrl}/css/aloitepalvelu-ie.css" />
-            <![endif]-->
         </noscript>
         <link rel="stylesheet/less" type="text/css" media="screen" href="/css/aloitepalvelu-iframe.less" />
-        <!--[if IE ]>
-            <link rel="stylesheet/less" type="text/css" media="screen" href="${urls.baseUrl}/css/aloitepalvelu-ie.less">
-        <![endif]-->
-
-        <link rel="stylesheet/less" type="text/css" media="print" href="${urls.baseUrl}/css/print.less" />
-
         <script src="${urls.baseUrl}/js/less-1.3.0.min.js" type="text/javascript"></script>
     </#if>
 
@@ -99,7 +85,6 @@
 <body class="${bodyWidthClass!""} ${locale}">
 
 <div class="container">
-
     <div id="header">
         <a id="logo" href="${urls.baseUrl}/${locale}" target="_blank" rel="external" title="<@u.message "siteName" />">
             <span><@u.message "siteName" /></span>
@@ -112,19 +97,15 @@
 	        <span class="extra-info"><@u.localDate initiative.startDate /></span>
 	    </#if>
 	</#if>
-    
+
     <#if votingInfo?? && votingInfo.votingInProggress || initiative.totalSupportCount gt 0>
 	    <div class="view-block">
 		    <@m.initiativeVoteInfo />
 		    <#if supportCountData??><@m.supportCountGraph supportCountData /></#if>
 		</div>
 	</#if>
-        
-        
-    </div>
 
-    
-    
+    </div>
 </div>
 
 	<#if optimizeResources>

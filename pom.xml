@@ -476,6 +476,22 @@
                             <goal>minify</goal>
                         </goals>
                     </execution>
+                    <execution>
+                        <id>iframe-minify</id>
+                        <phase>process-resources</phase>
+                        <configuration>
+                            <webappTargetDir>${basedir}/src/main/webapp</webappTargetDir>
+                            <cssSourceDir>css</cssSourceDir>
+                            <cssSourceFiles>
+                                <cssSourceFile>normalize.css</cssSourceFile>
+                                <cssSourceFile>aloitepalvelu-iframe.css</cssSourceFile>
+                            </cssSourceFiles>
+                            <cssFinalFile>style-iframe.css</cssFinalFile>
+                        </configuration>
+                        <goals>
+                            <goal>minify</goal>
+                        </goals>
+                    </execution>
                 </executions>
             </plugin>
             <plugin>

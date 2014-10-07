@@ -2,6 +2,10 @@
 //
 // Styleguide 1.
 
+// Breakpoints
+@narrow:    ~"only screen and (max-width: 520px)";
+@xnarrow:   ~"only screen and (max-width: 320px)";
+
 @bodyBackground:        #f0f0f0;
 @mainColor:             #087480;
 @mainColorLight:        #09a3b4;
@@ -122,10 +126,12 @@
 }
 
 html {
+    width: 100%;
     height:100%;
     font-size:16px; // Using absolute size as Opera gets default font-adjustment from users Computer
 }
 body {
+    width: 100%;
     height:100%;
     font-family: "PT Sans", "Trebuchet MS", Helvetica, sans-serif;
     color:@bodyColor;
@@ -133,7 +139,7 @@ body {
 }
 
 .container {
-	min-width: 500px;
+	min-width: 200px;
     max-width: 940px;
     margin: 0 auto;
     padding: 10px;
@@ -271,7 +277,7 @@ a.block-link {
 
 
 .view-block {
-    
+
 }
 
 
@@ -1110,7 +1116,7 @@ h4 {
 	h3 {
 		margin-right:0.5em;
 	}
-	
+
     .icon {
         display: inline-block;
         width: 20px;
@@ -1170,5 +1176,15 @@ h4 {
         .no-js & {
             display: none;
         }
+    }
+}
+
+@media @narrow {
+    .support-vote-graph {
+
+        .update-info {
+            margin-left: 0;
+        }
+
     }
 }

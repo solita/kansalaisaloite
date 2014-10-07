@@ -1,4 +1,4 @@
-/*global $, jQuery, Raphael, moment */
+/* global $, jQuery, Raphael, moment */
 
 (function ($) {
   'use strict';
@@ -60,7 +60,7 @@
 
       buttonsLeft.append(btnCumul);
       buttonsLeft.append(btnDaily);
-      
+
       $(element)
       .before(buttonsLeft)
       .before(buttons);
@@ -267,7 +267,7 @@
     }
   }
 
-  function getXLabels(data, xLabels, xDays, totalVotingDays) {
+  function getXLabels(data, xLabels, xDays, totalVotingDays, dateFormat) {
     var i,
       res = [],
       firstDate = moment(data.startDate).diff(data.votes[0].d, 'days') < 0 ? data.startDate : data.votes[0].d,
@@ -285,7 +285,7 @@
       } else {
         curDate = moment(data.endDate); // Use the last date, rounding might cause +/- 1 day difference
       }
-      res.push(curDate.format('D.M.YYYY'));
+      res.push(curDate.format(dateFormat));
     }
 
     return res;
@@ -359,6 +359,7 @@
       txtLabel = {font: '12px ' + fontFamily, fill: '#000'},
       txtLabelRight = {font: '12px ' + fontFamily, fill: '#000', 'text-anchor': 'end'},
       txtLabelLeft = {font: '12px ' + fontFamily, fill: '#000', 'text-anchor': 'start'},
+      dateFormat = settings.width < 500 ? (settings.width < 400 ? 'D.M.' : 'D.M.YY') : 'D.M.YYYY',
       xDays = getXDays(settings, labels.length, 30, votingDays),
       fitted = fitToSelectedView(settings, rawData, labels, xDays),
       data = fitted.data,
@@ -415,10 +416,10 @@
     // Draw X labels
     if (settings.cumulative && !settings.zoomed) {
       for (i = 0; i < 7; i++) {
-        r.text(leftgutter + 2 + ((width - leftgutter - X) / 6) * i, height - 6, moment(settings.data.startDate).add('months', i).format('D.M.YYYY')).attr((i < 6) ? (i === 0 ? txtLabelLeft : txtLabel) : txtLabelRight).toBack();
+        r.text(leftgutter + 2 + ((width - leftgutter - X) / 6) * i, height - 6, moment(settings.data.startDate).add('months', i).format(dateFormat)).attr((i < 6) ? (i === 0 ? txtLabelLeft : txtLabel) : txtLabelRight).toBack();
       }
     } else {
-      var xAxisLabels = getXLabels(settings.data, xLabels, xDays, votingDays);
+      var xAxisLabels = getXLabels(settings.data, xLabels, xDays, votingDays, dateFormat);
       for (i = 0; i < xAxisLabels.length; i++) {
         r.text(leftgutter + 2 + ((width - leftgutter - xLabels) / 6) * i, height - 6, xAxisLabels[i]).attr((i < 6) ? (i === 0 ? txtLabelLeft : txtLabel) : txtLabelRight).toBack();
       }
