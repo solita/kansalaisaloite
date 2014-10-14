@@ -21,7 +21,7 @@
   };
 
   var methods = {
-    init : function(options) {
+    init : function (options) {
       var settings = $.extend(defaults, options);
 
       // Override data with random data for developing purposes
@@ -133,7 +133,7 @@
     }
   };
 
-  $.fn.supportVoteGraph = function(methodOrOptions) {
+  $.fn.supportVoteGraph = function (methodOrOptions) {
     if ( methods[methodOrOptions] ) {
       return methods[ methodOrOptions ].apply( this, Array.prototype.slice.call( arguments, 1 ));
     } else if ( typeof methodOrOptions === 'object' || ! methodOrOptions ) {

@@ -134,7 +134,7 @@
 
     // Fire supportVoteGraph
     if (window.supportVoteGraph && window.supportVoteGraph.votes.length > 0) {
-      $(window).on('resize', function() {
+      $(window).on('resize', function () {
         $('#supportVotesGraph').supportVoteGraph({
           data: window.supportVoteGraph,
           color: '#087480',

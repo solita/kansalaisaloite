@@ -431,6 +431,9 @@
                     <outputDirectory>${project.build.directory}/${project.build.finalName}/css</outputDirectory>
                      -->
                     <compress>true</compress>
+                    <excludes>
+                        <exclude>less/*.less</exclude>
+                    </excludes>
                 </configuration>
                 <executions>
                     <execution>
