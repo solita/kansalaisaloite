@@ -4,30 +4,6 @@
 
 <#escape x as x?html>
 
-    <#--
-     * IE 8 and below does not support media-queries. Added a fix for rensponsive layout for IE8 and less.
-     * If width-parameter is included within the url, we will add breakpoint classes in body.
-     *
-    -->
-    <#if RequestParameters['width']??>
-        <#-- If paramater is not a numerical value fallback with default width -->
-        <#attempt>
-            <#assign viewportWidth = RequestParameters['width']?number>
-        <#recover>
-            <#assign viewportWidth = 250 />
-        </#attempt>
-
-        <#if (viewportWidth < 300)>
-            <#assign bodyWidthClass="small" />
-        <#elseif (viewportWidth < 480)>
-            <#assign bodyWidthClass="medium" />
-        <#else>
-            <#assign bodyWidthClass="large" />
-        </#if>
-    <#else>
-        <#assign bodyWidthClass="small" />
-    </#if>
-
     <#assign showTitle = false />
     <#if RequestParameters['showTitle']?? && RequestParameters['showTitle'] == "true">
     	<#assign showTitle = true />
@@ -77,7 +53,20 @@
             <link rel="stylesheet" type="text/css" media="screen" href="${urls.baseUrl}/css/aloitepalvelu.css" />
         </noscript>
         <link rel="stylesheet/less" type="text/css" media="screen" href="/css/aloitepalvelu-iframe.less" />
-        <script src="${urls.baseUrl}/js/less-1.3.0.min.js" type="text/javascript"></script>
+
+        <script>
+          less = {
+            env: "development",
+            async: false,
+            fileAsync: false,
+            poll: 1000,
+            functions: {},
+            dumpLineNumbers: "comments",
+            relativeUrls: false,
+            rootpath: "/css/"
+          };
+        </script>
+        <script src="${urls.baseUrl}/js/less.min.js" type="text/javascript"></script>
     </#if>
 
 </head>
@@ -86,13 +75,15 @@
 
 <div class="container">
     <div id="header">
-        <a class="logo" id="logo" href="${urls.baseUrl}/${locale}" target="_blank" rel="external" title="<@u.message "siteName" />">
+        <a class="logo small" id="logo" href="${urls.baseUrl}/${locale}" target="_blank" rel="external" title="<@u.message "siteName" />">
             <span><@u.message "siteName" /></span>
         </a>
 	</div>
 
     <#if showTitle>
-    	<h1 class="name"><@u.text initiative.name /></h1>
+        <a href="${urls.view(initiative.id)}" target="_blank" rel="external">
+    	   <h1 class="name"><@u.text initiative.name /></h1>
+        </a>
 	    <#if initiative.startDate??>
 	        <span class="extra-info"><@u.localDate initiative.startDate /></span>
 	    </#if>

@@ -26,7 +26,7 @@
  *
  * [min width, max width, min height, max height]
 -->
-<#assign iFrameBounds = [220, 890, 300, 1000]>
+<#assign iFrameBounds = [220, 1000, 300, 1500]>
 
 
 <@l.main "page.iframeGenerator" pageTitle!"">

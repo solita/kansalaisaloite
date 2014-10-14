@@ -135,9 +135,9 @@ a.block-link {
 
 #header {
     width: 100%;
-    padding-top:18px;
-    margin-bottom:2.3em;
-    background:#fff;
+    padding-top: 10px;
+    margin-bottom: 10px;
+    background: #fff;
 }
 
 .logo {
@@ -891,7 +891,7 @@ a.block-link {
 // Styleguide 7.
 
 h1, h2, h3, h4, h5, h6, p {
-    margin-top:0;
+    margin-top: 0;
 }
 
 // H1
@@ -996,9 +996,8 @@ h4 {
         width: 20px;
         height: 20px;
 
-        background-image: url("../img/icons-supportvotegraph.png?version=${timestamp}");
-        background-image: url("../img/icons-supportvotegraph.svg?version=${timestamp}"), none;
-        background-repeat: no-repeat;
+        .backgroundImage("icons-supportvotegraph");
+
         background-size: 48px auto;
 
         vertical-align: baseline;
@@ -1036,13 +1035,6 @@ h4 {
 
     }
 
-    // .graph-zoom {
-    //     // float: right;
-    //     a.act {
-    //         display: none;
-    //     }
-    // }
-
     .update-info {
         margin: 1em 0 0 50px;
         font-size: 0.8em;
@@ -1062,3 +1054,10 @@ h4 {
 
     }
 }
+
+@media @xnarrow {
+    h1 {
+        font-size: 1.2em;
+    }
+}
+

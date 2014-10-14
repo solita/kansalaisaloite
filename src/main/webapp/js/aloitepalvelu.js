@@ -134,19 +134,21 @@
 
     // Fire supportVoteGraph
     if (window.supportVoteGraph && window.supportVoteGraph.votes.length > 0) {
-      $('#supportVotesGraph').supportVoteGraph({
-        data: window.supportVoteGraph,
-        color: '#087480',
-        colorHl: '#bc448e',
-        width : $('#supportVotesGraph').parent().width() || 960,
-        height : 250,
-        leftgutter : 50,
-        rightgutter : 30,
-        bottomgutter : 20,
-        topgutter : 20,
-        cumulative : true,
-        max : 50000
-      });
+      $(window).on('resize', function() {
+        $('#supportVotesGraph').supportVoteGraph({
+          data: window.supportVoteGraph,
+          color: '#087480',
+          colorHl: '#bc448e',
+          width : $('#supportVotesGraph').parent().width() || 960,
+          height : 250,
+          leftgutter : 50,
+          rightgutter : 30,
+          bottomgutter : 20,
+          topgutter : 20,
+          cumulative : true,
+          max : 50000
+        });
+      }).trigger('resize');
     }
 
     /**
@@ -1432,10 +1434,9 @@
         });
 
         width.add(height).keyup(function () {
-          var thisObj = $(this);
-
           delay(function () {
-            checkBounds(thisObj);
+            checkBounds(width);
+            checkBounds(height);
             generateIframe(getParams());
           }, 1000);
         });

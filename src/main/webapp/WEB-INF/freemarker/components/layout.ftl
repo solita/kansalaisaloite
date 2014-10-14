@@ -176,7 +176,19 @@
 
         <link rel="stylesheet/less" type="text/css" media="print" href="${urls.baseUrl}/css/print.less" />
 
-        <script src="${urls.baseUrl}/js/less-1.3.0.min.js" type="text/javascript"></script>
+        <script>
+          less = {
+            env: "development",
+            async: false,
+            fileAsync: false,
+            poll: 1000,
+            functions: {},
+            dumpLineNumbers: "comments",
+            relativeUrls: false,
+            rootpath: "/css/"
+          };
+        </script>
+        <script src="${urls.baseUrl}/js/less.min.js" type="text/javascript"></script>
     </#if>
 
     <#--

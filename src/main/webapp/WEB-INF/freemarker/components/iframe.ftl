@@ -96,7 +96,8 @@
 
         <br class="clear" />
 
-        <p id="initiative-name"></p>
+        <div class="input-header"><@u.message "initiative" /></div>
+        <p id="initiative-name"><@u.message "iframeGenerator.chooseInitiative" /></p>
 
         <p><a href="#" class="js-reset-iframe"><@u.message "iframeGenerator.reset" /></a></p>
 
@@ -120,7 +121,7 @@
 	                    height: ${bounds[2]}
 	                },
 	                max : {
-	                    width:  ${bounds[1]},
+	                    width:  ${bounds[1]?string("0")},
 	                    height: ${bounds[3]?string("0")}
 	                }
 	            };

@@ -3,128 +3,145 @@
 (function ($) {
   'use strict';
 
-  var initGraph, clearChart;
+  var graph, initGraph, clearChart;
+  var firstLoad = true;
+  var defaults = {
+    data : {},
+    color: '#087480',
+    colorHl: '#bc448e',
+    width : 960,
+    height : 250,
+    leftgutter : 50,
+    rightgutter : 30,
+    bottomgutter : 20,
+    topgutter : 20,
+    cumulative : true,
+    zoomed : false,
+    max : 50000
+  };
 
-  $.fn.supportVoteGraph = function (options) {
-    var settings = $.extend({
-      data : {},
-      color: '#087480',
-      colorHl: '#bc448e',
-      width : 960,
-      height : 250,
-      leftgutter : 50,
-      rightgutter : 30,
-      bottomgutter : 20,
-      topgutter : 20,
-      cumulative : true,
-      zoomed : false,
-      max : 50000
-    }, options);
+  var methods = {
+    init : function(options) {
+      var settings = $.extend(defaults, options);
 
-    // Override data with random data for developing purposes
-    // settings.data.votes = testDataGererator('2014-06-04', '2014-12-04', 25, 50);
-    // settings.data.votes = testDataGererator('2014-06-04', '2014-12-04', 300, 100);
-    // settings.data.votes = testDataGererator('2014-06-04', '2014-10-04', 25, 50);
-    // settings.data.votes = testDataGererator('2014-06-04', '2014-10-04', 1, 10);
-    // settings.data.votes = testDataGererator('2014-08-04', '2014-10-05', 1, 10);
-    // settings.data.votes = testDataGererator('2014-06-04', '2014-12-04', 25, 50);
-    // settings.data.votes = testDataGererator('2014-06-07', '2014-06-15', 25, 50);
-    // settings.data.votes = testDataGererator('2014-06-07', '2014-06-20', 25, 50);
-    // settings.data.votes = testDataGererator('2014-06-04', '2014-06-25', 25, 50);
-    // settings.data.startDate = '2014-06-04';
-    // settings.data.endDate = '2014-12-04';
+      // Override data with random data for developing purposes
+      // settings.data.votes = testDataGererator('2014-06-04', '2014-12-04', 25, 50);
+      // settings.data.votes = testDataGererator('2014-06-04', '2014-12-04', 300, 100);
+      // settings.data.votes = testDataGererator('2014-06-04', '2014-10-04', 25, 50);
+      // settings.data.votes = testDataGererator('2014-06-04', '2014-10-04', 1, 10);
+      // settings.data.votes = testDataGererator('2014-08-04', '2014-10-05', 1, 10);
+      // settings.data.votes = testDataGererator('2014-06-04', '2014-12-04', 25, 50);
+      // settings.data.votes = testDataGererator('2014-06-07', '2014-06-15', 25, 50);
+      // settings.data.votes = testDataGererator('2014-06-07', '2014-06-20', 25, 50);
+      // settings.data.votes = testDataGererator('2014-06-04', '2014-06-25', 25, 50);
+      // settings.data.startDate = '2014-06-04';
+      // settings.data.endDate = '2014-12-04';
 
-    return this.each(function (index, element) {
-      var r,
-        btnCumul = $('<a>' + settings.data.lang.btnCumul + '</a>'),
-        btnDaily = $('<a>' + settings.data.lang.btnDaily + '</a>'),
-        buttonsLeft = $('<span class="switch-buttons" />'),
-        buttons = $('<div class="graph-actions" />'),
-        btnZoomIn = $('<a title="' + settings.data.lang.btnZoomIn + '" class="trigger-tooltip"><i class="icon zoom-in"></i></a>'),
-        btnZoomOut = $('<a title="' + settings.data.lang.btnZoomOut + '" class="trigger-tooltip"><i class="icon zoom-out"></i></a>'),
-        zoomHolder = $('<div class="graph-zoom" />');
+      return this.each(function (index, element) {
+        var r,
+          btnCumul = $('<a>' + settings.data.lang.btnCumul + '</a>'),
+          btnDaily = $('<a>' + settings.data.lang.btnDaily + '</a>'),
+          buttonsLeft = $('<span class="switch-buttons" />'),
+          buttons = $('<div class="graph-actions" />'),
+          btnZoomIn = $('<a title="' + settings.data.lang.btnZoomIn + '" class="trigger-tooltip"><i class="icon zoom-in"></i></a>'),
+          btnZoomOut = $('<a title="' + settings.data.lang.btnZoomOut + '" class="trigger-tooltip"><i class="icon zoom-out"></i></a>'),
+          zoomHolder = $('<div class="graph-zoom" />');
 
-      function refreshGraph() {
-        r = initGraph(element, settings);
-      }
-
-      function showZoomHolder(show) {
-        if (show) {
-          zoomHolder.css('display', 'inline-block');
-        } else {
-          zoomHolder.css('display', 'none');
+        function refreshGraph() {
+          if (graph !== undefined){
+            clearChart(graph, element);
+          }
+          graph = initGraph(element, settings);
         }
-      }
 
-      refreshGraph();
+        function showZoomHolder(show) {
+          if (show) {
+            zoomHolder.css('display', 'inline-block');
+          } else {
+            zoomHolder.css('display', 'none');
+          }
+        }
 
-      buttonsLeft.append(btnCumul);
-      buttonsLeft.append(btnDaily);
+        refreshGraph();
 
-      $(element)
-      .before(buttonsLeft)
-      .before(buttons);
+        if (firstLoad){
+          buttonsLeft.append(btnCumul);
+          buttonsLeft.append(btnDaily);
 
-      if (settings.cumulative) {
-        showZoomHolder(true);
-        btnCumul.addClass('active');
-      } else {
-        btnDaily.addClass('active');
-      }
+          $(element)
+          .before(buttonsLeft)
+          .before(buttons);
 
-      btnCumul.click(function () {
-        if (!$(this).hasClass('active')) {
-          $(this).addClass('active');
-          btnDaily.removeClass('active');
-          settings.cumulative = true;
+          // Zoom
+          zoomHolder.append(btnZoomIn);
+          zoomHolder.append(btnZoomOut);
+          buttons.prepend(zoomHolder);
+          btnZoomOut.addClass('act');
+        }
+        firstLoad = false;
+
+        if (settings.cumulative) {
           showZoomHolder(true);
-
-          clearChart(r, element);
-          refreshGraph();
+          btnCumul.addClass('active');
+        } else {
+          btnDaily.addClass('active');
         }
+
+        btnCumul.click(function () {
+          if (!$(this).hasClass('active')) {
+            $(this).addClass('active');
+            btnDaily.removeClass('active');
+            settings.cumulative = true;
+            showZoomHolder(true);
+
+            refreshGraph();
+          }
+        });
+
+        btnDaily.click(function () {
+          if (!$(this).hasClass('active')) {
+            $(this).addClass('active');
+            btnCumul.removeClass('active');
+            settings.cumulative = false;
+            showZoomHolder(false);
+
+            refreshGraph();
+          }
+        });
+
+        btnZoomIn.click(function () {
+          if (!$(this).hasClass('act')) {
+            $(this).addClass('act');
+            btnZoomOut.removeClass('act');
+            settings.zoomed = true;
+
+            refreshGraph();
+          }
+        });
+
+        btnZoomOut.click(function () {
+          if (!$(this).hasClass('act')) {
+            $(this).addClass('act');
+            btnZoomIn.removeClass('act');
+            settings.zoomed = false;
+
+            refreshGraph();
+          }
+        });
+
       });
+    }
+  };
 
-      btnDaily.click(function () {
-        if (!$(this).hasClass('active')) {
-          $(this).addClass('active');
-          btnCumul.removeClass('active');
-          settings.cumulative = false;
-          showZoomHolder(false);
-
-          clearChart(r, element);
-          refreshGraph();
-        }
-      });
-
-      // Zoom
-      zoomHolder.append(btnZoomIn);
-      zoomHolder.append(btnZoomOut);
-      buttons.prepend(zoomHolder);
-      btnZoomOut.addClass('act');
-
-      btnZoomIn.click(function () {
-        if (!$(this).hasClass('act')) {
-          $(this).addClass('act');
-          btnZoomOut.removeClass('act');
-          settings.zoomed = true;
-
-          clearChart(r, element);
-          refreshGraph();
-        }
-      });
-
-      btnZoomOut.click(function () {
-        if (!$(this).hasClass('act')) {
-          $(this).addClass('act');
-          btnZoomIn.removeClass('act');
-          settings.zoomed = false;
-
-          clearChart(r, element);
-          refreshGraph();
-        }
-      });
-
-    });
+  $.fn.supportVoteGraph = function(methodOrOptions) {
+    if ( methods[methodOrOptions] ) {
+      return methods[ methodOrOptions ].apply( this, Array.prototype.slice.call( arguments, 1 ));
+    } else if ( typeof methodOrOptions === 'object' || ! methodOrOptions ) {
+      // Default to "init"
+      return methods.init.apply( this, arguments );
+    } else {
+      $.error( 'Method ' +  methodOrOptions + ' does not exist on jQuery.supportVoteGraph' );
+    }
   };
 
   Raphael.fn.drawGrid = function (x, y, w, h, wv, hv, color, opacity) {
