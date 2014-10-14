@@ -36,7 +36,7 @@
 
     <div id="header">
         <div id="header-content">
-            <a id="logo" href="${urls.baseUrl}/${locale}" accesskey="1" title="<@u.message "siteName" />">
+            <a class="logo" id="logo" href="${urls.baseUrl}/${locale}" accesskey="1" title="<@u.message "siteName" />">
                 <span><@u.message "siteName" /></span>
             </a>
         </div>
@@ -244,7 +244,7 @@
     <div id="header">
         <div id="header-content">
 
-            <a id="logo" href="${urls.baseUrl}/${locale}" accesskey="1" title="<@u.message "siteName" />">
+            <a class="logo" id="logo" href="${urls.baseUrl}/${locale}" accesskey="1" title="<@u.message "siteName" />">
                 <span><@u.message "siteName.logo" /></span>
             </a>
 

@@ -1,129 +1,6 @@
-// Basic colors used on the service.
-//
-// Styleguide 1.
 
-// Breakpoints
-@narrow:    ~"only screen and (max-width: 520px)";
-@xnarrow:   ~"only screen and (max-width: 320px)";
-
-@bodyBackground:        #f0f0f0;
-@mainColor:             #087480;
-@mainColorLight:        #09a3b4;
-@secondaryColor:        #bc448e;
-@secondaryColorLight:   #f084c6;
-@tertiaryColor:         #6D6E71;
-@lightGray:             #b7b7b7;
-@bodyColor:             #444444;
-
-@link:                  #0089f2;
-@linkHover:             #0070c5;
-@headerLinkHover:       #D94E9C;
-
-@gradientDark:          #0ece27;
-@borderGray:            #cccccc;
-@borderGrayLight:       #e2e2e2;
-@secondaryTextColor:    #686868;
-@black:                 #000000;
-
-@greenGradient1:        #76b522;
-@greenGradient2:        #387d0e;
-@greenGradientActive1:  #68ac0d;
-@greenGradientActive2:  #1f5100;
-@greenGradientHover1:   #76bb19;
-@greenGradientHover2:   #2d7103;
-
-@redGradient1:          #e80a13;
-@redGradient2:          #b51105;
-@redGradientHover1:     #fe000a;
-@redGradientHover2:     #a60b00;
-@redGradientActive1:    #ec0009;
-@redGradientActive2:    #810900;
-
-@grayGradient1:         #ffffff;
-@grayGradient2:         #e2e2e2;
-@grayGradientActive1:   #ffffff;
-@grayGradientActive2:   #b2b2b2;
-@grayGradientHover1:    #ffffff;
-@grayGradientHover2:    #d7d7d7;
-
-@cornerRadius: 0.8em;
-@cornerRadiusSmall: 0.4em;
-@cornerRadiusXtraSmall: 0.2em;
-
-@dimmed: 0.6;
-
-// Mixing
-//
-// Rounded corners
-//
-// Styleguide 2.1
-
-.rounded-corners (@cornerRadius: 0.8em) {
-    -webkit-border-radius: @cornerRadius;
-    -moz-border-radius: @cornerRadius;
-    border-radius: @cornerRadius;
-}
-.rounded-corners-top-left (@cornerRadius: 0.8em) {
-    -webkit-border-top-left-radius: @cornerRadius;
-    -moz-border-top-left-radius: @cornerRadius;
-    border-top-left-radius: @cornerRadius;
-}
-.rounded-corners-bottom-left (@cornerRadius: 0.8em) {
-    -webkit-border-bottom-left-radius: @cornerRadius;
-    -moz-border-bottom-left-radius: @cornerRadius;
-    border-bottom-left-radius: @cornerRadius;
-}
-.rounded-corners-top-right (@cornerRadius: 0.8em) {
-    -webkit-border-top-right-radius: @cornerRadius;
-    -moz-border-top-right-radius: @cornerRadius;
-    border-top-right-radius: @cornerRadius;
-}
-.rounded-corners-bottom-right (@cornerRadius: 0.8em) {
-    -webkit-border-bottom-right-radius: @cornerRadius;
-    -moz-border-bottom-right-radius: @cornerRadius;
-    border-bottom-right-radius: @cornerRadius;
-}
-
-// Mixing
-//
-// .transition
-//
-// Styleguide 2.2
-.transition (@property, @delay, @easing) {
-    transition: @property @delay @easing;
-    -moz-transition: @property @delay @easing;
-    -webkit-transition: @property @delay @easing;
-    -o-transition: @property @delay @easing;
-}
-.gradient (@start, @stop){
-    background: @start;
-    background: linear-gradient(top,  @start,  @stop);
-    background: -ms-linear-gradient(top,  @start,  @stop);
-    background: -webkit-gradient(linear, left top, left bottom, from(@start), to(@stop));
-    background: -moz-linear-gradient(top,  @start, @stop);
-    background: -o-linear-gradient(top,  @start, @stop);
-}
-
-.gradientHorizontal (@start, @stop){
-    background: @start;
-    background: linear-gradient(left,  @start,  @stop);
-    background: -ms-linear-gradient(left,  @start,  @stop);
-    background: -webkit-gradient(linear, left top, right top, from(@start), to(@stop));
-    background: -moz-linear-gradient(left,  @start, @stop);
-    background: -o-linear-gradient(left,  @start, @stop);
-}
-
-.makeEllipsis(){
-    white-space:nowrap;
-    overflow:hidden;
-    -ms-text-overflow:ellipsis;
-    -o-text-overflow:ellipsis;
-    text-overflow:ellipsis;
-}
-
-.iconPosition(@xIndex, @yIndex, @offsetSize: 24px) {
-    background-position: (-@xIndex*@offsetSize)+0px (-@yIndex*@offsetSize)+0px;
-}
+@import 'less/vars';
+@import 'less/mixins';
 
 html {
     width: 100%;
@@ -261,15 +138,12 @@ a.block-link {
     padding-top:18px;
     margin-bottom:2.3em;
     background:#fff;
-
-    #logo {
-        display:block;
-        width: 360px;
-        height:72px;
-        background:url("../img/logo.png?version=${timestamp}") 0 0 no-repeat;
-    }
-    #logo span { display:none; }
 }
+
+.logo {
+    .kaaLogo();
+}
+
 
 .initiative-content-header {
     position:relative;

@@ -1359,7 +1359,6 @@
                 callback(null);
               }
             }
-
           },
           populateInitiativeDetails = function (params) {
             getInitiative(api, params.initiativeId, function (data) {

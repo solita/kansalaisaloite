@@ -1,0 +1,108 @@
+// Mixing
+//
+// Rounded corners
+//
+// Styleguide 2.1
+
+.rounded-corners (@cornerRadius: 0.8em) {
+    -webkit-border-radius: @cornerRadius;
+    -moz-border-radius: @cornerRadius;
+    border-radius: @cornerRadius;
+}
+.rounded-corners-top-left (@cornerRadius: 0.8em) {
+    -webkit-border-top-left-radius: @cornerRadius;
+    -moz-border-top-left-radius: @cornerRadius;
+    border-top-left-radius: @cornerRadius;
+}
+.rounded-corners-bottom-left (@cornerRadius: 0.8em) {
+    -webkit-border-bottom-left-radius: @cornerRadius;
+    -moz-border-bottom-left-radius: @cornerRadius;
+    border-bottom-left-radius: @cornerRadius;
+}
+.rounded-corners-top-right (@cornerRadius: 0.8em) {
+    -webkit-border-top-right-radius: @cornerRadius;
+    -moz-border-top-right-radius: @cornerRadius;
+    border-top-right-radius: @cornerRadius;
+}
+.rounded-corners-bottom-right (@cornerRadius: 0.8em) {
+    -webkit-border-bottom-right-radius: @cornerRadius;
+    -moz-border-bottom-right-radius: @cornerRadius;
+    border-bottom-right-radius: @cornerRadius;
+}
+
+// Mixing
+//
+// .transition
+//
+// Styleguide 2.2
+.transition (@property, @delay, @easing) {
+    transition: @property @delay @easing;
+    -moz-transition: @property @delay @easing;
+    -webkit-transition: @property @delay @easing;
+    -o-transition: @property @delay @easing;
+}
+.gradient (@start, @stop){
+    background: @start;
+    background: linear-gradient(top,  @start,  @stop);
+    background: -ms-linear-gradient(top,  @start,  @stop);
+    background: -webkit-gradient(linear, left top, left bottom, from(@start), to(@stop));
+    background: -moz-linear-gradient(top,  @start, @stop);
+    background: -o-linear-gradient(top,  @start, @stop);
+}
+
+.gradientHorizontal (@start, @stop){
+    background: @start;
+    background: linear-gradient(left,  @start,  @stop);
+    background: -ms-linear-gradient(left,  @start,  @stop);
+    background: -webkit-gradient(linear, left top, right top, from(@start), to(@stop));
+    background: -moz-linear-gradient(left,  @start, @stop);
+    background: -o-linear-gradient(left,  @start, @stop);
+}
+
+.makeEllipsis(){
+    white-space:nowrap;
+    overflow:hidden;
+    -ms-text-overflow:ellipsis;
+    -o-text-overflow:ellipsis;
+    text-overflow:ellipsis;
+}
+
+.iconPosition(@xIndex, @yIndex, @offsetSize: 24px) {
+    background-position: (-@xIndex*@offsetSize)+0px (-@yIndex*@offsetSize)+0px;
+}
+
+.backgroundImage(@fileName, @postFix: "") {
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-image: url("@{imagesFolder}/@{fileName}@{postFix}.png");
+  background-image: url("@{imagesFolder}/@{fileName}.svg"), none;
+}
+
+.kaaLogo() {
+    display: block;
+    width: 360px;
+    height:72px;
+    .backgroundImage("kansalaisaloite-logo-fi");
+
+    &.small {
+        width: 200px;
+        height: 41px;
+        .backgroundImage("kansalaisaloite-logo-fi", "-small");
+    }
+
+    .sv & {
+        width: 406px;
+        .backgroundImage("kansalaisaloite-logo-sv");
+
+        &.small {
+            width: 200px;
+            height: 41px;
+            .backgroundImage("kansalaisaloite-logo-fi", "-small");
+        }
+    }
+
+    span {
+        display: none;
+    }
+}

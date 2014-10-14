@@ -86,7 +86,7 @@
 
 <div class="container">
     <div id="header">
-        <a id="logo" href="${urls.baseUrl}/${locale}" target="_blank" rel="external" title="<@u.message "siteName" />">
+        <a class="logo" id="logo" href="${urls.baseUrl}/${locale}" target="_blank" rel="external" title="<@u.message "siteName" />">
             <span><@u.message "siteName" /></span>
         </a>
 	</div>
