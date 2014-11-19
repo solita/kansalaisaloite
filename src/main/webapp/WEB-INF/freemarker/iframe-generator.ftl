@@ -35,13 +35,12 @@
 
     <p><@u.message "iframeGenerator.instruction.description" /></p>
     <p><@u.message "iframeGenerator.instruction.links" /></p>
-    <p><@u.message "iframeGenerator.instruction.update" /></p>
 
     <h3><@u.message "iframeGenerator.instruction.setup.title" /></h3>
 
     <p><@u.message "iframeGenerator.instruction.setup.description" /></p>
     <ul>
-        <li><@u.message key="iframeGenerator.instruction.setup.municipality" /></li>
+        <li><@u.message key="iframeGenerator.instruction.setup.initiative" /></li>
         <li><@u.message key="iframeGenerator.instruction.setup.lang" /></li>
         <li><@u.message key="iframeGenerator.instruction.setup.width" args=[iFrameBounds[0], iFrameBounds[1]] /></li>
         <li><@u.message key="iframeGenerator.instruction.setup.height" args=[iFrameBounds[2], iFrameBounds[3]] /></li>
