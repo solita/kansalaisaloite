@@ -1,13 +1,11 @@
 package fi.om.initiative.web;
 
-import java.util.Locale;
+import fi.om.initiative.util.Locales;
+import org.springframework.web.servlet.LocaleResolver;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.web.servlet.LocaleResolver;
-
-import fi.om.initiative.util.Locales;
+import java.util.Locale;
 
 public class URILocaleResolver implements LocaleResolver {
 
@@ -20,6 +18,12 @@ public class URILocaleResolver implements LocaleResolver {
         } 
         
         else {
+
+            // Iframe has different uri to prevent usage of securityFilter, so it's locale must be checked here separatedly.
+            if (request.getRequestURI().startsWith(Urls.IFRAME_SV_BASE)) {
+                return Locales.LOCALE_SV;
+            }
+
             String uri = request.getRequestURI();
             
             if (uri.startsWith(request.getContextPath() + Urls.FRONT_SV)) {

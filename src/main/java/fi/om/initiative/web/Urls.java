@@ -1,7 +1,6 @@
 package fi.om.initiative.web;
 
 import com.google.common.base.Strings;
-
 import fi.om.initiative.dto.search.SearchView;
 import fi.om.initiative.dto.search.Show;
 import fi.om.initiative.util.Locales;
@@ -135,9 +134,13 @@ public final class Urls {
 
     public static final String IFRAME_GENERATOR_SV = "/sv/widget";
 
-    public static final String IFRAME_FI = "/iframe/fi" + "/" + ID_PARAMETER;
+    public static final String IFRAME_FI_BASE = "/iframe/fi/";
 
-    public static final String IFRAME_SV = "/iframe/sv" + "/" + ID_PARAMETER;
+    public static final String IFRAME_SV_BASE = "/iframe/sv/";
+
+    public static final String IFRAME_FI = IFRAME_FI_BASE + ID_PARAMETER;
+
+    public static final String IFRAME_SV = IFRAME_SV_BASE + ID_PARAMETER;
 
     public static Urls FI = null;
     
