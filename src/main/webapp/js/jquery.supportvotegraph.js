@@ -202,7 +202,7 @@
     l1 = (p2x - p1x) / 2;
     l2 = (p3x - p2x) / 2;
     a = Math.atan((p2x - p1x) / Math.abs(p2y - p1y));
-    b = Math.atan((p3x - p2x) / Math.abs(p2y - p3y));
+    b = Math.atan((p3x - p2x) / (Math.abs(p2y - p3y) !== 0 ? Math.abs(p2y - p3y) : 1));
     a = p1y < p2y ? Math.PI - a : a;
     b = p3y < p2y ? Math.PI - b : b;
 
