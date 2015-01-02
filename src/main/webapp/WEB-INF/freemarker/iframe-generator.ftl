@@ -15,11 +15,13 @@
 
 
 <#--
- * Set default data for iFrmae
+ * Set default data for iFrame
+ *
+ * Default to NO initiative
  *
  * [initiativeId, locale, limit, width, height, showTitle]
 -->
-<#assign iFrameDefaults = [1, locale, 600, 600, false]>
+<#assign iFrameDefaults = ["", locale, 600, 600, false]>
 
 <#--
  * Set min and maximum values for the generated iFrame

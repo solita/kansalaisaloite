@@ -135,31 +135,35 @@
 
         <script id="iframe-template" type="text/x-jsrender">
             <h2><@u.message "iframeGenerator.preview.title" /></h2>
-
-            <div id="iframe-placeholder" style="width:{{:width}}px; height:{{:height}}px;"><span class="loader"></span></div>
-            <iframe id="kansalaisaloite-leijuke"
-                    frameborder="0"
-                    scrolling="no"
-                    src="${iframeUrl}/{{:lang}}/{{:initiativeId}}?showTitle={{:showTitle}}"
-                    width="{{:width}}"
-                    height="{{:height}}" onload="iFrameLoaded('kansalaisaloite-leijuke', 'iframe-placeholder')">
-            </iframe>
-
-            <#assign iFrameSrc>
-            <@compress single_line=true>
-                <iframe id="kansalaisaloite-leijuke"
-                    frameborder="0"
-                    scrolling="no"
-                    src="${iframeUrl}/{{:lang}}/{{:initiativeId}}?showTitle={{:showTitle}}"
-                    width="{{:width}}"
-                    height="{{:height}}">
-                </iframe>
-            </@compress>
-            </#assign>
-
-            <h2><@u.message "iframeGenerator.source.title" /></h2>
-
-            <pre id="iframe-source">${iFrameSrc}</pre>
+            
+            {{if showPreview}}
+	            <div id="iframe-placeholder" style="width:{{:width}}px; height:{{:height}}px;"><span class="loader"></span></div>
+	            <iframe id="kansalaisaloite-leijuke"
+	                    frameborder="0"
+	                    scrolling="no"
+	                    src="${iframeUrl}/{{:lang}}/{{:initiativeId}}?showTitle={{:showTitle}}"
+	                    width="{{:width}}"
+	                    height="{{:height}}" onload="iFrameLoaded('kansalaisaloite-leijuke', 'iframe-placeholder')">
+	            </iframe>
+	
+	            <#assign iFrameSrc>
+	            <@compress single_line=true>
+	                <iframe id="kansalaisaloite-leijuke"
+	                    frameborder="0"
+	                    scrolling="no"
+	                    src="${iframeUrl}/{{:lang}}/{{:initiativeId}}?showTitle={{:showTitle}}"
+	                    width="{{:width}}"
+	                    height="{{:height}}">
+	                </iframe>
+	            </@compress>
+	            </#assign>
+	
+	            <h2><@u.message "iframeGenerator.source.title" /></h2>
+	
+	            <pre id="iframe-source">${iFrameSrc}</pre>
+            {{else}}
+            	<p><@u.message "iframeGenerator.chooseInitiative" /></p>
+            {{/if}}
         </script>
     </div>
 
