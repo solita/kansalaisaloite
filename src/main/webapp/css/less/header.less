@@ -1,142 +1,28 @@
-.header-dropdown {
-    position:relative;
-    float:left;
-}
-
-.dropdown-menu {
-    display: none;
-    position: absolute;
-    top: 36px;
-    left: 6px;
-    text-align: left;
-    background: white;
-    border: 1px solid silver;
-    border-top: 0px;
-    padding: 8px;
-    list-style: none;
-    z-index: 998;
-    font-size: 80%;
-    width: 13em;
-    box-shadow: 2px 2px 2px rgba(0,0,0,0.1);
-
-    &.user-menu {
-        left:auto;
-        right:0;
-        top:40px;
-        //width:100px;
-    }
-
-    a {
-        display: block;
-        color: #444;
-        border-top: 1px solid #f1f1f1;
-        padding: 5px;
-        margin: 0px;
-    }
-    li:first-child a {
-        border-top:none;
-    }
-
-    a:hover {
-        color: black;
-        background: #f1f1f1;
-    }
-}
-
-.logged-in-info {
-    font-size: 0.9em;
-    border-left: 1px solid black;
-    border-right: 1px solid #5a5a5a;
-    float: right;
-
-    .header-tool-link, .header-tool-text {
-        position:relative;
-        float: left;
-        max-width: 300px;
-        margin: 0px;
-        padding:0 38px 0 15px;
-        line-height:40px;
-
-        border-left: 1px solid #5a5a5a;
-        border-right: 1px solid black;
-
-        color: @lightGray;
-
-        &.login {
-            padding:0 15px 0 15px;
-        }
-
-        .makeEllipsis();
-
-        .ie8 & {
-            white-space: normal;
-            height: 40px;
-        }
-    }
-
-    .header-tool-link:hover {
-        color: white;
-    }
-
-    .header-tool-text {
-        padding:0 15px;
-    }
-}
-
-// Dropdown CSS for NOSCRIPT users
-.no-js #header-tools #header-tools-content .other-services-container:hover,
-.no-js #header-tools #header-tools-content .logged-in-info:hover {
-    .other-services-select {
-        border: 1px solid silver;
-        border-bottom:0;
-        z-index: 999;
-        color: #444;
-        background: #fff;
-        .icon-small.dropdown-icon {
-            background: #fff url("@{imagesPath}/icons-sprite.png?version=${timestamp}") no-repeat -96px -13px;
-        }
-    }
-
-    .dropdown-menu {
-        display:block;
-    }
-}
-
 #header {
     width: 100%;
-    padding-top:18px;
-    margin-bottom:2.3em;
-    background:#fff;
+    padding-top: @headerTopPad;
+    margin-bottom: 2.3em;
+    background: #fff;
 
     border-bottom: 1px solid @borderGray;
 
-    #header-content {
+    .header-content {
         position: relative;
         height: 130px;
         width: 960px;
         margin: 0 auto;
 
-
-        #header-additional-content {
+        .header-additional-content {
             position: absolute;
-            right: 0px;
-            top: 20px;
+            right: 10px;
+            top: 40px;
             text-align: right;
         }
-
     }
 }
 
 .logo {
     .kaaLogo();
-}
-
-
-// Exceptions for swedish page
-.sv {
-    &.font-size-large #header #main-navigation a {
-        padding:0.2em 0.5em 0.5em 0.5em;
-    }
 }
 
 .font-size {
@@ -146,7 +32,6 @@
 }
 
 .font-size-toggle {
-
     margin-left: 0.5em;
 
     .font-size-small-link {
@@ -189,7 +74,6 @@
 
 .additional-tools {
     font-size: 90%;
-    margin: 0.5em 1em;
     width:400px; // Fixes a Chrome/Safari issue with font-size links
 }
 

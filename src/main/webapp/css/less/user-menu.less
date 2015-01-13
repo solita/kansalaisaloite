@@ -1,0 +1,85 @@
+.logged-in-info {
+    position: absolute;
+    top: -@headerTopPad;
+    right: 0;
+    font-size: 0.9em;
+    float: right;
+
+    > a {
+        position:relative;
+        float: left;
+        max-width: 300px;
+        margin: 1px;
+        padding: 0 38px 0 15px;
+        line-height: 40px;
+        // border: 1px solid #ddd;
+
+        color: @bodyColor;
+
+        &.login {
+            padding:0 15px 0 15px;
+        }
+
+        .makeEllipsis();
+
+        .ie8 & {
+            white-space: normal;
+            height: 40px;
+        }
+
+        &:hover {
+            margin: 0;
+            border: 1px solid #ddd;
+            color: #666;
+        }
+    }
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 36px;
+    left: 6px;
+    text-align: left;
+    background: white;
+    border: 1px solid silver;
+    border-top: 0px;
+    padding: 8px;
+    list-style: none;
+    z-index: 998;
+    font-size: 80%;
+    width: 13em;
+    box-shadow: 2px 2px 2px rgba(0,0,0,0.1);
+
+    &.user-menu {
+        left: initial;
+        right: 0;
+        top: 40px;
+    }
+
+    a {
+        display: block;
+        color: #444;
+        border-top: 1px solid #f1f1f1;
+        padding: 5px;
+        margin: 0px;
+
+        &:hover {
+            color: black;
+            background: #f1f1f1;
+        }
+    }
+
+    li:first-child {
+        a {
+            border-top:none;
+        }
+    }
+}
+
+// Dropdown CSS for NOSCRIPT users
+.no-js .logged-in-info:hover {
+    .dropdown-menu {
+        display:block;
+    }
+}

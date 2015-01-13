@@ -228,7 +228,7 @@
     <#include "om-header.ftl" />
 
     <div id="header">
-        <div id="header-content">
+        <div class="header-content">
 
             <a class="logo" id="logo" href="${urls.baseUrl}/${locale}" accesskey="1" title="<@u.message "siteName" />">
                 <span><@u.message "siteName.logo" /></span>
@@ -237,23 +237,21 @@
 			<div class="logged-in-info">
                 <#-- Authenticated = Logged in -->
                 <#if currentUser.authenticated>
-                    <div class="header-dropdown">
-                        <a href="#" class="header-tool-link user-name dropdown-toggle">${currentUser.firstNames} ${currentUser.lastName}<span class="icon-small settings"></span></a>
-                        <ul id="user-menu" class="dropdown-menu user-menu">
-                            <#-- OM search view - lists all initiatives -->
-                            <#if currentUser.om><li><a href="${urls.searchOmView()}"><@u.message "user.omSearchView"/></a></li></#if>
-                            <#-- Registered = Authenticated and has initiatives (except OM/VRK-users) -->
-                            <#if currentUser.registered><li><a href="${urls.searchOwnOnly()}"><@u.message "user.myInitiatives"/></a></li></#if>
-                            <li><a href="${urls.logout()}" ><@u.message "common.logout"/></a></li>
-                        </ul>
-                    </div>
+                    <a href="#" class="user-name dropdown-toggle">${currentUser.firstNames} ${currentUser.lastName}<span class="icon-small settings"></span></a>
+                    <ul id="user-menu" class="dropdown-menu user-menu">
+                        <#-- OM search view - lists all initiatives -->
+                        <#if currentUser.om><li><a href="${urls.searchOmView()}"><@u.message "user.omSearchView"/></a></li></#if>
+                        <#-- Registered = Authenticated and has initiatives (except OM/VRK-users) -->
+                        <#if currentUser.registered><li><a href="${urls.searchOwnOnly()}"><@u.message "user.myInitiatives"/></a></li></#if>
+                        <li><a href="${urls.logout()}" ><@u.message "common.logout"/></a></li>
+                    </ul>
                 <#else>
                     <a href="${urls.login(springMacroRequestContext.requestUri)}" title="<@u.message "common.login"/>" class="header-tool-link login"><@u.message "common.login"/></a>
                 </#if>
             </div>
 
             <#-- Language toggle, text size -->
-            <div id="header-additional-content">
+            <div class="header-additional-content">
                 <div class="additional-tools">
                     <a href="${altUri!'/sv'}" class="language-selection"><@u.message "lang.alternative"/></a>
                     <#-- NOTE: ATM the font-size-toggle works only with JS hence the links are also generated with JS. -->
