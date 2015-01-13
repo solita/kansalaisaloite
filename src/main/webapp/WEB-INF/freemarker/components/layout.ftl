@@ -31,7 +31,7 @@
     <#include "om-header.ftl" />
 
     <div id="header">
-        <div id="header-content">
+        <div class="header-content">
             <a class="logo" id="logo" href="${urls.baseUrl}/${locale}" accesskey="1" title="<@u.message "siteName" />">
                 <span><@u.message "siteName" /></span>
             </a>
@@ -47,22 +47,24 @@
 
     <div id="footer">
         <div class="container">
-            <div class="block oikeusministerio">
+            <div class="block">
+            	<span class="logo om"></span>
                 <p>
                     <@u.message "footer.ministerOfJustice"/><br/>
-                    <a href="${urls.help(HelpPage.KANSALAISALOITE_FI.getUri(locale))}"><@u.message "common.readMore" /> <span class="icon-small arrow-right-2"></span></a>
+                    <a href="${urls.help(HelpPage.KANSALAISALOITE_FI.getUri(locale))}"><@u.message "common.readMore" /> &gt;</a>
                 </p>
             </div>
-            <div class="block viestintavirasto">
+            <div class="block">
+            	<span class="logo vivi"></span>
                 <p>
                     <@u.messageHTML "footer.ficora"/><br/>
-                    <a href="${urls.help(HelpPage.VIESTINTAVIRASTO.getUri(locale))}"><@u.message "common.readMore" /> <span class="icon-small arrow-right-2"></span></a>
+                    <a href="${urls.help(HelpPage.VIESTINTAVIRASTO.getUri(locale))}"><@u.message "common.readMore" /> &gt;</a>
                 </p>
             </div>
             <div class="footer-links">
                 <ul>
                     <#list footerLinks as footerLink>
-                        <li><span class="icon-small arrow-right-2"></span> <a href="${urls.help(footerLink.uri)}">${footerLink.subject}</a></li>
+                        <li><span class="triangle-right"></span> <a href="${urls.help(footerLink.uri)}">${footerLink.subject}</a></li>
                     </#list>
                 </ul>
             </div>
@@ -290,22 +292,24 @@
 
     <div id="footer">
         <div class="container">
-            <div class="block oikeusministerio">
+            <div class="block">
+            	<span class="logo om"></span>
                 <p>
                     <@u.message "footer.ministerOfJustice"/><br/>
-                    <a href="${urls.help(HelpPage.KANSALAISALOITE_FI.getUri(locale))}"><@u.message "common.readMore" /> <span class="icon-small arrow-right-2"></span></a>
+                    <a href="${urls.help(HelpPage.KANSALAISALOITE_FI.getUri(locale))}"><@u.message "common.readMore" /> &gt;</span></a>
                 </p>
             </div>
-            <div class="block viestintavirasto">
+            <div class="block">
+            	<span class="logo vivi"></span>
                 <p>
                     <@u.messageHTML "footer.ficora"/><br/>
-                    <a href="${urls.help(HelpPage.VIESTINTAVIRASTO.getUri(locale))}"><@u.message "common.readMore" /> <span class="icon-small arrow-right-2"></span></a>
+                    <a href="${urls.help(HelpPage.VIESTINTAVIRASTO.getUri(locale))}"><@u.message "common.readMore" /> &gt;</span></a>
                 </p>
             </div>
             <div class="footer-links">
                 <ul>
                 <#list footerLinks as footerLink>
-                    <li><span class="icon-small arrow-right-2"></span> <a href="${urls.help(footerLink.uri)}">${footerLink.subject}</a></li>
+                    <li><span class="triangle-right"></span> <a href="${urls.help(footerLink.uri)}">${footerLink.subject}</a></li>
                 </#list>
                 </ul>
             </div>
