@@ -1,0 +1,206 @@
+// Icons for buttons - glyphish.com
+//
+// .save-and-send - Icon for "save and send"
+// .save-as-draft - Icon for "save as draf"
+// .cancel - Icon for "cancel"
+// .edit - Icon for "edit"
+// .next - Icon for "next"
+// .delete - Icon for "delete"
+// .mail - Icon for "mail"
+// .document - Icon for "document"
+// .folder - Icon for "folder"
+// .upload - Icon for "upload"
+// .download - Icon for "download"
+// .previous - Icon for "previous"
+// .add - Icon for "add"
+// .stop - Icon for "canceled"
+//
+// Styleguide 4.2.1
+.large-icon {
+    padding-left: 40px;
+
+    background: transparent url("@{imagesPath}/button-large-sprite.png?version=${timestamp}") no-repeat 0 2px;
+
+    &.save-and-send {       background-position: 0 2px;      }
+    &.save-as-draft {       background-position: 0 -150px;   }
+    &.cancel {              background-position: 0 -301px;   }
+    &.edit {                background-position: 0 -450px;   }
+    &.next {                background-position: 0 -600px;   }
+    &.delete {              background-position: 0 -750px;   }
+    &.mail {                background-position: 0 -900px;   }
+    &.document {            background-position: 0 -1050px;  }
+    &.folder {              background-position: 0 -1200px;  }
+    &.upload {              background-position: 0 -1350px;  }
+    &.download {            background-position: 0 -1500px;  }
+    &.previous {            background-position: 0 -1650px;  }
+    &.add {                 background-position: 0 -1800px;  }
+    &.stop {                background-position: 0 -1950px;  }
+}
+
+// Small Icons for buttons - glyphish.com
+//
+// .save-and-send - Icon for "save and send"
+// .save-as-draft - Icon for "save as draf"
+// .cancel - Icon for "cancel"
+// .edit - Icon for "edit"
+// .next - Icon for "next"
+// .delete - Icon for "delete"
+// .mail - Icon for "mail"
+// .document - Icon for "document"
+// .folder - Icon for "folder"
+// .upload - Icon for "upload"
+// .download - Icon for "download"
+// .previous - Icon for "previous"
+// .add - Icon for "add"
+// .stop - Icon for "canceled"
+//
+// Styleguide 4.2.2
+.small-icon {
+    padding-left: 30px;
+
+    background: transparent url("@{imagesPath}/button-small-sprite.png?version=${timestamp}") no-repeat 0 12px;
+
+    &.save-and-send {       background-position: 0 12px;     }
+    &.save-as-draft {       background-position: 0 -140px;   }
+    &.cancel {              background-position: 0 -291px;   }
+    &.edit {                background-position: 0 -440px;   }
+    &.next {                background-position: 0 -590px;   }
+    &.delete {              background-position: 0 -740px;   }
+    &.mail {                background-position: 0 -890px;   }
+    &.document {            background-position: 0 -1040px;  }
+    &.folder {              background-position: 0 -1190px;  }
+    &.upload {              background-position: 0 -1340px;  }
+    &.download {            background-position: 0 -1490px;  }
+    &.previous {            background-position: 0 -1640px;  }
+    &.add {                 background-position: 0 -1790px;  }
+    &.logout {              background-position: 0 -2090px;  }
+}
+
+.file-icon {
+    display:inline-block;
+    width:32px;
+    height:32px;
+    margin:0 0.5em -0.5em 0;
+
+    &.pdf {
+        background:url("@{imagesPath}/pdficon_large.png?version=${timestamp}") no-repeat 0 0;
+    }
+}
+
+// Icons
+//
+// .required        - Form required field
+// .confirmed       - Confirmed author
+// .unconfirmed     - Unconfirmed author
+// .settings        - Settings
+// .logout          - Logout
+// .dropdown-icon   - Dropdown
+// .external        - External link
+// .more            - Show more
+// .less            - Hide more
+// .arrow-right-1   - Arrow right 1
+// .arrow-right-2   - Arrow right 2
+// .arrow-right-3   - Arrow right 3
+// .arrow-left-1    - Arrow left 1
+// .arrow-left-2    - Arrow left 2
+// .arrow-left-3    - Arrow left 3
+// .help            - Help
+// .help-tooltip    - Help tooltip
+//
+// Styleguide 3.5
+
+.icon-small {
+    display:inline-block;
+    width:12px;
+    height:12px;
+    background: transparent url("@{imagesPath}/icons-sprite.png?version=${timestamp}") 0 0 no-repeat;
+
+    &.pull-down {
+        position:relative;
+        bottom:-0.15em;
+    }
+
+    &.settings, &.logout {
+        position:absolute;
+        right:15px;
+        top:50%;
+        margin-top:-6px;
+    }
+
+    &.settings {
+        background-position:-48px 0;
+    }
+    &.logout {
+        background-position:-80px 0;
+    }
+
+    &.dropdown-icon {
+        margin-left:3px;
+        background-position:-96px 3px;
+    }
+
+    &.required { background-position:0 0; }         // Required field
+    &.unconfirmed { background-position:-16px 0; }  // Unconfirmed author
+    &.confirmed { background-position:-32px 0; }    // Confirmed author
+    &.external {                                    // External link
+        background-position:-144px 1px;             // Used a.external instead
+        margin-left:4px;
+    }
+    &.more {
+        width:16px;
+        height:16px;
+        margin:1px 0 0 4px;
+        background-position:-112px 0;
+
+        &.less { background-position:-128px 0; }
+    }
+    &.arrow-right {
+        background-position:-160px 1px;
+    }
+    &.arrow-right-2 {
+        background-position:-179px 1px;
+    }
+    &.arrow-right-3 {
+        background-position:-179px -15px;
+
+        &.floated {                                 // For info system-messages
+            float:left;
+            margin:0.2em 0 0 -16px;
+        }
+    }
+    &.arrow-left {
+        background-position:-192px 1px;
+    }
+    &.arrow-left-2 {
+        background-position:-208px 1px;
+    }
+    &.arrow-left-3 {
+        background-position:-208px -15px;
+    }
+    &.help {
+        width:27px;
+        height:21px;
+        background-position:0 -96px;
+    }
+    &.help-tooltip {
+        width:27px;
+        height:21px;
+        background-position:-32px -96px;
+    }
+    &.refresh {
+        cursor:pointer;
+        width:26px;
+        height:26px;
+        background-position:-64px -96px;
+        vertical-align: middle;
+        margin-top: -.2em;
+    }
+
+    .transition(opacity, 0.1s, ease-in);
+
+    &.js-disabled {
+        cursor:default;
+        opacity:0.3;
+    }
+
+}

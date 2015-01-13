@@ -1,0 +1,118 @@
+// System Messages
+//
+// .msg-summary     - Summary style box
+// .msg-info        - Info, gray
+// .msg-warning     - Warning, yellow
+// .msg-error       - Error, red
+// .msg-success     - Success, green
+//
+// Styleguide 6.
+
+.system-msg {
+    position:relative;
+    padding: 15px 25px 15px 60px;
+    box-shadow: none;
+    margin:1em 0;
+    border-width:1px; // separated for better overriding
+    border-style:solid;
+
+    font-size:0.9em;
+    text-align:left;
+
+    &.msg-summary {
+        min-height:67px;
+        margin-bottom:2em;
+        border:0;
+        border-left:4px solid @secondaryColor;
+        padding-left:126px;
+        background:#fff url("@{imagesPath}/icon-msg-summary.png?version=${timestamp}") no-repeat 32px 27px;
+
+        // Using nested messages so that it'd be easier to use wether combined or singular system-messages
+        .msg-info {
+            background:#fff;
+            margin:0 0 0 5px;
+            padding:1em 0;
+            border:none;
+            font-size:1em;
+        }
+    }
+
+    &.msg-info {
+        border-color:@borderGray;
+        background: @grayGradient2 url("@{imagesPath}/icon-msg-info.png?version=${timestamp}") no-repeat 20px 15px;
+
+        .close-msg {
+            background:@borderGray;
+        }
+    }
+
+    &.msg-warning {
+        border-color:#e9c000;
+        background: #f7e489 url("@{imagesPath}/icon-msg-warning.png?version=${timestamp}") no-repeat 18px 15px;
+
+        .close-msg {
+            background:#e9c000;
+        }
+    }
+
+    &.msg-error {
+        color:#fff;
+        border-color:@redGradient2;
+        background: #fa353d url("@{imagesPath}/icon-msg-error.png?version=${timestamp}") no-repeat 15px 15px;
+
+        a {
+            color:#fff;
+        }
+        a:hover {
+            color:#fff;
+            text-decoration:underline;
+        }
+
+        .close-msg {
+            background:@redGradient2;
+        }
+    }
+
+    &.msg-success {
+        border: 1px solid #7aa63f;
+        background: #b6eb7c url("@{imagesPath}/icon-msg-success.png?version=${timestamp}") no-repeat 15px 15px;
+        color:#254000;
+
+        .close-msg {
+            background:#58831d;
+            color: #b6eb7c;
+        }
+    }
+
+    // General message style for narrow columns
+    &.small {
+        background-image:none;
+        padding:5px;
+        margin:5px 5px 5px 0;
+    }
+
+    .close-msg {
+        position:absolute;
+        right:15px;
+        top:18px;
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        line-height: 13px;
+        //border-radius:0.2em;
+        text-align: center;
+        font-size:0.85em;
+
+        color:#fff;
+        opacity:0.5;
+        cursor:pointer;
+
+
+    }
+    &:hover {
+        .close-msg {
+            opacity:1;
+        }
+    }
+}
+.front .system-msg { top:-10px; } // Exception for frontpage

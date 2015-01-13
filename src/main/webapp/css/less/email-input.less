@@ -1,0 +1,64 @@
+.js .email-field {
+    position:relative;
+    min-height:135px;
+}
+.email-input {
+    position:relative;
+    overflow:hidden;
+    padding:2px;
+    border:1px solid @borderGray;
+    background:#fff;
+    min-height:6em;
+    font-size:0.9em;
+
+    .transition(box-shadow, 0.1s, ease-in);
+
+    li {
+        position:relative;
+        overflow:hidden;
+        margin-bottom:1px;
+        padding:0 20px 0 3px;
+        background:@greenGradient1;
+        border-radius:2px;
+        -moz-border-radius:2px;
+        -webkit-border-radius:2px;
+
+        &.invalid {
+            color:#fff;
+            background:@redGradient1;
+        }
+
+        &.disabled {
+            color:#fff;
+            background:@grayGradientActive2;
+        }
+
+        a {
+            position:absolute;
+            top:0; right:5px;
+            color:#fff;
+        }
+    }
+
+    textarea {
+        border:0;
+        padding:0;
+        margin:0;
+        height:auto;
+        resize: none;
+
+        &:focus {
+            box-shadow:none;
+        }
+    }
+
+    .email-place-holder {
+        position:absolute;
+        top:3px;
+        left:5px;
+        opacity:1;
+        color:#888;
+
+        //.transition(opacity, 0.3s, linear);
+    }
+}

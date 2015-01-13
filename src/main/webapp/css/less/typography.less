@@ -1,0 +1,152 @@
+// Typography
+//
+// h1           - Heading 1
+// h2           - Heading 2
+// h3           - Heading 3
+// h4           - Heading 4
+// p            - Paragraph
+// ul           - Unordered list
+// ol           - Ordered list
+// blockquote   - Blockquote
+// .vote-count  - Vote count
+// .vote-count-small     - Vote count small text
+// .internal-vote-count  - Internal vote count
+//
+// Styleguide 7.
+
+h1, h2, h3, h4, h5, h6, p {
+    margin-top:0;
+}
+
+// H1
+//
+// Styleguide 7.1
+h1 {
+    font-size:1.5em;
+    line-height:1.2em;
+    clear: both;
+    color: #111;
+    font-weight:normal;
+}
+.extra-info {
+    display:block;
+    margin:-1em 0 1em 0;
+}
+
+
+// H2
+//
+// Styleguide 7.2
+h2 {
+    color: #111;
+    margin-bottom:0.5em;
+    font-weight:normal;
+}
+
+// H3
+//
+// Styleguide 7.3
+h3 {
+    color: #111;
+    margin-bottom:0.5em;
+    font-weight:normal;
+
+    &.navi-title {
+        margin-right:1em;
+        border-bottom:1px solid @borderGray;
+    }
+}
+
+// H4
+//
+// Styleguide 7.4
+h4 {
+    margin-bottom:0.5em;
+
+    &.header { margin-bottom:0; }
+    &.subtle {
+        margin:0;
+        font-weight:normal;
+    }
+}
+
+.inline-header { display:inline-block; }
+
+// Paragraph
+//
+// Styleguide 7.5
+p {
+    margin:0 0 1em 0;
+}
+
+// UL, OL
+//
+// .no-style    - default styles overrided
+// .alpha       - alphabetical
+// .roman       - roman numbers
+//
+// Styleguide 7.6
+ul, ol {
+    margin:0 0 1em 0;
+    padding:0 0 0 2em;
+
+    &.no-style {
+        margin:0; padding:0; list-style:none;
+    }
+
+    &.alpha {
+        list-style-type:lower-alpha;
+    }
+    &.roman {
+        list-style-type:lower-roman;
+    }
+}
+
+// Blockquote
+//
+// Styleguide 7.7
+blockquote {
+    margin-bottom:2em;
+    font-style:italic;
+}
+
+.bull {
+    margin:0 0.5em;
+    font-size:0.8em;
+    color:@borderGray;
+}
+
+pre {
+    border:1px solid @borderGray;
+    background:@bodyBackground;
+    padding:1em;
+    font-size:0.8em;
+}
+
+// Vote counts
+//
+// .vote-count          - Summed vote count
+// .vote-count-small     - Vote count small text
+// .internal-vote-count - Internal vote count
+//
+// Styleguide 7.8
+.vote-count-container {
+    display:inline-block;
+    position:relative;
+    vertical-align: middle;
+    margin-right: 1em;
+}
+.vote-count {
+    font-size: 3em;
+    font-style: italic;
+
+    &.internal {
+        font-size: 1.2em;
+    }
+}
+.vote-count-small {
+    font-size:1.1em;
+    font-style:italic;
+    font-weight:bold;
+}
+

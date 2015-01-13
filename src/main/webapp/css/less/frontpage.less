@@ -1,0 +1,53 @@
+// Frontpage
+.front-container {
+    min-height:441px;
+    margin:-10px -60px 0px -66px;
+    padding:325px 0 0 66px;
+    background:url("@{imagesPath}/bg-front.jpg?version=${timestamp}") -2px 0 no-repeat;
+
+    .faux-columns {
+        width:960px;
+        margin-bottom:50px;
+        background:url("@{imagesPath}/faux-columns.png?version=${timestamp}") 0 0 repeat-y;
+
+        .col-1 {
+            width:470px;
+            float:left;
+        }
+        .col-2 {
+            width:470px;
+            float:right;
+        }
+    }
+
+    .front-block {
+        padding:0 50px 20px 100px;
+
+        background:url("@{imagesPath}/block-icons.png?version=${timestamp}") 30px 0 no-repeat;
+
+        &.block-2 {
+            background-position:-970px 0;
+            border-bottom:20px solid @bodyBackground;
+        }
+        &.block-3 {
+            padding-top:30px;
+            background-position:-1970px 30px;
+        }
+
+        h1 {
+            margin-right:-1.5em;
+        }
+    }
+}
+
+
+.front-page-intro {
+
+    font-size: 0.9em;
+    position: relative;
+
+    .front-page-intro-image {
+        float: right;
+        margin: 0px 0px 2em 2em;
+    }
+}

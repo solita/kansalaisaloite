@@ -1,0 +1,62 @@
+// Support vote graph
+.support-vote-graph {
+    .icon {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+
+        .backgroundImage("icons-supportvotegraph");
+
+        background-size: 48px auto;
+
+        vertical-align: baseline;
+
+        &.zoom-in {
+            .iconPosition(0, 0, 24px);
+        }
+        &.zoom-out {
+            .iconPosition(1, 0, 24px);
+        }
+        &.cumulative {
+            .iconPosition(0, 1, 24px);
+        }
+        &.daily {
+            .iconPosition(1, 1, 24px);
+        }
+    }
+
+    .graph-actions {
+        position: relative;
+        z-index: 10;
+        float: right;
+        margin-bottom: -15px;
+
+        a {
+            margin-left: 1em;
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+
+            &.act {
+                display: none;
+            }
+        }
+
+    }
+
+    // .graph-zoom {
+    //     // float: right;
+    //     a.act {
+    //         display: none;
+    //     }
+    // }
+
+    .update-info {
+        margin: 1em 0 0 50px;
+        font-size: 0.8em;
+
+        .no-js & {
+            display: none;
+        }
+    }
+}

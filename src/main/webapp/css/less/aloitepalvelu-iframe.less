@@ -1,6 +1,6 @@
 
-@import 'less/vars';
-@import 'less/mixins';
+@import 'vars';
+@import 'mixins';
 
 html {
     width: 100%;
@@ -47,7 +47,7 @@ html.no-js {
     z-index:9999;
     width:100%;
     height:100%;
-    background:#fff url("../img/ajax-loader.gif?version=${timestamp}") center center no-repeat;
+    background:#fff url("@{imagesPath}/ajax-loader.gif?version=${timestamp}") center center no-repeat;
     opacity:0;
 }
 
@@ -58,10 +58,10 @@ html.no-js {
     width:16px;
     height:16px;
     margin:-8px;
-    background:url("../img/ajax-loader.gif?version=${timestamp}") center center no-repeat;
+    background:url("@{imagesPath}/ajax-loader.gif?version=${timestamp}") center center no-repeat;
 
     &.gray-loader {
-        background:url("../img/ajax-loader-f7f7f7.gif?version=${timestamp}") center center no-repeat;
+        background:url("@{imagesPath}/ajax-loader-f7f7f7.gif?version=${timestamp}") center center no-repeat;
     }
 
     &.inline {
@@ -106,7 +106,7 @@ a:active {
 
 a.external {
     padding-right:15px;
-    background:url("../img/icon-external-link.png?version=${timestamp}") right center no-repeat;
+    background:url("@{imagesPath}/icon-external-link.png?version=${timestamp}") right center no-repeat;
 }
 .ellipsis {
     display:inline-block;
@@ -121,7 +121,7 @@ a.block-link {
     line-height:38px;
     margin-bottom:1em;
     padding:0 2.5em 0 0.9em;
-    background:@mainColor url("../img/icons-sprite.png?version=${timestamp}") right -149px no-repeat;
+    background:@mainColor url("@{imagesPath}/icons-sprite.png?version=${timestamp}") right -149px no-repeat;
     color:#fff;
     font-weight:bold;
 
@@ -337,7 +337,7 @@ a.block-link {
 .large-icon {
     padding-left: 40px;
 
-    background: transparent url("../img/button-large-sprite.png?version=${timestamp}") no-repeat 0 2px;
+    background: transparent url("@{imagesPath}/button-large-sprite.png?version=${timestamp}") no-repeat 0 2px;
 
     &.save-and-send {       background-position: 0 2px;      }
     &.save-as-draft {       background-position: 0 -150px;   }
@@ -376,7 +376,7 @@ a.block-link {
 .small-icon {
     padding-left: 30px;
 
-    background: transparent url("../img/button-small-sprite.png?version=${timestamp}") no-repeat 0 12px;
+    background: transparent url("@{imagesPath}/button-small-sprite.png?version=${timestamp}") no-repeat 0 12px;
 
     &.save-and-send {       background-position: 0 12px;     }
     &.save-as-draft {       background-position: 0 -140px;   }
@@ -435,7 +435,7 @@ a.block-link {
     display:inline-block;
     width:12px;
     height:12px;
-    background: transparent url("../img/icons-sprite.png?version=${timestamp}") 0 0 no-repeat;
+    background: transparent url("@{imagesPath}/icons-sprite.png?version=${timestamp}") 0 0 no-repeat;
 
     &.pull-down {
         position:relative;
@@ -597,7 +597,7 @@ a.block-link {
 
 .content-block-header {
     position:relative;
-    background: #fff url("../img/input-block-extra-bg.png?version=${timestamp}") repeat-y top right;
+    background: #fff url("@{imagesPath}/input-block-extra-bg.png?version=${timestamp}") repeat-y top right;
     border-left: 4px solid @mainColor;
     padding:20px 25px 0 55px;
 
@@ -782,7 +782,7 @@ a.block-link {
         border:0;
         border-left:4px solid @secondaryColor;
         padding-left:126px;
-        background:#fff url("../img/icon-msg-summary.png?version=${timestamp}") no-repeat 32px 27px;
+        background:#fff url("@{imagesPath}/icon-msg-summary.png?version=${timestamp}") no-repeat 32px 27px;
 
         // Using nested messages so that it'd be easier to use wether combined or singular system-messages
         .msg-info {
@@ -796,7 +796,7 @@ a.block-link {
 
     &.msg-info {
         border-color:@borderGray;
-        background: @grayGradient2 url("../img/icon-msg-info.png?version=${timestamp}") no-repeat 20px 15px;
+        background: @grayGradient2 url("@{imagesPath}/icon-msg-info.png?version=${timestamp}") no-repeat 20px 15px;
 
         .close-msg {
             background:@borderGray;
@@ -805,7 +805,7 @@ a.block-link {
 
     &.msg-warning {
         border-color:#e9c000;
-        background: #f7e489 url("../img/icon-msg-warning.png?version=${timestamp}") no-repeat 18px 15px;
+        background: #f7e489 url("@{imagesPath}/icon-msg-warning.png?version=${timestamp}") no-repeat 18px 15px;
 
         .close-msg {
             background:#e9c000;
@@ -815,7 +815,7 @@ a.block-link {
     &.msg-error {
         color:#fff;
         border-color:@redGradient2;
-        background: #fa353d url("../img/icon-msg-error.png?version=${timestamp}") no-repeat 15px 15px;
+        background: #fa353d url("@{imagesPath}/icon-msg-error.png?version=${timestamp}") no-repeat 15px 15px;
 
         a {
             color:#fff;
@@ -832,7 +832,7 @@ a.block-link {
 
     &.msg-success {
         border: 1px solid #7aa63f;
-        background: #b6eb7c url("../img/icon-msg-success.png?version=${timestamp}") no-repeat 15px 15px;
+        background: #b6eb7c url("@{imagesPath}/icon-msg-success.png?version=${timestamp}") no-repeat 15px 15px;
         color:#254000;
 
         .close-msg {

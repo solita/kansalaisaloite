@@ -1,0 +1,54 @@
+.initiative-content-header {
+    position:relative;
+}
+
+.input-block, .view-block {
+    margin-bottom: 3em;
+    position: relative;
+    //z-index: 3;
+    background: #fff url("@{imagesPath}/input-block-extra-bg.png?version=${timestamp}") repeat-y top right;
+    border-left: 4px solid @mainColor;
+
+    padding:0 35px 30px 55px;
+
+    &.vote {
+        padding-top:20px;
+        background:#fff;
+    }
+
+    &.faq-item {
+        margin-bottom:0;
+        padding-top:0;
+    }
+
+    .system-msg {
+        margin:5px 0;
+        border:0;
+        //-webkit-border-radius: 0;
+        //-moz-border-radius: 0;
+        //border-radius: 0;
+    }
+}
+.view-block {
+    padding-top:35px;
+    background:#fff;
+
+    &.small-pad { padding-top: 15px; }
+    &.first { margin-top: 2em; }
+    &.last { margin-bottom: 2em; }
+}
+.input-block {
+    .input-block-action {
+        width:585px;
+    }
+}
+
+.pad {
+    padding:10px 20px;
+    background:#f1f1f1;
+    border-radius:3px;
+
+    &.margin { margin:0.5em 0 1em 0; }
+
+    .table { margin:0; }
+}

@@ -1,0 +1,84 @@
+// Flow state indicator
+//
+// .active - Active step
+// .checked - Checked step
+// .failed - Failded step
+//
+// Styleguide 10.
+
+.flow-state-indicator {
+    overflow: hidden;
+    margin-bottom:30px;
+    color: #4e4e4e;
+    font-size:1em;
+    line-height:1.1em;
+
+    .flow-state-content {
+        display:table-cell;
+        vertical-align:middle;
+        height:70px;
+        padding:0 65px 0 40px;
+
+        background:url("@{imagesPath}/flow-state-indicator.png?version=${timestamp}") no-repeat right -75px;
+    }
+
+
+    .flow-state-step {
+        display: table;
+        float: left;
+        width: 319px;
+        position: relative;
+
+        background:url("@{imagesPath}/flow-state-indicator.png?version=${timestamp}") no-repeat left 0;
+
+        &.active {
+            background-position:left -150px;
+            color:#fff;
+
+            .flow-state-content {
+                background-position:right -225px;
+            }
+        }
+
+        &.checked {
+            background-position:left -300px;
+
+            .flow-state-content {
+                background-position:right -375px;
+            }
+        }
+
+        &.failed {
+            background-position:left -450px;
+            color:#000;
+
+            .flow-state-content {
+                background-position:right -525px;
+            }
+        }
+
+         &.done, &.canceled {
+            float:none;
+            display:block;
+            width:50%;
+            margin:0 auto;
+            text-align: center;
+            font-size:1.2em;
+            background:#fff;
+
+            .flow-state-content {
+                display:block;
+                height:auto;
+                padding:1em 0;
+                background:none;
+                line-height:26px;
+
+                .info {
+                    display:block;
+                    margin-top:0.5em;
+                    font-size:0.8em;
+                }
+            }
+        }
+    }
+}

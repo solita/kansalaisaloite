@@ -1,0 +1,174 @@
+// Buttons
+//
+// .large-button - Generic class for large button, needs additional class(es) for layout
+// .small-button - Generic class for small button, needs additional class(es) for layout
+// .green - Green gradient button
+// .red - Red gradient button
+// .gray - Gray gradient button
+// .disabled - Disabled button
+//
+// Styleguide 4
+
+// span.large-icon - Generic class for large icons (sets padding)
+// span.small-icon - Generic class for small icons (sets padding)
+
+.large-button, .small-button {
+    //.rounded-corners;
+    display: inline-block;
+    zoom: 1; /* zoom and *display = ie7 hack for display:inline-block */
+    *display: inline;
+    vertical-align: baseline;
+    margin: 0 2px;
+    outline: none;
+    cursor: pointer;
+    text-align: left;
+    text-decoration: none;
+    padding: 14px 20px;
+    line-height: 1.2em;
+    padding: 14px 20px;
+    line-height: 1.2em;
+
+    color: @bodyColor;
+    border: solid 1px @borderGray;
+    background: @grayGradient2;
+    background: linear-gradient(top,  @grayGradient1,  @grayGradient2);
+    background: -ms-linear-gradient(top,  @grayGradient1,  @grayGradient2);
+    background: -webkit-gradient(linear, left top, left bottom, from(@grayGradient1), to(@grayGradient2));
+    background: -moz-linear-gradient(top,  @grayGradient1,  @grayGradient2);
+    background: -o-linear-gradient(top,  @grayGradient1,  @grayGradient2);
+
+    &:hover, &.disabled:hover {
+        background: @grayGradientHover2;
+        background: linear-gradient(top,  @grayGradientHover1,  @grayGradientHover2);
+        background: -ms-linear-gradient(top,  @grayGradientHover1,  @grayGradientHover2);
+        background: -webkit-gradient(linear, left top, left bottom, from(@grayGradientHover1), to(@grayGradientHover2));
+        background: -moz-linear-gradient(top, @grayGradientHover1, @grayGradientHover2);
+        background: -o-linear-gradient(top, @grayGradientHover1, @grayGradientHover2);
+        color: @black;
+        border-color: #b7b7b7;
+        text-decoration: none;
+    }
+    &:active, &.disabled:active, &:focus {
+        color: @black;
+        background: linear-gradient(top,  @grayGradientActive1,  @grayGradientActive2);
+        background: -ms-linear-gradient(top,  @grayGradientActive1,  @grayGradientActive2);
+        background: -webkit-gradient(linear, left top, left bottom, from(@grayGradientActive1), to(@grayGradientActive2));
+        background: -moz-linear-gradient(top,  @grayGradientActive1,  @grayGradientActive2);
+        background: -o-linear-gradient(top,  @grayGradientActive1,  @grayGradientActive2);
+        outline:none;
+    }
+    &.disabled {
+       opacity:@dimmed;
+       cursor:default;
+    }
+
+    &.icon-button {
+        height:28px;
+        line-height:30px;
+        width:28px;
+        min-width:0;
+        padding:0;
+
+        .gradient(#4f9ca5, @mainColor);
+        border:0;
+    }
+
+    .transition(opacity, 0.1s, ease-in);
+
+    &.js-disabled {
+        cursor:default;
+        opacity:0.3;
+    }
+
+    &.rounded { border-radius:1em; }
+
+    strong {
+        display: block;
+    }
+
+}
+
+.small-button {
+    height:36px;
+    line-height:36px;
+    padding:0 12px;
+    min-width:4em;
+    text-align:center;
+    //line-height: 1em;
+    //padding: 10px 12px;
+
+}
+
+.switch-buttons {
+    display:inline;
+    margin-left:0.5em;
+
+    a {
+        display:inline-block;
+        padding:0.1em 0.5em;
+
+        &.active {
+            .gradient (#09a3b4, #067582);
+            .rounded-corners(@cornerRadiusXtraSmall);
+            color:#fff;
+            text-shadow:0px 1px 1px rgba(0,0,0,0.3);
+        }
+    }
+}
+
+
+// Gray and disabled button
+//
+// :hover       - hover state
+// :active      - active state
+//
+// Styleguide 4.1.3.
+.gray, .disabled {
+    color: @secondaryTextColor;
+    border: solid 1px @borderGray;
+    background: @grayGradient2;
+    background: linear-gradient(top,  @grayGradient1,  @grayGradient2);
+    background: -ms-linear-gradient(top,  @grayGradient1,  @grayGradient2);
+    background: -webkit-gradient(linear, left top, left bottom, from(@grayGradient1), to(@grayGradient2));
+    background: -moz-linear-gradient(top,  @grayGradient1,  @grayGradient2);
+    background: -o-linear-gradient(top,  @grayGradient1,  @grayGradient2);
+}
+.gray:hover, .disabled:hover {
+    background: @grayGradientHover2;
+    background: linear-gradient(top, @grayGradientHover1, @grayGradientHover2);
+    background: -ms-linear-gradient(top, @grayGradientHover1, @grayGradientHover2);
+    background: -webkit-gradient(linear, left top, left bottom, from(@grayGradientHover1), to(@grayGradientHover2));
+    background: -moz-linear-gradient(top, @grayGradientHover1, @grayGradientHover2);
+    background: -o-linear-gradient(top, @grayGradientHover1, @grayGradientHover2);
+    color: #4f4f4f;
+    border-color: #b7b7b7;
+}
+.gray:active, .disabled:active, .gray:focus {
+    color: black;
+    background: linear-gradient(top,  @grayGradientActive1,  @grayGradientActive2);
+    background: -ms-linear-gradient(top,  @grayGradientActive1,  @grayGradientActive2);
+    background: -webkit-gradient(linear, left top, left bottom, from(@grayGradientActive1), to(@grayGradientActive2));
+    background: -moz-linear-gradient(top,  @grayGradientActive1,  @grayGradientActive2);
+    background: -o-linear-gradient(top,  @grayGradientActive1,  @grayGradientActive2);
+}
+
+
+.large-icon, .medium-icon, .small-icon {
+    display: inline-block;
+    *display: inline;
+    zoom: 1;
+}
+
+
+
+
+// Known positioning issue in IE7.
+.more {
+    float:right;
+    padding-bottom:1px;
+    color:#444;
+
+    &:hover {
+        color:@black;
+    }
+}

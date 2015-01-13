@@ -1,0 +1,123 @@
+// 1. Basic colors                          - Styleguide 1
+// 2. Mixings                               - Styleguide 2
+//   2.1. Rounded corners                   - Styleguide 2.1
+//   2.2. Transition                        - Styleguide 2.2
+// 3. Form elements                         - Styleguide 3
+//   3.1. Form block
+//   3.2. Text fields                       - Styleguide 3.2
+//   3.3. Textarea                          - Styleguide 3.3
+//   3.4. Radio buttons and checkboxes      - Styleguide 3.4
+//   3.5. Help and required                 - Styleguide 3.5
+// 4. Buttons                               - Styleguide 4
+//   4.1. Generic buttons                   - Styleguide 4.1
+//      4.1.1. Green button
+//      4.1.2. Red button
+//      4.1.3. Gray button
+//   4.2. Buttons with icons                - Styleguide 4.2
+// 5. jQueryTools                           - Styleguide 5
+//   5.1. Modal                             - Styleguide 5.1
+//   5.2. Tooltip                           - Styleguide 5.2
+//   5.3. DateInput
+// 6. Messages                              - Styleguide 6
+// 7. Typography                            - Styleguide 7
+// 8. Tables                                - Styleguide 8
+// 9. Search results
+// 10. Flow state indicator                 - Styleguide 10
+// 10. SOME buttons                         - Styleguide 11
+
+
+@import 'vars';
+@import 'mixins';
+
+// Fonts
+// TODO: implement later
+//@import 'fonts';
+
+
+html {
+    height: 100%;
+    font-size: 16px; // Using absolute size as Opera gets default font-adjustment from users Computer
+}
+
+body {
+    height: 100%;
+    font-family: "PT Sans", "Trebuchet MS", Helvetica, sans-serif;
+    color: @bodyColor;
+    background: @bodyBackground;
+}
+
+#wrapper {
+    position: relative;
+    min-height: 100%;
+}
+
+.container {
+    width: 960px;
+    margin: 0 auto;
+    clear: both;
+}
+
+#content {
+    padding-bottom: 250px;
+}
+
+.two-column-content .content-column {
+    width: 640px;
+    float: left;
+    margin-right: 20px;
+}
+
+#accesskeys, #back-to-top {
+    position: absolute;
+    left: -9999px;
+}
+
+
+// The class 'wysiwyg-color-date' is for the content created by the wysiwyg editor
+.news-date, .wysiwyg-color-date {
+    display: block;
+    margin-bottom: 1em;
+    font-weight: bold;
+    border-bottom: 1px solid @borderGray;
+}
+
+.expose {
+    position: relative;
+    z-index: 1000;
+
+    .msg-summary, .content-block-header{
+        box-shadow: 0px 0px 5px rgba(0,0,0,0.2);
+    }
+    .input-block {
+        box-shadow: 0px 5px 5px rgba(0,0,0,0.2);
+    }
+}
+
+@import 'common';
+@import 'navigation';
+@import 'before-create';
+@import 'initiative-view';
+@import 'form-block';
+@import 'form';
+@import 'form-action-panel';
+@import 'email-input';
+@import 'loader';
+@import 'columns';
+@import 'frontpage';
+@import 'header';
+@import 'buttons';
+@import 'icons';
+@import 'form-help';
+@import 'footer';
+@import 'jquery-tools';
+@import 'system-messages';
+@import 'typography';
+@import 'search-actions';
+@import 'search-results';
+@import 'pagination';
+@import 'flow-state-indicator';
+@import 'some';
+@import 'api';
+@import 'support-vote-graph';
+@import 'top-ribbon';
+@import 'iframe-generator';

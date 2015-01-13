@@ -1,36 +1,38 @@
+@import 'vars';
+
 // Gradients are made as images for IE
 .large-button, .small-button, .gray, .disabled {
-    background:#fff url("../img/ie/gradient-gray.png?version=${timestamp}") left bottom repeat-x;
-    
-    &:hover { background:#fff url("../img/ie/gradient-gray-hover.png?version=${timestamp}") left bottom repeat-x; }
-    &:active { background:#fff url("../img/ie/gradient-gray-active.png?version=${timestamp}") left bottom repeat-x; }
+    background:#fff url("@imagesPathIE/gradient-gray.png?version=${timestamp}") left bottom repeat-x;
+
+    &:hover { background:#fff url("@imagesPathIE/gradient-gray-hover.png?version=${timestamp}") left bottom repeat-x; }
+    &:active { background:#fff url("@imagesPathIE/gradient-gray-active.png?version=${timestamp}") left bottom repeat-x; }
 }
 
 .search-parameters {
-    background:#fff url("../img/ie/gradient-gray-light.png?version=${timestamp}") center bottom repeat-x;
-    
+    background:#fff url("@imagesPathIE/gradient-gray-light.png?version=${timestamp}") center bottom repeat-x;
+
     a {
-        &:hover { background:#fff url("../img/ie/gradient-gray-hover.png?version=${timestamp}") center bottom repeat-x; }
-        &.active { background:#09a3b4 url("../img/ie/gradient-turquoise.png?version=${timestamp}") center bottom repeat-x; }
+        &:hover { background:#fff url("@imagesPathIE/gradient-gray-hover.png?version=${timestamp}") center bottom repeat-x; }
+        &.active { background:#09a3b4 url("@imagesPathIE/gradient-turquoise.png?version=${timestamp}") center bottom repeat-x; }
     }
 }
 .search-sort-links {
     a {
         &.active {
-            background:#09a3b4 url("../img/ie/gradient-turquoise.png?version=${timestamp}") center bottom repeat-x;
+            background:#09a3b4 url("@imagesPathIE/gradient-turquoise.png?version=${timestamp}") center bottom repeat-x;
         }
     }
 }
 
 .modal {
     .modal-header {
-        background:#fff url("../img/ie/gradient-gray.png?version=${timestamp}") left bottom repeat-x;
-        
+        background:#fff url("@imagesPathIE/gradient-gray.png?version=${timestamp}") left bottom repeat-x;
+
         .close {
-            background:#fff url("../img/ie/gradient-gray.png?version=${timestamp}") left bottom repeat-x;
-        
-            &:hover { background:#fff url("../img/ie/gradient-gray-hover.png?version=${timestamp}") left bottom repeat-x; }
-            &:active { background:#fff url("../img/ie/gradient-gray-active.png?version=${timestamp}") left bottom repeat-x; }
+            background:#fff url("@imagesPathIE/gradient-gray.png?version=${timestamp}") left bottom repeat-x;
+
+            &:hover { background:#fff url("@imagesPathIE/gradient-gray-hover.png?version=${timestamp}") left bottom repeat-x; }
+            &:active { background:#fff url("@imagesPathIE/gradient-gray-active.png?version=${timestamp}") left bottom repeat-x; }
         }
     }
 }
@@ -42,12 +44,12 @@
     // Guillotine fixes
     .system-msg, .support-votes, .font-size-toggle a,
     .initiative-content-row { display:inline-block; }
-    
+
     .font-size-toggle a {
         line-height:19px;
     }
 
-    
+
     .add-link {
         .link-input-description, .link-input-url {
             width:49%;
@@ -56,30 +58,30 @@
     .remove-link {
         bottom:1px;
     }
-    
+
     // CSS Tables
     .table {
         display:inline-block;
-    
-        .row { 
+
+        .row {
             clear:both;
         }
         .cell {
             float:left;
         }
     }
-    
-    // Icons 
+
+    // Icons
     .icon-small { margin-bottom:0.3em; }
     .icon-button {
         .icon-small { margin:0.45em 0 0 0; }
     }
     .push { position:static; margin-left:1em; }
-    
+
     .search-parameters {
         display:inline;
     }
-    
+
     // Other browsers uses display:table-cell for vertical-align
     .flow-state-content {
         span {
@@ -87,8 +89,8 @@
             margin-top:1em;
             line-height:1.3em;
         }
-        
-        
+
+
     }
     .canceled {
         .flow-state-content {
@@ -96,9 +98,9 @@
                 margin-top:0;
             }
         }
-    }     
-       
-} 
+    }
+
+}
 
 // IE 6 & 7 & specific styles
 .ie6, .ie7, .ie8  {
@@ -112,8 +114,8 @@
         &.disabled {
            filter: progid:DXImageTransform.Microsoft.Alpha(opacity = 60);
         }
-    }  
-    
+    }
+
     .js-disabled {
         filter: progid:DXImageTransform.Microsoft.Alpha(opacity = 30);
     }
