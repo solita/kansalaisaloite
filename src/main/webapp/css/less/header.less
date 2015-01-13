@@ -1,140 +1,3 @@
-#header-tools {
-    height: 40px;
-    width: 100%;
-    background: #f1f1f1 url("@{imagesPath}/other-services-bg.png?version=${timestamp}") repeat-x bottom left;
-    position: relative;
-    z-index:2;
-
-    .logged-in-info {
-        font-size: 0.9em;
-        border-left: 1px solid black;
-        border-right: 1px solid #5a5a5a;
-        float: right;
-
-        .header-tool-link, .header-tool-text {
-            position:relative;
-            float: left;
-            max-width: 300px;
-            margin: 0px;
-            padding:0 38px 0 15px;
-            line-height:40px;
-
-            border-left: 1px solid #5a5a5a;
-            border-right: 1px solid black;
-
-            color: @lightGray;
-
-            &.login {
-                padding:0 15px 0 15px;
-            }
-
-            .makeEllipsis();
-
-            .ie8 & {
-                white-space: normal;
-                height: 40px;
-            }
-        }
-
-        .header-tool-link:hover {
-            color: white;
-        }
-
-        .header-tool-text {
-            padding:0 15px;
-        }
-    }
-
-    #header-tools-content {
-        // text-align: right;
-        width: 960px;
-        margin: 0 auto;
-        position: relative;
-
-        #aloite-links {
-            float: left;
-            overflow: hidden;
-            height: 40px;
-
-            a {
-                display: inline-block;
-                // padding: 7px 20px 30px 20px;
-                padding: 8px 10px 30px 10px;
-                background: @lightGray;
-                // margin: 8px 10px 0px 0px;
-                margin: 8px 0 0 0;
-                color: #393939;
-                z-index: 999;
-                font-size: 14px;
-
-                .transition(background, 0.2s, linear);
-
-                .rounded-corners();
-
-                &:hover {
-                    background: @borderGrayLight;
-                }
-            }
-
-            a.active {
-                background: white;
-                border: none;
-                color: black;
-            }
-
-            a:hover {
-                color: black;
-            }
-        }
-
-        /*span {
-            color: black;
-            font-size: 0.8em;
-            position: absolute;
-            top: 17px;
-            right: 280px;
-        }*/
-
-        img {
-            margin-top: 5px;
-        }
-
-        .other-services-container {
-            position: relative;
-            float: left;
-        }
-
-        .other-services-select {
-            float: left;
-            color: @lightGray;
-            font-size: 0.9em;
-            margin: 9px 0px 0px 6px;
-            padding: 5px 3px 10px 10px;
-            z-index: 998;
-
-            &:hover {
-                color:#fff;
-            }
-
-            .icon-small {
-                margin:0 0 -2px 3px;
-            }
-        }
-
-        .other-services-select.active {
-            border: 1px solid silver;
-            border-bottom: 0;
-            z-index: 999;
-            color: #444;
-            background: #fff;
-
-
-
-            .icon-small.dropdown-icon { background-position:-96px -13px; }
-        }
-    }
-}
-
 .header-dropdown {
     position:relative;
     float:left;
@@ -177,6 +40,46 @@
     a:hover {
         color: black;
         background: #f1f1f1;
+    }
+}
+
+.logged-in-info {
+    font-size: 0.9em;
+    border-left: 1px solid black;
+    border-right: 1px solid #5a5a5a;
+    float: right;
+
+    .header-tool-link, .header-tool-text {
+        position:relative;
+        float: left;
+        max-width: 300px;
+        margin: 0px;
+        padding:0 38px 0 15px;
+        line-height:40px;
+
+        border-left: 1px solid #5a5a5a;
+        border-right: 1px solid black;
+
+        color: @lightGray;
+
+        &.login {
+            padding:0 15px 0 15px;
+        }
+
+        .makeEllipsis();
+
+        .ie8 & {
+            white-space: normal;
+            height: 40px;
+        }
+    }
+
+    .header-tool-link:hover {
+        color: white;
+    }
+
+    .header-tool-text {
+        padding:0 15px;
     }
 }
 

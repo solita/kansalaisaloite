@@ -28,11 +28,7 @@
 <body class="${locale}">
 <div id="wrapper">
 
-    <div id="header-tools">
-        <div id="header-tools-content">
-            <#include "header-links.ftl" />
-        </div>
-    </div>
+    <#include "om-header.ftl" />
 
     <div id="header">
         <div id="header-content">
@@ -229,11 +225,16 @@
     <@r.topRibbon/>
     <#-- NOTE: Extra title for test sites ENDS ------------------------------- -->
 
-    <div id="header-tools">
-        <div id="header-tools-content">
-            <#include "header-links.ftl" />
+    <#include "om-header.ftl" />
 
-            <div class="logged-in-info">
+    <div id="header">
+        <div id="header-content">
+
+            <a class="logo" id="logo" href="${urls.baseUrl}/${locale}" accesskey="1" title="<@u.message "siteName" />">
+                <span><@u.message "siteName.logo" /></span>
+            </a>
+
+			<div class="logged-in-info">
                 <#-- Authenticated = Logged in -->
                 <#if currentUser.authenticated>
                     <div class="header-dropdown">
@@ -250,15 +251,6 @@
                     <a href="${urls.login(springMacroRequestContext.requestUri)}" title="<@u.message "common.login"/>" class="header-tool-link login"><@u.message "common.login"/></a>
                 </#if>
             </div>
-        </div>
-    </div>
-
-    <div id="header">
-        <div id="header-content">
-
-            <a class="logo" id="logo" href="${urls.baseUrl}/${locale}" accesskey="1" title="<@u.message "siteName" />">
-                <span><@u.message "siteName.logo" /></span>
-            </a>
 
             <#-- Language toggle, text size -->
             <div id="header-additional-content">

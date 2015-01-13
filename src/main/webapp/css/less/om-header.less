@@ -1,0 +1,48 @@
+@omHeaderHeight: 40px;
+@omHeaderTextColor: #fff;
+@omHeaderTextColorAct: @mainColor;
+@omHeaderColorAct: #fff;
+@omHeaderPad: 11px;
+
+.om-header {
+    height: @omHeaderHeight;
+    width: 100%;
+
+    .gradient(#434443, #2e2f2f);
+
+
+    .ie9 &, .ie8 & {
+        background: #f1f1f1 url("@{imagesPath}/other-services-bg.png?version=${timestamp}") repeat-x bottom left;
+    }
+
+    ul {
+        padding-left: @omHeaderPad;
+
+        li {
+            display: inline-block;
+            height: @omHeaderHeight;
+            text-transform: uppercase;
+
+            a {
+                display: inline-block;
+                padding: @omHeaderPad @omHeaderPad 0 @omHeaderPad;
+                line-height: @omHeaderHeight - @omHeaderPad;
+
+                color: @omHeaderTextColor;
+                font-size: 11px;
+
+                .transition(background, 0.2s, linear);
+
+                &:hover {
+                    color: #ddd;
+                }
+
+                &.active {
+                    background: @omHeaderColorAct;
+                    border: none;
+                    color: @omHeaderTextColorAct;
+                }
+            }
+        }
+    }
+}
