@@ -1,10 +1,6 @@
 @imagesPath: "../img";
 @imagesPathIE: "@{imagesPath}/ie";
 
-// Breakpoints
-@narrow:    ~"only screen and (max-width: 520px)";
-@xnarrow:   ~"only screen and (max-width: 320px)";
-
 // Basic colors used on the service.
 //
 // Styleguide 1.
@@ -20,7 +16,7 @@
 
 @link:                  #0089f2;
 @linkHover:             #0070c5;
-@headerLinkHover:       #D94E9C;
+@headerLinkHover:       @mainColor;
 
 @gradientDark:          #0ece27;
 @borderGray:            #cccccc;
@@ -57,9 +53,10 @@
 
 @headerTopPad: 18px;
 
-@highdensity:   ~"only screen and (-webkit-min-device-pixel-ratio: 2)",
-                ~"only screen and (   min--moz-device-pixel-ratio: 2)",
-                ~"only screen and (     -o-min-device-pixel-ratio: 2/1)",
-                ~"only screen and (        min-device-pixel-ratio: 2)",
-                ~"only screen and (                min-resolution: 192dpi)",
-                ~"only screen and (                min-resolution: 2dppx)";
+// OM Header
+@omHeaderHeight: 40px;
+@omHeaderTextColor: #fff;
+@omHeaderTextColorHover: #bcdade;
+@omHeaderTextColorAct: @mainColor;
+@omHeaderColorAct: #fff;
+@omHeaderPad: 11px;

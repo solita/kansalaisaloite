@@ -29,8 +29,7 @@
 
 <div class="container">
     <a href="${urls.createNew()}" class="hero-holder noprint">
-        <span class="hero">Ehdota<strong>lakia</strong><i class="icon-front i-arrow-right"></i></span>
-        <#--<a href="${urls.createNew()}" class="hero">Föreslå<strong>lag</strong></a>-->
+        <span class="hero"><@u.messageHTML "index.hero" /><i class="icon-front i-arrow-right"></i></span>
     </a>
 
     <div id="content">
@@ -43,6 +42,12 @@
 	                    <h1><@u.message "index.block-1.title" /></h1>
 	        
 	                    <p><@u.message "index.block-1.p-1" /></p>
+	                    
+	                    <ol>
+	                    	<li><@u.message "index.block-1.li-1" /></li>
+	                    	<li><@u.message "index.block-1.li-2" /></li>
+	                    </ol>
+	                    
 	                    <p><@u.message "index.block-1.p-2" /></p>
 	                    
 	                    <a href="${urls.helpIndex()}" class="block-link"><@u.message "index.block-1.link" /></a>

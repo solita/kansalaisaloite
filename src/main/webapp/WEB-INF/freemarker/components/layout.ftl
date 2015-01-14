@@ -236,22 +236,6 @@
                 <span><@u.message "siteName.logo" /></span>
             </a>
 
-			<div class="logged-in-info">
-                <#-- Authenticated = Logged in -->
-                <#if currentUser.authenticated>
-                    <a href="#" class="user-name dropdown-toggle">${currentUser.firstNames} ${currentUser.lastName}<span class="icon-small settings"></span></a>
-                    <ul id="user-menu" class="dropdown-menu user-menu">
-                        <#-- OM search view - lists all initiatives -->
-                        <#if currentUser.om><li><a href="${urls.searchOmView()}"><@u.message "user.omSearchView"/></a></li></#if>
-                        <#-- Registered = Authenticated and has initiatives (except OM/VRK-users) -->
-                        <#if currentUser.registered><li><a href="${urls.searchOwnOnly()}"><@u.message "user.myInitiatives"/></a></li></#if>
-                        <li><a href="${urls.logout()}" ><@u.message "common.logout"/></a></li>
-                    </ul>
-                <#else>
-                    <a href="${urls.login(springMacroRequestContext.requestUri)}" title="<@u.message "common.login"/>" class="header-tool-link login"><@u.message "common.login"/></a>
-                </#if>
-            </div>
-
             <#-- Language toggle, text size -->
             <div class="header-additional-content">
                 <div class="additional-tools">

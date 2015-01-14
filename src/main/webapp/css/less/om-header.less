@@ -1,41 +1,35 @@
-@omHeaderHeight: 40px;
-@omHeaderTextColor: #fff;
-@omHeaderTextColorAct: @mainColor;
-@omHeaderColorAct: #fff;
-@omHeaderPad: 11px;
-
 .om-header {
     height: @omHeaderHeight;
     width: 100%;
+    text-transform: uppercase;
 
     .gradient(#434443, #2e2f2f);
-
 
     .ie9 &, .ie8 & {
         background: #f1f1f1 url("@{imagesPath}/ie/om-header-gradient.png?version=${timestamp}") repeat-x bottom left;
     }
 
-    ul {
+    a {
+        color: @omHeaderTextColor;
+        font-size: 11px;
+
+        &:hover {
+            color: @omHeaderTextColorHover;
+        }
+    }
+
+    > ul {
+        margin-right: 375px;
         padding-left: @omHeaderPad;
 
         li {
             display: inline-block;
             height: @omHeaderHeight;
-            text-transform: uppercase;
 
             a {
                 display: inline-block;
                 padding: @omHeaderPad @omHeaderPad 0 @omHeaderPad;
                 line-height: @omHeaderHeight - @omHeaderPad;
-
-                color: @omHeaderTextColor;
-                font-size: 11px;
-
-                .transition(background, 0.2s, linear);
-
-                &:hover {
-                    color: #ddd;
-                }
 
                 &.active {
                     background: @omHeaderColorAct;
@@ -44,5 +38,86 @@
                 }
             }
         }
+    }
+}
+
+
+.logged-in-info {
+    position: relative;
+    font-size: 11px;
+    border-left: 1px solid black;
+    border-right: 1px solid #5a5a5a;
+    float: right;
+    margin-right: 11px;
+
+    > a {
+        position:relative;
+        float: left;
+        max-width: 300px;
+        margin: 0px;
+        padding: @omHeaderPad 38px 0 15px;
+        line-height: @omHeaderHeight - @omHeaderPad;
+
+        border-left: 1px solid #5a5a5a;
+        border-right: 1px solid black;
+
+        &.login {
+            padding-right: 15px;
+        }
+
+        .makeEllipsis();
+
+        .ie8 & {
+            white-space: normal;
+            height: @omHeaderHeight - @omHeaderPad;
+        }
+    }
+}
+
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    text-align: left;
+    background: white;
+    border: 1px solid silver;
+    border-top: 0px;
+    padding: 8px;
+    list-style: none;
+    z-index: 998;
+    font-size: 1em;
+    width: 13em;
+    box-shadow: 2px 2px 2px rgba(0,0,0,0.1);
+    text-transform: none;
+
+    &.user-menu {
+        right: 0;
+        top: 40px;
+    }
+
+    a {
+        display: block;
+        color: #444;
+        border-top: 1px solid #f1f1f1;
+        padding: 5px;
+        margin: 0px;
+
+        &:hover {
+            color: black;
+            background: #f1f1f1;
+        }
+    }
+
+    li:first-child {
+        a {
+            border-top:none;
+        }
+    }
+}
+
+// Dropdown CSS for NOSCRIPT users
+.no-js .logged-in-info:hover {
+    .dropdown-menu {
+        display:block;
     }
 }
