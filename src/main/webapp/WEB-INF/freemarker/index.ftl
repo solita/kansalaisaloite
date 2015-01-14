@@ -57,6 +57,22 @@
 	        
 	                    <p><@u.message "index.block-2" /></p>
 	                    
+	                    <#assign dummyInitiativeList = [
+	                    	{ "id": 1, "startDate": "27.12.2014", "name": "Avioliittolaista suoritettava kansanäänestys"},
+	                    	{ "id": 2, "startDate": "16.12.2014", "name": "Isänpäivä viralliseksi liputuspäiväksi"}
+	                    ] />
+	                    
+	                    <#if dummyInitiativeList?? && dummyInitiativeList?size gt 0>
+		                    <ul class="initiative-list no-style">
+		                    	<#list dummyInitiativeList as initiative>
+			                    	<li>
+			                    		<span class="date">${initiative.startDate}</span>
+			                    		<a href="${urls.view(initiative.id)}">${initiative.name}</a>
+			                    	</li>
+		                    	</#list>
+		                    </ul>
+	                    </#if>
+	                    
 	                    <a href="${urls.search()}" class="block-link"><@u.message "index.block-2.link" /></a>
 	                </div>
 	                

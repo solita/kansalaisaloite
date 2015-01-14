@@ -97,14 +97,14 @@ a.external {
     text-overflow: ellipsis;
 }
 a.block-link {
-    display:block;
-    height:38px;
-    line-height:38px;
-    margin-bottom:1em;
-    padding:0 2.5em 0 0.9em;
-    background:@mainColor url("@{imagesPath}/icons-sprite.png?version=${timestamp}") right -149px no-repeat;
-    color:#fff;
-    font-weight:bold;
+    display: block;
+    height: 38px;
+    line-height: 38px;
+    margin: 1.5em 0 1em 0;
+    padding: 0 2.5em 0 0.9em;
+    background: @mainColor url("@{imagesPath}/icons-sprite.png?version=${timestamp}") right -149px no-repeat;
+    color: #fff;
+    font-weight: bold;
 
     .transition(background-color, 0.2s, ease-in);
 
@@ -126,5 +126,15 @@ div {
 
     .top-margin {
         margin-top: 1em;
+    }
+}
+
+.initiative-list {
+    li {
+        margin-bottom: 1em;
+
+        .date {
+            display: block;
+        }
     }
 }
