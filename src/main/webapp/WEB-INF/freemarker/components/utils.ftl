@@ -253,7 +253,7 @@
             <div class="container">
     
                 <#if requestMessage.type == RequestMessageType.SUCCESS>
-                    <@systemMessage path=requestMessage type="success" cssClass="wide" showClose=true useCloseTarget=false />
+                    <@systemMessage path=requestMessage type="success" cssClass="wide" showClose=true />
                 <#else>
                     <#-- NOT in use for frontpage at this moment. Some styling is needed -->
                     <@systemMessage path=requestMessage type=requestMessage.type?lower_case />

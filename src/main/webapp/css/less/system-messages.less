@@ -99,7 +99,6 @@
         width: 16px;
         height: 16px;
         line-height: 13px;
-        //border-radius:0.2em;
         text-align: center;
         font-size:0.85em;
 
@@ -115,4 +114,12 @@
         }
     }
 }
-.front .system-msg { top:-10px; } // Exception for frontpage
+// Exception for frontpage
+.front {
+    .system-msg {
+        z-index: 9999;
+        top: 20px;
+        margin: 0;
+
+    }
+}
