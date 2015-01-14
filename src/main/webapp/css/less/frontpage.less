@@ -1,9 +1,64 @@
-// Frontpage
+@frontImageHeight: 294px;
+@frontImageGutter: 3px;
+@heroTextColor: #fff;
+@heroBgColor: @mainColor;
+@heroBgColorHover: @mainColorDark;
+
+.frontpage-image (@index:1) {
+    // background-image:url("@{imagesPath}/front-images/front-strip-@{index}.jpg?version=${timestamp}");
+}
+
+.frontpage-image-retina (@index:1) {
+    // background-image:url("@{imagesPath}/front-images/front-strip-@{index}-2x.jpg?version=${timestamp}");
+}
+
+.image-container {
+    position:relative;
+    height: @frontImageHeight;
+    background-color: #e1e1e1;
+    background-position: center top;
+    background-repeat: repeat-x;
+
+    .frontpage-image(1);
+
+    &.image-2 {
+        .frontpage-image(2);
+    }
+    &.image-3 {
+        .frontpage-image(3);
+    }
+    &.image-4 {
+        .frontpage-image(4);
+    }
+
+    @media @highdensity {
+        background-size: cover;
+
+        .frontpage-image-retina(1);
+
+        &.image-2 {
+            .frontpage-image-retina(2);
+        }
+        &.image-3 {
+            .frontpage-image-retina(3);
+        }
+        &.image-4 {
+            .frontpage-image-retina(4);
+        }
+    }
+
+}
+
+.front {
+    .container {
+        position: relative;
+    }
+}
+
 .front-container {
     min-height: 441px;
-    margin: -10px -60px 0px -66px;
-    padding: 325px 0 0 66px;
-    background:url("@{imagesPath}/bg-front.jpg?version=${timestamp}") -2px 0 no-repeat;
+    margin: 0 -60px 0px -66px;
+    padding: 10px 0 0 66px;
 
     .faux-columns {
         width: 960px;
@@ -20,17 +75,21 @@
     }
 
     .front-block {
-        padding: 0 50px 20px 100px;
-
-        background: url("@{imagesPath}/block-icons.png?version=${timestamp}") 30px 0 no-repeat;
+        position: relative;
+        padding: 40px 40px 20px 40px;
 
         &.block-2 {
-            background-position: -970px 0;
             border-bottom: 20px solid @bodyBackground;
         }
+
         &.block-3 {
-            padding-top: 30px;
-            background-position: -1970px 30px;
+            // padding-top: 30px;
+        }
+
+        i {
+            position: absolute;
+            top: 15px;
+            right: 15px;
         }
 
         h1 {
@@ -47,5 +106,47 @@
     .front-page-intro-image {
         float: right;
         margin: 0px 0px 2em 2em;
+    }
+}
+
+.hero-holder {
+    display: block;
+    position: absolute;
+    top: -@frontImageHeight;
+    left: 94px;
+    width: 280px;
+    height: @frontImageHeight;
+    box-sizing: border-box;
+    background-color: @heroBgColor;
+    border-left: @frontImageGutter solid #fff;
+    border-right: @frontImageGutter solid #fff;
+
+    .transition(background-color, 0.2s, ease-in);
+
+    &:hover {
+        background-color: @heroBgColorHover;
+    }
+}
+
+.hero {
+    position: absolute;
+    left: 40px;
+    bottom: 30px;
+    font-size: 63px;
+    line-height: 60px;
+    color: @heroTextColor;
+
+    strong {
+        display: inline-block;
+        font-style: italic;
+        border-bottom: 8px solid @heroTextColor;
+    }
+
+    i {
+        margin: 0 0 -12px 23px;
+    }
+
+    &:hover {
+        color: @heroTextColor;
     }
 }

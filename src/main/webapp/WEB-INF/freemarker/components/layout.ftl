@@ -277,18 +277,22 @@
         </div>
     </div>
 
-    <div class="container">
-        <div id="content">
-
-            <#if requestMessages?? && !editorOn??>
-                <@u.requestMessage requestMessages />
-            </#if>
-
-            <#-- Main content -->
-            <#nested />
-
-        </div>
-    </div>
+	<#if page == "page.frontpage">
+        <#nested />
+    <#else>
+	    <div class="container">
+	        <div id="content">
+	
+	            <#if requestMessages?? && !editorOn??>
+	                <@u.requestMessage requestMessages />
+	            </#if>
+	
+	            <#-- Main content -->
+	            <#nested />
+	
+	        </div>
+	    </div>
+    </#if>
 
     <div id="footer">
         <div class="container">

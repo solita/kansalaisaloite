@@ -239,6 +239,33 @@
 </#macro>
 
 <#--
+ * frontpageRequestMessage
+ *
+ * Request message uses systemMessage macro to show messages.
+ * Message types are SUCCESS and WARNING (INFO and ERROR might be implemented later on).
+ *
+ * @param messageList
+-->
+<#macro frontpageRequestMessage messageList>
+    
+    <#list messageList as requestMessage>
+        <div class="front-system-msg js-close-msg-target reveal-msg">
+            <div class="container">
+    
+                <#if requestMessage.type == RequestMessageType.SUCCESS>
+                    <@systemMessage path=requestMessage type="success" cssClass="wide" showClose=true useCloseTarget=false />
+                <#else>
+                    <#-- NOT in use for frontpage at this moment. Some styling is needed -->
+                    <@systemMessage path=requestMessage type=requestMessage.type?lower_case />
+                </#if>
+
+            </div>
+        </div>
+    </#list>
+            
+</#macro>
+
+<#--
  * shortenText
  *
  * First chapter of the initiative proposal. Summary length is defined in SummaryMethod.java
