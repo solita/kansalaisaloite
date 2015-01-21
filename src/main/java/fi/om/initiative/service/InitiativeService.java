@@ -29,6 +29,8 @@ public interface InitiativeService {
 
     InitiativeSublistWithTotalCount findInitiatives(InitiativeSearch search);
 
+    List<InitiativeInfo> findInitiativesByAmount(InitiativeSearch search, Integer limit);
+
     InitiativeManagement update(InitiativeManagement initiative, EditMode editMode, Errors errors);
 
     Author getAuthor(Long initiativeId, Long userId);

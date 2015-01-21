@@ -381,6 +381,13 @@ public class InitiativeServiceImpl implements InitiativeService {
         return initiatives;
     }
 
+    @Cacheable("frontPageInitiatives")
+    @Transactional(readOnly=true)
+    public List<InitiativeInfo> findInitiativesByAmount(InitiativeSearch search, Integer limit) {
+        InitiativeSublistWithTotalCount initiativeSublistWithTotalCount = initiativeDao.findInitiatives(search.setLimit(limit), null, initiativeSettings.getMinSupportCountSettings());
+        return initiativeSublistWithTotalCount.list;
+    }
+
     @Override
     @Cacheable("publicInitiativeCount")
     public InitiativeCountByState getPublicInitiativeCountByState() {

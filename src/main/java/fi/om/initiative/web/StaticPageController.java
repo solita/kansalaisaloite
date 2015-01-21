@@ -45,9 +45,7 @@ public class StaticPageController extends BaseController {
         model.addAttribute(ALT_URI_ATTR, urls.alt().frontpage());
         addPiwicIdIfNotAuthenticated(model);
 
-        InitiativeSublistWithTotalCount initiativeSublistWithTotalCount = initiativeService.findInitiatives(new InitiativeSearch().setLimit(2));
-        List<InitiativeInfo> initiatives = initiativeSublistWithTotalCount.list;
-
+        List<InitiativeInfo> initiatives = initiativeService.findInitiativesByAmount(new InitiativeSearch(), 2);
         model.addAttribute("initiatives", initiatives);
 
         return INDEX_VIEW;
