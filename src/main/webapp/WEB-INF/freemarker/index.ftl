@@ -66,7 +66,7 @@
 		                    <ul class="initiative-list no-style">
 		                    	<#list initiatives as initiative>
 			                    	<li>
-			                    		<span class="date">${initiative.startDate}</span>
+			                    		<span class="date"><@u.localDate initiative.startDate /></span>
 			                    		<a href="${urls.view(initiative.id)}"><@u.text initiative.name /></a>
 			                    	</li>
 		                    	</#list>
