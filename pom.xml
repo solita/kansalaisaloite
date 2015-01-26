@@ -412,6 +412,7 @@
                             </options>
                             <includes>
                             	<!--<include>**/jquery.supportvotegraph.js</include>-->
+                            	<!--<include>**/jquery.headernav.js</include>-->
                                 <include>**/aloitepalvelu.js</include>
                             </includes>
                         </configuration>
@@ -474,6 +475,7 @@
                                 <jsSourceFile>moment.min.js</jsSourceFile>
                                 <jsSourceFile>raphael.min.js</jsSourceFile>
                                 <jsSourceFile>jquery.supportvotegraph.js</jsSourceFile>
+                                <jsSourceFile>jquery.headernav.js</jsSourceFile>
                                 <jsSourceFile>aloitepalvelu.js</jsSourceFile>
                             </jsSourceFiles>
                             <jsFinalFile>script.js</jsFinalFile>

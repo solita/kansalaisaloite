@@ -72,7 +72,8 @@
 
   $(document).ready(function () {
     // Define general variables
-    var $body, speedFast, speedSlow, speedVeryFast, speedAutoHide, vpHeight, vpWidth, validateEmail, locale, isIE7, $topRibbon, myConsole;
+    var $body, speedFast, speedSlow, speedVeryFast, speedAutoHide, vpHeight, vpWidth, validateEmail,
+      locale, isIE7, $topRibbon, myConsole, fireSupportVoteGraph, headerNav;
 
     $body = $('body');
     speedFast = '200'; // General speeds for animations
@@ -131,25 +132,6 @@
         switcher.html(temp);
       }
     };
-
-    // Fire supportVoteGraph
-    if (window.supportVoteGraph && window.supportVoteGraph.votes.length > 0) {
-      $(window).on('resize', function () {
-        $('#supportVotesGraph').html('').supportVoteGraph({
-          data: window.supportVoteGraph,
-          color: '#087480',
-          colorHl: '#bc448e',
-          width : $('#supportVotesGraph').parent().width() || 960,
-          height : 250,
-          leftgutter : 50,
-          rightgutter : 30,
-          bottomgutter : 20,
-          topgutter : 20,
-          cumulative : true,
-          max : 50000
-        });
-      }).trigger('resize');
-    }
 
     /**
      *  Prevent double clicks
@@ -219,6 +201,33 @@
     $topRibbon = $('.debug-ribbon.top.fixed');
     $topRibbon.after('<div style="height:' + $topRibbon.outerHeight() + 'px" />').css('position', 'fixed');
 
+
+    // Fire supportVoteGraph
+    if (window.supportVoteGraph && window.supportVoteGraph.votes.length > 0) {
+      fireSupportVoteGraph = function () {
+        $('#supportVotesGraph').html('').supportVoteGraph({
+          data: window.supportVoteGraph,
+          color: '#087480',
+          colorHl: '#bc448e',
+          width : $('#supportVotesGraph').parent().width() || 960,
+          height : 250,
+          leftgutter : 50,
+          rightgutter : 30,
+          bottomgutter : 20,
+          topgutter : 20,
+          cumulative : true,
+          max : 50000
+        });
+      };
+    }
+
+    // OM header navigation
+    headerNav = $('#headerNav');
+    headerNav.headerNav({
+      btnTitle: locale === 'sv' ? 'Visa mer' : 'Näytä lisää',
+      btnShow : '+', // TEXT/HTML
+      btnHide : '-' // TEXT/HTML
+    });
 
     /**
      * Toggle form help texts
@@ -1473,6 +1482,17 @@
 
       }());
     }
+
+    $(window).on('resize', function () {
+      if (fireSupportVoteGraph !== undefined) {
+        fireSupportVoteGraph();
+      }
+
+      if (headerNav !== undefined) {
+        headerNav.headerNav('resize');
+      }
+    }).trigger('resize');
+
   });
 
 }());
