@@ -149,6 +149,8 @@ public final class Urls {
     public static final String ENCODING = "UTF-8";
     
     public static final String PARAM_INVITATION_CODE = "invitation";
+    
+    public static final String PARAM_INITIATIVE_ID = "id";
 
     public static final String SEARCH_OWN_ONLY = "searchView="+ SearchView.own.name();
 
@@ -304,6 +306,10 @@ public final class Urls {
 
     public String news() {
         return getLocalizedPageUrl(NEWS_FI, NEWS_SV);
+    }
+    
+    public String widget(Long initiativeId) {
+    	return getLocalizedPageUrl(IFRAME_GENERATOR_FI, IFRAME_GENERATOR_SV) + "?" + PARAM_INITIATIVE_ID + "=" + initiativeId;
     }
 
     public String supportStatementPdf(Long initiativeId) {

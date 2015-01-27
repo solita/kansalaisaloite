@@ -11,7 +11,15 @@
  * @param page is "page.iframeGenerator"
  * @param pageTitle can be assigned as custom HTML title
 -->
-<#assign page="page.find" />
+<#assign page="page.iframeGenerator" />
+
+<#--
+ * Get default initiative id from URL
+-->
+<#assign initiativeId="" />
+<#if RequestParameters['id']??>
+	<#assign initiativeId=RequestParameters['id'] />
+</#if>
 
 
 <#--
@@ -21,7 +29,7 @@
  *
  * [initiativeId, locale, limit, width, height, showTitle]
 -->
-<#assign iFrameDefaults = ["", locale, 600, 600, false]>
+<#assign iFrameDefaults = [initiativeId, locale, 600, 600, false]>
 
 <#--
  * Set min and maximum values for the generated iFrame
@@ -32,6 +40,7 @@
 
 
 <@l.main "page.iframeGenerator" pageTitle!"">
+
 
     <h1><@u.message "page.iframeGenerator" /></h1>
 

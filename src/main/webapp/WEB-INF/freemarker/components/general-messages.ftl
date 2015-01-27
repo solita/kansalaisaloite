@@ -17,7 +17,10 @@
     	<div id="supportVotesGraph">
     		<noscript><@u.message key="graph.javaScriptSupport" /></noscript>
     	</div>
-        <div class="update-info"><@u.message key="graph.updateInfo" /></div>
+        <div class="update-info">
+        	<@u.message key="graph.updateInfo" /><br/>
+        	<a hreF="${urls.widget(initiative.id)}"><@u.message key="graph.widgetLink" /></a>
+        </div>
     </div>
 
      <script type="text/javascript">
