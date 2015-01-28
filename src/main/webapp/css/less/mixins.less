@@ -59,6 +59,12 @@
     background: -o-linear-gradient(left,  @start, @stop);
 }
 
+.boxSizing(@style: border-box){
+    box-sizing: @style;
+    -webkit-box-sizing: @style; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: @style;    /* Firefox, other Gecko */
+}
+
 // Triangle
 .triangleBase() {
     content: '';

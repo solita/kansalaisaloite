@@ -77,13 +77,13 @@
 }
 
 .file-icon {
-    display:inline-block;
-    width:32px;
-    height:32px;
-    margin:0 0.5em -0.5em 0;
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    margin: 0 0.5em -0.5em 0;
 
     &.pdf {
-        background:url("@{imagesPath}/pdficon_large.png?version=${timestamp}") no-repeat 0 0;
+        background: url("@{imagesPath}/pdficon_large.png?version=${timestamp}") no-repeat 0 0;
     }
 }
 
@@ -110,88 +110,79 @@
 // Styleguide 3.5
 
 .icon-small {
-    display:inline-block;
-    width:12px;
-    height:12px;
+    display: inline-block;
+    width: 12px;
+    height: 12px;
     background: transparent url("@{imagesPath}/icons-sprite.png?version=${timestamp}") 0 0 no-repeat;
 
     &.pull-down {
-        position:relative;
-        bottom:-0.15em;
+        position: relative;
+        bottom: -0.15em;
     }
 
     &.settings, &.logout {
-        position:absolute;
-        right:15px;
-        top:50%;
-        margin-top:-1px;
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        margin-top: -1px;
     }
 
     &.settings {
-        background-position:-48px 0;
+        background-position: -48px 0;
     }
     &.logout {
-        background-position:-80px 0;
+        background-position: -80px 0;
     }
 
     &.dropdown-icon {
-        margin-left:3px;
-        background-position:-96px 3px;
+        margin-left: 3px;
+        background-position: -96px 3px;
     }
 
-    &.required { background-position:0 0; }         // Required field
-    &.unconfirmed { background-position:-16px 0; }  // Unconfirmed author
-    &.confirmed { background-position:-32px 0; }    // Confirmed author
+    &.required { background-position: 0 0; }         // Required field
+    &.unconfirmed { background-position: -16px 0; }  // Unconfirmed author
+    &.confirmed { background-position: -32px 0; }    // Confirmed author
     &.external {                                    // External link
-        background-position:-144px 1px;             // Used a.external instead
-        margin-left:4px;
+        background-position: -144px 1px;             // Used a.external instead
+        margin-left: 4px;
     }
+    &.lock { background-position: -64px -16px; }
     &.more {
-        width:16px;
-        height:16px;
-        margin:1px 0 0 4px;
-        background-position:-112px 0;
+        width: 16px;
+        height: 16px;
+        margin: 1px 0 0 4px;
+        background-position: -112px 0;
 
-        &.less { background-position:-128px 0; }
+        &.less { background-position: -128px 0; }
     }
-    &.arrow-right {
-        background-position:-160px 1px;
-    }
-    &.arrow-right-2 {
-        background-position:-179px 1px;
-    }
+    &.arrow-right { background-position: -160px 1px; }
+    &.arrow-right-2 { background-position: -179px 1px; }
     &.arrow-right-3 {
-        background-position:-179px -15px;
+        background-position: -179px -15px;
 
         &.floated {                                 // For info system-messages
-            float:left;
-            margin:0.2em 0 0 -16px;
+            float: left;
+            margin: 0.2em 0 0 -16px;
         }
     }
-    &.arrow-left {
-        background-position:-192px 1px;
-    }
-    &.arrow-left-2 {
-        background-position:-208px 1px;
-    }
-    &.arrow-left-3 {
-        background-position:-208px -15px;
-    }
+    &.arrow-left { background-position: -192px 1px; }
+    &.arrow-left-2 { background-position: -208px 1px; }
+    &.arrow-left-3 { background-position: -208px -15px; }
     &.help {
-        width:27px;
-        height:21px;
-        background-position:0 -96px;
+        width: 27px;
+        height: 21px;
+        background-position: 0 -96px;
     }
     &.help-tooltip {
-        width:27px;
-        height:21px;
-        background-position:-32px -96px;
+        width: 27px;
+        height: 21px;
+        background-position: -32px -96px;
     }
     &.refresh {
-        cursor:pointer;
-        width:26px;
-        height:26px;
-        background-position:-64px -96px;
+        cursor: pointer;
+        width: 26px;
+        height: 26px;
+        background-position: -64px -96px;
         vertical-align: middle;
         margin-top: -.2em;
     }
@@ -199,8 +190,8 @@
     .transition(opacity, 0.1s, ease-in);
 
     &.js-disabled {
-        cursor:default;
-        opacity:0.3;
+        cursor: default;
+        opacity: 0.3;
     }
 
 }

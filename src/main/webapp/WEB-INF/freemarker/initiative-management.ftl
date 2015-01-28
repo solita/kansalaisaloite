@@ -67,7 +67,9 @@
         </div>
     </#if>
         
-    <#noescape>${topContributionVRK!""}</#noescape>   
+    <#noescape>${topContributionVRK!""}</#noescape>  
+    
+    <#if reviewHistory??><#noescape>${reviewHistory}</#noescape></#if> 
    
     <#-- Full edit form errors summary -->
     <#if managementSettings.editMode == EditMode.FULL>
