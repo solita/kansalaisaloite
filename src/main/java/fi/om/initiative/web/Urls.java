@@ -185,6 +185,8 @@ public final class Urls {
     public static final String ACTION_DELETE_CURRENT_AUTHOR = "action-delete-current-author";
 
     public static final String ACTION_REMOVE_SUPPORT_VOTES = "action-remove-support-votes";
+    
+    public static final String ACTION_MODERATOR_ADD_COMMENT = "moderatorComment";
 
     public static final String JSONP_CALLBACK = "jsonp";
 

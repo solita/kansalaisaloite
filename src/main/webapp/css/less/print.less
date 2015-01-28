@@ -4,8 +4,9 @@
 }
 
 #accesskeys,
-#header-tools, #header-additional-content,
-#main-navigation, .navigation, 
+.header-additional-content,
+#main-navigation, .navigation,
+.om-header,
 .block-link, .switch-view, .msg-summary .system-msg,
 .initiative-content-tools, button, .small-button, .large-button,
 .search-parameters-title, .search-parameters-container, .search-sort, .pagination, .toggle-under-50,
@@ -13,7 +14,7 @@
 
 html {
     margin:0; padding:0;
-    font-size:10pt; // Using absolute size as Opera gets default font-adjustment from users Computer 
+    font-size:10pt; // Using absolute size as Opera gets default font-adjustment from users Computer
 }
 body {
     font-family: 'PT Sans', "Trebuchet MS", Helvetica, sans-serif;
@@ -25,11 +26,11 @@ a { color:#0089f2; }
 img { max-width:100%; }
 br.clear { display:none; }
 
-// Set all DIVs as inline 
+// Set all DIVs as inline
 div {
     display:inline;
 
-    // Exceptions that should be blocks     
+    // Exceptions that should be blocks
     &.flow-state-indicator,
     &.content-block-header {
         display:block;
@@ -52,7 +53,7 @@ div {
 #logo span {
     display:block;
     font-size:1.5em;
-    line-height:1em;    
+    line-height:1em;
     color: #111;
     font-weight:normal;
 }
@@ -69,7 +70,7 @@ div {
 // blockquote   - Blockquote
 // .vote-count  - Vote count
 // .internal-vote-count  - Internal vote count
-// 
+//
 // Styleguide 7.
 
 h1, h2, h3, h4, h5, h6, p {
@@ -78,14 +79,14 @@ h1, h2, h3, h4, h5, h6, p {
 
 h1 {
     font-size:1.5em;
-    line-height:1em;    
+    line-height:1em;
     clear: both;
     color: #111;
     font-weight:normal;
 }
 .extra-info {
     display:block;
-    margin:-0.5em 0 1em 0;   
+    margin:-0.5em 0 1em 0;
 }
 
 
@@ -104,7 +105,7 @@ h3 {
 h4
 {
     margin-bottom:0.5em;
-    
+
     &.header { margin:1em 0 0 0; }
     &.subtle {
         margin:0;
@@ -123,7 +124,7 @@ ul, ol {
     &.no-style {
         margin:0; padding:0; list-style:none;
     }
-    
+
     &.alpha {
         list-style-type:lower-alpha;
     }
@@ -150,12 +151,12 @@ blockquote {
 .initiative-content-row {
     margin-bottom: 0.7em;
     padding-bottom: 0.7em;
-    
+
     .header {
         display: block;
         font-weight: bold;
     }
-    
+
     &.last{
         margin:0;
         padding:0;
@@ -166,7 +167,7 @@ blockquote {
     margin-top:2em;
 }
 
-// Flow state indicator 
+// Flow state indicator
 
 .flow-state-indicator {
     overflow: hidden;
@@ -178,39 +179,39 @@ blockquote {
         display:inline;
         margin:0 0.5em;
     }
-    
+
 
     .flow-state-step {
         display:inline;
-        
+
         // print separator element with CSS content
         &:before {
             //content: "»";
             content:'\2192';
-        }    
+        }
         &:first-child {
             .flow-state-content {
                 margin-left:0;
-            }    
-        
+            }
+
             &:before {
                 content: "";
             }
-        } 
-        
+        }
+
         &.active {
             font-weight:bold;
         }
-        
+
         &.checked {
             text-decoration:line-through;
             color:#888;
         }
-        
+
         &.failed {
 
         }
-        
+
         &.done {
 
         }
@@ -229,13 +230,13 @@ blockquote {
         padding:1em;
         margin:2em 0;
         border:1px solid #000;
-        
+
         .msg-info {
             background:#fff;
             padding:0 0 1em 0;
             border:none;
             font-size:1em;
-            
+
             &:last-child {
                 padding:0;
             }
@@ -255,7 +256,7 @@ blockquote {
         padding:0;
         list-style:none;
     }
-    
+
     li {
         overflow:hidden; // clearfix
         position:relative;
@@ -263,10 +264,10 @@ blockquote {
         margin-bottom:0.7em;
         padding-top:0.7em;
         border-top:1px solid #eee;
-        
+
         &.first { border:0; }
     }
-    
+
     .date {
         float:left;
     }
@@ -280,28 +281,28 @@ blockquote {
         margin-left:7em;
         color:#999;
     }
-    
+
     .support-votes-details {
         float:right;
         width:13em;
-        
+
         .support-votes-container {
             position:relative;
             display:block;
             text-align:right;
         }
-        
+
         .support-votes {
             position:relative;
             z-index:2;
             font-size:1.3em;
             //font-style:italic;
         }
-        
+
         .bar {
             display:none;
         }
-        
+
         .internal-support-votes {
             display:inline-block;
             width:100%;
@@ -312,7 +313,7 @@ blockquote {
             font-size:1.2em;
             font-weight:bold;
         }
-        
+
     }
 
 }
