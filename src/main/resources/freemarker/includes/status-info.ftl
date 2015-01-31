@@ -19,7 +19,7 @@
  *  VRK_RESOLUTION
 -->
 
-<#macro endlinesToHtml text>${text?replace('\n','<br/>')}</#macro>
+<#macro endlinesToHtml text="">${text?replace('\n','<br/>')}</#macro>
 
 <#if emailMessageType == EmailMessageType.INVITATION_REJECTED>
     <#-- TEXT -->
