@@ -7,37 +7,32 @@
     , SHOW_BTN_CLASS = 'show';
 
   var defaults = {
-        btnTitle: 'Näytä lisää',
-        btnShow : '+', // TEXT/HTML
-        btnHide : '-' // TEXT/HTML
-      }
+        btnTitle: 'Näytä lisää'
+      , btnMenu : '<i class="om-header-nav-icon"></i>' // TEXT/HTML
+    }
     , settings = {}
     , dropdownContainer
     , toggleBtn;
 
   var setup = function (options) {
       settings = $.extend(defaults, options);
-
       dropdownContainer = $('<div class="header-nav-dropdown" />');
-      toggleBtn = $('<a href="#" class="toggle-dropdown" title="' + settings.btnTitle + '">' + settings.btnShow + '</a>');
+      toggleBtn = $('<a href="#" class="toggle-dropdown" title="' + settings.btnTitle + '">' + settings.btnMenu + '</a>');
+    },
+
+    toggleMenu = function (ul, show) {
+      if (show) {
+        dropdownContainer.html(ul.clone().addClass('dropdown-menu'));
+      } else {
+        dropdownContainer.html('');
+      }
     },
 
     handleResize = function (el) {
       var ul = el.find('ul').first()
         , li = ul.find('li')
-        , pinLeft = false
         , droppedCount = 0
         , visible = false;
-
-      var toggleMenu = function (btn, show) {
-        btn.html( show ? settings.btnHide : settings.btnShow );
-
-        if (show) {
-          dropdownContainer.html(ul.clone().addClass('dropdown-menu'));
-        } else {
-          dropdownContainer.html('');
-        }
-      };
 
       li.each(function (index, element) {
         var el = $(element);
@@ -53,26 +48,16 @@
       // Drop all if only one remaining
       if (li.length > 1 && $(li[1]).hasClass(DROP_CLASS)) {
         $(li[0]).addClass(DROP_CLASS);
-        pinLeft = true;
       }
 
-      el.toggleClass('pin-left', pinLeft);
-
-      toggleMenu(toggleBtn, false);
-
-      if (droppedCount > 0) {
-        toggleBtn.addClass(SHOW_BTN_CLASS);
-      } else {
-        toggleBtn.removeClass(SHOW_BTN_CLASS).html(settings.btnShow);
-      }
+      toggleMenu(ul, false);
+      toggleBtn.toggleClass(SHOW_BTN_CLASS, droppedCount > 0);
+      ul.toggleClass('push', droppedCount > 0);
 
       toggleBtn.click(function (e) {
         e.preventDefault();
-
-        var $this = $(this);
-
         visible = !visible;
-        toggleMenu($this, visible);
+        toggleMenu(ul, visible);
       });
     };
 

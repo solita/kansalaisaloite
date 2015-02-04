@@ -1,3 +1,20 @@
+@omHeaderHeight: 40px;
+@omHeaderTextColor: #fff;
+@omHeaderTextColorHover: #bcdade;
+@omHeaderTextColorAct: #017380;
+@omHeaderColorAct: #fff;
+@omHeaderPad: 11px;
+@omHeaderNavOffset: 20px;
+
+
+.om-header-nav-icon {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+
+    .backgroundImage('om-header-nav-icons', 16px auto);
+}
+
 .om-header {
     height: @omHeaderHeight;
     width: 100%;
@@ -90,8 +107,8 @@
 
     .header-nav {
         position: relative;
-        margin-right: 375px;
-        padding: 0 @omHeaderHeight 0 @omHeaderPad;
+        margin: 0 375px 0 @omHeaderPad;
+        padding: 0 @omHeaderNavOffset 0 0;
         height: @omHeaderHeight;
 
         > ul {
@@ -99,6 +116,10 @@
             margin: 0;
             padding: 0;
             overflow: hidden;
+
+            &.push {
+                margin-left: @omHeaderNavOffset;
+            }
 
             li {
                 display: inline-block;
@@ -126,7 +147,7 @@
         .toggle-dropdown {
             display: none;
             position: absolute;
-            right: 0;
+            left: @omHeaderPad;
             top: 0;
             margin: @omHeaderPad 0 0 0;
             line-height: @omHeaderHeight - @omHeaderPad;
@@ -144,10 +165,12 @@
         .header-nav-dropdown {
             position: absolute;
             top: 0;
-            right: 0;
+            left: 0;
 
             .dropdown-menu {
                 display: block;
+                left: 0;
+                right: auto;
 
                 li {
                     display: none;
@@ -156,14 +179,6 @@
                         display: block;
                     }
                 }
-            }
-        }
-
-        &.pin-left {
-            .toggle-dropdown,
-            .header-nav-dropdown {
-                left: @omHeaderPad;
-                right: auto;
             }
         }
     }

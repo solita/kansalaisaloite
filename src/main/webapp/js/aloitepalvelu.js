@@ -224,9 +224,7 @@
     // OM header navigation
     headerNav = $('#headerNav');
     headerNav.headerNav({
-      btnTitle: locale === 'sv' ? 'Visa mer' : 'Näytä lisää',
-      btnShow : '+', // TEXT/HTML
-      btnHide : '-' // TEXT/HTML
+      btnTitle: locale === 'sv' ? 'Visa mer' : 'Näytä lisää'
     });
 
     /**

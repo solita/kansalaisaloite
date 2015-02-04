@@ -45,34 +45,7 @@
         </div>
     </div>
 
-    <div id="footer">
-        <div class="container">
-            <div class="block">
-            	<span class="logo om"></span>
-                <p>
-                    <@u.message "footer.ministerOfJustice"/><br/>
-                    <a href="${urls.help(HelpPage.KANSALAISALOITE_FI.getUri(locale))}"><@u.message "common.readMore" /> &gt;</a>
-                </p>
-            </div>
-            <div class="block">
-            	<span class="logo vivi"></span>
-                <p>
-                    <@u.messageHTML "footer.ficora"/><br/>
-                    <a href="${urls.help(HelpPage.VIESTINTAVIRASTO.getUri(locale))}"><@u.message "common.readMore" /> &gt;</a>
-                </p>
-            </div>
-            <div class="footer-links">
-                <ul>
-                    <#list footerLinks as footerLink>
-                        <li><span class="triangle-right"></span> <a href="${urls.help(footerLink.uri)}">${footerLink.subject}</a></li>
-                    </#list>
-                </ul>
-            </div>
-            <br class="clear"/>
-        </div>
-
-        <a href="#header-tools" accesskey="3" id="back-to-top"><@u.message "accesskey.backToTop" /></a>
-    </div>
+    <#include "om-footer.ftl" />
 
 </div>
 </body>
@@ -266,46 +239,19 @@
     <#else>
 	    <div class="container">
 	        <div id="content">
-	
+
 	            <#if requestMessages?? && !editorOn??>
 	                <@u.requestMessage requestMessages />
 	            </#if>
-	
+
 	            <#-- Main content -->
 	            <#nested />
-	
+
 	        </div>
 	    </div>
     </#if>
 
-    <div id="footer">
-        <div class="container">
-            <div class="block">
-            	<span class="logo om"></span>
-                <p>
-                    <@u.message "footer.ministerOfJustice"/><br/>
-                    <a href="${urls.help(HelpPage.KANSALAISALOITE_FI.getUri(locale))}"><@u.message "common.readMore" /> &gt;</span></a>
-                </p>
-            </div>
-            <div class="block">
-            	<span class="logo vivi"></span>
-                <p>
-                    <@u.messageHTML "footer.ficora"/><br/>
-                    <a href="${urls.help(HelpPage.VIESTINTAVIRASTO.getUri(locale))}"><@u.message "common.readMore" /> &gt;</span></a>
-                </p>
-            </div>
-            <div class="footer-links">
-                <ul>
-                <#list footerLinks as footerLink>
-                    <li><span class="triangle-right"></span> <a href="${urls.help(footerLink.uri)}">${footerLink.subject}</a></li>
-                </#list>
-                </ul>
-            </div>
-            <br class="clear"/>
-        </div>
-
-        <a href="#header-tools" accesskey="3" id="back-to-top"><@u.message "accesskey.backToTop" /></a>
-    </div>
+    <#include "om-footer.ftl" />
 
     <#-- NOTE: Extra footer for test sites STARTS ----------------------------- -->
     <@r.bottomRibbon/>
