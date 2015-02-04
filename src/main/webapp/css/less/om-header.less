@@ -6,13 +6,12 @@
 @omHeaderPad: 11px;
 @omHeaderNavOffset: 20px;
 
-
 .om-header-nav-icon {
     display: inline-block;
     width: 16px;
     height: 16px;
 
-    .backgroundImage('om-header-nav-icons', 16px auto);
+    .backgroundImage('om-header-nav-icon', 16px auto);
 }
 
 .om-header {
@@ -38,7 +37,7 @@
     .logged-in-info {
         position: relative;
         font-size: 11px;
-        border-left: 1px solid black;
+        border-left: 1px solid #000;
         border-right: 1px solid #5a5a5a;
         float: right;
         margin-right: 11px;
@@ -52,7 +51,7 @@
             line-height: @omHeaderHeight - @omHeaderPad;
 
             border-left: 1px solid #5a5a5a;
-            border-right: 1px solid black;
+            border-right: 1px solid #000;
 
             &.login {
                 padding-right: 15px;
@@ -74,7 +73,7 @@
         top: 40px;
         text-align: left;
         background: white;
-        border: 1px solid silver;
+        border: 1px solid #c0c0c0;
         border-top: 0px;
         padding: 8px;
         list-style: none;
@@ -183,10 +182,75 @@
         }
     }
 
-    // Dropdown CSS for NOSCRIPT users
+    // User dropdown CSS for NOSCRIPT users
     .no-js & .logged-in-info:hover {
         .dropdown-menu {
             display:block;
+        }
+    }
+
+    // Header-nav Dropdown CSS for NOSCRIPT users
+    @media screen and (max-width: 1023px) {
+        .no-js & .header-nav {
+            &:before {
+                content: '';
+                display: block;
+                position: relative;
+                top: @omHeaderPad + 5px;
+                width: 16px;
+                height: 16px;
+
+                .backgroundImage('om-header-nav-icons', 16px auto);
+            }
+
+            > ul {
+                z-index: 998;
+                display: none;
+                position: absolute;
+                left: 0;
+                top: 40px;
+                width: 13em;
+                height: auto;
+                margin-left: -5px;
+                padding: 8px;
+                background: white;
+                border: 1px solid #c0c0c0;
+                border-top: 0px;
+                box-shadow: 2px 2px 2px rgba(0,0,0,0.1);
+                text-transform: none;
+                overflow: visible;
+
+                li {
+                    display: block;
+                    height: auto;
+
+                    a {
+                        display: block;
+                        color: #444;
+                        border-bottom: 1px solid #f1f1f1;
+                        padding: 5px;
+                        margin: 0px;
+                        line-height: inherit;
+
+                        &:hover {
+                            color: black;
+                            background: #f1f1f1;
+                        }
+                    }
+
+                    &:last-child {
+                        a {
+                            border-bottom:none;
+                        }
+                    }
+                }
+            }
+
+            &:hover {
+                > ul {
+                    display: block;
+                }
+            }
         }
     }
 }
