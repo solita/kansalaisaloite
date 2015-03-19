@@ -42,6 +42,13 @@
 	                    <h1><@u.message "index.block-1.title" /></h1>
 	        
 	                    <p><@u.message "index.block-1.p-1" /></p>
+	                    
+	                    <ol>
+	                    	<li><@u.message "index.block-1.li-1" /></li>
+	                    	<li><@u.message "index.block-1.li-2" /></li>
+	                    	<li><@u.message "index.block-1.li-3" /></li>
+	                    </ol>
+	                    
 	                    <p><@u.message "index.block-1.p-2" /></p>
 	                    <p><@u.message "index.block-1.p-3" /></p>
 	                    
