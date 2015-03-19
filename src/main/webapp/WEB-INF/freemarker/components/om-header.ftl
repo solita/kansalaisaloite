@@ -13,7 +13,7 @@
 		    	<a href="https://www.kuntalaisaloite.fi/${locale}"><@u.message "otherServices.municipalityinitiative"/></a>
 
 		    <li>
-		    	<a href="http://www.lausuntopalvelu.fi/"><@u.message "otherServices.lausuntopalvelu"/></a>
+		    	<a href="http://www.lausuntopalvelu.fi/${(locale == "sv")?string("SV","FI")}"><@u.message "otherServices.lausuntopalvelu"/></a>
 	
 			<li>
 		    	<a href="http://www.${(locale == "sv")?string("ungasideer","nuortenideat")}.fi"><@u.message "otherServices.nuortenIdeat"/></a>
