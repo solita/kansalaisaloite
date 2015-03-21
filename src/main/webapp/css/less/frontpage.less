@@ -1,15 +1,15 @@
 @frontImageHeight: 294px;
-@frontImageGutter: 3px;
+@frontImageGutter: 4px;
 @heroTextColor: #fff;
 @heroBgColor: @mainColor;
 @heroBgColorHover: @mainColorDark;
 
 .frontpage-image (@index:1) {
-    // background-image:url("@{imagesPath}/front-images/front-strip-@{index}.jpg?version=${timestamp}");
+    background-image:url("@{imagesPath}/front-images/front-strip-@{index}.jpg?version=${timestamp}");
 }
 
 .frontpage-image-retina (@index:1) {
-    // background-image:url("@{imagesPath}/front-images/front-strip-@{index}-2x.jpg?version=${timestamp}");
+    background-image:url("@{imagesPath}/front-images/front-strip-@{index}-2x.jpg?version=${timestamp}");
 }
 
 .image-container {
@@ -19,32 +19,37 @@
     background-position: center top;
     background-repeat: repeat-x;
 
+    // This does not need to be this exact, if the image edges slips few pixels under the green badge.
+    @media screen and (max-width: 974px) {
+        background-position: -195px 0;
+    }
+
     .frontpage-image(1);
 
-    &.image-2 {
-        .frontpage-image(2);
-    }
-    &.image-3 {
-        .frontpage-image(3);
-    }
-    &.image-4 {
-        .frontpage-image(4);
-    }
+    // &.image-2 {
+    //     .frontpage-image(2);
+    // }
+    // &.image-3 {
+    //     .frontpage-image(3);
+    // }
+    // &.image-4 {
+    //     .frontpage-image(4);
+    // }
 
     @media @highdensity {
-        background-size: cover;
+        background-size: auto @frontImageHeight;
 
         .frontpage-image-retina(1);
 
-        &.image-2 {
-            .frontpage-image-retina(2);
-        }
-        &.image-3 {
-            .frontpage-image-retina(3);
-        }
-        &.image-4 {
-            .frontpage-image-retina(4);
-        }
+        // &.image-2 {
+        //     .frontpage-image-retina(2);
+        // }
+        // &.image-3 {
+        //     .frontpage-image-retina(3);
+        // }
+        // &.image-4 {
+        //     .frontpage-image-retina(4);
+        // }
     }
 
 }
@@ -148,7 +153,7 @@
     &:hover {
         color: @heroTextColor;
     }
-    
+
     // Due longer SV text
     .sv & {
     	left: 30px;
