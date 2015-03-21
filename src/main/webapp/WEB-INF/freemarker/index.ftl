@@ -43,11 +43,11 @@
 	        
 	                    <p><@u.message "index.block-1.p-1" /></p>
 	                    
-	                    <ol>
+	                    <ul>
 	                    	<li><@u.message "index.block-1.li-1" /></li>
 	                    	<li><@u.message "index.block-1.li-2" /></li>
 	                    	<li><@u.message "index.block-1.li-3" /></li>
-	                    </ol>
+	                    </ul>
 	                    
 	                    <p><@u.message "index.block-1.p-2" /></p>
 	                    <p><@u.message "index.block-1.p-3" /></p>
