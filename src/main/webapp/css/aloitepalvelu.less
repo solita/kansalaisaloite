@@ -520,6 +520,7 @@ body {
 }
 
 .push { position:relative; left:1em; }
+.push-right { margin-right:1em; }
 .pull { position:relative; left:-1em; }
 .pushdown { position:relative; top:1em; }
 .pullup { position:relative; top:-1em; }
@@ -2373,14 +2374,11 @@ pre {
     display:inline-block;
     position:relative;
     vertical-align: middle;
-    margin-right: 1em;
 }
 .vote-count {
-    font-size: 3em;
-    font-style: italic;
-
-    &.internal {
-        font-size: 1.2em;
+    &.total {
+        font-size: 3em;
+    	font-style: italic;
     }
 }
 .vote-count-small {
