@@ -384,7 +384,7 @@ public class InitiativeServiceImpl implements InitiativeService {
     @Cacheable("frontPageInitiatives")
     @Transactional(readOnly=true)
     public List<InitiativeInfo> getFrontPageInitiatives() {
-        InitiativeSublistWithTotalCount initiativeSublistWithTotalCount = initiativeDao.findInitiatives(new InitiativeSearch().setLimit(2), null, initiativeSettings.getMinSupportCountSettings());
+        InitiativeSublistWithTotalCount initiativeSublistWithTotalCount = initiativeDao.findInitiatives(new InitiativeSearch().setLimit(3), null, initiativeSettings.getMinSupportCountSettings());
         return initiativeSublistWithTotalCount.list;
     }
 
