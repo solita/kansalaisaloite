@@ -85,8 +85,6 @@
 	                    <#assign href1>${urls.helpIndex()}</#assign>
 	                    <#assign href2>${urls.help(HelpPage.CONTACT.getUri(locale))}</#assign>
 	                    <p><@u.messageHTML key="index.block-3.p-1" args=[href1, href2] /></p>
-
-	                    <p><@u.messageHTML "index.block-3.p-2" /> <@u.scrambleEmail "kansalaisaloite.om@om.fi" /></p>
 	                </div>
 
 	            </div>
