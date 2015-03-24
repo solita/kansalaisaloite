@@ -1,0 +1,72 @@
+// Top navi
+#main-navigation {
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    border-left:1px solid #ccc;
+
+    ul {
+        margin: 0px;
+        padding: 0px;
+        list-style: none;
+
+        li {
+            display: inline;
+        }
+    }
+
+    a {
+        display:inline-block;
+        text-decoration: none;
+        color: #111;
+        font-size: 1.1em;
+        padding:0.2em 0.9em 0.5em 0.9em;
+        border-right:1px solid @borderGray;
+
+        .transition(color, 0.2s, ease-in);
+    }
+
+    a:hover, .active a:hover {
+        color: @headerLinkHover;
+    }
+
+    .active a {
+        color: black;
+        font-weight:bold;
+        //border-bottom: 3px solid #cecece;
+    }
+}
+
+// Exceptions for swedish page
+.sv {
+    &.font-size-large #main-navigation a {
+        padding: 0.2em 0.5em 0.5em 0.5em;
+    }
+}
+
+// Left navi
+.navi {
+    margin:0.3em 1em 0 0;
+    padding:0;
+
+    &.block-style {
+
+        li {
+            display:block;
+
+            &.separator {
+
+            }
+
+            a {
+                display:block;
+                margin-bottom:1em;
+            }
+            .active {
+                font-weight:bold;
+            }
+        }
+    }
+}

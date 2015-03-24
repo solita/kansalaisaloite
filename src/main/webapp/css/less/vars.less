@@ -1,15 +1,13 @@
-@imagesFolder: ~"../img";
-
-// Breakpoints
-@narrow:    ~"only screen and (max-width: 520px)";
-@xnarrow:   ~"only screen and (max-width: 320px)";
+@imagesPath: "../img";
+@imagesPathIE: "@{imagesPath}/ie";
 
 // Basic colors used on the service.
 //
 // Styleguide 1.
 @bodyBackground:        #f0f0f0;
-@mainColor:             #087480;
+@mainColor:             #017380;
 @mainColorLight:        #09a3b4;
+@mainColorDark:         #015c66;
 @secondaryColor:        #bc448e;
 @secondaryColorLight:   #f084c6;
 @tertiaryColor:         #6D6E71;
@@ -18,7 +16,7 @@
 
 @link:                  #0089f2;
 @linkHover:             #0070c5;
-@headerLinkHover:       #D94E9C;
+@headerLinkHover:       @mainColor;
 
 @gradientDark:          #0ece27;
 @borderGray:            #cccccc;
@@ -52,3 +50,5 @@
 @cornerRadiusXtraSmall: 0.2em;
 
 @dimmed: 0.6;
+
+@headerTopPad: 18px;

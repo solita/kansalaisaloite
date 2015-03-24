@@ -1,4 +1,14 @@
 <ehcache>
+  <cache name="frontPageInitiatives"
+         maxElementsInMemory="1"
+         eternal="false"
+         timeToIdleSeconds="60"
+         timeToLiveSeconds="60"
+         overflowToDisk="false"
+         maxElementsOnDisk="1"
+         diskPersistent="false"
+         diskExpiryThreadIntervalSeconds="120"
+         memoryStoreEvictionPolicy="LRU"/>
     <cache name="publicInitiativeCount"
            maxElementsInMemory="1"
            eternal="false"

@@ -1,0 +1,77 @@
+// Pagination
+//
+// Styleguide 9.3
+.pagination {
+    margin:2em 0 1em;
+
+    &.top {
+        margin-bottom:-1em;
+        padding-bottom:0.5em;
+        border-bottom: 1px solid @borderGray;
+    }
+    &.bottom {
+        margin-top:0;
+        //padding-top:0.5em;
+        //border-top: 1px solid @borderGray;
+    }
+
+    .pagination-limiter {
+        float:right;
+
+        * { margin-left:1em; }
+
+        .active {
+            font-weight:bold;
+        }
+    }
+
+    .pagination-links {
+        float:left;
+    }
+
+    .separator {
+        margin:0 0.5em;
+        color:@lightGray;
+    }
+}
+.pagination-number-container {
+    text-align:center;
+}
+.pagination-numbers {
+
+    a {
+        margin:0 0.2em;
+        padding:0.2em 0.5em;
+        //background:#fff;
+        color:#444;
+        .gradient (#fff, #f5f5f5);
+        border:1px solid @borderGray;
+
+        &:hover {
+            .gradient (#fff, #ddd);
+            color:#000;
+        }
+
+        &.next, &.prev {
+            background:none;
+            border:none;
+            color:@link;
+        }
+    }
+    span {
+        margin:0 0.2em;
+        padding:0.2em 0.5em;
+        .gradient (#09a3b4, #067582);
+        border:1px solid @borderGray;
+        color:#fff;
+    }
+
+}
+.page-numbers {
+    margin:0 1em;
+}
+
+span.next, span.prev {
+    opacity:@dimmed;
+    //color:@lightGray;
+}

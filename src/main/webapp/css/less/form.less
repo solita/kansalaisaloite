@@ -1,0 +1,226 @@
+.instruction-text {
+    display:block;
+    font-size: 0.8em;
+    color: @secondaryTextColor;
+}
+// Exception for link-area. Use more generic solution if needed elsewhere also.
+.initiative-links-area .instruction-text {
+    margin-bottom:1em;
+}
+
+.initiative-links-area {
+    input[type="text"] {
+        height:30px;
+        line-height:30px;
+        margin-bottom:0;
+        padding:0 0.3em;
+    }
+}
+
+// Input fields
+//
+// .large - Wide field
+// .medium - Medium wide field
+// .small - Narrow field
+// .has-error - Input with error
+//
+// Styleguide 3.2
+input[type="text"] {
+
+    border: 1px solid @borderGray;
+    background: #fefefe;
+    font-size: 1em;
+    padding: 0.3em;
+    margin: 0.2em 0em 1em 0em;
+
+    .transition(box-shadow, 0.2s, ease-in);
+
+    &.large {
+        //width:581px;
+        width:98%;
+    }
+    &.medium {
+        //width:265px;
+        width:95%;
+    }
+    &.small {
+        width:110px;
+    }
+    &.x-small {
+        width:60px;
+    }
+}
+.input-placeholder {
+    border-color:#fff;
+    border-left:0;
+    padding:0.3em 0.3em 0.3em 0;
+    margin:0.2em 0em 1em 0em;
+    font-size: 1em;
+    line-height:1.8em;
+
+    &.disabled {
+        background:@bodyBackground;
+    }
+}
+
+// Textarea
+//
+// .textarea-tall - Large textarea
+// .has-error - Textarea with error
+//
+// Styleguide 3.3
+textarea {
+    width: 98%;
+    margin-top:0.2em;
+    vertical-align:bottom; // for removing whitespace
+    padding:0.3em;
+    height: 6em;
+    border: 1px solid @borderGray;
+    resize:vertical;
+
+    .transition(box-shadow, 0.2s, ease-in);
+
+    &.noresize { resize:none; }
+
+    &.textarea-tall {
+        min-height: 17em;
+    }
+}
+textarea:focus, input[type="text"]:focus, .email-input.focus {
+    box-shadow:0 0 5px rgba(0,0,0,0.2);
+    border: 1px solid #bbb;
+
+}
+
+input:-moz-placeholder, textarea:-moz-placeholder { color:#999; }
+::-webkit-input-placeholder, ::-webkit-textarea-placeholder { color:#999; }
+input:-ms-input-placeholder, input:-ms-textarea-placeholder { color:#999;  }// for IE10
+
+
+textarea, input[type="text"] {
+    &.has-error {
+        border-color:#be3730 !important;  box-shadow:inset 2px 2px 2px rgba(0,0,0,0.1);
+    }
+}
+// Error for more general use
+.has-error {
+    color:#be3730;
+    font-weight:bold;
+}
+
+input.datepicker {
+    width: 110px;
+    margin: 0;
+    background: white url("@{imagesPath}/icons-sprite.png?version=${timestamp}") 97px -57px no-repeat;
+}
+
+label  {
+    display: block;
+    //font-size: 0.9em;
+    input[type="radio"], input[type="checkbox"] {
+        margin: 2px 8px 0 0;
+        float: left;
+
+        &.no-float { float: none; }
+    }
+
+    &.inline { display: inline; }
+
+    input[type="text"]{
+        display:block;
+    }
+}
+.disabled-input {
+    opacity:@dimmed;
+}
+
+.input-header {
+    position: relative
+    display: block;
+    //margin-top: 2em;
+    margin-right:30px; // prevent overlapping with help-icon
+    margin-bottom: 0.2em;
+    font-size: 1em;
+}
+
+.alt-lang {
+    padding-top:0.2em;
+    //font-size:0.9em;
+}
+
+// Testing highlighted input-area
+.highlighted {
+    padding:5px;
+    margin:-6px;
+    background:#eee;
+    border:1px solid @borderGray;
+}
+
+
+// Add/remove link
+//
+// Styleguide xxx
+
+.add-link {
+    position:relative;
+    display: block;
+
+    .link-input-description, .link-input-url {
+        position:relative;
+        float: left;
+        width:50%;
+        padding-bottom:1em;
+
+        label {
+            position:relative;
+        }
+    }
+
+    label span {
+        font-size:0.9em;
+
+    }
+    .input-header {
+        margin-bottom:0;
+    }
+
+
+}
+
+.remove-link {
+    position:absolute;
+    right:-13px;
+    //top:25px;
+    bottom:0;
+    display:block;
+    width:16px;
+    height:30px;
+    line-height:30px;
+
+    font-size:11px;
+    text-align:center;
+    color:#333;
+
+    border:1px solid @borderGray;
+    border-top-right-radius:0.4em;
+    border-bottom-right-radius:0.4em;
+
+    background: @grayGradient2;
+    background: linear-gradient(top,  @grayGradient1,  @grayGradient2);
+    background: -ms-linear-gradient(top,  @grayGradient1,  @grayGradient2);
+    background: -webkit-gradient(linear, left top, left bottom, from(@grayGradient1), to(@grayGradient2));
+    background: -moz-linear-gradient(top,  @grayGradient1,  @grayGradient2);
+    background: -o-linear-gradient(top,  @grayGradient1,  @grayGradient2);
+
+    &:hover, &:active {
+        border:solid 1px @redGradient2;
+        color: white;
+        background: #b61318;
+        background: linear-gradient(top,  @redGradientHover1,  @redGradientHover2);
+        background: -ms-linear-gradient(top,  @redGradientHover1,  @redGradientHover2);
+        background: -webkit-gradient(linear, left top, left bottom, from(@redGradientHover1), to(@redGradientHover2));
+        background: -moz-linear-gradient(top,  @redGradientHover1,  @redGradientHover2);
+        background: -o-linear-gradient(top,  @redGradientHover1,  @redGradientHover2);
+
+    }
+}

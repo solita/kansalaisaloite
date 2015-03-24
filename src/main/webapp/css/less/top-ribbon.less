@@ -1,0 +1,78 @@
+// NOTE: This is only for the demo-site
+.debug-ribbon, .info-ribbon {
+    position:relative; z-index:9999;
+    left:0;
+    width:100%;
+    padding: 0.7em 0;
+    background: #64aad0;
+    background: linear-gradient(top,  #8dc8e8,  #64aad0);
+    background: -ms-linear-gradient(top,  #8dc8e8,  #64aad0);
+    background: -webkit-gradient(linear, left top, left bottom, from(#8dc8e8), to(#64aad0));
+    background: -moz-linear-gradient(top,  #8dc8e8, #64aad0);
+    background: -o-linear-gradient(top,  #8dc8e8, #64aad0);
+    text-align: center;
+    font-size:16px;
+    text-shadow: 0 1px 0 rgba(0,0,0,0.1);
+    color: #fff;
+
+    &.static {
+        position:static;
+    }
+
+    &.ribbon-red {
+        background: @redGradient1;
+        background: linear-gradient(top,  @redGradient1,  @redGradient2);
+        background: -ms-linear-gradient(top,  @redGradient1,  @redGradient2);
+        background: -webkit-gradient(linear, left top, left bottom, from(@redGradient1), to(@redGradient2));
+        background: -moz-linear-gradient(top,  @redGradient1, @redGradient2);
+        background: -o-linear-gradient(top,  @redGradient1, @redGradient2);
+
+        a {
+            color: #eee;
+        }
+    }
+
+    &.ribbon-turquoise {
+        background: @mainColor;
+        background: linear-gradient(top,  #018999,  @mainColor);
+        background: -ms-linear-gradient(top,  #018999,  @mainColor);
+        background: -webkit-gradient(linear, left top, left bottom, from(#018999), to(@mainColor));
+        background: -moz-linear-gradient(top,  #018999, @mainColor);
+        background: -o-linear-gradient(top, #018999, @mainColor);
+    }
+
+    &.top {
+        top:0;
+        box-shadow:0px 2px 3px rgba(0,0,0,0.2)
+    }
+
+    &.bottom {
+        position:absolute;
+        bottom:0;
+    }
+
+    a {
+        color: #cde6f3;
+        text-decoration:underline;
+        font-style:italic;
+
+        .transition(color, 0.3s, ease-in);
+    }
+
+    a:hover {
+        color:#fff;
+    }
+}
+.container.relative { position:relative; }
+.test-padge {
+    position:absolute;
+    top:50px;
+    left:423px;
+    width:180px;
+    height:97px;
+    background:url("@{imagesPath}/test-padge.png?version=${timestamp}") repeat-x bottom left;
+
+    &.has-info-ribbon {
+        top:90px;
+    }
+}

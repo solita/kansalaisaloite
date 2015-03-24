@@ -1,0 +1,30 @@
+// Before create page
+.option-container {
+    margin:30px 70px;
+    position:relative;
+
+    .option-block {
+        float:left;
+        width:320px;
+        padding:20px 40px 0 40px;
+
+        &.right { float:right; }
+        &.last { padding:0 40px 20px 40px; }
+
+        li { margin-bottom:1em; }
+    }
+
+    // Faux columns bg without bg-image
+    .bg {
+        position:absolute;
+        top:0;
+        bottom:0;
+        z-index:-1;
+        width:400px;
+
+        background:#fff;
+
+        &.left { left:0; }
+        &.right { right:0; }
+    }
+}

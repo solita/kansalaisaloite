@@ -28,14 +28,10 @@
 <body class="${locale}">
 <div id="wrapper">
 
-    <div id="header-tools">
-        <div id="header-tools-content">
-            <#include "header-links.ftl" />
-        </div>
-    </div>
+    <#include "om-header.ftl" />
 
     <div id="header">
-        <div id="header-content">
+        <div class="header-content">
             <a class="logo" id="logo" href="${urls.baseUrl}/${locale}" accesskey="1" title="<@u.message "siteName" />">
                 <span><@u.message "siteName" /></span>
             </a>
@@ -49,32 +45,7 @@
         </div>
     </div>
 
-    <div id="footer">
-        <div class="container">
-            <div class="block oikeusministerio">
-                <p>
-                    <@u.message "footer.ministerOfJustice"/><br/>
-                    <a href="${urls.help(HelpPage.KANSALAISALOITE_FI.getUri(locale))}"><@u.message "common.readMore" /> <span class="icon-small arrow-right-2"></span></a>
-                </p>
-            </div>
-            <div class="block viestintavirasto">
-                <p>
-                    <@u.messageHTML "footer.ficora"/><br/>
-                    <a href="${urls.help(HelpPage.VIESTINTAVIRASTO.getUri(locale))}"><@u.message "common.readMore" /> <span class="icon-small arrow-right-2"></span></a>
-                </p>
-            </div>
-            <div class="footer-links">
-                <ul>
-                    <#list footerLinks as footerLink>
-                        <li><span class="icon-small arrow-right-2"></span> <a href="${urls.help(footerLink.uri)}">${footerLink.subject}</a></li>
-                    </#list>
-                </ul>
-            </div>
-            <br class="clear"/>
-        </div>
-
-        <a href="#header-tools" accesskey="3" id="back-to-top"><@u.message "accesskey.backToTop" /></a>
-    </div>
+    <#include "om-footer.ftl" />
 
 </div>
 </body>
@@ -169,12 +140,12 @@
                 <link rel="stylesheet" type="text/css" media="screen" href="${urls.baseUrl}/css/aloitepalvelu-ie.css" />
             <![endif]-->
         </noscript>
-        <link rel="stylesheet/less" type="text/css" media="screen" href="/css/aloitepalvelu.less" />
+        <link rel="stylesheet/less" type="text/css" media="screen" href="/css/less/aloitepalvelu.less" />
         <!--[if IE ]>
-            <link rel="stylesheet/less" type="text/css" media="screen" href="${urls.baseUrl}/css/aloitepalvelu-ie.less">
+            <link rel="stylesheet/less" type="text/css" media="screen" href="${urls.baseUrl}/css/less/aloitepalvelu-ie.less">
         <![endif]-->
 
-        <link rel="stylesheet/less" type="text/css" media="print" href="${urls.baseUrl}/css/print.less" />
+        <link rel="stylesheet/less" type="text/css" media="print" href="${urls.baseUrl}/css/less/print.less" />
 
         <script>
           less = {
@@ -188,7 +159,7 @@
             rootpath: "/css/"
           };
         </script>
-        <script src="${urls.baseUrl}/js/less.min.js" type="text/javascript"></script>
+        <script src="${urls.baseUrl}/js/less-1.7.5.min.js" type="text/javascript"></script>
     </#if>
 
     <#--
@@ -229,39 +200,35 @@
     <@r.topRibbon/>
     <#-- NOTE: Extra title for test sites ENDS ------------------------------- -->
 
-    <div id="header-tools">
-        <div id="header-tools-content">
-            <#include "header-links.ftl" />
-
-            <div class="logged-in-info">
-                <#-- Authenticated = Logged in -->
-                <#if currentUser.authenticated>
-                    <div class="header-dropdown">
-                        <a href="#" class="header-tool-link user-name dropdown-toggle">${currentUser.firstNames} ${currentUser.lastName}<span class="icon-small settings"></span></a>
-                        <ul id="user-menu" class="dropdown-menu user-menu">
-                            <#-- OM search view - lists all initiatives -->
-                            <#if currentUser.om><li><a href="${urls.searchOmView()}"><@u.message "user.omSearchView"/></a></li></#if>
-                            <#-- Registered = Authenticated and has initiatives (except OM/VRK-users) -->
-                            <#if currentUser.registered><li><a href="${urls.searchOwnOnly()}"><@u.message "user.myInitiatives"/></a></li></#if>
-                            <li><a href="${urls.logout()}" ><@u.message "common.logout"/></a></li>
-                        </ul>
-                    </div>
-                <#else>
-                    <a href="${urls.login(springMacroRequestContext.requestUri)}" title="<@u.message "common.login"/>" class="header-tool-link login"><@u.message "common.login"/></a>
-                </#if>
-            </div>
-        </div>
-    </div>
+    <#include "om-header.ftl" />
 
     <div id="header">
-        <div id="header-content">
+        <div class="header-content">
 
             <a class="logo" id="logo" href="${urls.baseUrl}/${locale}" accesskey="1" title="<@u.message "siteName" />">
                 <span><@u.message "siteName.logo" /></span>
             </a>
 
             <#-- Language toggle, text size -->
-            <div id="header-additional-content">
+            <div class="header-additional-content">
+            	<#if currentUser??>
+					<div class="logged-in-info">
+				        <#-- Authenticated = Logged in -->
+				        <#if currentUser.authenticated>
+				            <a href="#" class="user-name dropdown-toggle">${currentUser.firstNames} ${currentUser.lastName}<span class="icon-small arrow-down-black"></span></a>
+				            <ul id="user-menu" class="dropdown-menu user-menu">
+				                <#-- OM search view - lists all initiatives -->
+				                <#if currentUser.om><li><a href="${urls.searchOmView()}"><@u.message "user.omSearchView"/></a></li></#if>
+				                <#-- Registered = Authenticated and has initiatives (except OM/VRK-users) -->
+				                <#if currentUser.registered><li><a href="${urls.searchOwnOnly()}"><@u.message "user.myInitiatives"/></a></li></#if>
+				                <li><a href="${urls.logout()}" ><@u.message "common.logout"/></a></li>
+				            </ul>
+				        <#else>
+				            <a href="${urls.login(springMacroRequestContext.requestUri)}" title="<@u.message "common.login"/>" class="header-tool-link login"><@u.message "common.login"/></a>
+				        </#if>
+				    </div>
+			    </#if>
+		    
                 <div class="additional-tools">
                     <a href="${altUri!'/sv'}" class="language-selection"><@u.message "lang.alternative"/></a>
                     <#-- NOTE: ATM the font-size-toggle works only with JS hence the links are also generated with JS. -->
@@ -285,45 +252,24 @@
         </div>
     </div>
 
-    <div class="container">
-        <div id="content">
+	<#if page == "page.frontpage">
+        <#nested />
+    <#else>
+	    <div class="container">
+	        <div id="content">
 
-            <#if requestMessages?? && !editorOn??>
-                <@u.requestMessage requestMessages />
-            </#if>
+	            <#if requestMessages?? && !editorOn??>
+	                <@u.requestMessage requestMessages />
+	            </#if>
 
-            <#-- Main content -->
-            <#nested />
+	            <#-- Main content -->
+	            <#nested />
 
-        </div>
-    </div>
+	        </div>
+	    </div>
+    </#if>
 
-    <div id="footer">
-        <div class="container">
-            <div class="block oikeusministerio">
-                <p>
-                    <@u.message "footer.ministerOfJustice"/><br/>
-                    <a href="${urls.help(HelpPage.KANSALAISALOITE_FI.getUri(locale))}"><@u.message "common.readMore" /> <span class="icon-small arrow-right-2"></span></a>
-                </p>
-            </div>
-            <div class="block viestintavirasto">
-                <p>
-                    <@u.messageHTML "footer.ficora"/><br/>
-                    <a href="${urls.help(HelpPage.VIESTINTAVIRASTO.getUri(locale))}"><@u.message "common.readMore" /> <span class="icon-small arrow-right-2"></span></a>
-                </p>
-            </div>
-            <div class="footer-links">
-                <ul>
-                <#list footerLinks as footerLink>
-                    <li><span class="icon-small arrow-right-2"></span> <a href="${urls.help(footerLink.uri)}">${footerLink.subject}</a></li>
-                </#list>
-                </ul>
-            </div>
-            <br class="clear"/>
-        </div>
-
-        <a href="#header-tools" accesskey="3" id="back-to-top"><@u.message "accesskey.backToTop" /></a>
-    </div>
+    <#include "om-footer.ftl" />
 
     <#-- NOTE: Extra footer for test sites STARTS ----------------------------- -->
     <@r.bottomRibbon/>
@@ -351,6 +297,7 @@
       <script type="text/javascript" src="${urls.baseUrl}/js/moment.min.js?version=${resourcesVersion}"></script>
       <script type="text/javascript" src="${urls.baseUrl}/js/raphael.min.js?version=${resourcesVersion}"></script>
       <script type="text/javascript" src="${urls.baseUrl}/js/jquery.supportvotegraph.js?version=${resourcesVersion}"></script>
+      <script type="text/javascript" src="${urls.baseUrl}/js/jquery.headernav.js?version=${resourcesVersion}"></script>
       <script type="text/javascript" src="${urls.baseUrl}/js/aloitepalvelu.js?version=${resourcesVersion}"></script>
     </#if>
 

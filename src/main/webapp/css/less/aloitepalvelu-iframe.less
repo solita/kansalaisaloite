@@ -1,0 +1,1064 @@
+
+@import 'vars';
+@import 'mixins';
+@import 'breakpoints';
+
+html {
+    width: 100%;
+    height:100%;
+    font-size:16px; // Using absolute size as Opera gets default font-adjustment from users Computer
+}
+body {
+    width: 100%;
+    height:100%;
+    font-family: "PT Sans", "Trebuchet MS", Helvetica, sans-serif;
+    color:@bodyColor;
+    background: #fff;
+}
+
+.container {
+	min-width: 200px;
+    max-width: 940px;
+    margin: 0 auto;
+    padding: 10px;
+    clear: both;
+}
+
+.push { position:relative; left:1em; }
+.pull { position:relative; left:-1em; }
+.pushdown { position:relative; top:1em; }
+.pullup { position:relative; top:-1em; }
+
+
+// Hide unwanted elements
+.hide,
+.js .js-hide {
+    display:none;
+}
+html.no-js {
+    .hidden, .help, .close-msg {
+        display:none;
+    }
+}
+
+.loading {
+    position:absolute;
+    left:0;
+    top:0;
+    z-index:9999;
+    width:100%;
+    height:100%;
+    background:#fff url("@{imagesPath}/ajax-loader.gif?version=${timestamp}") center center no-repeat;
+    opacity:0;
+}
+
+.loader {
+    position:absolute;
+    left:50%; top:50%;
+    display:inline-block;
+    width:16px;
+    height:16px;
+    margin:-8px;
+    background:url("@{imagesPath}/ajax-loader.gif?version=${timestamp}") center center no-repeat;
+
+    &.gray-loader {
+        background:url("@{imagesPath}/ajax-loader-f7f7f7.gif?version=${timestamp}") center center no-repeat;
+    }
+
+    &.inline {
+        position:static;
+        margin:0;
+    }
+
+}
+
+.expose-mask {
+    z-index:999;
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:#fff;
+    opacity:0.9;
+}
+
+.clear {
+    clear:  both;
+}
+
+a {
+    text-decoration: none;
+    color: @link;
+    cursor:pointer; // Link might not have href
+    outline:none;
+}
+
+a:hover {
+    color: @linkHover;
+    outline:none;
+}
+
+a:active {
+    //color: #005393; // can be quite confusing in some cases
+    outline:none;
+    background:none;    // removes navigation link background in IE
+}
+
+a.external {
+    padding-right:15px;
+    background:url("@{imagesPath}/icon-external-link.png?version=${timestamp}") right center no-repeat;
+}
+.ellipsis {
+    display:inline-block;
+    max-width: 90%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+a.block-link {
+    display:block;
+    height:38px;
+    line-height:38px;
+    margin-bottom:1em;
+    padding:0 2.5em 0 0.9em;
+    background:@mainColor url("@{imagesPath}/icons-sprite.png?version=${timestamp}") right -149px no-repeat;
+    color:#fff;
+    font-weight:bold;
+
+    .transition(background-color, 0.2s, ease-in);
+
+    &:hover {
+        background-color:#015c66;
+    }
+
+}
+
+#header {
+    width: 100%;
+    padding-top: 10px;
+    margin-bottom: 10px;
+    background: #fff;
+}
+
+.logo {
+    .kaaLogo();
+}
+
+
+.initiative-content-header {
+    position:relative;
+}
+
+
+.view-block {
+
+}
+
+
+// Buttons
+//
+// .large-button - Generic class for large button, needs additional class(es) for layout
+// .small-button - Generic class for small button, needs additional class(es) for layout
+// .green - Green gradient button
+// .red - Red gradient button
+// .gray - Gray gradient button
+// .disabled - Disabled button
+//
+// Styleguide 4
+
+// span.large-icon - Generic class for large icons (sets padding)
+// span.small-icon - Generic class for small icons (sets padding)
+
+.large-button, .small-button {
+    //.rounded-corners;
+    display: inline-block;
+    zoom: 1; /* zoom and *display = ie7 hack for display:inline-block */
+    *display: inline;
+    vertical-align: baseline;
+    margin: 0 2px;
+    outline: none;
+    cursor: pointer;
+    text-align: left;
+    text-decoration: none;
+    padding: 14px 20px;
+    line-height: 1.2em;
+    padding: 14px 20px;
+    line-height: 1.2em;
+
+    color: @bodyColor;
+    border: solid 1px @borderGray;
+    background: @grayGradient2;
+    background: linear-gradient(top,  @grayGradient1,  @grayGradient2);
+    background: -ms-linear-gradient(top,  @grayGradient1,  @grayGradient2);
+    background: -webkit-gradient(linear, left top, left bottom, from(@grayGradient1), to(@grayGradient2));
+    background: -moz-linear-gradient(top,  @grayGradient1,  @grayGradient2);
+    background: -o-linear-gradient(top,  @grayGradient1,  @grayGradient2);
+
+    &:hover, &.disabled:hover {
+        background: @grayGradientHover2;
+        background: linear-gradient(top,  @grayGradientHover1,  @grayGradientHover2);
+        background: -ms-linear-gradient(top,  @grayGradientHover1,  @grayGradientHover2);
+        background: -webkit-gradient(linear, left top, left bottom, from(@grayGradientHover1), to(@grayGradientHover2));
+        background: -moz-linear-gradient(top, @grayGradientHover1, @grayGradientHover2);
+        background: -o-linear-gradient(top, @grayGradientHover1, @grayGradientHover2);
+        color: @black;
+        border-color: #b7b7b7;
+        text-decoration: none;
+    }
+    &:active, &.disabled:active, &:focus {
+        color: @black;
+        background: linear-gradient(top,  @grayGradientActive1,  @grayGradientActive2);
+        background: -ms-linear-gradient(top,  @grayGradientActive1,  @grayGradientActive2);
+        background: -webkit-gradient(linear, left top, left bottom, from(@grayGradientActive1), to(@grayGradientActive2));
+        background: -moz-linear-gradient(top,  @grayGradientActive1,  @grayGradientActive2);
+        background: -o-linear-gradient(top,  @grayGradientActive1,  @grayGradientActive2);
+        outline:none;
+    }
+    &.disabled {
+       opacity:@dimmed;
+       cursor:default;
+    }
+
+    &.icon-button {
+        height:28px;
+        line-height:30px;
+        width:28px;
+        min-width:0;
+        padding:0;
+
+        .gradient(#4f9ca5, @mainColor);
+        border:0;
+    }
+
+    .transition(opacity, 0.1s, ease-in);
+
+    &.js-disabled {
+        cursor:default;
+        opacity:0.3;
+    }
+
+    &.rounded { border-radius:1em; }
+
+    strong {
+        display: block;
+    }
+
+}
+
+.small-button {
+    height:36px;
+    line-height:36px;
+    padding:0 12px;
+    min-width:4em;
+    text-align:center;
+    //line-height: 1em;
+    //padding: 10px 12px;
+
+}
+
+.switch-buttons {
+    display:inline-block;
+
+    a {
+        display:inline-block;
+        padding:0.1em 0.5em;
+
+        &.active {
+            .gradient (#09a3b4, #067582);
+            .rounded-corners(@cornerRadiusXtraSmall);
+            color:#fff;
+            text-shadow:0px 1px 1px rgba(0,0,0,0.3);
+        }
+    }
+}
+
+
+// Gray and disabled button
+//
+// :hover       - hover state
+// :active      - active state
+//
+// Styleguide 4.1.3.
+.gray, .disabled {
+    color: @secondaryTextColor;
+    border: solid 1px @borderGray;
+    background: @grayGradient2;
+    background: linear-gradient(top,  @grayGradient1,  @grayGradient2);
+    background: -ms-linear-gradient(top,  @grayGradient1,  @grayGradient2);
+    background: -webkit-gradient(linear, left top, left bottom, from(@grayGradient1), to(@grayGradient2));
+    background: -moz-linear-gradient(top,  @grayGradient1,  @grayGradient2);
+    background: -o-linear-gradient(top,  @grayGradient1,  @grayGradient2);
+}
+.gray:hover, .disabled:hover {
+    background: @grayGradientHover2;
+    background: linear-gradient(top, @grayGradientHover1, @grayGradientHover2);
+    background: -ms-linear-gradient(top, @grayGradientHover1, @grayGradientHover2);
+    background: -webkit-gradient(linear, left top, left bottom, from(@grayGradientHover1), to(@grayGradientHover2));
+    background: -moz-linear-gradient(top, @grayGradientHover1, @grayGradientHover2);
+    background: -o-linear-gradient(top, @grayGradientHover1, @grayGradientHover2);
+    color: #4f4f4f;
+    border-color: #b7b7b7;
+}
+.gray:active, .disabled:active, .gray:focus {
+    color: black;
+    background: linear-gradient(top,  @grayGradientActive1,  @grayGradientActive2);
+    background: -ms-linear-gradient(top,  @grayGradientActive1,  @grayGradientActive2);
+    background: -webkit-gradient(linear, left top, left bottom, from(@grayGradientActive1), to(@grayGradientActive2));
+    background: -moz-linear-gradient(top,  @grayGradientActive1,  @grayGradientActive2);
+    background: -o-linear-gradient(top,  @grayGradientActive1,  @grayGradientActive2);
+}
+
+
+.large-icon, .medium-icon, .small-icon {
+    display: inline-block;
+    *display: inline;
+    zoom: 1;
+}
+
+
+// Icons for buttons - glyphish.com
+//
+// .save-and-send - Icon for "save and send"
+// .save-as-draft - Icon for "save as draf"
+// .cancel - Icon for "cancel"
+// .edit - Icon for "edit"
+// .next - Icon for "next"
+// .delete - Icon for "delete"
+// .mail - Icon for "mail"
+// .document - Icon for "document"
+// .folder - Icon for "folder"
+// .upload - Icon for "upload"
+// .download - Icon for "download"
+// .previous - Icon for "previous"
+// .add - Icon for "add"
+// .stop - Icon for "canceled"
+//
+// Styleguide 4.2.1
+.large-icon {
+    padding-left: 40px;
+
+    background: transparent url("@{imagesPath}/button-large-sprite.png?version=${timestamp}") no-repeat 0 2px;
+
+    &.save-and-send {       background-position: 0 2px;      }
+    &.save-as-draft {       background-position: 0 -150px;   }
+    &.cancel {              background-position: 0 -301px;   }
+    &.edit {                background-position: 0 -450px;   }
+    &.next {                background-position: 0 -600px;   }
+    &.delete {              background-position: 0 -750px;   }
+    &.mail {                background-position: 0 -900px;   }
+    &.document {            background-position: 0 -1050px;  }
+    &.folder {              background-position: 0 -1200px;  }
+    &.upload {              background-position: 0 -1350px;  }
+    &.download {            background-position: 0 -1500px;  }
+    &.previous {            background-position: 0 -1650px;  }
+    &.add {                 background-position: 0 -1800px;  }
+    &.stop {                background-position: 0 -1950px;  }
+}
+
+// Small Icons for buttons - glyphish.com
+//
+// .save-and-send - Icon for "save and send"
+// .save-as-draft - Icon for "save as draf"
+// .cancel - Icon for "cancel"
+// .edit - Icon for "edit"
+// .next - Icon for "next"
+// .delete - Icon for "delete"
+// .mail - Icon for "mail"
+// .document - Icon for "document"
+// .folder - Icon for "folder"
+// .upload - Icon for "upload"
+// .download - Icon for "download"
+// .previous - Icon for "previous"
+// .add - Icon for "add"
+// .stop - Icon for "canceled"
+//
+// Styleguide 4.2.2
+.small-icon {
+    padding-left: 30px;
+
+    background: transparent url("@{imagesPath}/button-small-sprite.png?version=${timestamp}") no-repeat 0 12px;
+
+    &.save-and-send {       background-position: 0 12px;     }
+    &.save-as-draft {       background-position: 0 -140px;   }
+    &.cancel {              background-position: 0 -291px;   }
+    &.edit {                background-position: 0 -440px;   }
+    &.next {                background-position: 0 -590px;   }
+    &.delete {              background-position: 0 -740px;   }
+    &.mail {                background-position: 0 -890px;   }
+    &.document {            background-position: 0 -1040px;  }
+    &.folder {              background-position: 0 -1190px;  }
+    &.upload {              background-position: 0 -1340px;  }
+    &.download {            background-position: 0 -1490px;  }
+    &.previous {            background-position: 0 -1640px;  }
+    &.add {                 background-position: 0 -1790px;  }
+    &.logout {              background-position: 0 -2090px;  }
+}
+
+
+.alt-lang {
+    padding-top:0.2em;
+    //font-size:0.9em;
+}
+
+// Testing highlighted input-area
+.highlighted {
+    padding:5px;
+    margin:-6px;
+    background:#eee;
+    border:1px solid @borderGray;
+}
+
+
+// Icons
+//
+// .required        - Form required field
+// .confirmed       - Confirmed author
+// .unconfirmed     - Unconfirmed author
+// .settings        - Settings
+// .logout          - Logout
+// .dropdown-icon   - Dropdown
+// .external        - External link
+// .more            - Show more
+// .less            - Hide more
+// .arrow-right-1   - Arrow right 1
+// .arrow-right-2   - Arrow right 2
+// .arrow-right-3   - Arrow right 3
+// .arrow-left-1    - Arrow left 1
+// .arrow-left-2    - Arrow left 2
+// .arrow-left-3    - Arrow left 3
+// .help            - Help
+// .help-tooltip    - Help tooltip
+//
+// Styleguide 3.5
+
+.icon-small {
+    display:inline-block;
+    width:12px;
+    height:12px;
+    background: transparent url("@{imagesPath}/icons-sprite.png?version=${timestamp}") 0 0 no-repeat;
+
+    &.pull-down {
+        position:relative;
+        bottom:-0.15em;
+    }
+
+    &.settings, &.logout {
+        position:absolute;
+        right:15px;
+        top:50%;
+        margin-top:-6px;
+    }
+
+    &.settings {
+        background-position:-48px 0;
+    }
+    &.logout {
+        background-position:-80px 0;
+    }
+
+    &.dropdown-icon {
+        margin-left:3px;
+        background-position:-96px 3px;
+    }
+
+    &.required { background-position:0 0; }         // Required field
+    &.unconfirmed { background-position:-16px 0; }  // Unconfirmed author
+    &.confirmed { background-position:-32px 0; }    // Confirmed author
+    &.external {                                    // External link
+        background-position:-144px 1px;             // Used a.external instead
+        margin-left:4px;
+    }
+    &.more {
+        width:16px;
+        height:16px;
+        margin:1px 0 0 4px;
+        background-position:-112px 0;
+
+        &.less { background-position:-128px 0; }
+    }
+    &.arrow-right {
+        background-position:-160px 1px;
+    }
+    &.arrow-right-2 {
+        background-position:-179px 1px;
+    }
+    &.arrow-right-3 {
+        background-position:-179px -15px;
+
+        &.floated {                                 // For info system-messages
+            float:left;
+            margin:0.2em 0 0 -16px;
+        }
+    }
+    &.arrow-left {
+        background-position:-192px 1px;
+    }
+    &.arrow-left-2 {
+        background-position:-208px 1px;
+    }
+    &.arrow-left-3 {
+        background-position:-208px -15px;
+    }
+    &.help {
+        width:27px;
+        height:21px;
+        background-position:0 -96px;
+    }
+    &.help-tooltip {
+        width:27px;
+        height:21px;
+        background-position:-32px -96px;
+    }
+    &.refresh {
+        cursor:pointer;
+        width:26px;
+        height:26px;
+        background-position:-64px -96px;
+        vertical-align: middle;
+        margin-top: -.2em;
+    }
+
+    .transition(opacity, 0.1s, ease-in);
+
+    &.js-disabled {
+        cursor:default;
+        opacity:0.3;
+    }
+
+}
+
+
+
+.column {
+    width: 32%;
+    margin-right: 2%;
+    float: left;
+
+    .role-input-area {
+        border: 1px solid @borderGray;
+        padding: 0.3em;
+        background: white;
+        height: 10em;
+        font-size: 0.8em;
+    }
+
+    &.wide { width:66%; }
+    &.col-1of2 {
+        width:48%;
+        margin-right:4%;
+    }
+    &.col-1of4 {
+        width:24%;
+    }
+    &.col-2of4 {
+        width:48%;
+    }
+    &.col-3of4 {
+        width:74%;
+        margin-right:1%;
+    }
+    &.auto-scale {
+        width:auto; min-width:32%;
+    }
+    &.last { margin:0; }
+}
+
+
+
+
+/**
+ * For modern browsers
+ * 1. The space content is one way to avoid an Opera bug when the
+ *    contenteditable attribute is included anywhere else in the document.
+ *    Otherwise it causes space to appear at the top and bottom of elements
+ *    that are clearfixed.
+ * 2. The use of `table` rather than `block` is only necessary if using
+ *    `:before` to contain the top-margins of child elements.
+ */
+.cf:before,
+.cf:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+.cf:after {
+    clear: both;
+}
+
+/**
+ * For IE 6/7 only
+ * Include this rule to trigger hasLayout and contain floats.
+ */
+.cf {
+    *zoom: 1;
+}
+
+// Form block header
+
+.content-block-header {
+    position:relative;
+    background: #fff url("@{imagesPath}/input-block-extra-bg.png?version=${timestamp}") repeat-y top right;
+    border-left: 4px solid @mainColor;
+    padding:20px 25px 0 55px;
+
+    &.view {
+        z-index:3;
+        background:#fff;
+    }
+
+    &.faq {
+        margin-top:3em;
+
+        h2 {
+            padding-bottom:35px;
+        }
+    }
+
+    h2 {
+        margin: 0;
+        color: @mainColor;
+        font-weight:normal;
+        //text-shadow: #0b3911 1px 1px 1px;
+    }
+}
+
+.input-block-content, .input-block-extra, .input-block-action {
+    float: left;
+}
+
+.input-block-content {
+    width: 585px;
+    position:relative;
+    margin-top:2em;
+}
+
+.initiative-finance-url-area, .initiative-external-support-count {
+    position:relative;
+    margin-top:1em;
+}
+
+.initiative-content-row {
+    border-bottom: 1px solid @borderGray;
+    margin-bottom: 0.7em;
+    padding-bottom: 0.7em;
+
+    .header {
+        display: block;
+        font-weight: bold;
+    }
+
+    &.last{
+        margin:0;
+        padding:0;
+        border:0;
+    }
+}
+
+.initiative-content-tools {
+    position: absolute;
+    top: 23px;
+    right:35px;
+
+}
+.show-alternative-lang {
+    float:right;
+    font-size:0.9em;
+}
+
+.no-top-margin {
+    margin-top: 0;
+}
+
+.no-bottom-margin {
+    margin-bottom: 0;
+}
+
+.top-margin {
+    margin-top: 1em;
+}
+
+
+
+// Tooltip
+//
+// Element class "trigger-tooltip" triggers JS tooltip with the content of the title-attribute.
+//
+// Styleguide 5.2
+.tooltip {
+    max-width:300px;
+    z-index:1000;
+    background:@mainColor;
+    font-size:0.9em;
+    padding:0.3em 1em;
+    color:#fff;
+    //border-radius:@cornerRadiusSmall;
+    box-shadow:0px 3px 2px -3px rgba(0,0,0,0.5);
+
+    // For modern browsers and IE 8+
+    &:before {
+        width:0; height:0;
+        border:solid;
+        border-color:@mainColor transparent;
+        border-width:6px 6px 0 6px;
+        content:"";
+        display:block;
+        left:50%;
+        margin-left:-6px;
+        position:absolute;
+        bottom:-5px;
+        z-index:999;
+    }
+
+    // Dynamic tooltips
+    &.right {
+        margin:30px 0 0 10px;
+
+        &:before {
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+            border-right: 6px solid @mainColor;
+            left:-5px;
+            margin-bottom:-6px;
+            bottom:50%;
+        }
+    }
+    &.left {
+        margin:30px 0 0 -10px;
+
+        &:before {
+            border-top: 6px solid transparent;
+            border-right: none;
+            border-bottom: 6px solid transparent;
+            border-left: 6px solid @mainColor;
+            left:auto;
+            right:-5px;
+            margin-bottom:-6px;
+            bottom:50%;
+        }
+    }
+    &.bottom {
+        margin-top:2px;
+
+        &:before {
+            border-top: none;
+            border-right:6px solid transparent;
+            border-bottom: 6px solid @mainColor;
+            border-left: 6px solid transparent;
+            left:50%;
+            margin-bottom:-6px;
+            top:-5px;
+        }
+    }
+
+    strong { display:block; }
+}
+
+
+
+// System Messages
+//
+// .msg-summary     - Summary style box
+// .msg-info        - Info, gray
+// .msg-warning     - Warning, yellow
+// .msg-error       - Error, red
+// .msg-success     - Success, green
+//
+// Styleguide 6.
+
+.system-msg {
+    position:relative;
+    padding: 15px 25px 15px 60px;
+    box-shadow: none;
+    margin:1em 0;
+    border-width:1px; // separated for better overriding
+    border-style:solid;
+
+    font-size:0.9em;
+    text-align:left;
+
+    &.msg-summary {
+        min-height:67px;
+        margin-bottom:2em;
+        border:0;
+        border-left:4px solid @secondaryColor;
+        padding-left:126px;
+        background:#fff url("@{imagesPath}/icon-msg-summary.png?version=${timestamp}") no-repeat 32px 27px;
+
+        // Using nested messages so that it'd be easier to use wether combined or singular system-messages
+        .msg-info {
+            background:#fff;
+            margin:0 0 0 5px;
+            padding:1em 0;
+            border:none;
+            font-size:1em;
+        }
+    }
+
+    &.msg-info {
+        border-color:@borderGray;
+        background: @grayGradient2 url("@{imagesPath}/icon-msg-info.png?version=${timestamp}") no-repeat 20px 15px;
+
+        .close-msg {
+            background:@borderGray;
+        }
+    }
+
+    &.msg-warning {
+        border-color:#e9c000;
+        background: #f7e489 url("@{imagesPath}/icon-msg-warning.png?version=${timestamp}") no-repeat 18px 15px;
+
+        .close-msg {
+            background:#e9c000;
+        }
+    }
+
+    &.msg-error {
+        color:#fff;
+        border-color:@redGradient2;
+        background: #fa353d url("@{imagesPath}/icon-msg-error.png?version=${timestamp}") no-repeat 15px 15px;
+
+        a {
+            color:#fff;
+        }
+        a:hover {
+            color:#fff;
+            text-decoration:underline;
+        }
+
+        .close-msg {
+            background:@redGradient2;
+        }
+    }
+
+    &.msg-success {
+        border: 1px solid #7aa63f;
+        background: #b6eb7c url("@{imagesPath}/icon-msg-success.png?version=${timestamp}") no-repeat 15px 15px;
+        color:#254000;
+
+        .close-msg {
+            background:#58831d;
+            color: #b6eb7c;
+        }
+    }
+
+    // General message style for narrow columns
+    &.small {
+        background-image:none;
+        padding:5px;
+        margin:5px 5px 5px 0;
+    }
+
+    .close-msg {
+        position:absolute;
+        right:15px;
+        top:18px;
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        line-height: 13px;
+        //border-radius:0.2em;
+        text-align: center;
+        font-size:0.85em;
+
+        color:#fff;
+        opacity:0.5;
+        cursor:pointer;
+
+
+    }
+    &:hover {
+        .close-msg {
+            opacity:1;
+        }
+    }
+}
+.front .system-msg { top:-10px; } // Exception for frontpage
+
+// Typography
+//
+// h1           - Heading 1
+// h2           - Heading 2
+// h3           - Heading 3
+// h4           - Heading 4
+// p            - Paragraph
+// ul           - Unordered list
+// ol           - Ordered list
+// blockquote   - Blockquote
+// .vote-count  - Vote count
+// .vote-count-small     - Vote count small text
+// .internal-vote-count  - Internal vote count
+//
+// Styleguide 7.
+
+h1, h2, h3, h4, h5, h6, p {
+    margin-top: 0;
+}
+
+// H1
+//
+// Styleguide 7.1
+h1 {
+    font-size:1.5em;
+    line-height:1.2em;
+    clear: both;
+    color: #111;
+    font-weight:normal;
+}
+.extra-info {
+    display:block;
+    margin:-1em 0 1em 0;
+}
+
+
+// H2
+//
+// Styleguide 7.2
+h2 {
+    color: #111;
+    margin-bottom:0.5em;
+    font-weight:normal;
+}
+
+// H3
+//
+// Styleguide 7.3
+h3 {
+    color: #111;
+    margin-bottom:0.5em;
+    font-weight:normal;
+
+    &.navi-title {
+        margin-right:1em;
+        border-bottom:1px solid @borderGray;
+    }
+}
+
+// H4
+//
+// Styleguide 7.4
+h4 {
+    margin-bottom:0.5em;
+
+    &.header { margin-bottom:0; }
+    &.subtle {
+        margin:0;
+        font-weight:normal;
+    }
+}
+
+.inline-header { display:inline-block; }
+
+
+.bull {
+    margin:0 0.5em;
+    font-size:0.8em;
+    color:@borderGray;
+}
+
+// Vote counts
+//
+// .vote-count          - Summed vote count
+// .vote-count-small     - Vote count small text
+// .internal-vote-count - Internal vote count
+//
+// Styleguide 7.8
+.vote-count-container {
+    display:inline-block;
+    position:relative;
+    vertical-align: middle;
+    margin-right: 1em;
+}
+.vote-count {
+    font-size: 3em;
+    font-style: italic;
+
+    &.internal {
+        font-size: 1.2em;
+    }
+}
+.vote-count-small {
+    font-size:1.1em;
+    font-style:italic;
+    font-weight:bold;
+}
+
+
+
+
+// Support vote graph
+.support-vote-graph {
+	h3 {
+		margin-right:0.5em;
+	}
+
+    .icon {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+
+        .backgroundImage("icons-supportvotegraph");
+
+        background-size: 48px auto;
+
+        vertical-align: baseline;
+
+        &.zoom-in {
+            .iconPosition(0, 0, 24px);
+        }
+        &.zoom-out {
+            .iconPosition(1, 0, 24px);
+        }
+        &.cumulative {
+            .iconPosition(0, 1, 24px);
+        }
+        &.daily {
+            .iconPosition(1, 1, 24px);
+        }
+    }
+
+    .graph-actions {
+        position: relative;
+        z-index: 10;
+        float: right;
+        margin-bottom: -15px;
+
+        a {
+            margin-left: 1em;
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+
+            &.act {
+                display: none;
+            }
+        }
+
+    }
+
+    .update-info {
+        margin: 1em 0 0 50px;
+        font-size: 0.8em;
+
+        .no-js & {
+            display: none;
+        }
+    }
+}
+
+@media @narrow {
+    .support-vote-graph {
+
+        .update-info {
+            margin-left: 0;
+        }
+
+    }
+}
+
+@media @xnarrow {
+    h1 {
+        font-size: 1.2em;
+    }
+}
+

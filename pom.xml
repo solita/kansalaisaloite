@@ -412,6 +412,7 @@
                             </options>
                             <includes>
                             	<!--<include>**/jquery.supportvotegraph.js</include>-->
+                            	<!--<include>**/jquery.headernav.js</include>-->
                                 <include>**/aloitepalvelu.js</include>
                             </includes>
                         </configuration>
@@ -422,18 +423,21 @@
             <plugin>
                 <groupId>org.lesscss</groupId>
                 <artifactId>lesscss-maven-plugin</artifactId>
-                <version>1.3.3</version>
+                <version>1.7.0.1.1</version>
                 <configuration>
-                    <sourceDirectory>${project.basedir}/src/main/webapp/css</sourceDirectory>
+                    <sourceDirectory>${project.basedir}/src/main/webapp/css/less</sourceDirectory>
                     <!-- NOTE: These are compiled into src for noscript and faster web testing -->
                     <outputDirectory>${project.basedir}/src/main/webapp/css</outputDirectory>
                     <!--
                     <outputDirectory>${project.build.directory}/${project.build.finalName}/css</outputDirectory>
                      -->
                     <compress>true</compress>
-                    <excludes>
-                        <exclude>less/*.less</exclude>
-                    </excludes>
+                    <includes>
+            			<include>aloitepalvelu.less</include>
+            			<include>aloitepalvelu-ie.less</include>
+            			<include>aloitepalvelu-iframe.less</include>
+            			<include>print.less</include>
+        			</includes>
                 </configuration>
                 <executions>
                     <execution>
@@ -471,6 +475,7 @@
                                 <jsSourceFile>moment.min.js</jsSourceFile>
                                 <jsSourceFile>raphael.min.js</jsSourceFile>
                                 <jsSourceFile>jquery.supportvotegraph.js</jsSourceFile>
+                                <jsSourceFile>jquery.headernav.js</jsSourceFile>
                                 <jsSourceFile>aloitepalvelu.js</jsSourceFile>
                             </jsSourceFiles>
                             <jsFinalFile>script.js</jsFinalFile>

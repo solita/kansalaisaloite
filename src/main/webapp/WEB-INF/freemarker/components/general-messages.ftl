@@ -13,11 +13,11 @@
 <#macro supportCountGraph data>
     <div class="support-vote-graph">
     	<h3 class="inline-header">
-    		<@u.message key="graph.title" />
-    		<span id="internal-support-count-${initiative.id}" class="vote-count-container">
-    			<span class="vote-count">${initiative.supportCount!""}</span>
-    		</span>
-    	</h3>
+            <@u.message key="graph.title" />
+            <span id="internal-support-count-${initiative.id}" class="vote-count-container">
+                <span class="vote-count">${initiative.supportCount!""}</span>
+            </span>
+        </h3>
 
     	<div id="supportVotesGraph">
     		<noscript><@u.message key="graph.javaScriptSupport" /></noscript>
@@ -58,13 +58,13 @@
 <#macro initiativeVoteInfo>
     <#if votingInfo?? && votingInfo.votingInProggress || initiative.totalSupportCount gt 0>
     	<#assign externalSupportCount = initiative.totalSupportCount - initiative.supportCount />
-    	
+
         <p>
         	<span id="support-count-${initiative.id}" class="vote-count-container push-right">
                 <span class="vote-count total">${initiative.totalSupportCount}</span>
             </span>
         	<@u.message key="initiative.totalSupportCount" args=[initiative.totalSupportCount] /><#if externalSupportCount gt 0>,</#if>
-        	
+
         	<#if externalSupportCount gt 0>
         		<@u.message key="initiative.supportCountExternal" args=[externalSupportCount] />
         	</#if>

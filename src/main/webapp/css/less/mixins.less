@@ -59,6 +59,22 @@
     background: -o-linear-gradient(left,  @start, @stop);
 }
 
+// Triangle
+.triangleBase() {
+    content: '';
+    display: inline-block;
+    width: 0;
+    height: 0;
+}
+
+.triangleRight(@size, @color) {
+    .triangleBase();
+
+    border-top: @size solid transparent;
+    border-bottom: @size solid transparent;
+    border-left: @size solid @color;
+}
+
 .makeEllipsis(){
     white-space:nowrap;
     overflow:hidden;
@@ -71,12 +87,12 @@
     background-position: (-@xIndex*@offsetSize)+0px (-@yIndex*@offsetSize)+0px;
 }
 
-.backgroundImage(@fileName, @postFix: "") {
+.backgroundImage(@fileName, @size: 100%, @postFix: "") {
   background-position: 0 0;
   background-repeat: no-repeat;
-  background-size: contain;
-  background-image: url("@{imagesFolder}/@{fileName}@{postFix}.png");
-  background-image: url("@{imagesFolder}/@{fileName}.svg"), none;
+  background-size: @size;
+  background-image: url("@{imagesPath}/@{fileName}@{postFix}.png");
+  background-image: url("@{imagesPath}/@{fileName}.svg"), none;
 }
 
 .kaaLogo() {
@@ -88,7 +104,7 @@
     &.small {
         width: 200px;
         height: 41px;
-        .backgroundImage("kansalaisaloite-logo-fi", "-small");
+        .backgroundImage("kansalaisaloite-logo-fi", 100%, "-small");
     }
 
     .sv & {
@@ -98,7 +114,7 @@
         &.small {
             width: 200px;
             height: 41px;
-            .backgroundImage("kansalaisaloite-logo-fi", "-small");
+            .backgroundImage("kansalaisaloite-logo-fi", 100%, "-small");
         }
     }
 

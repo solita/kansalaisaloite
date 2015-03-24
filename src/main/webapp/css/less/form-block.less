@@ -1,0 +1,113 @@
+// Form block header
+
+.content-block-header {
+    position:relative;
+    background: #fff url("@{imagesPath}/input-block-extra-bg.png?version=${timestamp}") repeat-y top right;
+    border-left: 4px solid @mainColor;
+    padding:20px 25px 0 55px;
+
+    &.view {
+        z-index:3;
+        background:#fff;
+    }
+
+    &.faq {
+        margin-top:3em;
+
+        h2 {
+            padding-bottom:35px;
+        }
+    }
+
+    h2 {
+        margin: 0;
+        color: @mainColor;
+        font-weight:normal;
+        //text-shadow: #0b3911 1px 1px 1px;
+    }
+}
+
+.input-block-content, .input-block-extra, .input-block-action {
+    float: left;
+}
+
+.input-block-content {
+    width: 585px;
+    position:relative;
+    margin-top:2em;
+}
+
+.initiative-finance-url-area, .initiative-external-support-count {
+    position:relative;
+    margin-top:1em;
+}
+
+.input-block-extra {
+    position:absolute;
+    top:-6px;
+    right:-306px;
+    width: 235px;
+    margin:0 0px 0px 10px;
+    padding: 10px 0px 20px 33px;
+    height:0;
+    background: transparent url("@{imagesPath}/input-block-extra-indicator.png?version=${timestamp}") no-repeat 9px 6px;
+    font-size: 90%;
+    color: #787878;
+
+    .input-block-extra-content {
+        position: relative;
+
+        p {
+            margin: 0px 0px 1em 0px;
+        }
+    }
+}
+
+.input-block-action {
+    clear:both;
+    margin-top:25px;
+}
+
+.no-js-help-container{
+    position:relative;
+    right:-25px;
+    float:right;
+    width:235px;
+
+    // Floating position for NOSCRIPT
+    .input-block-extra {
+        position: static;
+        height:auto;
+        margin-left:0;
+        padding-left:0;
+        background:none;
+    }
+}
+
+.initiative-content-row {
+    border-bottom: 1px solid @borderGray;
+    margin-bottom: 0.7em;
+    padding-bottom: 0.7em;
+
+    .header {
+        display: block;
+        font-weight: bold;
+    }
+
+    &.last{
+        margin:0;
+        padding:0;
+        border:0;
+    }
+}
+
+.initiative-content-tools {
+    position: absolute;
+    top: 23px;
+    right:35px;
+
+}
+.show-alternative-lang {
+    float:right;
+    font-size:0.9em;
+}

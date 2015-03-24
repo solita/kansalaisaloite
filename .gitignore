@@ -29,3 +29,5 @@ src/main/webapp/js/script.js
 src/main/webapp/js/script.min.js
 
 /target
+**/.idea/**
+initiative-web.iml

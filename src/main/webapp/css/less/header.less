@@ -1,0 +1,98 @@
+#header {
+    width: 100%;
+    padding-top: @headerTopPad;
+    margin-bottom: 2.3em;
+    background: #fff;
+
+    border-bottom: 1px solid @borderGray;
+
+    .header-content {
+        position: relative;
+        height: 130px;
+        width: 960px;
+        margin: 0 auto;
+
+        .header-additional-content {
+            position: absolute;
+            right: 10px;
+            top: 0;
+            text-align: right;
+        }
+    }
+}
+
+.front {
+    #header {
+        margin-bottom: 0;
+    }
+}
+
+.logo {
+    .kaaLogo();
+}
+
+.font-size {
+    padding-left: 0.6em;
+    margin-left: 0.2em;
+    border-left: 1px solid @borderGray;
+}
+
+.font-size-toggle {
+    margin-left: 0.5em;
+
+    .font-size-small-link {
+        -webkit-border-top-left-radius: @cornerRadius;
+        -webkit-border-bottom-left-radius: @cornerRadius;
+        -moz-border-radius-topleft: @cornerRadius;
+        -moz-border-radius-bottomleft: @cornerRadius;
+        border-top-left-radius: @cornerRadius;
+        border-bottom-left-radius: @cornerRadius;
+    }
+
+    .font-size-medium-link {
+        border-left: 1px solid white;
+    }
+
+    .font-size-large-link {
+        border-left: 1px solid white;
+        -webkit-border-top-right-radius: @cornerRadius;
+        -webkit-border-bottom-right-radius: @cornerRadius;
+        -moz-border-radius-topright: @cornerRadius;
+        -moz-border-radius-bottomright: @cornerRadius;
+        border-top-right-radius: @cornerRadius;
+        border-bottom-right-radius: @cornerRadius;
+    }
+
+    .active {
+        color: @secondaryColor;
+    }
+
+    a {
+        span {
+            display: inline-block;
+            *zoom: 1;
+            //padding: 10px 10px 12px 10px;
+            padding: 0 10px;
+            }
+    }
+}
+
+
+.additional-tools {
+    font-size: 90%;
+    width:400px; // Fixes a Chrome/Safari issue with font-size links
+}
+
+
+
+body.font-size-small, span.font-size-small {
+    font-size: 80%;
+}
+
+body.font-size-medium, span.font-size-medium {
+    font-size: 100%;
+}
+
+body.font-size-large, span.font-size-large {
+    font-size: 110%;
+}

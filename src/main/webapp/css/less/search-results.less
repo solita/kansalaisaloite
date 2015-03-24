@@ -1,0 +1,154 @@
+// Search results
+//
+// Styleguide 9.
+
+.switch-view {
+    border-left: 1px solid @borderGray;
+    margin-left: 0.5em;
+    padding-left: 1.3em;
+    font-size:0.725em;
+    font-weight:normal;
+}
+.search-results {
+    margin-top:2em;
+
+    ul {
+        margin:0 0 1em 0;
+        padding:0;
+        list-style:none;
+        border-top:1px solid #ddd;
+        border-bottom:1px solid #f3f3f3;
+
+        color:@secondaryTextColor;
+    }
+
+    li {
+        overflow:hidden; // clearfix
+        position:relative;
+        display:block;
+        border-bottom:1px solid #ddd;
+        border-top:1px solid #f3f3f3;
+
+        &.first {
+            border-top:1px solid #f3f3f3;
+        }
+
+        &:hover { background:#eaeaea; }
+
+        a {
+            overflow:hidden;
+            display:block;
+            padding:0.7em 0.3em;
+        }
+    }
+
+    .date {
+        float:left;
+        color:@secondaryTextColor;
+    }
+    .title {
+        display:block;
+        margin:0 15em 0 100px;
+    }
+    .info {
+        display:block;
+        font-size:0.9em;
+        margin-left:100px;
+        color:@secondaryTextColor;
+    }
+
+    .support-votes-details {
+        float:right;
+        width:13em;
+        text-align:right;
+        color:@secondaryTextColor;
+
+        .support-votes-container {
+            position:relative;
+            display:block;
+            overflow:hidden;
+            padding:0.3em 0.7em;
+            background:#f7f7f7;
+            border:1px solid @borderGray;
+            border-radius:0.3em;
+        }
+
+        .support-votes {
+            padding-right:0.1em;
+            font-size:1.3em;
+            font-style:italic;
+            line-height:1em;
+            color:@bodyColor;
+        }
+
+
+
+        .internal-support-votes {
+            display:block;
+            margin-top:-0.2em;
+            padding-right:0.1em;
+            text-align:right;
+            font-size:0.8em;
+        }
+        .internal-count {
+            font-size:1.2em;
+            font-weight:bold;
+        }
+
+    }
+
+}
+
+// Progress bars for support vote counts and time remaining
+.progress-bars {
+    display:block;
+
+    &:hover {
+        box-shadow:0px 1px 2px -1px rgba(0,0,0,0.2);
+    }
+}
+
+.bar-container {
+    position:relative;
+    display:block;
+    overflow:hidden;
+
+    width:100%;
+    min-widht:1px;
+    margin-bottom:1px;
+
+    &.count {
+        height:8px;
+        .gradientHorizontal(@mainColorLight, @mainColor);
+
+        &.completed {
+            background:@mainColor;
+        }
+    }
+    &.time {
+        height:3px;
+        .gradientHorizontal(@secondaryColorLight, @secondaryColor);
+    }
+}
+
+.bar {
+    position:absolute;
+    top:0;
+    right:0;
+    width:100%;
+    max-width:99.5%;
+    height:10px;
+    background: #dadada;
+
+    .transition(width, 0.5s, cubic-bezier(1.000, 0.000, 0.000, 1.000));
+}
+
+.js {
+    .bar {
+        &.js-animate {
+            // use 0 to animate from right to left
+            // use 100% to animate from left to right
+            width:100% !important;
+        }
+    }
+}
