@@ -19,7 +19,7 @@
 </#function>
 
 <#assign _rand = 0.36 />
-<#assign imageNumber = rand(1, 4)?c />
+<#assign imageNumber = rand(1, 5)?c />
 
 <div class="image-container image-${imageNumber}">
 <#if requestMessages?? && (requestMessages?size > 0)>
