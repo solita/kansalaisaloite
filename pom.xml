@@ -50,40 +50,6 @@
             <id>repo2_maven_org</id>
             <url>http://repo2.maven.org/maven2</url>
         </repository>
-        <repository>
-            <id>msource</id>
-            <url>http://source.mysema.com/maven2/releases/</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>sonatype</id>
-            <url>http://oss.sonatype.org/content/groups/public/</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>sonatype2</id>
-            <url>http://oss.sonatype.org/content/repositories/releases/</url>
-            <releases>
-                <enabled>true</enabled>
-                <updatePolicy>always</updatePolicy>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-        <!-- <repository> <id>dwr</id> <url>http://download.java.net/maven/2/</url>
-            <layout>default</layout> <releases><enabled>true</enabled></releases> <snapshots><enabled>true</enabled></snapshots>
-            </repository> -->
     </repositories>
 
     <dependencies>
