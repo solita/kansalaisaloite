@@ -4,12 +4,12 @@ set -eu
 set -x
 
 # Run tests, script will stop running if tests fail
-${MAVEN_BIN} clean test -Pci -Dmaven.test.failure.ignore=false -Dci.jdbc.url=${JDBC_URL}
+mvn clean test
 
 WAR_FILE=./root-${RELEASE_VERSION}.war
 
 # Pom version to given releaseversion
-${MAVEN_BIN} versions:set -DgenerateBackupPoms=false -DnewVersion="${RELEASE_VERSION}"
+mvn versions:set -DgenerateBackupPoms=false -DnewVersion="${RELEASE_VERSION}"
 
 # Tag just before we're about to create the war file
 git add pom.xml
@@ -21,11 +21,11 @@ git push origin version-${RELEASE_VERSION}
 # Release
 rm -rf target/root.war # ensure that the old war does not exist
 rm -rf ${WAR_FILE} # double check
-${MAVEN_BIN} clean verify -DskipTests -Dcommit.hash=$(git rev-parse HEAD)
+mvn clean verify -DskipTests -Dcommit.hash=$(git rev-parse HEAD)
 mv target/root.war ${WAR_FILE}
 
 # Next increment
-${MAVEN_BIN} versions:set -DgenerateBackupPoms=false -DnewVersion="$NEXT_VERSION-SNAPSHOT"
+mvn versions:set -DgenerateBackupPoms=false -DnewVersion="$NEXT_VERSION-SNAPSHOT"
 
 git add pom.xml
 git commit -m "Prepare ${NEXT_VERSION}-SNAPSHOT"
