@@ -551,7 +551,8 @@ public class InitiativeController extends BaseController {
     
     @RequestMapping(value={ IFRAME_GENERATOR_FI, IFRAME_GENERATOR_SV }, method=GET)
     public String iFrameGenerator(Model model, Locale locale) {
-    	return IFRAME_GENERATOR_VIEW;
+        model.addAttribute(ALT_URI_ATTR, Urls.get(locale).alt().widget());
+        return IFRAME_GENERATOR_VIEW;
     }
     
     @InitBinder

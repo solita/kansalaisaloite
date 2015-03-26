@@ -312,6 +312,10 @@ public final class Urls {
     	return getLocalizedPageUrl(IFRAME_GENERATOR_FI, IFRAME_GENERATOR_SV) + "?" + PARAM_INITIATIVE_ID + "=" + initiativeId;
     }
 
+    public String widget() {
+        return getLocalizedPageUrl(IFRAME_GENERATOR_FI, IFRAME_GENERATOR_SV);
+    }
+
     public String supportStatementPdf(Long initiativeId) {
         return getLocalizedPageUrl(SUPPORT_STATEMENT_PDF_FI, SUPPORT_STATEMENT_PDF_SV).replace(ID_PARAMETER, initiativeId.toString());
     }
