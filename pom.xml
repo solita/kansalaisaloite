@@ -7,7 +7,7 @@
     <groupId>fi.om.initiative</groupId>
     <artifactId>initiative-web</artifactId>
     <name>Aloitepalvelu</name>
-    <version>3.4.2</version>
+    <version>3.4.3-SNAPSHOT</version>
     <packaging>war</packaging>
 
     <properties>
