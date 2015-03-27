@@ -1,3 +1,4 @@
+@omHeaderFontSize: 11px;
 @omHeaderHeight: 40px;
 @omHeaderTextColor: #fff;
 @omHeaderTextColorHover: #bcdade;
@@ -18,6 +19,7 @@
     height: @omHeaderHeight;
     width: 100%;
     text-transform: uppercase;
+    font-size: @omHeaderFontSize;
 
     .gradient(#434443, #2e2f2f);
 
@@ -27,7 +29,7 @@
 
     a {
         color: @omHeaderTextColor;
-        font-size: 11px;
+        font-size: @omHeaderFontSize;
 
         &:hover {
             color: @omHeaderTextColorHover;
@@ -36,7 +38,7 @@
 
     .logged-in-info {
         position: relative;
-        font-size: 11px;
+        font-size: @omHeaderFontSize;
         border-left: 1px solid #000;
         border-right: 1px solid #5a5a5a;
         float: right;
