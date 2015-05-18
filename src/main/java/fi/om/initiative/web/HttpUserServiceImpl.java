@@ -33,10 +33,13 @@ public class HttpUserServiceImpl implements HttpUserService {
     private UserDao userDao;
     
     private static final User ANON = new User();
-    
-    public HttpUserServiceImpl(UserDao userDao, EncryptionService encryptionService) {
+
+    private boolean secureCookieEnabled;
+
+    public HttpUserServiceImpl(UserDao userDao, EncryptionService encryptionService, Boolean secureCookieEnabled) {
         this.userDao = userDao;
         this.encryptionService = encryptionService;
+        this.secureCookieEnabled = secureCookieEnabled;
     }
     
     /* (non-Javadoc)
@@ -120,7 +123,7 @@ public class HttpUserServiceImpl implements HttpUserService {
             contextPath = "/";
         }
         cookie.setPath(contextPath);
-        cookie.setSecure(true);
+        cookie.setSecure(secureCookieEnabled);
         response.addCookie(cookie);
     }
 

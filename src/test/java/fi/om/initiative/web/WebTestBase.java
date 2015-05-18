@@ -1,11 +1,11 @@
 package fi.om.initiative.web;
 
+import com.gargoylesoftware.htmlunit.BrowserVersion;
 import fi.om.initiative.StartJetty;
 import fi.om.initiative.conf.PropertyNames;
 import fi.om.initiative.conf.WebTestConfiguration;
 import fi.om.initiative.dao.TestHelper;
 import fi.om.initiative.util.Locales;
-
 import org.eclipse.jetty.server.Server;
 import org.joda.time.ReadablePeriod;
 import org.joda.time.format.ISOPeriodFormat;
@@ -28,11 +28,8 @@ import org.springframework.core.env.Environment;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.gargoylesoftware.htmlunit.BrowserVersion;
-
 import javax.annotation.Resource;
 import javax.inject.Inject;
-
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -42,7 +39,7 @@ import static org.junit.Assert.*;
 @ContextConfiguration(classes={WebTestConfiguration.class})
 public abstract class WebTestBase {
     
-    protected static final int PORT = 8445; // NOTE: must match port in test.properties/baseUrl
+    protected static final int PORT = 8095; // NOTE: must match port in test.properties/baseUrl
     
     @Resource 
     protected TestHelper testHelper;

@@ -1,16 +1,15 @@
 package fi.om.initiative;
 
+import fi.om.initiative.conf.PropertyNames;
 import org.eclipse.jetty.http.ssl.SslContextFactory;
 import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.server.ssl.SslSelectChannelConnector;
+import org.eclipse.jetty.server.nio.SelectChannelConnector;
 import org.eclipse.jetty.webapp.WebAppContext;
-
-import fi.om.initiative.conf.PropertyNames;
 
 public class StartJetty {
     
-    public static final int PORT = 8443;
+    public static final int PORT = 8090;
 
     public static void main(String[] args) {
         try {
@@ -26,12 +25,10 @@ public class StartJetty {
         SslContextFactory sslContext = new SslContextFactory("keystore");
         sslContext.setKeyStorePassword("aloitepalvelu");
 
-//        SelectChannelConnector connector = new SelectChannelConnector();
-//        connector.setPort(8080);
-        
-        SslSelectChannelConnector sslConnector = new SslSelectChannelConnector(sslContext);
-        sslConnector.setPort(port);
-        server.setConnectors(new Connector[] { sslConnector });
+        SelectChannelConnector connector = new SelectChannelConnector();
+        connector.setPort(port);
+
+        server.setConnectors(new Connector[] { connector });
                 
         WebAppContext context = new WebAppContext();
         context.setDescriptor("src/main/webapp/WEB-INF/web.xml");

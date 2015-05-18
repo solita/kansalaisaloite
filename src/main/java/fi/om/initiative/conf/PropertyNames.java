@@ -89,4 +89,6 @@ public final class PropertyNames {
     public static final String appVersion = "appVersion";
 
     public static final String commitHash = "commit.hash";
+
+    public static final String secureCookieEnabled = "secure.cookie.enabled";
 }

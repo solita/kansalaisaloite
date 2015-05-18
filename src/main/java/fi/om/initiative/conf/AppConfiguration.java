@@ -153,7 +153,7 @@ public class AppConfiguration {
     
     @Bean
     public HttpUserServiceImpl userService() {
-        return new HttpUserServiceImpl(userDao(), encryptionService());
+        return new HttpUserServiceImpl(userDao(), encryptionService(), Boolean.valueOf(env.getProperty(PropertyNames.secureCookieEnabled)));
     }
 
     @Bean
