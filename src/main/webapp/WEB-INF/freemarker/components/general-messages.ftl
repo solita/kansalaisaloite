@@ -58,18 +58,50 @@
 <#macro initiativeVoteInfo>
     <#if votingInfo?? && votingInfo.votingInProggress || initiative.totalSupportCount gt 0>
     	<#assign externalSupportCount = initiative.totalSupportCount - initiative.supportCount />
+        <#assign sentToVRK = initiative.sentSupportCount gt 0 />
+        <#assign supportCountConfirmedByVRK = initiative.verifiedSupportCount gt 0/>
 
         <p>
-        	<span id="support-count-${initiative.id?c}" class="vote-count-container push-right">
-                <span class="vote-count total">${initiative.totalSupportCount}</span>
-            </span>
-        	<@u.message key="initiative.totalSupportCount" args=[initiative.totalSupportCount] /><#if externalSupportCount gt 0>,</#if>
 
-        	<#if externalSupportCount gt 0>
-        		<@u.message key="initiative.supportCountExternal" args=[externalSupportCount] />
-        	</#if>
+            <#if supportCountConfirmedByVRK>
 
-	        <#-- Show refresh-button only when voting is in progress -->
+                <span id="support-count-${initiative.id?c}" class="vote-count-container push-right">
+                    <span class="vote-count total">${initiative.verifiedSupportCount}</span>
+                </span>
+
+                <@u.message key="initiative.verifiedTotalSupportCount" args=[initiative.verifiedSupportCount] />
+
+            </#if>
+
+            <#if !supportCountConfirmedByVRK>
+
+                <span id="support-count-${initiative.id?c}" class="vote-count-container push-right">
+                    <span class="vote-count total">${initiative.totalSupportCount}</span>
+                </span>
+
+                <@u.message key="initiative.totalSupportCount" args=[initiative.totalSupportCount] /><#if externalSupportCount gt 0>,</#if>
+
+                <#if externalSupportCount gt 0>
+                    <@u.message key="initiative.supportCountExternal" args=[externalSupportCount] />
+                </#if>
+
+                <#if externalSupportCount gt 0>
+                    <#if sentToVRK>
+                        <@u.message "initiative.sentToVRK"/>
+                    </#if>
+                    <#if !sentToVRK>
+                        <@u.message "initiative.externalNotConfirmed"/>
+                    </#if>
+                </#if>
+
+            </#if>
+
+
+
+
+
+
+    <#-- Show refresh-button only when voting is in progress -->
 	        <#if votingInfo?? && votingInfo.votingInProggress>
 	            <span class="js-update-support-count icon-small refresh push rounded trigger-tooltip hidden" data-id="${initiative.id?c}" data-target-total="support-count-${initiative.id?c}" data-target-internal="internal-support-count-${initiative.id?c}" title="<@u.message "initiative.supportCount.refresh" />"></span>
 	        </#if>
