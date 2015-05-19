@@ -50,6 +50,8 @@
  *
  * Displays vote count. Shows votes all together and from this service.
  *
+ * Shows the verification status. Whether the votes are confirmed by VRK or not.
+ *
  * Requirements:
  * - Initiative state is ACCEPTED
  * - Voting is in progress (date requirement)
