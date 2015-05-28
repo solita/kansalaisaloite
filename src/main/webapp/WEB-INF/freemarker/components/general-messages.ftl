@@ -65,15 +65,7 @@
 
         <p>
 
-            <#if supportCountConfirmedByVRK>
 
-                <span id="support-count-${initiative.id?c}" class="vote-count-container push-right">
-                    <span class="vote-count total">${initiative.verifiedSupportCount}</span>
-                </span>
-
-                <@u.message key="initiative.verifiedTotalSupportCount" args=[initiative.verifiedSupportCount] />
-
-            </#if>
 
             <#if !supportCountConfirmedByVRK>
 
@@ -87,18 +79,27 @@
                     <@u.message key="initiative.supportCountExternal" args=[externalSupportCount] />
                 </#if>
 
-                <#if externalSupportCount gt 0>
-                    <#if sentToVRK>
-                        <@u.message "initiative.sentToVRK"/>
-                    </#if>
-                    <#if !sentToVRK>
+                <#if sentToVRK>
+                    <@u.message "initiative.sentToVRK"/>
+                </#if>
+
+                <#if !sentToVRK>
+                    <#if externalSupportCount gt 0>
                         <@u.message "initiative.externalNotConfirmed"/>
                     </#if>
                 </#if>
 
             </#if>
 
+            <#if supportCountConfirmedByVRK>
 
+                <span id="support-count-${initiative.id?c}" class="vote-count-container push-right">
+                    <span class="vote-count total">${initiative.verifiedSupportCount}</span>
+                </span>
+
+                <@u.message key="initiative.verifiedTotalSupportCount" args=[initiative.verifiedSupportCount] />
+
+            </#if>
 
 
 
