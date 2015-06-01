@@ -214,6 +214,19 @@
 </#macro>
 
 <#--
+ * warningText
+ *
+-->
+<#macro warningText path noscript="" href="">
+    <div class="input-block-extra-warning ${path!""} js-hide ${(noscript="noscript")?string('','hidden')}">
+        <div class="input-block-extra-content">
+            <h4><@u.message path+".title" /></h4>
+            <@u.messageHTML key=path+".description" args=[href] />
+        </div>
+    </div>
+</#macro>
+
+<#--
  * invitations
  *
  * Organizer Invitations

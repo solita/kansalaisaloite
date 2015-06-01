@@ -290,6 +290,7 @@
         }
       };
 
+
       // Matches with data-name of the help-icon and the class-name of the help-text container
       $('.help').click(function () {
         var help, $thisHelp;
@@ -304,6 +305,57 @@
         var $thisHelp = $(this).parents('.input-block-content:first').find('.input-block-extra:first');
         toggleHelpTexts($thisHelp, false);
       });
+    }());
+
+    /**
+     * Show warning for links, that user has entered to input box.
+     */
+    (function(){
+      var checkForLinks, showLinkWarning, potentialLinks;
+
+      checkForLinks = function(text) {
+        potentialLinks = [];
+        var words = text.split(" ");
+        for (var i = 0; i < words.length; i++) {
+          var word = words[i];
+          if (word.startsWith("http") || word.startsWith("www")) {
+            potentialLinks.push(word);
+          }
+        }
+        if (potentialLinks.length > 0) {
+          return true;
+        }
+        else {
+          return false;
+        }
+      };
+
+      showLinkWarning = function(elem, show) {
+        if(show) {
+          elem.fadeIn(speedFast);
+        }
+        else {
+          elem.fadeOut(speedFast);
+        }
+        for (var i = 0; i < potentialLinks.length; i++) {
+          console.log("Potential link " + potentialLinks[i]);
+        }
+      };
+
+      $('textarea').live('focusout', function () {
+        if (this.id == "rationale.fi" || this.id == "proposal.fi") {
+          var $thisWarning = $(this).parents('.input-block-content:first').find('.input-block-extra-warning:first');
+
+          var text = this.value;
+          if (checkForLinks(text)) {
+            showLinkWarning($thisWarning, true);
+          }
+          else {
+            showLinkWarning($thisWarning, false);
+          }
+        }
+      });
+
     }());
 
     /**
