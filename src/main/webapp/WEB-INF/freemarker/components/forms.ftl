@@ -222,6 +222,7 @@
         <div class="input-block-extra-content">
             <h4><@u.message path+".title" /></h4>
             <@u.messageHTML key=path+".description" args=[href] />
+            <ul></ul>
         </div>
     </div>
 </#macro>

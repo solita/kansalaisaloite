@@ -237,7 +237,7 @@
      *  - In some case when removing link-rows help text overflows
      */
     (function () {
-      var $allHelps, toggleHelpTexts;
+      var $allHelps, toggleHelpTexts, toggleLinks;
 
       $allHelps = $('.input-block-extra');
 
@@ -311,7 +311,17 @@
      * Show warning for links, that user has entered to input box.
      */
     (function(){
-      var checkForLinks, showLinkWarning, potentialLinks;
+      var checkForLinks, showLinkWarning, potentialLinks, updateLinks;
+
+      showLinkWarning = function(elem, show) {
+        if(show) {
+          elem.fadeIn(speedFast);
+        }
+        else {
+          elem.fadeOut(speedFast);
+        }
+
+      };
 
       checkForLinks = function(text) {
         potentialLinks = [];
@@ -322,39 +332,44 @@
             potentialLinks.push(word);
           }
         }
-        if (potentialLinks.length > 0) {
-          return true;
-        }
-        else {
-          return false;
-        }
+        return potentialLinks;
       };
 
-      showLinkWarning = function(elem, show) {
-        if(show) {
-          elem.fadeIn(speedFast);
-        }
-        else {
-          elem.fadeOut(speedFast);
-        }
-        for (var i = 0; i < potentialLinks.length; i++) {
-          console.log("Potential link " + potentialLinks[i]);
-        }
+      updateLinks = function($ul, potentialLinks) {
+          $ul.empty();
+          var newheigth = 0;
+          for (var i = 0; i < potentialLinks.length; i++) {
+            var potentialLink = potentialLinks[i];
+            newheigth += Math.max (1, Math.round (potentialLink.length / 34) );
+
+            $ul.append('<li>' + potentialLink + '</li>');
+
+            console.log("Potential link " + potentialLinks[i]);
+          }
+          return newheigth;
       };
 
       $('textarea').live('focusout', function () {
         if (this.id == "rationale.fi" || this.id == "proposal.fi") {
+
           var $thisWarning = $(this).parents('.input-block-content:first').find('.input-block-extra-warning:first');
 
-          var text = this.value;
-          if (checkForLinks(text)) {
-            showLinkWarning($thisWarning, true);
+          var potentialLinks = checkForLinks(this.value);
+
+          showLinkWarning($thisWarning, potentialLinks.length > 0);
+
+          var $ul = $(this).parents('.input-block-content:first').find('ul');
+
+          var newheight = updateLinks($ul, potentialLinks);
+
+          if (newheight > 3) {
+            var newHeight = newheight + 17;
+            $(this).height(newHeight + "em");
           }
-          else {
-            showLinkWarning($thisWarning, false);
-          }
+
         }
       });
+
 
     }());
 
