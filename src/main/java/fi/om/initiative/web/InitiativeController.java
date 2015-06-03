@@ -560,8 +560,7 @@ public class InitiativeController extends BaseController {
         binder.registerCustomEditor(LocalDate.class, new LocalDateEditor(messageSource.getMessage("date.format", null, locale)));
         // NOTE: This editor is implicit by Java Bean PropertyEditor naming convention
     }
-
-
+    
     
     /*
      * HELPERS

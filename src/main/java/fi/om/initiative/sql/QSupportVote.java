@@ -33,9 +33,9 @@ public class QSupportVote extends com.mysema.query.sql.RelationalPathBase<QSuppo
 
     public final com.mysema.query.sql.PrimaryKey<QSupportVote> supportVotePk = createPrimaryKey(initiativeId, supportid);
 
-    public final com.mysema.query.sql.ForeignKey<QInitiative> supportVoteInitiativeIdFk = createForeignKey(initiativeId, "id");
-
     public final com.mysema.query.sql.ForeignKey<QSupportVoteBatch> supportVoteBatchIdFk = createForeignKey(batchId, "id");
+
+    public final com.mysema.query.sql.ForeignKey<QInitiative> supportVoteInitiativeIdFk = createForeignKey(initiativeId, "id");
 
     public QSupportVote(String variable) {
         super(QSupportVote.class,  forVariable(variable), "initiative", "support_vote");

@@ -136,7 +136,10 @@ public class AppConfiguration {
     public SupportVoteDao supportVoteDao() {
         return new SupportVoteDaoImpl();
     }
-    
+
+    @Bean
+    public ReviewHistoryDao reviewHistoryDao() {return new ReviewHistoryDaoImpl();}
+
     private PostgresQueryFactory queryFactory() {
         return jdbcConfiguration.queryFactory();
     }
