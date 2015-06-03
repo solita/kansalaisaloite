@@ -1,9 +1,6 @@
 package fi.om.initiative.service;
 
-import fi.om.initiative.dto.EditMode;
-import fi.om.initiative.dto.InitiativeCountByState;
-import fi.om.initiative.dto.InitiativeCountByStateOm;
-import fi.om.initiative.dto.Invitation;
+import fi.om.initiative.dto.*;
 import fi.om.initiative.dto.author.Author;
 import fi.om.initiative.dto.initiative.InitiativeInfo;
 import fi.om.initiative.dto.initiative.InitiativeManagement;
@@ -46,6 +43,10 @@ public interface InitiativeService {
     void sendToOM(Long initiativeId);
 
     void respondByOm(Long initiativeId, boolean accept, String comment, String acceptanceIdentifier);
+
+    void commentByOm(Long initiativeId, String comment);
+
+    List<ReviewHistoryRow> findReviewHistory( Long initiativeId);
 
     void confirmCurrentAuthor(Long initiativeId);
 

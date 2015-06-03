@@ -1,13 +1,16 @@
 package fi.om.initiative.sql;
 
-import com.mysema.query.sql.ColumnMetadata;
-import com.mysema.query.types.Path;
-import com.mysema.query.types.PathMetadata;
+import static com.mysema.query.types.PathMetadataFactory.*;
+
 import com.mysema.query.types.path.*;
 
+import com.mysema.query.types.PathMetadata;
 import javax.annotation.Generated;
+import com.mysema.query.types.Path;
 
-import static com.mysema.query.types.PathMetadataFactory.forVariable;
+import java.util.*;
+
+import com.mysema.query.sql.ColumnMetadata;
 
 
 /**
@@ -92,17 +95,19 @@ public class QInitiative extends com.mysema.query.sql.RelationalPathBase<QInitia
 
     public final com.mysema.query.sql.ForeignKey<QInituser> initiativeModifierIdFk = createForeignKey(modifierId, "id");
 
-    public final com.mysema.query.sql.ForeignKey<QInitiativeLink> _linkInitiativeIdFk = createInvForeignKey(id, "initiative_id");
+    public final com.mysema.query.sql.ForeignKey<QInitiativeAuthor> _authorInitiativeIdFk = createInvForeignKey(id, "initiative_id");
 
     public final com.mysema.query.sql.ForeignKey<QInitiativeSupportVoteDay> _supportVoteDayInitiativeIdFk = createInvForeignKey(id, "initiative_id");
 
-    public final com.mysema.query.sql.ForeignKey<QSupportVote> _supportVoteInitiativeIdFk = createInvForeignKey(id, "initiative_id");
-
     public final com.mysema.query.sql.ForeignKey<QInitiativeInvitation> _invitationInitiativeIdFk = createInvForeignKey(id, "initiative_id");
 
-    public final com.mysema.query.sql.ForeignKey<QInitiativeAuthor> _authorInitiativeIdFk = createInvForeignKey(id, "initiative_id");
+    public final com.mysema.query.sql.ForeignKey<QReviewHistory> _reviewHistoryInitiativeId = createInvForeignKey(Arrays.asList(id, id), Arrays.asList("initiative_id", "initiative_id"));
 
     public final com.mysema.query.sql.ForeignKey<QSupportVoteBatch> _supportVoteBatchInitiativeIdFk = createInvForeignKey(id, "initiative_id");
+
+    public final com.mysema.query.sql.ForeignKey<QSupportVote> _supportVoteInitiativeIdFk = createInvForeignKey(id, "initiative_id");
+
+    public final com.mysema.query.sql.ForeignKey<QInitiativeLink> _linkInitiativeIdFk = createInvForeignKey(id, "initiative_id");
 
     public QInitiative(String variable) {
         super(QInitiative.class,  forVariable(variable), "initiative", "initiative");
