@@ -386,6 +386,7 @@
       Y = fitted.Y,
       y50 = height - bottomgutter + 0.5 - Y * 50,
       y50000 = height - bottomgutter + 0.5 - Y * settings.max,
+      yDailyLimit = height - bottomgutter + 0.5 - Y * 278,
       xLabels = 7;
 
     // Background grid
@@ -401,9 +402,14 @@
       r.path(["M", leftgutter + X - 0.5, y50000, "L", width - 1, y50000 ]).attr({stroke: colorHl, 'stroke-width': 1});
     }
 
+
     // Horizontal line in 50
     if (settings.cumulative && scale[scale.length - 1] <= 1000) {
       r.path(["M", leftgutter + xLabels / 2 - 0.5, y50, "L", width - xLabels / 2 + 0.5, y50 ]).attr({stroke: colorHl, 'stroke-width': 1, opacity: 0.5});
+    }
+
+    if (!settings.cumulative) {
+      r.path(["M", leftgutter + X - 0.5, yDailyLimit, "L", width - 1, yDailyLimit ]).attr({stroke: colorHl, 'stroke-width': 1});
     }
 
     var path = r.path().attr({stroke: color, 'stroke-width': 1, 'stroke-linejoin': 'round'}),
