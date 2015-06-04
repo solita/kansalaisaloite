@@ -16,6 +16,8 @@ import fi.om.initiative.service.InitiativeService;
 import fi.om.initiative.service.Role;
 import fi.om.initiative.service.SupportVoteService;
 import fi.om.initiative.util.Locales;
+import fi.om.initiative.util.Maybe;
+import fi.om.initiative.util.ReviewHistoryDiff;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -234,6 +236,7 @@ public class InitiativeController extends BaseController {
     @RequestMapping(value={ VIEW_HASH_FI, VIEW_HASH_SV }, method=GET)
     public String view(@PathVariable("id") Long initiativeId,
                        @PathVariable("hash") String hash,
+                       @RequestParam(value = HISTORY_ITEM_PARAMETER, required = false) Long historyItemId,
                        Model model, Locale locale, HttpServletRequest request) {
         Urls urls = Urls.get(locale);
         model.addAttribute(ALT_URI_ATTR, urls.alt().view(initiativeId, hash));
@@ -266,6 +269,9 @@ public class InitiativeController extends BaseController {
             } else {
                 editMode = getEditMode(request);
             }
+
+            addReviewHistory(initiativeId, historyItemId, model, user);
+
             return managementView(model, initiative, null, editMode, request);
         }
         // Public view for anyone else
@@ -280,9 +286,22 @@ public class InitiativeController extends BaseController {
 
     }
 
+    private void addReviewHistory(@PathVariable("id") Long initiativeId, Long historyItemId, Model model, User user) {
+        if (user.isOm()) {
+            List<ReviewHistoryRow> reviewHistory = initiativeService.findReviewHistory(initiativeId);
+            model.addAttribute("reviewHistories", reviewHistory);
+            Maybe<ReviewHistoryDiff> reviewHistoryDiff = Maybe.absent();
+            if (historyItemId != null) {
+                reviewHistoryDiff = Maybe.of(ReviewHistoryDiff.from(reviewHistory, historyItemId));
+            }
+            model.addAttribute("reviewDiff", reviewHistoryDiff);
+        }
+    }
+
     @RequestMapping(value={ VIEW_FI, VIEW_SV }, method=GET)
-    public String view(@PathVariable("id") Long initiativeId, Model model, Locale locale, HttpServletRequest request) {
-        return view(initiativeId, null, model, locale, request);
+    public String view(@PathVariable("id") Long initiativeId, @RequestParam(value = HISTORY_ITEM_PARAMETER, required = false) Long historyItemId, Model model, Locale locale, HttpServletRequest request) {
+
+        return view(initiativeId, null, historyItemId, model, locale, request);
     }
 
     @ModelAttribute
@@ -442,6 +461,8 @@ public class InitiativeController extends BaseController {
         return redirectWithMessage(urls.view(initiativeId), RequestMessage.REJECT_BY_OM, request);
     }
 
+
+
     /*
      * REST
      */
@@ -553,7 +574,8 @@ public class InitiativeController extends BaseController {
     public String iFrameGenerator(Model model, Locale locale) {
     	return IFRAME_GENERATOR_VIEW;
     }
-    
+
+
     @InitBinder
     public void initBinder(WebDataBinder binder, Locale locale) {
         binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
@@ -644,6 +666,7 @@ public class InitiativeController extends BaseController {
 
             return UNCONFIRMED_AUTHOR;
         } else {
+
             model.addAttribute("initiative", initiative);
             // NOTE: BindingAwareModelMap removes BindingResults if object doesn't match target -> re-add binding results
             if (bindingResult != null) {
@@ -667,6 +690,8 @@ public class InitiativeController extends BaseController {
                 throw new IllegalStateException("User is not an author, om or vrk official");
             }
         }
+
+
     }
     
     private EditMode getEditMode(HttpServletRequest request) {

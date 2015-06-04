@@ -80,7 +80,9 @@ public final class Urls {
     public static final String VIEW_HASH_FI = CREATE_FI + "/" + ID_PARAMETER+"/"+HASH_PARAMETER;
 
     public static final String VIEW_HASH_SV = CREATE_SV + "/" + ID_PARAMETER+"/"+HASH_PARAMETER;
-    
+
+    public static final String HISTORY_ITEM_PARAMETER = "historyItem";
+
     public static final String SEARCH_FI =    "/fi/hae";
     
     public static final String SEARCH_SV =    "/sv/sok";

@@ -5,6 +5,7 @@ import com.mysema.query.sql.postgres.PostgresQueryFactory;
 import com.mysema.query.types.Expression;
 import com.mysema.query.types.MappingProjection;
 import fi.om.initiative.dto.ReviewHistoryRow;
+import fi.om.initiative.util.Maybe;
 import fi.om.initiative.util.ReviewHistoryType;
 
 import javax.annotation.Resource;
@@ -72,13 +73,8 @@ public class ReviewHistoryDaoImpl implements ReviewHistoryDao {
                     ReviewHistoryRow reviewHistoryRow = new ReviewHistoryRow();
                     reviewHistoryRow.setId(row.get(reviewHistory.id));
                     reviewHistoryRow.setCreated(row.get(reviewHistory.created));
-
-                    if (row.get(reviewHistory.message) != null) {
-                        reviewHistoryRow.setMessage(row.get(reviewHistory.message));
-                    }
-                    if (row.get(reviewHistory.initiativeSnapshot) != null) {
-                        reviewHistoryRow.setSnapshot(row.get(reviewHistory.initiativeSnapshot));
-                    }
+                    reviewHistoryRow.setMessage(Maybe.fromNullable(row.get(reviewHistory.message)));
+                    reviewHistoryRow.setSnapshot(Maybe.fromNullable(row.get(reviewHistory.initiativeSnapshot)));
                     reviewHistoryRow.setType(row.get(reviewHistory.type));
                     return reviewHistoryRow;
                 }
