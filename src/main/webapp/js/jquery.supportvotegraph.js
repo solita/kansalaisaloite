@@ -92,6 +92,7 @@
             $(this).addClass('active');
             btnDaily.removeClass('active');
             settings.cumulative = true;
+            settings.max = 50000;
             showZoomHolder(true);
 
             refreshGraph();
@@ -103,7 +104,7 @@
             $(this).addClass('active');
             btnCumul.removeClass('active');
             settings.cumulative = false;
-            showZoomHolder(false);
+            settings.max = 1000;
 
             refreshGraph();
           }
@@ -234,7 +235,7 @@
 
   function getMax(data, settings) {
     var max = Math.max.apply(Math, data);
-    if (settings.cumulative && !settings.zoomed) {
+    if (!settings.zoomed) {
       return max < settings.max ? settings.max : max;
     } else {
       return max;
@@ -277,7 +278,7 @@
   }
 
   function getXDays(settings, labels, min, max) {
-    if (settings.cumulative && !settings.zoomed) {
+    if (!settings.zoomed) {
       return max;
     } else {
       return labels <= min ? min : max;
@@ -350,6 +351,16 @@
     return data;
   }
 
+  function dailyGoal(settings) {
+    var endDate = moment(settings.data.startDate).add(6, 'months');
+    var votingDays = moment(endDate).diff(moment(settings.data.startDate), 'days') + 1;
+    if (votingDays <= 0) {
+      return 0;
+    }
+    console.log(50000/votingDays);
+    return 50000/votingDays;
+  }
+
   initGraph = function (element, settings) {
     var labels = [],
       rawData = [],
@@ -386,7 +397,7 @@
       Y = fitted.Y,
       y50 = height - bottomgutter + 0.5 - Y * 50,
       y50000 = height - bottomgutter + 0.5 - Y * settings.max,
-      yDailyLimit = height - bottomgutter + 0.5 - Y * 278,
+      yDaily = height - bottomgutter + 0.5 - Y * dailyGoal(settings),
       xLabels = 7;
 
     // Background grid
@@ -408,8 +419,9 @@
       r.path(["M", leftgutter + xLabels / 2 - 0.5, y50, "L", width - xLabels / 2 + 0.5, y50 ]).attr({stroke: colorHl, 'stroke-width': 1, opacity: 0.5});
     }
 
+    // Horizontal line at daily limit
     if (!settings.cumulative) {
-      r.path(["M", leftgutter + X - 0.5, yDailyLimit, "L", width - 1, yDailyLimit ]).attr({stroke: colorHl, 'stroke-width': 1});
+      r.path(["M", leftgutter + X - 0.5, yDaily, "L", width - 1, yDaily ]).attr({stroke: colorHl, 'stroke-width': 1});
     }
 
     var path = r.path().attr({stroke: color, 'stroke-width': 1, 'stroke-linejoin': 'round'}),
@@ -437,7 +449,7 @@
     }
 
     // Draw X labels
-    if (settings.cumulative && !settings.zoomed) {
+    if (!settings.zoomed) {
       for (i = 0; i < 7; i++) {
         r.text(leftgutter + 2 + ((width - leftgutter - X) / 6) * i, height - 6, moment(settings.data.startDate).add('months', i).format(dateFormat)).attr((i < 6) ? (i === 0 ? txtLabelLeft : txtLabel) : txtLabelRight).toBack();
       }
