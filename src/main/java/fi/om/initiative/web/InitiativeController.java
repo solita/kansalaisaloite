@@ -294,7 +294,7 @@ public class InitiativeController extends BaseController {
             if (historyItemId != null) {
                 reviewHistoryDiff = Maybe.of(ReviewHistoryDiff.from(reviewHistory, historyItemId));
             }
-            model.addAttribute("reviewDiff", reviewHistoryDiff);
+            model.addAttribute("reviewHistoryDiff", reviewHistoryDiff);
         }
     }
 
