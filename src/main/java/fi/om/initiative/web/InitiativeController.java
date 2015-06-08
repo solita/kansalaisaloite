@@ -461,7 +461,13 @@ public class InitiativeController extends BaseController {
         return redirectWithMessage(urls.view(initiativeId), RequestMessage.REJECT_BY_OM, request);
     }
 
+    @RequestMapping(value={ VIEW_FI, VIEW_SV }, method=POST, params=ACTION_COMMENT_BY_OM)
+    public String commentByOm(@PathVariable("id") Long initiativeId, @RequestParam(value="moderatorComment", required=true) String comment, Locale locale, HttpServletRequest request) {
+        Urls urls = Urls.get(locale);
 
+        initiativeService.commentByOm(initiativeId, comment);
+        return redirectWithMessage(urls.view(initiativeId), RequestMessage.COMMENT_BY_OM, request);
+    }
 
     /*
      * REST

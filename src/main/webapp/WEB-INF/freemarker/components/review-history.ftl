@@ -24,11 +24,11 @@
 		                <input type="hidden" name="CSRFToken" value="${CSRFToken}"/>
 		
 		                <div class="input-block-content no-top-margin">
-		                    <textarea class="collapse" name="${UrlConstants.ACTION_MODERATOR_ADD_COMMENT}" maxlength="${InitiativeConstants.STATE_COMMENT_MAX}"></textarea>
+		                    <textarea class="collapse" name="${UrlConstants.ACTION_MODERATOR_ADD_COMMENT}" maxlength="${InitiativeConstants.STATE_COMMENT_MAX?string("#")}"></textarea>
 		                </div>
-		
+
 		                <div class="input-block-content">
-		                    <button type="submit"  class="small-button"><span class="small-icon save-and-send"><@u.message "review.history.add.comment" /></span></button>
+		                    <button type="submit" name="${UrlConstants.ACTION_COMMENT_BY_OM}" value="true" class="small-button"><span class="small-icon save-and-send"><@u.message "review.history.add.comment" /></span></button>
 		                    <a href="#" class="push js-btn-close-block hidden"><@u.message "action.cancel" /></a>
 		                </div>
 		            </form>
@@ -44,11 +44,12 @@
                 	</span>
                     <div class="info">
                         <#if row.message.present>
-                            <@u.text row.message.value />
+                            <#-- <@u.text row.message.value /> -->
+                            <p>${row.message.value}</p>
                         </#if>
                         <#if row.type = "REVIEW_SENT">
                         	<#-- TODO: diff url, maybe like urls.view(initiative.id, row.id) -->
-                            <#--<a href="${urls.moderation(initiative.id, row.id)}#diff"><@u.message key="review.history.show.diff"/></a>-->
+                            <a href="${urls.viewHistoryItem(initiative.id, row.id)}#diff"><@u.message key="review.history.show.diff"/></a>
                         </#if>
                         
                     </div>
