@@ -1,21 +1,41 @@
 package fi.om.initiative.util;
 
 import fi.om.initiative.dto.initiative.InitiativeManagement;
+import fi.om.initiative.dto.initiative.Link;
+
+import java.util.List;
 
 public class SnapshotCreator {
     public static String create(InitiativeManagement initiative) {
-        return initiative.getName().getFi()
+        return emptyStringOrValue(initiative.getName().getFi())
                 + "\n\n"
-                + initiative.getProposal().getFi()
+                + emptyStringOrValue(initiative.getProposal().getFi())
                 + "\n\n"
-                + initiative.getRationale().getFi()
+                + emptyStringOrValue(initiative.getRationale().getFi())
                 + "\n\n"
-                + initiative.getName().getSv()
+                + emptyStringOrValue(initiative.getName().getSv())
                 + "\n\n"
-                + initiative.getProposal().getSv()
+                + emptyStringOrValue(initiative.getProposal().getSv())
                 + "\n\n"
-                + initiative.getRationale().getSv()
+                + emptyStringOrValue(initiative.getRationale().getSv())
                 + "\n\n"
-                + initiative.getLinks().toString();
+                + emptyStringOrValues(initiative.getLinks());
+    }
+
+    private static String emptyStringOrValue(String value) {
+        if (value == null) {
+            return "";
+        }
+        else {
+            return value;
+        }
+    }
+    private static String emptyStringOrValues(List<Link> list) {
+        if (list.isEmpty()) {
+            return "";
+        }
+        else {
+            return list.toString();
+        }
     }
 }

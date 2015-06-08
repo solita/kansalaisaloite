@@ -45,7 +45,7 @@
                     <div class="info">
                         <#if row.message.present>
                             <#-- <@u.text row.message.value /> -->
-                            <p>${row.message.value}</p>
+                            <@u.comment row.message.value/>
                         </#if>
                         <#if row.type = "REVIEW_SENT">
                         	<#-- TODO: diff url, maybe like urls.view(initiative.id, row.id) -->
