@@ -3,6 +3,7 @@ package fi.om.initiative.service;
 import com.google.common.collect.Lists;
 import fi.om.initiative.conf.IntegrationTestConfiguration;
 import fi.om.initiative.dao.InitiativeDao;
+import fi.om.initiative.dao.ReviewHistoryDao;
 import fi.om.initiative.dao.TestHelper;
 import fi.om.initiative.dto.InitiativeCountByState;
 import fi.om.initiative.dto.InitiativeCountByStateOm;
@@ -49,6 +50,10 @@ public class InitiativeServiceFindPageTest {
     private InitiativeDao initiativeDao;
 
     @Resource
+    private ReviewHistoryDao reviewHistoryDao;
+
+
+    @Resource
     private TestHelper testHelper;
     private Long userId;
 
@@ -65,7 +70,7 @@ public class InitiativeServiceFindPageTest {
 
         userServiceFake = new UserServiceFake();
 
-        initiativeService = new InitiativeServiceImpl(initiativeDao, userServiceFake, null, null, null, INITIATIVE_SETTINGS, new HashCreator(""));
+        initiativeService = new InitiativeServiceImpl(initiativeDao, reviewHistoryDao, userServiceFake, null, null, null, INITIATIVE_SETTINGS, new HashCreator(""));
         testHelper.dbCleanup();
         userId = testHelper.createTestUser();
         testStartTime = testHelper.getDbCurrentTime();

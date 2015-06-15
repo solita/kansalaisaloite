@@ -70,12 +70,13 @@ public class InitiativeServiceImpl implements InitiativeService {
     public InitiativeServiceImpl() {
     }
     
-    public InitiativeServiceImpl(InitiativeDao initiativeDao, UserService userService, 
+    public InitiativeServiceImpl(InitiativeDao initiativeDao, ReviewHistoryDao reviewHistoryDao, UserService userService,
                                  EmailService emailService, EncryptionService encryptionService, 
                                  SmartValidator validator,
                                  InitiativeSettings initiativeSettings,
                                  HashCreator hashCreator) {
         this.initiativeDao = initiativeDao;
+        this.reviewHistoryDao = reviewHistoryDao;
         this.userService = userService;
         this.emailService = emailService;
         this.encryptionService = encryptionService;

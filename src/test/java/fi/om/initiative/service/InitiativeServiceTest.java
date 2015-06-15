@@ -5,12 +5,14 @@ import fi.om.initiative.conf.IntegrationTestConfiguration;
 import fi.om.initiative.dao.InitiativeDao;
 import fi.om.initiative.dao.InitiativeDaoTest;
 import fi.om.initiative.dao.NotFoundException;
+import fi.om.initiative.dao.ReviewHistoryDao;
 import fi.om.initiative.dto.EditMode;
 import fi.om.initiative.dto.Invitation;
 import fi.om.initiative.dto.author.Author;
 import fi.om.initiative.dto.initiative.InitiativeManagement;
 import fi.om.initiative.dto.initiative.InitiativePublic;
 import fi.om.initiative.dto.initiative.InitiativeState;
+import fi.om.initiative.util.ReviewHistoryType;
 import mockit.Expectations;
 import mockit.Mocked;
 import org.joda.time.DateTime;
@@ -20,9 +22,11 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Errors;
 import org.springframework.validation.SmartValidator;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 import static junit.framework.Assert.*;
@@ -32,6 +36,7 @@ import static junit.framework.Assert.*;
 public class InitiativeServiceTest extends ServiceTestBase {
     
     @Mocked InitiativeDao initiativeDao;
+    @Mocked ReviewHistoryDao reviewHistoryDao;
     @Mocked UserService userService; 
     @Mocked EmailService emailService; 
     @Mocked Errors errors;
@@ -40,7 +45,8 @@ public class InitiativeServiceTest extends ServiceTestBase {
     @Autowired SmartValidator validator;
 
     private InitiativeServiceImpl initiativeService;
-    
+
+
     private final Invitation INVITATION = new Invitation(123l); 
     
     private final String invitationCode = INITIATIVE_MANAGEMENT.getId() + "4567";
@@ -60,7 +66,7 @@ public class InitiativeServiceTest extends ServiceTestBase {
 
     @Before
     public void init() {
-        initiativeService = new InitiativeServiceImpl(initiativeDao, userService, emailService, encryptionService, validator, INITIATIVE_SETTINGS, hashCreator);
+        initiativeService = new InitiativeServiceImpl(initiativeDao, reviewHistoryDao, userService, emailService, encryptionService, validator, INITIATIVE_SETTINGS, hashCreator);
     }   
     
     @Test
@@ -213,7 +219,7 @@ public class InitiativeServiceTest extends ServiceTestBase {
 
         }};
         
-        assertTrue( initiativeService.sendInvitations(INITIATIVE_MANAGEMENT.getId()) );
+        assertTrue(initiativeService.sendInvitations(INITIATIVE_MANAGEMENT.getId()));
     }
     
     @Test
@@ -353,12 +359,14 @@ public class InitiativeServiceTest extends ServiceTestBase {
             initiativeDao.getInitiativeForManagement(INITIATIVE_MANAGEMENT.getId(), true); result = INITIATIVE_MANAGEMENT;
             initiativeDao.getAuthor(INITIATIVE_MANAGEMENT.getId(), OM_USER.getId()); result = null;
             
-            initiativeDao.updateInitiativeStateAndAcceptanceIdentifier(INITIATIVE_MANAGEMENT.getId(), OM_USER.getId(), InitiativeState.ACCEPTED , comment, acceptanceIdentifier);
+            initiativeDao.updateInitiativeStateAndAcceptanceIdentifier(INITIATIVE_MANAGEMENT.getId(), OM_USER.getId(), InitiativeState.ACCEPTED, comment, acceptanceIdentifier);
             emailService.sendStatusInfoToVEVs(INITIATIVE_MANAGEMENT, EmailMessageType.ACCEPTED_BY_OM);
+
         }};
         
         initiativeService.respondByOm(INITIATIVE_MANAGEMENT.getId(), true, comment, acceptanceIdentifier);
     }
+
 
     @Test
     public void Respond_by_OM_Reject_OK(){
