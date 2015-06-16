@@ -349,7 +349,7 @@
           return newheigth;
       };
 
-      $('textarea').live('focusout', function () {
+      $('textarea').live('input propertychange', function () {
         if (this.id == "rationale.fi" || this.id == "proposal.fi") {
 
           var $thisWarning = $(this).parents('.input-block-content:first').find('.input-block-extra-warning:first');
@@ -362,10 +362,10 @@
 
           var newheight = updateLinks($ul, potentialLinks);
 
-          if (newheight > 3) {
-            var newHeight = newheight + 17;
-            $(this).height(newHeight + "em");
-          }
+          var newHeight = newheight + 17;
+
+          $(this).height(newHeight + "em");
+
 
         }
       });
