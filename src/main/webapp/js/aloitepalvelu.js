@@ -311,7 +311,7 @@
      * Show warning for links, that user has entered to input box.
      */
     (function () {
-      var checkForLinks, showLinkWarning, updateLinks, infoTextHeight;
+      var checkForLinks, showLinkWarning, updateLinks, infoTextHeight, startsWith;
 
       infoTextHeight = 17;
 
@@ -324,6 +324,14 @@
 
       };
 
+      startsWith = function (string, substring) {
+        if (string.indexOf(substring) === 0) {
+          return true;
+        } else {
+          return false;
+        }
+      };
+
       checkForLinks = function (text) {
         var potentialLinks, words, word, i;
 
@@ -331,7 +339,7 @@
         words = text.split(" ");
         for (i = 0; i < words.length; i++) {
           word = words[i];
-          if (word.startsWith("http") || word.startsWith("www.")) {
+          if (startsWith(word, "http") || startsWith(word, "www.")) {
             potentialLinks.push(word);
           }
         }
