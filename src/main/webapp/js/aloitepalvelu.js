@@ -311,9 +311,7 @@
      * Show warning for links, that user has entered to input box.
      */
     (function(){
-      var checkForLinks, showLinkWarning, potentialLinks, updateLinks, potentialLinksCount;
-
-      potentialLinksCount = 0;
+      var checkForLinks, showLinkWarning, potentialLinks, updateLinks;
 
       showLinkWarning = function(elem, show) {
         if(show) {
@@ -344,7 +342,7 @@
 
           for (var i = 0; i < potentialLinks.length; i++) {
             var potentialLink = potentialLinks[i];
-            newheigth += Math.max (1, Math.round (potentialLink.length / 34) );
+            newheigth += Math.max (1, Math.round (potentialLink.length / 20) );
 
             $ul.append('<li>' + potentialLink + '</li>');
 
@@ -361,19 +359,14 @@
 
           var $thisWarning = $(this).parents('.input-block-content:first').find('.input-block-extra-warning:first');
 
-          showLinkWarning($thisWarning, potentialLinksCount > 0);
+          showLinkWarning($thisWarning, potentialLinks.length > 0);
 
           var $ul = $(this).parents('.input-block-content:first').find('ul');
 
           var newheight = updateLinks($ul, potentialLinks);
 
-          if (potentialLinks.length != potentialLinksCount) {
+          $(this).css("min-height", newheight + "em");
 
-            potentialLinksCount = potentialLinks.length;
-
-            $(this).height(newheight + "em");
-
-          }
         }
       });
 
