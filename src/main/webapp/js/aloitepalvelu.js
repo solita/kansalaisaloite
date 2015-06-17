@@ -317,15 +317,15 @@
         if (show) {
           elem.fadeIn(speedFast);
         } else {
-            elem.fadeOut(speedFast);
-          }
+          elem.fadeOut(speedFast);
+        }
 
       };
 
       checkForLinks = function (text) {
         potentialLinks = [];
         var words = text.split(" ");
-        for (var i = 0; i < words.length; i++) {
+        for (i = 0; i < words.length; i++) {
           var word = words[i];
           if (word.startsWith("http") || word.startsWith("www.")) {
             potentialLinks.push(word);
