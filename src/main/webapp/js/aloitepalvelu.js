@@ -311,7 +311,9 @@
      * Show warning for links, that user has entered to input box.
      */
     (function(){
-      var checkForLinks, showLinkWarning, potentialLinks, updateLinks;
+      var checkForLinks, showLinkWarning, potentialLinks, updateLinks, potentialLinksCount;
+
+      potentialLinksCount = 0;
 
       showLinkWarning = function(elem, show) {
         if(show) {
@@ -328,7 +330,7 @@
         var words = text.split(" ");
         for (var i = 0; i < words.length; i++) {
           var word = words[i];
-          if (word.startsWith("http") || word.startsWith("www")) {
+          if (word.startsWith("http") || word.startsWith("www.")) {
             potentialLinks.push(word);
           }
         }
@@ -337,7 +339,9 @@
 
       updateLinks = function($ul, potentialLinks) {
           $ul.empty();
+          var infoTextHeight = 17;
           var newheigth = 0;
+
           for (var i = 0; i < potentialLinks.length; i++) {
             var potentialLink = potentialLinks[i];
             newheigth += Math.max (1, Math.round (potentialLink.length / 34) );
@@ -346,27 +350,30 @@
 
             console.log("Potential link " + potentialLinks[i]);
           }
-          return newheigth;
+          return newheigth + infoTextHeight;
       };
+
 
       $('textarea').live('input propertychange', function () {
         if (this.id == "rationale.fi" || this.id == "proposal.fi") {
 
-          var $thisWarning = $(this).parents('.input-block-content:first').find('.input-block-extra-warning:first');
-
           var potentialLinks = checkForLinks(this.value);
 
-          showLinkWarning($thisWarning, potentialLinks.length > 0);
+          var $thisWarning = $(this).parents('.input-block-content:first').find('.input-block-extra-warning:first');
+
+          showLinkWarning($thisWarning, potentialLinksCount > 0);
 
           var $ul = $(this).parents('.input-block-content:first').find('ul');
 
           var newheight = updateLinks($ul, potentialLinks);
 
-          var newHeight = newheight + 17;
+          if (potentialLinks.length != potentialLinksCount) {
 
-          $(this).height(newHeight + "em");
+            potentialLinksCount = potentialLinks.length;
 
+            $(this).height(newheight + "em");
 
+          }
         }
       });
 
