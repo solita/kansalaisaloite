@@ -237,7 +237,7 @@
      *  - In some case when removing link-rows help text overflows
      */
     (function () {
-      var $allHelps, toggleHelpTexts, toggleLinks;
+      var $allHelps, toggleHelpTexts;
 
       $allHelps = $('.input-block-extra');
 
