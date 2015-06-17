@@ -310,20 +310,19 @@
     /**
      * Show warning for links, that user has entered to input box.
      */
-    (function(){
-      var checkForLinks, showLinkWarning, potentialLinks, updateLinks;
+    (function () {
+      var checkForLinks, showLinkWarning, potentialLinks, updateLinks, i;
 
-      showLinkWarning = function(elem, show) {
-        if(show) {
+      showLinkWarning = function (elem, show) {
+        if (show) {
           elem.fadeIn(speedFast);
-        }
-        else {
-          elem.fadeOut(speedFast);
-        }
+        } else {
+            elem.fadeOut(speedFast);
+          }
 
       };
 
-      checkForLinks = function(text) {
+      checkForLinks = function (text) {
         potentialLinks = [];
         var words = text.split(" ");
         for (var i = 0; i < words.length; i++) {
@@ -340,7 +339,7 @@
           var infoTextHeight = 17;
           var newheigth = 0;
 
-          for (var i = 0; i < potentialLinks.length; i++) {
+          for (i = 0; i < potentialLinks.length; i++) {
             var potentialLink = potentialLinks[i];
             newheigth += Math.max (1, Math.round (potentialLink.length / 20) );
 
