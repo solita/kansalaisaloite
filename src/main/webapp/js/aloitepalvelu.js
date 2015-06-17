@@ -290,6 +290,7 @@
         }
       };
 
+
       // Matches with data-name of the help-icon and the class-name of the help-text container
       $('.help').click(function () {
         var help, $thisHelp;
@@ -304,6 +305,72 @@
         var $thisHelp = $(this).parents('.input-block-content:first').find('.input-block-extra:first');
         toggleHelpTexts($thisHelp, false);
       });
+    }());
+
+    /**
+     * Show warning for links, that user has entered to input box.
+     */
+    (function(){
+      var checkForLinks, showLinkWarning, potentialLinks, updateLinks;
+
+      showLinkWarning = function(elem, show) {
+        if(show) {
+          elem.fadeIn(speedFast);
+        }
+        else {
+          elem.fadeOut(speedFast);
+        }
+
+      };
+
+      checkForLinks = function(text) {
+        potentialLinks = [];
+        var words = text.split(" ");
+        for (var i = 0; i < words.length; i++) {
+          var word = words[i];
+          if (word.startsWith("http") || word.startsWith("www.")) {
+            potentialLinks.push(word);
+          }
+        }
+        return potentialLinks;
+      };
+
+      updateLinks = function($ul, potentialLinks) {
+          $ul.empty();
+          var infoTextHeight = 17;
+          var newheigth = 0;
+
+          for (var i = 0; i < potentialLinks.length; i++) {
+            var potentialLink = potentialLinks[i];
+            newheigth += Math.max (1, Math.round (potentialLink.length / 20) );
+
+            $ul.append('<li>' + potentialLink + '</li>');
+
+            console.log("Potential link " + potentialLinks[i]);
+          }
+          return newheigth + infoTextHeight;
+      };
+
+
+      $('textarea').live('input propertychange', function () {
+        if (this.id == "rationale.fi" || this.id == "proposal.fi") {
+
+          var potentialLinks = checkForLinks(this.value);
+
+          var $thisWarning = $(this).parents('.input-block-content:first').find('.input-block-extra-warning:first');
+
+          showLinkWarning($thisWarning, potentialLinks.length > 0);
+
+          var $ul = $(this).parents('.input-block-content:first').find('ul');
+
+          var newheight = updateLinks($ul, potentialLinks);
+
+          $(this).css("min-height", newheight + "em");
+
+        }
+      });
+
+
     }());
 
     /**

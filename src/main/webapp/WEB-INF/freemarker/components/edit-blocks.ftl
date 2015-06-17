@@ -163,6 +163,7 @@
         <div class="input-block-content">
             <div class="initiative-proposal-area">
                 <@f.helpText "helpProposal" />
+                <@f.warningText "linkWarning" />
                 <@f.textarea path="initiative.proposal" required="required" optional=true cssClass="textarea-tall" />
             </div>
         </div>   
@@ -171,6 +172,7 @@
         <div class="input-block-content">
             <div class="initiative-rationale-area">
                 <@f.helpText "helpRationale" />
+                <@f.warningText "linkWarning" />
                 <@f.textarea path="initiative.rationale" required="required" optional=false cssClass="textarea-tall" />
             </div>
         </div>
