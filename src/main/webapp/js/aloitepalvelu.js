@@ -311,7 +311,9 @@
      * Show warning for links, that user has entered to input box.
      */
     (function () {
-      var checkForLinks, showLinkWarning, potentialLinks, updateLinks, i;
+      var checkForLinks, showLinkWarning, updateLinks, infoTextHeight;
+
+      infoTextHeight = 17;
 
       showLinkWarning = function (elem, show) {
         if (show) {
@@ -323,10 +325,12 @@
       };
 
       checkForLinks = function (text) {
+        var potentialLinks, words, word, i;
+
         potentialLinks = [];
-        var words = text.split(" ");
+        words = text.split(" ");
         for (i = 0; i < words.length; i++) {
-          var word = words[i];
+          word = words[i];
           if (word.startsWith("http") || word.startsWith("www.")) {
             potentialLinks.push(word);
           }
@@ -334,35 +338,36 @@
         return potentialLinks;
       };
 
-      updateLinks = function($ul, potentialLinks) {
-          $ul.empty();
-          var infoTextHeight = 17;
-          var newheigth = 0;
+      updateLinks = function ($ul, potentialLinks) {
+        var newheigth, i;
 
-          for (i = 0; i < potentialLinks.length; i++) {
-            var potentialLink = potentialLinks[i];
-            newheigth += Math.max (1, Math.round (potentialLink.length / 20) );
+        newheigth = 0;
+        $ul.empty();
 
-            $ul.append('<li>' + potentialLink + '</li>');
+        for (i = 0; i < potentialLinks.length; i++) {
+          newheigth += Math.max(1, Math.round(potentialLinks[i].length / 20));
 
-            console.log("Potential link " + potentialLinks[i]);
-          }
-          return newheigth + infoTextHeight;
+          $ul.append('<li>' + potentialLinks[i] + '</li>');
+
+        }
+        return newheigth + infoTextHeight;
       };
 
 
       $('textarea').live('input propertychange', function () {
-        if (this.id == "rationale.fi" || this.id == "proposal.fi") {
+        var potentialLinks, $thisWarning, $ul, newheight;
 
-          var potentialLinks = checkForLinks(this.value);
+        if (this.id === "rationale.fi" || this.id === "proposal.fi") {
 
-          var $thisWarning = $(this).parents('.input-block-content:first').find('.input-block-extra-warning:first');
+          potentialLinks = checkForLinks(this.value);
+
+          $thisWarning = $(this).parents('.input-block-content:first').find('.input-block-extra-warning:first');
 
           showLinkWarning($thisWarning, potentialLinks.length > 0);
 
-          var $ul = $(this).parents('.input-block-content:first').find('ul');
+          $ul = $(this).parents('.input-block-content:first').find('ul');
 
-          var newheight = updateLinks($ul, potentialLinks);
+          newheight = updateLinks($ul, potentialLinks);
 
           $(this).css("min-height", newheight + "em");
 
