@@ -13,6 +13,7 @@ import fi.om.initiative.dto.LanguageCode;
 import fi.om.initiative.dto.ProposalType;
 import fi.om.initiative.dto.author.AuthorRole;
 import fi.om.initiative.dto.initiative.InitiativeState;
+import fi.om.initiative.util.ReviewHistoryType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
@@ -76,6 +77,7 @@ public class JdbcConfiguration {
         configuration.register("initiative_invitation", "role", new EnumAsObjectType<>(AuthorRole.class));
         configuration.register("info_text", "category", new EnumAsObjectType<>(InfoTextCategory.class));
         configuration.register("info_text", "languagecode", new EnumAsObjectType<>(LanguageCode.class));
+        configuration.register("review_history", "type", new EnumAsObjectType<>(ReviewHistoryType.class));
         
         return configuration;
     }
