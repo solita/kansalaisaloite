@@ -1,5 +1,6 @@
 package fi.om.initiative.util;
 
+import com.google.common.base.Optional;
 import fi.om.initiative.dto.initiative.InitiativeManagement;
 import fi.om.initiative.dto.initiative.Link;
 
@@ -19,23 +20,23 @@ public class SnapshotCreator {
                 + "\n\n"
                 + emptyStringOrValue(initiative.getRationale().getSv())
                 + "\n\n"
-                + emptyStringOrValues(initiative.getLinks());
+                + parseLinkList(initiative.getLinks());
     }
 
     private static String emptyStringOrValue(String value) {
-        if (value == null) {
-            return "";
-        }
-        else {
-            return value;
-        }
+        return Optional.fromNullable(value).or("");
     }
-    private static String emptyStringOrValues(List<Link> list) {
-        if (list.isEmpty()) {
-            return "";
+
+    private static String parseLinkList(List<Link> list) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Link link : list) {
+            stringBuilder
+                    .append(link.getLabel())
+                    .append(": ")
+                    .append(link.getUri())
+                    .append("\n");
         }
-        else {
-            return list.toString();
-        }
+
+        return stringBuilder.toString();
     }
 }
