@@ -311,7 +311,7 @@
      * Show warning for links, that user has entered to input box.
      */
     (function () {
-      var checkForLinks, showLinkWarning, updateLinks, infoTextHeight, startsWith;
+      var checkForLinks, showLinkWarning, updateLinks, infoTextHeight, startsWith, entityMap, escapeHtml;
 
       infoTextHeight = 17;
 
@@ -339,14 +339,31 @@
         words = text.split(" ");
         for (i = 0; i < words.length; i++) {
           word = words[i];
-          if (startsWith(word, "http") || startsWith(word, "www.")) {
+          if (startsWith(word, "http://") || startsWith(word, "https://") || startsWith(word, "www.")) {
             potentialLinks.push(word);
           }
         }
         return potentialLinks;
       };
 
+      entityMap = {
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': '&quot;',
+        "'": '&#39;',
+        "/": '&#x2F;'
+      };
+
+      escapeHtml = function (string) {
+        return String(string).replace(/[&<>"'\/]/g, function (s) {
+          return entityMap[s];
+        });
+      };
+
       updateLinks = function ($ul, potentialLinks) {
+
+
         var newheigth, i;
 
         newheigth = 0;
@@ -355,7 +372,7 @@
         for (i = 0; i < potentialLinks.length; i++) {
           newheigth += Math.max(1, Math.round(potentialLinks[i].length / 20));
 
-          $ul.append('<li>' + potentialLinks[i] + '</li>');
+          $ul.append('<li>' + escapeHtml(potentialLinks[i]) + '</li>');
 
         }
         return newheigth + infoTextHeight;
