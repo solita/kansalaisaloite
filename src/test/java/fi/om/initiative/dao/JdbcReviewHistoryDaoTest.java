@@ -40,7 +40,6 @@ public class JdbcReviewHistoryDaoTest {
 
     @Before
     public void setup() {
-        testHelper.dbCleanup();
         Long userId = testHelper.createTestUser();
         initiativeId = testHelper.create(new TestHelper.InitiativeDraft(userId));
     }
