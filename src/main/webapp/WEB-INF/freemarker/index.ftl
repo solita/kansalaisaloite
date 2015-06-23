@@ -22,9 +22,7 @@
 <#assign imageNumber = rand(1, 5)?c />
 
 <div class="image-container image-${imageNumber}">
-<#if requestMessages?? && (requestMessages?size > 0)>
-    <@u.frontpageRequestMessage requestMessages />
-</#if>
+
 </div>
 
 <div class="container">

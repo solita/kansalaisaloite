@@ -203,7 +203,12 @@
     <#include "om-header.ftl" />
 
     <div id="header">
-        <div class="header-content">
+        <div class="header-content
+                <#if page=="page.frontpage">
+                    <#if requestMessages?? && (requestMessages?size > 0)>
+                        height-200
+                    </#if>
+                </#if>">
 
             <a class="logo" id="logo" href="${urls.baseUrl}/${locale}" accesskey="1" title="<@u.message "siteName" />">
                 <span><@u.message "siteName.logo" /></span>
@@ -238,7 +243,11 @@
                     </script>
                 </div>
             </div>
-
+            <#if page=="page.frontpage">
+                <#if requestMessages?? && (requestMessages?size > 0)>
+                    <@u.frontpageRequestMessage requestMessages />
+                </#if>
+            </#if>
             <#if (naviItems?size > 0) >
                 <div id="main-navigation">
                     <ul>

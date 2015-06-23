@@ -182,6 +182,9 @@
       var parent = $(this).closest('div').fadeOut('speedSlow', function () {
         parent.remove();
       });
+      // Front page warnings require resizing the header-content.
+      $(".header-content").removeClass("height-200");
+
     });
 
     // Action for external links
