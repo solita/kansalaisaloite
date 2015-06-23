@@ -19,6 +19,21 @@
 </@compress>
 </#macro>
 
+<#--
+* comment
+*
+* Print non-localized string value.
+*
+*
+* @Param text is a the non localized string
+-->
+<#macro comment text>
+    <@compress single_line=true>
+        <#assign escapedText>${text}</#assign>
+        <#noescape>${escapedText?replace('\n\n','</p><p>')?replace('\n','<br/>')}</#noescape>
+    </@compress>
+</#macro>
+
 <#-- 
  * message
  * 

@@ -4,6 +4,7 @@ import com.google.common.collect.Sets;
 import com.mysema.commons.lang.Assert;
 import fi.om.initiative.dao.InitiativeDao;
 import fi.om.initiative.dao.NotFoundException;
+import fi.om.initiative.dao.ReviewHistoryDao;
 import fi.om.initiative.dto.*;
 import fi.om.initiative.dto.author.Author;
 import fi.om.initiative.dto.initiative.InitiativeInfo;
@@ -16,6 +17,7 @@ import fi.om.initiative.dto.search.SearchView;
 import fi.om.initiative.dto.search.Show;
 import fi.om.initiative.json.SupportCount;
 import fi.om.initiative.util.OptionalHashMap;
+import fi.om.initiative.util.SnapshotCreator;
 import fi.om.initiative.validation.AuthorRoleValidator;
 import fi.om.initiative.validation.LocalizationRequiredValidator;
 import fi.om.initiative.validation.group.OM;
@@ -61,17 +63,20 @@ public class InitiativeServiceImpl implements InitiativeService {
 
     @Resource HashCreator hashCreator;
 
+    @Resource ReviewHistoryDao reviewHistoryDao;
+
     private final int invitationCodeLength = 12; // Multiples of 3 work best
     
     public InitiativeServiceImpl() {
     }
     
-    public InitiativeServiceImpl(InitiativeDao initiativeDao, UserService userService, 
+    public InitiativeServiceImpl(InitiativeDao initiativeDao, ReviewHistoryDao reviewHistoryDao, UserService userService,
                                  EmailService emailService, EncryptionService encryptionService, 
                                  SmartValidator validator,
                                  InitiativeSettings initiativeSettings,
                                  HashCreator hashCreator) {
         this.initiativeDao = initiativeDao;
+        this.reviewHistoryDao = reviewHistoryDao;
         this.userService = userService;
         this.emailService = emailService;
         this.encryptionService = encryptionService;
@@ -673,7 +678,7 @@ public class InitiativeServiceImpl implements InitiativeService {
         if (!managementSettings.isAllowSendToOM()) {
             throw new IllegalStateException("Not allowed for current user or current state");
         }
-        
+        reviewHistoryDao.addReviewSent(initiativeId, SnapshotCreator.create(initiative));
         initiativeDao.updateInitiativeState(initiative.getId(), user.getId(), InitiativeState.REVIEW, null);
         initiativeDao.removeInvitations(initiative.getId());
         initiativeDao.removeUnconfirmedAuthors(initiative.getId());
@@ -688,10 +693,10 @@ public class InitiativeServiceImpl implements InitiativeService {
     public void respondByOm(Long initiativeId, boolean accept, String comment, String acceptanceIdentifier) {
         final String METHOD_NAME = "respondByOm";
         User user = userService.getUserInRole(Role.OM);
-        
+
         InitiativeManagement initiative = getInitiativeForManagement(initiativeId, true);
         ManagementSettings managementSettings = initiativeSettings.getManagementSettings(initiative, user);
-        
+
         // Allowed only for non-author OM officials
         if (!managementSettings.isAllowRespondByOM()) {
             throw new IllegalStateException("Not allowed for current user or current state");
@@ -701,8 +706,10 @@ public class InitiativeServiceImpl implements InitiativeService {
 
         if (accept) {
             initiativeDao.updateInitiativeStateAndAcceptanceIdentifier(initiative.getId(), user.getId(), state , comment, acceptanceIdentifier);
+            reviewHistoryDao.addAccepted(initiativeId, comment);
         } else {
             initiativeDao.updateInitiativeState(initiative.getId(), user.getId(), state , comment);
+            reviewHistoryDao.addRejected(initiativeId, comment);
         }
         // Update initiative dto
         initiative.assignModifierId(user.getId());
@@ -717,6 +724,16 @@ public class InitiativeServiceImpl implements InitiativeService {
         emailService.sendStatusInfoToVEVs(initiative, accept ? EmailMessageType.ACCEPTED_BY_OM : EmailMessageType.REJECTED_BY_OM);
 
         log(METHOD_NAME, initiativeId, user, true);
+    }
+
+    @Transactional
+    public void commentByOm(Long initiativeId, String comment){
+        reviewHistoryDao.addReviewComment(initiativeId, comment);
+    }
+
+    @Transactional(readOnly = true)
+    public List<ReviewHistoryRow> findReviewHistory( Long initiativeId) {
+        return reviewHistoryDao.findReviewHistoriesAndCommentsOrderedByTime(initiativeId);
     }
 
     @Override

@@ -2,6 +2,7 @@
 <#import "components/utils.ftl" as u />
 <#import "components/forms.ftl" as f />
 <#import "components/general-messages.ftl" as m />
+<#import "components/review-history.ftl" as rh />
 
 <#include "components/management-messages.ftl" />
 
@@ -170,6 +171,15 @@
 
 </#if>
 
+</#assign>
+
+<#--
+ * Assign review history for OM view.
+-->
+<#assign reviewHistory>
+	<#if reviewHistories??>
+		<@rh.reviewHistories reviewHistories reviewHistoryDiff />
+	</#if>
 </#assign>
 
 <#--

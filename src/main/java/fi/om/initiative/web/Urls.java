@@ -80,7 +80,9 @@ public final class Urls {
     public static final String VIEW_HASH_FI = CREATE_FI + "/" + ID_PARAMETER+"/"+HASH_PARAMETER;
 
     public static final String VIEW_HASH_SV = CREATE_SV + "/" + ID_PARAMETER+"/"+HASH_PARAMETER;
-    
+
+    public static final String HISTORY_ITEM_PARAMETER = "historyItem";
+
     public static final String SEARCH_FI =    "/fi/hae";
     
     public static final String SEARCH_SV =    "/sv/sok";
@@ -182,9 +184,13 @@ public final class Urls {
 
     public static final String ACTION_CONFIRM_CURRENT_AUTHOR = "action-confirm-current-author";
 
+    public static final String ACTION_COMMENT_BY_OM = "action-comment-by-om";
+
     public static final String ACTION_DELETE_CURRENT_AUTHOR = "action-delete-current-author";
 
     public static final String ACTION_REMOVE_SUPPORT_VOTES = "action-remove-support-votes";
+    
+    public static final String ACTION_MODERATOR_ADD_COMMENT = "moderatorComment";
 
     public static final String JSONP_CALLBACK = "jsonp";
 
@@ -399,6 +405,10 @@ public final class Urls {
         return getAltLocale().getLanguage();
     }
 
+    public String viewHistoryItem(Long id, Long historyItemId) {
+        return view(id) + "?" + HISTORY_ITEM_PARAMETER + "=" + historyItemId.toString();
+    }
+
     public static Urls get(Locale locale) {
         if (Locales.LOCALE_SV.equals(locale)) {
             return SV;
@@ -419,6 +429,7 @@ public final class Urls {
         // NOTE: add other chars if needed or would be nice to user some existing converter ...
         return ret;
     }
+
 
     private static String urlEncode(String s) {
         if (s == null) {
