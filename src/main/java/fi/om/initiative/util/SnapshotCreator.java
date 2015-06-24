@@ -20,7 +20,10 @@ public class SnapshotCreator {
                 + "\n\n"
                 + emptyStringOrValue(initiative.getRationale().getSv())
                 + "\n\n"
+                + emptyStringOrValue(initiative.getFinancialSupportURL().toString())
+                + "\n\n"
                 + parseLinkList(initiative.getLinks());
+
     }
 
     private static String emptyStringOrValue(String value) {
