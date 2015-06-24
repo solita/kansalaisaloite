@@ -1,6 +1,7 @@
 package fi.om.initiative.util;
 
 import com.google.common.base.Optional;
+import fi.om.initiative.dto.InitURI;
 import fi.om.initiative.dto.initiative.InitiativeManagement;
 import fi.om.initiative.dto.initiative.Link;
 
@@ -8,6 +9,7 @@ import java.util.List;
 
 public class SnapshotCreator {
     public static String create(InitiativeManagement initiative) {
+
         return emptyStringOrValue(initiative.getName().getFi())
                 + "\n\n"
                 + emptyStringOrValue(initiative.getProposal().getFi())
@@ -20,7 +22,7 @@ public class SnapshotCreator {
                 + "\n\n"
                 + emptyStringOrValue(initiative.getRationale().getSv())
                 + "\n\n"
-                + emptyStringOrValue(initiative.getFinancialSupportURL().toString())
+                + ((initiative.getFinancialSupportURL() != null) ? initiative.getFinancialSupportURL().toString() : "")
                 + "\n\n"
                 + parseLinkList(initiative.getLinks());
 
