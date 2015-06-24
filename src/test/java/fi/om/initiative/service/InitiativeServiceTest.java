@@ -429,6 +429,23 @@ public class InitiativeServiceTest extends ServiceTestBase {
 
     }
 
+    @Test
+    public void test_snapshot_creator_with_empty_initiative() {
+
+        String realSnapshot = SnapshotCreator.create(new InitiativeManagement());
+
+        String snapshot = "" +  "\n\n" +
+                "" +  "\n\n" +
+                "" +  "\n\n" +
+                "" + "\n\n" +
+                "" + "\n\n" +
+                "" + "\n\n" +
+                "" + "\n\n";
+
+        assertEquals(snapshot, realSnapshot);
+
+    }
+
 
     
     private void addAuthorsToInitiative(){
