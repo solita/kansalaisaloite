@@ -43,8 +43,10 @@ public class ServiceTestBase {
     }
         
     final InitiativeManagement INITIATIVE_MANAGEMENT = InitiativeDaoTest.createNotEndedInitiative(123l);
-    
+
     final InitiativePublic INITIATIVE_PUBLIC = new InitiativePublic(INITIATIVE_MANAGEMENT);
 
     final InitiativeSettings INITIATIVE_SETTINGS = new InitiativeSettings(1, 1, 2, Days.days(1), Days.days(3), Days.days(4), Days.days(5), Days.days(6), Days.days(7));
+
+    final InitiativeManagement INITIATIVE_MANAGEMENT_CONSTANT = InitiativeDaoTest.createNotEndedInitiativeWithConstantContent();
 }

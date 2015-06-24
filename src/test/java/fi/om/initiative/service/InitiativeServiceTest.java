@@ -1,6 +1,7 @@
 package fi.om.initiative.service;
 
 import com.google.common.collect.Lists;
+import com.mysema.commons.lang.Assert;
 import fi.om.initiative.conf.IntegrationTestConfiguration;
 import fi.om.initiative.dao.InitiativeDao;
 import fi.om.initiative.dao.InitiativeDaoTest;
@@ -13,6 +14,7 @@ import fi.om.initiative.dto.initiative.InitiativeManagement;
 import fi.om.initiative.dto.initiative.InitiativePublic;
 import fi.om.initiative.dto.initiative.InitiativeState;
 import fi.om.initiative.util.ReviewHistoryType;
+import fi.om.initiative.util.SnapshotCreator;
 import mockit.Expectations;
 import mockit.Mocked;
 import org.joda.time.DateTime;
@@ -30,6 +32,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 import static junit.framework.Assert.*;
+import static junit.framework.Assert.assertSame;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes={IntegrationTestConfiguration.class})
@@ -405,6 +408,25 @@ public class InitiativeServiceTest extends ServiceTestBase {
         }};
         
         initiativeService.update(INITIATIVE_MANAGEMENT, EditMode.CURRENT_AUTHOR, errors);
+    }
+
+    @Test
+    public void test_snapshot_creator() {
+
+        String realSnapshot = SnapshotCreator.create(INITIATIVE_MANAGEMENT_CONSTANT);
+
+        String snapshot = "Nimi" +  "\n\n" +
+                "Ehdotus" +  "\n\n" +
+                "Perustelut" +  "\n\n" +
+                "Nimi-sv" + "\n\n" +
+                "Ehdotus-sv" + "\n\n" +
+                "Perustelut-sv" + "\n\n" +
+                "http://www.solita.fi" + "\n\n" +
+                "Solita" + ": " + "http://www.solita.fi" + "\n" +
+                "Solita" + ": " + "http://www.solita.fi" + "\n";
+
+        assertEquals(snapshot, realSnapshot);
+
     }
 
 

@@ -339,6 +339,29 @@ public class InitiativeDaoTest {
         return initiative;
     }
 
+    // Use this method to get with constant data initiative
+    public static InitiativeManagement createNotEndedInitiativeWithConstantContent() {
+        String chg = getChanger();
+        InitiativeManagement initiative = new InitiativeManagement();
+        initiative.assignId(1L);
+        initiative.setFinancialSupport(true);
+        initiative.setFinancialSupportURL(new InitURI("http://www.solita.fi"));
+        initiative.setName(asLocalizedString("Nimi", "Nimi-sv"));
+        initiative.setProposal(asLocalizedString("Ehdotus", "Ehdotus-sv"));
+        initiative.setAcceptanceIdentifier("some acceptance identifier");
+        initiative.setProposalType(ProposalType.LAW);
+        initiative.setRationale(asLocalizedString("Perustelut", "Perustelut-sv"));
+        initiative.setPrimaryLanguage(LanguageCode.FI);
+        initiative.setStartDate(today);
+        initiative.assignEndDate(today.plusMonths(6));
+        initiative.setSupportStatementsInWeb(true);
+        initiative.setSupportStatementsOnPaper(true);
+
+        initiative.setLinks(Lists.newArrayList(intiativeLinkCreateValuesWithConstantValues(), intiativeLinkCreateValuesWithConstantValues()));
+
+        return initiative;
+    }
+
     private void intiativeUpdateValues(InitiativeBase i) {
         String chg = getChanger();
         i.setFinancialSupport(!i.isFinancialSupport());
@@ -373,6 +396,13 @@ public class InitiativeDaoTest {
         Link link = new Link();
         link.setLabel("Solita"+chg);
         link.setUri(new InitURI("http://www.solita.fi"+chg));
+        return link;
+    }
+    public static Link intiativeLinkCreateValuesWithConstantValues() {
+        String chg = getChanger();
+        Link link = new Link();
+        link.setLabel("Solita");
+        link.setUri(new InitURI("http://www.solita.fi"));
         return link;
     }
 

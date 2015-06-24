@@ -304,6 +304,8 @@ public class ReviewHistoryDiffTest {
 
     }
 
+
+
     private static void printDiff(List<ReviewHistoryDiff.DiffLine> diff) {
         for (ReviewHistoryDiff.DiffLine diffLine : diff) {
             System.out.println(diffLine.getModificationType() + ": " + diffLine.getLine());
