@@ -339,7 +339,7 @@
         var potentialLinks, words, word, i;
 
         potentialLinks = [];
-        words = text.split(" ");
+        words = text.split(/\s+/);
         for (i = 0; i < words.length; i++) {
           word = words[i];
           if (startsWith(word, "http://") || startsWith(word, "https://") || startsWith(word, "www.")) {
