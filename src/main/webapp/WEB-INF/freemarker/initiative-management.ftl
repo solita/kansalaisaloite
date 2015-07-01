@@ -70,7 +70,8 @@
     <#noescape>${topContributionVRK!""}</#noescape>  
     
     <#if reviewHistory??><#noescape>${reviewHistory}</#noescape></#if> 
-   
+
+    <#if linkWarning??><#noescape>${linkWarning}</#noescape></#if>
     <#-- Full edit form errors summary -->
     <#if managementSettings.editMode == EditMode.FULL>
         <@u.errorsSummary path="initiative.*" prefix="initiative."/>

@@ -361,7 +361,28 @@ public class InitiativeDaoTest {
 
         return initiative;
     }
+    // Use this method to get with constant data initiative
+    public static InitiativeManagement createNotEndedInitiativeWithGivenContent(String proposalFin, String proposalSv, String rationaleFin, String rationaleSv ) {
+        String chg = getChanger();
+        InitiativeManagement initiative = new InitiativeManagement();
+        initiative.assignId(1L);
+        initiative.setFinancialSupport(true);
+        initiative.setFinancialSupportURL(new InitURI("http://www.solita.fi"));
+        initiative.setName(asLocalizedString("Nimi", "Nimi-sv"));
+        initiative.setProposal(asLocalizedString(proposalFin, proposalSv));
+        initiative.setAcceptanceIdentifier("some acceptance identifier");
+        initiative.setProposalType(ProposalType.LAW);
+        initiative.setRationale(asLocalizedString(rationaleFin, rationaleSv));
+        initiative.setPrimaryLanguage(LanguageCode.FI);
+        initiative.setStartDate(today);
+        initiative.assignEndDate(today.plusMonths(6));
+        initiative.setSupportStatementsInWeb(true);
+        initiative.setSupportStatementsOnPaper(true);
 
+        initiative.setLinks(Lists.newArrayList(intiativeLinkCreateValuesWithConstantValues(), intiativeLinkCreateValuesWithConstantValues()));
+
+        return initiative;
+    }
     private void intiativeUpdateValues(InitiativeBase i) {
         String chg = getChanger();
         i.setFinancialSupport(!i.isFinancialSupport());

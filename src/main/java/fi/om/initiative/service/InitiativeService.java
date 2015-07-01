@@ -65,4 +65,6 @@ public interface InitiativeService {
     void updateSendToParliament(InitiativeManagement initiativeManagement, BindingResult errors);
 
     void endInitiative(Long initiativeId);
+
+   List<String> checkProposalAndRationalForLinks(InitiativeManagement initiative);
 }

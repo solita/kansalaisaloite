@@ -203,6 +203,10 @@
     <@m.supportStatementsRemoved />
 </#assign>
 
+<#assign linkWarning>
+    <@u.printlist potentialLinks />
+</#assign>
+
 <#include "initiative-management.ftl"/>
 </#escape> 
 

@@ -37,6 +37,7 @@ import org.springframework.validation.SmartValidator;
 import javax.annotation.Nullable;
 import javax.annotation.Resource;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -759,6 +760,36 @@ public class InitiativeServiceImpl implements InitiativeService {
             log(METHOD_NAME, initiative.getId(), user, false);
             return false;
         }
+    }
+    @Override
+    public List<String> checkProposalAndRationalForLinks(InitiativeManagement initiative) {
+        List<String> links = new ArrayList<String>();
+
+        links.addAll(findLinks(initiative.getProposal().getFi()));
+        links.addAll(findLinks(initiative.getProposal().getSv()));
+
+        links.addAll(findLinks(initiative.getRationale().getFi()));
+        links.addAll(findLinks(initiative.getRationale().getSv()));
+
+
+        return links;
+    }
+
+
+    private ArrayList<String> findLinks(String text) {
+        ArrayList<String> links = new ArrayList<String>();
+
+        if (text == null) {
+            return links;
+        }
+
+        String[] words = text.split("\\s+");
+        for (String word : words) {
+            if (word.contains("www.") || word.contains("https://") || word.contains("http://")) {
+                links.add(word);
+            }
+        }
+        return links;
     }
 
     private void log(final String method, final Long initiativeId, final User user, final boolean ok) {

@@ -270,9 +270,7 @@ public class InitiativeController extends BaseController {
                 editMode = getEditMode(request);
             }
 
-            addReviewHistory(initiativeId, historyItemId, model, user);
-
-            return managementView(model, initiative, null, editMode, request);
+            return managementView(model, initiative, null, editMode, request, historyItemId);
         }
         // Public view for anyone else
         else {
@@ -284,18 +282,6 @@ public class InitiativeController extends BaseController {
             return PUBLIC_VIEW;
         }
 
-    }
-
-    private void addReviewHistory(@PathVariable("id") Long initiativeId, Long historyItemId, Model model, User user) {
-        if (user.isOm()) {
-            List<ReviewHistoryRow> reviewHistory = initiativeService.findReviewHistory(initiativeId);
-            model.addAttribute("reviewHistories", reviewHistory);
-            Maybe<ReviewHistoryDiff> reviewHistoryDiff = Maybe.absent();
-            if (historyItemId != null) {
-                reviewHistoryDiff = Maybe.of(ReviewHistoryDiff.from(reviewHistory, historyItemId));
-            }
-            model.addAttribute("reviewHistoryDiff", reviewHistoryDiff);
-        }
     }
 
     @RequestMapping(value={ VIEW_FI, VIEW_SV }, method=GET)
@@ -658,8 +644,11 @@ public class InitiativeController extends BaseController {
         
         return ACCEPT_INVITATION_VIEW;
     }
-
     private String managementView(Model model, InitiativeManagement initiative, BindingResult bindingResult, EditMode editMode, HttpServletRequest request) {
+        return managementView(model, initiative, bindingResult, editMode, request, null);
+    }
+
+    private String managementView(Model model, InitiativeManagement initiative, BindingResult bindingResult, EditMode editMode, HttpServletRequest request, Long historyItemId) {
         Author currentAuthor = initiative.getCurrentAuthor();
         model.addAttribute("currentAuthor", currentAuthor);
         
@@ -690,6 +679,10 @@ public class InitiativeController extends BaseController {
             if (currentAuthor != null) {
                 return INITIATIVE_AUTHOR;
             } else if (currentUser.isOm()) {
+                if (initiative.getState() == InitiativeState.REVIEW) {
+                    model.addAttribute("potentialLinks", initiativeService.checkProposalAndRationalForLinks(initiative));
+                }
+                addReviewHistory(initiative.getId(), historyItemId, model, currentUser);
                 return INITIATIVE_OM;
             } else if (currentUser.isVrk()) {
                 return INITIATIVE_VRK;
@@ -697,10 +690,20 @@ public class InitiativeController extends BaseController {
                 throw new IllegalStateException("User is not an author, om or vrk official");
             }
         }
+    }
 
+    private void addReviewHistory(Long initiativeId, Long historyItemId, Model model, User user) {
+        List<ReviewHistoryRow> reviewHistory = initiativeService.findReviewHistory(initiativeId);
+        model.addAttribute("reviewHistories", reviewHistory);
+        Maybe<ReviewHistoryDiff> reviewHistoryDiff = Maybe.absent();
+        if (historyItemId != null) {
+            reviewHistoryDiff = Maybe.of(ReviewHistoryDiff.from(reviewHistory, historyItemId));
+        }
+        model.addAttribute("reviewHistoryDiff", reviewHistoryDiff);
 
     }
-    
+
+
     private EditMode getEditMode(HttpServletRequest request) {
         String str = request.getParameter("edit");
         EditMode editMode;

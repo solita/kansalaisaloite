@@ -446,6 +446,17 @@ public class InitiativeServiceTest extends ServiceTestBase {
 
     }
 
+    @Test
+    public void check_initiative_for_links(){
+        InitiativeManagement initiativeManagement = InitiativeDaoTest.createNotEndedInitiativeWithGivenContent("https://hs.fi lol lol", "ja jotain muuta linkkiä    http://huvudstagbladet.fi", "tässäpä nettisivu www.solita.fi", "www.solita.se och https://www.lol.se");
+        List<String> links = initiativeService.checkProposalAndRationalForLinks(initiativeManagement);
+        assertEquals(links.get(0), "https://hs.fi");
+        assertEquals(links.get(1), "http://huvudstagbladet.fi");
+        assertEquals(links.get(2), "www.solita.fi");
+        assertEquals(links.get(3), "www.solita.se");
+        assertEquals(links.get(4), "https://www.lol.se");
+    }
+
 
     
     private void addAuthorsToInitiative(){

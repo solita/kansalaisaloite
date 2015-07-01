@@ -443,4 +443,22 @@ ${email?split("@")?first}&#064;<span class="hide">null</span>${email?split("@")?
     </div>
 </#macro>
 
+<#--
+ * Print items in a list
+ *
+ * @param list
+-->
+<#macro printlist items>
+    <#if items?? && items?size gt 0>
+        <div class="system-msg msg-summary">
+            <h2><@u.message key="initiative.warning.containslinks"/></h2>
+            <ul>
+                <#list items as item>
+                    <li>${item}</li>
+                </#list>
+            </ul>
+        </div>
+    </#if>
+</#macro>
+
 </#escape>
