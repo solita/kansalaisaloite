@@ -128,13 +128,21 @@ public class VetumaController extends BaseLoginController {
             return redirectToTarget(session);
         } else {
             if (CANCELLED.equals(status)) { // Usually errors are REJECTED or FAILURE. Failure often has "Cannot use VTJ" and errorcode 8001
+                session.setAttribute(TARGET_SESSION_PARAM, uriWithoutQueryParameters((String) session.getAttribute(TARGET_SESSION_PARAM)));
                 return redirectToTarget(session);
             }
             log.error("VetumaLoginResponse:\nSTATUS = {}\nEXTRADATA = {}", status, vetumaResponse.getEXTRADATA());
             return redirect(urls.vetumaError());
         }
     }
-    
+
+    private static String uriWithoutQueryParameters(String target) {
+        if (target == null) {
+            return "/";
+        }
+        return target.contains("?") ? target.split("\\?")[0] : target;
+    }
+
     private View redirectToTarget(HttpSession session) {
         String target = (String) session.getAttribute(TARGET_SESSION_PARAM);  
         session.removeAttribute(TARGET_SESSION_PARAM);
