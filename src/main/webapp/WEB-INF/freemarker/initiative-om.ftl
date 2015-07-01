@@ -204,7 +204,9 @@
 </#assign>
 
 <#assign linkWarning>
-    <@u.printlist potentialLinks />
+    <#if potentialLinks??>
+        <@u.printlist potentialLinks />
+    </#if>
 </#assign>
 
 <#include "initiative-management.ftl"/>
