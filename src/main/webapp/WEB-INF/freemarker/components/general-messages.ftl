@@ -62,12 +62,24 @@
     	<#assign externalSupportCount = initiative.totalSupportCount - initiative.supportCount />
         <#assign sentToVRK = initiative.sentSupportCount gt 0 />
         <#assign supportCountConfirmedByVRK = initiative.verifiedSupportCount gt 0/>
+        <#assign verifiedExternalSupportCount = initiative.verifiedSupportCount - initiative.supportCount />
 
         <p>
 
+            <#if supportCountConfirmedByVRK>
+
+                <span id="support-count-${initiative.id?c}" class="vote-count-container push-right">
+                    <span class="vote-count total">${initiative.verifiedSupportCount}</span>
+                </span>
+
+                <@u.message key="initiative.verifiedTotalSupportCount" args=[initiative.verifiedSupportCount] /><#if verifiedExternalSupportCount gt 0>,</#if>
+
+                <#if verifiedExternalSupportCount gt 0>
+                    <@u.message key="initiative.supportCountExternal" args=[verifiedExternalSupportCount] />
+                </#if>
 
 
-            <#if !supportCountConfirmedByVRK>
+            <#else>
 
                 <span id="support-count-${initiative.id?c}" class="vote-count-container push-right">
                     <span class="vote-count total">${initiative.totalSupportCount}</span>
@@ -83,25 +95,7 @@
                     <@u.message "initiative.sentToVRK"/>
                 </#if>
 
-                <#if !sentToVRK>
-                    <#if externalSupportCount gt 0>
-                        <@u.message "initiative.externalNotConfirmed"/>
-                    </#if>
-                </#if>
-
             </#if>
-
-            <#if supportCountConfirmedByVRK>
-
-                <span id="support-count-${initiative.id?c}" class="vote-count-container push-right">
-                    <span class="vote-count total">${initiative.verifiedSupportCount}</span>
-                </span>
-
-                <@u.message key="initiative.verifiedTotalSupportCount" args=[initiative.verifiedSupportCount] />
-
-            </#if>
-
-
 
 
     <#-- Show refresh-button only when voting is in progress -->

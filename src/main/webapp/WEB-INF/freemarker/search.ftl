@@ -150,6 +150,14 @@
     <div class="search-results">
     <#if initiatives?? && (initiatives?size > 0)>
         <#list initiatives as initiative>
+            <#assign totalSupportCount = initiative.totalSupportCount />
+
+            <#assign verifiedByVRK = initiative.verifiedSupportCount gt 0/>
+            <#if verifiedByVRK>
+                <#assign totalSupportCount = initiative.verifiedSupportCount />
+            </#if>
+
+
             <#if initiative_index == 0><ul></#if>
             <li <#if initiative_index == 0>class="first"</#if>>
                 <a href="${urls.view(initiative.id)}">
@@ -159,8 +167,9 @@
                       && flowStateAnalyzer.getFlowState(initiative) != FlowState.ACCEPTED_NOT_STARTED>
                       
                 <span class="support-votes-details">
-                    
-                    <span class="support-votes">${initiative.totalSupportCount}</span>
+
+                    <span class="support-votes">${totalSupportCount}</span>
+
 
                     <#if (initiative.supportCount > 0)>
                         <#assign args><span class="internal-count">${initiative.supportCount}</span></#assign>
@@ -169,14 +178,14 @@
                     
                     
                     <#if (initiative.votingDaysLeft > 0 && initiative.totalVotingDays > 0)>
-                        <#assign progressBarTooltip><@u.messageHTML key="searchResults.initiative.bar" args=[initiative.totalSupportCount, initiative.votingDaysLeft, initiative.totalVotingDays] /></#assign>
+                        <#assign progressBarTooltip><@u.messageHTML key="searchResults.initiative.bar" args=[totalSupportCount, initiative.votingDaysLeft, initiative.totalVotingDays] /></#assign>
                     <#else>
-                        <#assign progressBarTooltip><@u.messageHTML key="searchResults.initiative.bar.votingEnded" args=[initiative.totalSupportCount] /></#assign>
+                        <#assign progressBarTooltip><@u.messageHTML key="searchResults.initiative.bar.votingEnded" args=[totalSupportCount] /></#assign>
                     </#if>
                     
                     <span class="progress-bars trigger-tooltip" title="${progressBarTooltip}">
-                        <span class="bar-container count ${(initiative.totalSupportCount < requiredVoteCount)?string("","completed")}">
-                            <#assign countWidth = (100-100*initiative.totalSupportCount/requiredVoteCount) />
+                        <span class="bar-container count ${(totalSupportCount < requiredVoteCount)?string("","completed")}">
+                            <#assign countWidth = (100-100*totalSupportCount/requiredVoteCount) />
                             <#if countWidth lt 0>
                                 <#assign countWidth = 0 />
                             </#if>
