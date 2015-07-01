@@ -1,12 +1,14 @@
 package fi.om.initiative.web;
 
 import java.io.IOException;
+import java.util.Locale;
 
 import javax.annotation.Resource;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import fi.om.initiative.util.Locales;
 import org.springframework.web.util.NestedServletException;
 import org.springframework.web.util.UrlPathHelper;
 
@@ -54,8 +56,10 @@ public class SecurityFilter implements Filter {
                     target.append("?");
                     target.append(request.getQueryString());
                 }
-    
-                response.sendRedirect(Urls.FI.login(target.toString()));
+                Urls urls = Urls.get(request.getLocale());
+
+                response.sendRedirect(urls.login(target.toString()));
+
             } else if (t instanceof CSRFException) {
                 csrfException(e, request, response);
             } else {
