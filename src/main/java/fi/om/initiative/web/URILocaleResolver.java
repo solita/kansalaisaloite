@@ -23,6 +23,9 @@ public class URILocaleResolver implements LocaleResolver {
             if (request.getRequestURI().startsWith(Urls.IFRAME_SV_BASE)) {
                 return Locales.LOCALE_SV;
             }
+            else if (request.getRequestURI().startsWith(Urls.IFRAME_FI_BASE)) {
+                return Locales.LOCALE_FI;
+            }
 
             String uri = request.getRequestURI();
             

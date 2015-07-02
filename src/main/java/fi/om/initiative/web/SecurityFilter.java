@@ -55,8 +55,7 @@ public class SecurityFilter implements Filter {
                     target.append("?");
                     target.append(request.getQueryString());
                 }
-                Locale locale = (Locale) request.getAttribute("requestLocale");
-                response.sendRedirect(Urls.get(locale).login(target.toString()));
+                response.sendRedirect(Urls.get((Locale) request.getAttribute("requestLocale")).login(target.toString()));
 
             } else if (t instanceof CSRFException) {
                 csrfException(e, request, response);
