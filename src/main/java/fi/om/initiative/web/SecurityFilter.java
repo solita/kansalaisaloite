@@ -1,6 +1,7 @@
 package fi.om.initiative.web;
 
 import java.io.IOException;
+import java.util.Locale;
 
 import javax.annotation.Resource;
 import javax.servlet.*;
@@ -54,8 +55,8 @@ public class SecurityFilter implements Filter {
                     target.append("?");
                     target.append(request.getQueryString());
                 }
-                Urls urls = Urls.get(request.getLocale());
-                response.sendRedirect(urls.login(target.toString()));
+                Locale locale = (Locale) request.getAttribute("requestLocale");
+                response.sendRedirect(Urls.get(locale).login(target.toString()));
 
             } else if (t instanceof CSRFException) {
                 csrfException(e, request, response);
