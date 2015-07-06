@@ -59,11 +59,26 @@ public class FlowStateAnalyzer {
     }
 
     private FlowState votingEndedNotEnoughtVerifiedSupportsFlowState(InitiativeInfo initiative) {
-        if (initiative.hasTotalSupportCountAtLeast(settings.getRequiredVoteCount())) {
+        if (!sentToVRK(initiative) && initiative.hasTotalSupportCountAtLeast(settings.getRequiredVoteCount())) {
             return FlowState.ACCEPTED_UNCONFIRMED;
-        } else {
+        }
+        if (sentToVRK(initiative) && !confirmedByVRK(initiative)) {
+            return FlowState.ACCEPTED_SENT_TO_VRK;
+        }
+        if (sentToVRK(initiative) && confirmedByVRK(initiative)) {
+            return FlowState.ACCEPTED_CONFIRMATION_FAILED;
+        }
+        else {
             return FlowState.ACCEPTED_FAILED;
         }
+    }
+
+    private boolean confirmedByVRK(InitiativeInfo initiative) {
+        return initiative.getVerifiedSupportCount() > 0;
+    }
+
+    private boolean sentToVRK(InitiativeInfo initiative) {
+        return initiative.getSentSupportCount() > 0;
     }
 
     private FlowState enoughVerifiedSupportsFlowState(InitiativeInfo initiative, LocalDate now) {

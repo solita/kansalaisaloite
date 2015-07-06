@@ -69,6 +69,15 @@ public enum FlowState {
      */
     ACCEPTED_CONFIRMED_FAILED,
     /**
+     * Aloitteen keräys on päättynyt sekä saanut yli 50000 kannatusilmoitusta ja kannatusilmoitukset on lähetetty VRK:lle tarkistettavaksi.
+     */
+    ACCEPTED_SENT_TO_VRK,
+
+    /**
+     * Aloite on kerännyt alustavasti yli 50000 kannatusilmoitusta, lähetetty VRK:lle tarkistettavaksi mutta VRK:n tarkistuksen jälkeen jää alle 50 000
+     */
+    ACCEPTED_CONFIRMATION_FAILED,
+    /**
      * @see InitiativeState#DONE
      */
     DONE,

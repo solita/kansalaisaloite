@@ -18,6 +18,7 @@
  * ACCEPTED_UNCONFIRMED:        Voting ended, over 50 000 unconfirmed votes
  * ACCEPTED_FAILED:             Voting ended, less than 50 000 votes
  * ACCEPTED_CONFIRMED_RUNNING:  Voting in progress, over 50 000 confirmed votes
+ * ACCEPTED_SENT_TO_VRK         Voting ended, over 50 000 votes, sent for confirmation to VRK.
  * ACCEPTED_CONFIRMED:          Voting ended, over 50 000 confirmed votes
  * ACCEPTED_CONFIRMED_FAILED:   Voting ended, over 50 000 confirmed votes,
  *                              but was not sent to parliament within 6 months
@@ -37,7 +38,9 @@
 
     <#elseif flowState == FlowState.ACCEPTED_FIRST_MONTH || flowState == FlowState.ACCEPTED_RUNNING
           || flowState == FlowState.ACCEPTED_UNCONFIRMED || flowState == FlowState.ACCEPTED_FAILED
-          || flowState == FlowState.ACCEPTED_CONFIRMED_RUNNING || flowState == FlowState.ACCEPTED_CONFIRMED>
+          || flowState == FlowState.ACCEPTED_CONFIRMED_RUNNING || flowState == FlowState.ACCEPTED_CONFIRMED
+          || flowState == FlowState.ACCEPTED_SENT_TO_VRK || flowState == FlowState.ACCEPTED_CONFIRMATION_FAILED
+          >
         <#assign paramDate><@u.localDate initiative.endDate /></#assign>
 
     <#elseif flowState == FlowState.DONE >
@@ -66,9 +69,9 @@
  * first-step-active:   DRAFT, PROPOSAL, REVIEW
  * second-step-active:  ACCEPTED_NOT_STARTED, ACCEPTED_FIRST_MONTH, ACCEPTED_RUNNING,
  *                      ACCEPTED_CONFIRMED_RUNNING
- * third-step-active:   ACCEPTED_CONFIRMED
+ * fourth-step-active:   ACCEPTED_CONFIRMED
  * error-second:        ACCEPTED_FIRST_MONTH_FAILED, ACCEPTED_UNCONFIRMED, ACCEPTED_FAILED
- * error-third:         ACCEPTED_CONFIRMED_FAILED
+ * error-fourth:         ACCEPTED_CONFIRMED_FAILED
  * done:                DONE 
  * canceled:            CANCELED 
  *  
@@ -93,10 +96,18 @@
         
     <#elseif flowState == FlowState.ACCEPTED_CONFIRMED  || flowState == FlowState.ACCEPTED_CONFIRMED_RUNNING>
     
+        <#assign indicatorState="fourth-step-active" />
+        <#assign firstState="checked" />
+        <#assign secondState="checked" />
+        <#assign thirdState = "checked" />
+        <#assign fourthState="active" />
+        <#assign indicatorActive=true />
+
+    <#elseif flowState == FlowState.ACCEPTED_SENT_TO_VRK>
         <#assign indicatorState="third-step-active" />
         <#assign firstState="checked" />
         <#assign secondState="checked" />
-        <#assign thirdState="active" />
+        <#assign thirdState = "active" />
         <#assign indicatorActive=true />
         
     <#elseif flowState == FlowState.DONE>
@@ -104,8 +115,17 @@
         <#assign indicatorState="done" />    
         <#assign firstState="checked" />
         <#assign secondState="checked" />
-        <#assign thirdState="checked" />
+        <#assign thirdState = "checked" />
+        <#assign fourthState="checked" />
         <#assign indicatorActive=false />
+
+    <#elseif flowState == FlowState.ACCEPTED_CONFIRMATION_FAILED>
+        <#assign indicatorState="third-step-active" />
+        <#assign firstState="checked" />
+        <#assign secondState="checked" />
+        <#assign thirdState = "failed" />
+        <#assign indicatorActive=true />
+
         
     <#elseif flowState == FlowState.ACCEPTED_FIRST_MONTH_FAILED || flowState == FlowState.ACCEPTED_FAILED>
     
@@ -116,10 +136,11 @@
         
     <#elseif flowState == FlowState.ACCEPTED_CONFIRMED_FAILED>
 
-        <#assign indicatorState="third-step-active" />
+        <#assign indicatorState="fourth-step-active" />
         <#assign firstState="checked" />
         <#assign secondState="checked" />
-        <#assign thirdState="failed" />
+        <#assign thirdState = "checked" />
+        <#assign fourthState="failed" />
         <#assign indicatorActive=true />
         
     <#elseif flowState == FlowState.CANCELED>
@@ -149,6 +170,11 @@
           <div class="flow-state-step ${thirdState!""}">
             <div class="flow-state-content">
               <span><@u.message "FlowStateIndicator.third" /></span>
+            </div>
+          </div>
+          <div class="flow-state-step ${fourthState!""}">
+            <div class="flow-state-content">
+              <span><@u.message "FlowStateIndicator.fourth" /></span>
             </div>
           </div>
         <#elseif flowState == FlowState.DONE>

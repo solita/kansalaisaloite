@@ -14,6 +14,7 @@ import static org.junit.Assert.assertThat;
 
 public class FlowStateAnalyzerTest {
 
+    public static final int ANY_NUMBER_LARGER_THAN_ZERO = 1000;
     private FlowStateAnalyzer flowStateAnalyzer;
 
     private static final LocalDate TODAY = new LocalDate(2011, 1, 1);
@@ -145,6 +146,30 @@ public class FlowStateAnalyzerTest {
         assertFlowState(ACCEPTED_UNCONFIRMED);
     }
 
+    @Test
+    public void voting_ended_and_sent_to_VRK_enough_support_votes() {
+        createAcceptedInitiativeStartingAt(TWO_DAYS_AGO);
+        setVotingEnded();
+
+        setEnoughTotalSupports();
+        setSentToVRK();
+
+        assertFlowState(ACCEPTED_SENT_TO_VRK);
+    }
+
+    @Test
+    public void voting_ended_VRK_returned_not_enough_support_votes(){
+        createAcceptedInitiativeStartingAt(TWO_DAYS_AGO);
+        setVotingEnded();
+
+        setEnoughTotalSupports();
+        setSentToVRK();
+        setNOTEnoughVerifiedSupports();
+
+        assertFlowState(ACCEPTED_CONFIRMATION_FAILED);
+    }
+
+
     // - - - - - - - - - - - - - - - - - - - - - - - -
     // Voting not ended:
     // - - - - - - - - - - - - - - - - - - - - - - - -
@@ -200,6 +225,9 @@ public class FlowStateAnalyzerTest {
         assert(initiativeInfo.getVerifiedSupportCount() > settings.getRequiredVoteCount());
     }
 
+    private void setNOTEnoughVerifiedSupports() {
+        initiativeInfo.setVerifiedSupportCount(REQUIRED_VOTE_COUNT - 1);
+    }
     private void createAcceptedInitiativeStartingAt(LocalDate startDate) {
         createInitiativeStartingAt(startDate);
         initiativeInfo.assignState(InitiativeState.ACCEPTED);
@@ -234,6 +262,10 @@ public class FlowStateAnalyzerTest {
         assert(initiativeInfo.isVotingEnded(TODAY));
     }
 
+    private void setSentToVRK() {
+        initiativeInfo.assignSentSupportCount(ANY_NUMBER_LARGER_THAN_ZERO);
+    }
+
     private void setEndToParliamentEnded(boolean isEnded) {
         if (isEnded) {
             initiativeInfo.setVerified(initiativeInfo.getStartDate());
@@ -246,10 +278,10 @@ public class FlowStateAnalyzerTest {
 
     private void setRequiredMinSupportCounts(boolean hasRequired) {
         if (hasRequired) {
-            initiativeInfo.assignSupportCount(MIN_SUPPORT_COUNT_FOR_SEARCH+1);
+            initiativeInfo.assignSupportCount(MIN_SUPPORT_COUNT_FOR_SEARCH + 1);
         }
         else {
-            initiativeInfo.assignSupportCount(MIN_SUPPORT_COUNT_FOR_SEARCH-1);
+            initiativeInfo.assignSupportCount(MIN_SUPPORT_COUNT_FOR_SEARCH - 1);
         }
         assert(initiativeInfo.hasTotalSupportCountAtLeast(MIN_SUPPORT_COUNT_FOR_SEARCH) == hasRequired);
     }
@@ -257,6 +289,8 @@ public class FlowStateAnalyzerTest {
     private void assertFlowState(FlowState expected) {
         assertThat(flowStateAnalyzer.getFlowState(initiativeInfo, TODAY), is(expected));
     }
+
+
 
 
 
