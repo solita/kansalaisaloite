@@ -16,7 +16,7 @@ Aloitteelle on kerätty kannatusilmoituksia yhteensä ${initiative.totalSupportC
 Siirry käsittelemään aloitetta:
 ${viewUrlFi}
 
-<@eb.abstract "fi" "text" />
+<@eb.abstract "fi" "text" true/>
 
 ---------------------------------------
 
@@ -32,5 +32,5 @@ Initiativet har sammanlagt ${initiative.totalSupportCount} stödröster, varav $
 Övergå till att behandla initiativet:
 ${viewUrlSv}
 
-<@eb.abstract "sv" "text" />
+<@eb.abstract "sv" "text" true/>
 

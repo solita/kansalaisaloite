@@ -209,8 +209,9 @@
  * 
  * @param lang 'fi' or 'sv'
  * @param type 'text' or 'html'
+ * @param omOrVrk boolean
  -->
-<#macro abstract lang="" type="">
+<#macro abstract lang="" type="" omOrVrk=false>
     <#if lang == "fi">
         <#if type == "html">
             <h4 style="font-size:12px; margin:1em 0 0.5em 0;">Tiivistelmä kansalaisaloitteesta</h4>
@@ -222,7 +223,11 @@
 
 
             Näytä aloitteen koko sisältö:
-            ${viewUrlFiHash}
+            <#if omOrVrk>
+                ${viewUrlFi}
+            <#else>
+                ${viewUrlFiHash}
+            </#if>
         </#if>
     <#elseif lang == "sv">
         <#if type == "html">
@@ -235,7 +240,11 @@
             
             
             Visa initiativets innehåll:
-            ${viewUrlSvHash}
+            <#if omOrVrk>
+                ${viewUrlSv}
+            <#else>
+                ${viewUrlSvHash}
+            </#if>
         </#if>
     </#if>
 </#macro>
