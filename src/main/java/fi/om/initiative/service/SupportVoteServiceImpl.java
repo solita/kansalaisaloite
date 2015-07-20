@@ -28,6 +28,8 @@ public class SupportVoteServiceImpl implements SupportVoteService {
     private final Logger log = LoggerFactory.getLogger(SupportVoteServiceImpl.class);
     
     private static final String VRK_CSV_DELIM = "|";
+
+    private static final User ANON = new User();
     
     static DateTimeFormatter VRK_DTF = DateTimeFormat.forPattern("yyyyMMdd");
     
@@ -71,7 +73,7 @@ public class SupportVoteServiceImpl implements SupportVoteService {
         
         InitiativePublic initiative = initiativeService.getInitiativeForPublic(initiativeId);
 
-        VotingInfo votingInfo = getVotingInfo(initiative, user, now);
+        VotingInfo votingInfo = getVotingInfo(initiative, user);
 
         if (votingInfo.isAllowVoting()) {
             // supportId: base64(sha256(initiative_id & ssn & sharedSecret))
@@ -95,10 +97,15 @@ public class SupportVoteServiceImpl implements SupportVoteService {
     @Override
     @Transactional(readOnly=true)
     public VotingInfo getVotingInfo(InitiativeBase initiative) {
-        return getVotingInfo(initiative, userService.getCurrentUser(), new DateTime());
+        return getVotingInfo(initiative, userService.getCurrentUser());
     }
 
-    private VotingInfo getVotingInfo(InitiativeBase initiative, User user, DateTime dateTime) {
+    @Override
+    public VotingInfo getVotingInfoWithoutUserData(InitiativeBase initiative) {
+        return getVotingInfo(initiative, ANON);
+    }
+
+    private VotingInfo getVotingInfo(InitiativeBase initiative, User user) {
         DateTime now = new DateTime();
         
         // Initiative doesn't allow voting

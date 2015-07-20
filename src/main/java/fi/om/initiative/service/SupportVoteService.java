@@ -23,6 +23,8 @@ public interface SupportVoteService {
 
     VotingInfo getVotingInfo(InitiativeBase initiative);
 
+    VotingInfo getVotingInfoWithoutUserData(InitiativeBase initiative);
+
     List<SupportVoteBatch> getSupportVoteBatches(InitiativeManagement initiative);
 
     String getSupportVotesPerDateJson(Long initiativeId);
@@ -30,6 +32,5 @@ public interface SupportVoteService {
     void removeSupportVotes(Long initiativeId);
 
     SortedMap<LocalDate, Integer> getDenormalizedSupportCountData(Long initiativeId);
-
 
 }

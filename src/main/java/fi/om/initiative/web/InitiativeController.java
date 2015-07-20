@@ -557,11 +557,11 @@ public class InitiativeController extends BaseController {
     	InitiativePublic initiative = initiativeService.getInitiativeForPublic(initiativeId, null);
 
         model.addAttribute("initiative", initiative);
-        addVotingInfo(initiative, model);
+        addVotingInfoToIframe(initiative, model);
 
         return IFRAME_VIEW;
     }
-    
+
     @RequestMapping(value={ IFRAME_GENERATOR_FI, IFRAME_GENERATOR_SV }, method=GET)
     public String iFrameGenerator(Model model, Locale locale) {
         model.addAttribute(ALT_URI_ATTR, Urls.get(locale).alt().widget());
@@ -636,7 +636,12 @@ public class InitiativeController extends BaseController {
         model.addAttribute(ATTR_VOTING_INFO, supportVoteService.getVotingInfo(initiative));
         model.addAttribute("supportCountData", supportVoteService.getSupportVotesPerDateJson(initiative.getId()));
     }
-    
+
+    private void addVotingInfoToIframe(InitiativePublic initiative, Model model) {
+        model.addAttribute(ATTR_VOTING_INFO, supportVoteService.getVotingInfoWithoutUserData(initiative));
+        model.addAttribute("supportCountData", supportVoteService.getSupportVotesPerDateJson(initiative.getId()));
+    }
+
     private String acceptInvitationView(Long initiativeId, Invitation invitation, Author author, Model model, String hash) {
         model.addAttribute("invitation", invitation);
         model.addAttribute("currentAuthor", author);
