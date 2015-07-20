@@ -96,7 +96,7 @@ public class InitiativeController extends BaseController {
         Author author = toAuthor(user);
         InitiativeManagement initiative = new InitiativeManagement(author, Locales.LOCALE_SV.equals(locale) ? LanguageCode.SV : LanguageCode.FI);
 
-        return managementView(model, initiative, null, FULL, request);
+        return managementView(model, initiative, null, FULL, request, null);
     }
 
     @RequestMapping(value={ CREATE_FI, CREATE_SV }, method=POST) // , params=ACTION_SAVE - default action
@@ -105,7 +105,7 @@ public class InitiativeController extends BaseController {
         if (create(initiative, bindingResult, model, locale, request)) {
             return redirectWithMessage(urls.view(initiative.getId()), RequestMessage.SAVE, request);
         } else {
-            return managementView(model, initiative, bindingResult, FULL, request);
+            return managementView(model, initiative, bindingResult, FULL, request, null);
         }
     }
 
@@ -115,7 +115,7 @@ public class InitiativeController extends BaseController {
         if (create(initiative, bindingResult, model, locale, request)) {
             return sendInvitations(initiative.getId(), urls, FULL, model, RequestMessage.SAVE_AND_SEND_INVITATIONS, RequestMessage.SAVE, locale, request);
         } else {
-            return managementView(model, initiative, bindingResult, FULL, request);
+            return managementView(model, initiative, bindingResult, FULL, request, null);
         }
     }
 
@@ -137,7 +137,7 @@ public class InitiativeController extends BaseController {
         if (!bindingResult.hasErrors()) {
             return redirectWithMessage(urls.view(initiative.getId()), RequestMessage.SAVE, request);
         } else {
-            return managementView(model, initiative, bindingResult, editMode, request);
+            return managementView(model, initiative, bindingResult, editMode, request, null);
         }
     }
 
@@ -150,7 +150,7 @@ public class InitiativeController extends BaseController {
         if (!bindingResult.hasErrors()) {
             return sendInvitations(initiative.getId(), urls, editMode, model, RequestMessage.SAVE_AND_SEND_INVITATIONS, RequestMessage.SAVE, locale, request);
         } else {
-            return managementView(model, initiative, bindingResult, editMode, request);
+            return managementView(model, initiative, bindingResult, editMode, request, null);
         }
     }
 
@@ -175,7 +175,7 @@ public class InitiativeController extends BaseController {
         if (initiativeService.updateVRKResolution(initiative, bindingResult)) {
             return redirectWithMessage(urls.view(id), RequestMessage.SAVE_VRK_RESOLUTION, request);
         } else {
-            return managementView(model, initiativeService.getInitiativeForManagement(id), bindingResult, NONE, request);
+            return managementView(model, initiativeService.getInitiativeForManagement(id), bindingResult, NONE, request, null);
         }
     }
     
@@ -433,7 +433,7 @@ public class InitiativeController extends BaseController {
         initiativeService.updateSendToParliament(initiative, errors);
 
         if (errors.hasErrors()) {
-            return managementView(model, initiativeService.getInitiativeForManagement(initiativeId), errors, NONE, request);
+            return managementView(model, initiativeService.getInitiativeForManagement(initiativeId), errors, NONE, request, null);
         } else {
             return redirectWithMessage(urls.view(initiativeId), RequestMessage.SENT_TO_PARLIAMENT_UPDATED, request);
         }
@@ -643,9 +643,6 @@ public class InitiativeController extends BaseController {
         model.addAttribute("initiative", initiativeService.getInitiativeForPublic(initiativeId, hash));
         
         return ACCEPT_INVITATION_VIEW;
-    }
-    private String managementView(Model model, InitiativeManagement initiative, BindingResult bindingResult, EditMode editMode, HttpServletRequest request) {
-        return managementView(model, initiative, bindingResult, editMode, request, null);
     }
 
     private String managementView(Model model, InitiativeManagement initiative, BindingResult bindingResult, EditMode editMode, HttpServletRequest request, Long historyItemId) {
