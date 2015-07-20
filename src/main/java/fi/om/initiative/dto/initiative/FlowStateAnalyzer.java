@@ -82,14 +82,10 @@ public class FlowStateAnalyzer {
     }
 
     private FlowState enoughVerifiedSupportsFlowState(InitiativeInfo initiative, LocalDate now) {
-        if (initiative.isVotingEnded(now)) {
-            if (isSentToParliamentEnded(initiative, now)) {
-                return FlowState.ACCEPTED_CONFIRMED_FAILED;
-            } else {
-                return FlowState.ACCEPTED_CONFIRMED;
-            }
+        if (isSentToParliamentEnded(initiative, now)) {
+            return FlowState.ACCEPTED_CONFIRMED_FAILED;
         } else {
-            return FlowState.ACCEPTED_CONFIRMED_RUNNING;
+            return FlowState.ACCEPTED_CONFIRMED;
         }
     }
 

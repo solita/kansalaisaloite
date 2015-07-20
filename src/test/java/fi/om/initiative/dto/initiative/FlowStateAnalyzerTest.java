@@ -98,7 +98,7 @@ public class FlowStateAnalyzerTest {
         setEnoughVerifiedSupports();
         setVotingNotEnded();
 
-        assertFlowState(ACCEPTED_CONFIRMED_RUNNING);
+        assertFlowState(ACCEPTED_CONFIRMED);
     }
 
     @Test
