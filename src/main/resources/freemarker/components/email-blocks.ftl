@@ -216,7 +216,13 @@
         <#if type == "html">
             <h4 style="font-size:12px; margin:1em 0 0.5em 0;">Tiivistelmä kansalaisaloitteesta</h4>
             <p style="margin:0.5em 0;"><@eu.shortenText initiative.proposal "fi" "html" /></p>
-            <p style="margin:0.5em 0;"><@eu.link viewUrlFiHash "Näytä aloitteen koko sisältö &rarr;" /></p>
+            <p style="margin:0.5em 0;">
+            <#if omOrVrk>
+                <@eu.link viewUrlFi "Näytä aloitteen koko sisältö &rarr;" />
+            <#else>
+                <@eu.link viewUrlFiHash "Näytä aloitteen koko sisältö &rarr;" />
+            </#if>
+            </p>
         <#else>
             Tiivistelmä kansalaisaloitteesta:
             <@eu.shortenText initiative.proposal "fi" "text" />
@@ -233,7 +239,13 @@
         <#if type == "html">
             <h4 style="font-size:12px; margin:1em 0 0.5em 0;">Initiativets sammanfattning</h4>
             <p style="margin:0.5em 0;"><@eu.shortenText initiative.proposal "sv" "html" /></p>
-            <p style="margin:0.5em 0;"><@eu.link viewUrlSvHash "Visa initiativets innehåll &rarr;" /></p>
+            <p style="margin:0.5em 0;">
+                <#if omOrVrk>
+                    <@eu.link viewUrlSv "Visa initiativets innehåll &rarr;" />
+                <#else>
+                    <@eu.link viewUrlSvHash "Visa initiativets innehåll &rarr;" />
+                </#if>
+            </p>
         <#else>
             Sammandrag av medborgarinitiativet:
             <@eu.shortenText initiative.proposal "sv" "text" />
