@@ -113,16 +113,8 @@ public class HttpUserServiceImpl implements HttpUserService {
     }
     
     private void setCookie(String name, String value, HttpServletRequest request, HttpServletResponse response) {
-        // httpOnly would be ideal, but it requires either writing raw cookie header or using WAS specific Cookies
-        Cookie cookie = new Cookie(name, value);
-
-        String contextPath = request.getContextPath();
-        if (Strings.isNullOrEmpty(contextPath)) {
-            contextPath = "/";
-        }
-        cookie.setPath(contextPath);
-        cookie.setSecure(request.isSecure());
-        response.addCookie(cookie);
+        // We have to write this cookie directly to header because javax.servlet.http.Cookie does not support httpOnly
+        response.setHeader("SET-COOKIE", name + "=" + value + "; Path=/; "+ (request.isSecure() ? "Secure;" : "")+ "; HttpOnly");
     }
 
     @Override
