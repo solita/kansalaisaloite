@@ -18,7 +18,7 @@
 -->
 <#assign initiativeId="" />
 <#if RequestParameters['id']??>
-	<#assign initiativeId=RequestParameters['id']?number />
+	<#assign initiativeId=RequestParameters['id']?number?c />
 </#if>
 
 
