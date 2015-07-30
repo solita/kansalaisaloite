@@ -358,7 +358,6 @@
     if (votingDays <= 0) {
       return 0;
     }
-    console.log(50000/votingDays);
     return 50000/votingDays;
   }
 

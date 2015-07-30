@@ -143,6 +143,7 @@ public final class Urls {
     public static final String IFRAME_FI = IFRAME_FI_BASE + ID_PARAMETER;
 
     public static final String IFRAME_SV = IFRAME_SV_BASE + ID_PARAMETER;
+    public static final int MIN_SUPPORT_COUNT_SHOW_ALL = 0;
 
     public static Urls FI = null;
     
@@ -335,7 +336,7 @@ public final class Urls {
     }
 
     public String searchOmView() {
-        return search() + "?" + SEARCH_OM_VIEW+"&show="+ Show.preparation.name();
+        return search() + "?" + SEARCH_OM_VIEW+"&show="+ Show.preparation.name() + "&minSupportCount=" + MIN_SUPPORT_COUNT_SHOW_ALL;
     }
 
     public String createNew() {
