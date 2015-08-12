@@ -138,6 +138,7 @@
     
     <#if pathAltLocale != "">
         <div class="alt-lang ${altLangClass}">
+            <@warningText "linkWarning" />
             <@u.message pathAltLocale/>
             <@spring.bind pathAltLocale />
             <@showError />

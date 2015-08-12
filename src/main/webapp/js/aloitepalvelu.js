@@ -385,15 +385,15 @@
       $('textarea').live('input propertychange', function () {
         var potentialLinks, $thisWarning, $ul, newheight;
 
-        if (this.id === "rationale.fi" || this.id === "proposal.fi") {
+        if (this.id === "rationale.fi" || this.id === "proposal.fi" || this.id === "rationale.sv" || this.id === "proposal.sv") {
 
           potentialLinks = checkForLinks(this.value);
 
-          $thisWarning = $(this).parents('.input-block-content:first').find('.input-block-extra-warning:first');
+          $thisWarning = $(this).parent().find('.input-block-extra-warning:first');
 
           showLinkWarning($thisWarning, potentialLinks.length > 0);
 
-          $ul = $(this).parents('.input-block-content:first').find('ul');
+          $ul = $thisWarning.find('ul');
 
           newheight = updateLinks($ul, potentialLinks);
 
