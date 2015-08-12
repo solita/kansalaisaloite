@@ -55,7 +55,7 @@ public class InitiativeInfo {
     private LocalDate endDate;
     
     @NotNull(groups=Basic.class)
-    private ProposalType proposalType = ProposalType.LAW;
+    private ProposalType proposalType = ProposalType.PREPARATION;
     
     private LanguageCode primaryLanguage;
     
