@@ -397,7 +397,7 @@
       Y = fitted.Y,
       y50 = height - bottomgutter + 0.5 - Y * 50,
       y50000 = height - bottomgutter + 0.5 - Y * settings.max,
-      yDaily = height - bottomgutter + 0.5 - Y * dailyGoal(settings),
+      yDailyGoal = height - bottomgutter + 0.5 - Y * dailyGoal(settings),
       xLabels = 7;
 
     // Background grid
@@ -419,9 +419,10 @@
       r.path(["M", leftgutter + xLabels / 2 - 0.5, y50, "L", width - xLabels / 2 + 0.5, y50 ]).attr({stroke: colorHl, 'stroke-width': 1, opacity: 0.5});
     }
 
-    // Horizontal line at daily limit
+    // Horizontal line at daily goal
     if (!settings.cumulative) {
-      r.path(["M", leftgutter + X - 0.5, yDaily, "L", width - 1, yDaily ]).attr({stroke: colorHl, 'stroke-width': 1});
+      r.path(["M", leftgutter + xLabels / 2 - 0.5, yDailyGoal, "L", width - 1, yDailyGoal ]).attr({stroke: colorHl, 'stroke-width': 1});
+      //r.path(["M", leftgutter + X - 0.5, yDailyGoal, "L", width - 1, yDailyGoal ]).attr({stroke: colorHl, 'stroke-width': 1});
     }
 
     var path = r.path().attr({stroke: color, 'stroke-width': 1, 'stroke-linejoin': 'round'}),
