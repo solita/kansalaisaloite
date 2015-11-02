@@ -13,7 +13,7 @@
 Siirry käsittelemään aloitetta:
 ${viewUrlFi}
 
-<@eb.abstract "fi" "text" true/>
+<@eb.abstract "fi" "text" />
 
 ---------------------------------------
 
@@ -25,5 +25,5 @@ Ett medborgarinitiativ för granskning
 Övergå till att behandla initiativet:
 ${viewUrlSv}
 
-<@eb.abstract "sv" "text" true/>
+<@eb.abstract "sv" "text" />
 

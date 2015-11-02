@@ -15,7 +15,7 @@
         
         <p>Siirry käsittelemään aloitetta: <@eu.link viewUrlFi /></p>
         
-        <@eb.abstract "fi" "html" true/>
+        <@eb.abstract "fi" "html" />
     </@eb.emailTemplate>
     
     <#-- SWEDISH -->      
@@ -24,7 +24,7 @@
     
         <p>Övergå till att behandla initiativet: <@eu.link viewUrlSv /></p>
     
-        <@eb.abstract "sv" "html" true/>
+        <@eb.abstract "sv" "html" />
     </@eb.emailTemplate>
 
 </@el.emailHtml>

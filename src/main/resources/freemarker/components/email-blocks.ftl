@@ -211,52 +211,41 @@
  * @param type 'text' or 'html'
  * @param omOrVrk boolean
  -->
-<#macro abstract lang="" type="" omOrVrk=false>
+<#macro abstract lang="" type="" >
     <#if lang == "fi">
         <#if type == "html">
             <h4 style="font-size:12px; margin:1em 0 0.5em 0;">Tiivistelmä kansalaisaloitteesta</h4>
             <p style="margin:0.5em 0;"><@eu.shortenText initiative.proposal "fi" "html" /></p>
             <p style="margin:0.5em 0;">
-            <#if omOrVrk>
-                <@eu.link viewUrlFi "Näytä aloitteen koko sisältö &rarr;" />
-            <#else>
-                <@eu.link viewUrlFiHash "Näytä aloitteen koko sisältö &rarr;" />
-            </#if>
+            <@eu.link viewUrlFiHash "Näytä aloitteen koko sisältö &rarr;" />
+
             </p>
         <#else>
             Tiivistelmä kansalaisaloitteesta:
             <@eu.shortenText initiative.proposal "fi" "text" />
 
-
             Näytä aloitteen koko sisältö:
-            <#if omOrVrk>
-                ${viewUrlFi}
-            <#else>
-                ${viewUrlFiHash}
-            </#if>
+
+            ${viewUrlFiHash}
+
         </#if>
     <#elseif lang == "sv">
         <#if type == "html">
             <h4 style="font-size:12px; margin:1em 0 0.5em 0;">Initiativets sammanfattning</h4>
             <p style="margin:0.5em 0;"><@eu.shortenText initiative.proposal "sv" "html" /></p>
             <p style="margin:0.5em 0;">
-                <#if omOrVrk>
-                    <@eu.link viewUrlSv "Visa initiativets innehåll &rarr;" />
-                <#else>
-                    <@eu.link viewUrlSvHash "Visa initiativets innehåll &rarr;" />
-                </#if>
+
+                <@eu.link viewUrlSvHash "Visa initiativets innehåll &rarr;" />
+
             </p>
         <#else>
             Sammandrag av medborgarinitiativet:
             <@eu.shortenText initiative.proposal "sv" "text" />
-            
-            
+
             Visa initiativets innehåll:
-            <#if omOrVrk>
-                ${viewUrlSv}
-            <#else>
-                ${viewUrlSvHash}
-            </#if>
+
+            ${viewUrlSvHash}
+
         </#if>
     </#if>
 </#macro>
