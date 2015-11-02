@@ -147,7 +147,7 @@
         <div class="input-block-content">
             <div class="initiative-header-type-area">
                 <@f.helpText "helpProposalType" />
-                <@f.radiobutton path="initiative.proposalType" required="required" options={"LAW":"initiative.proposalType.law", "PREPARATION":"initiative.proposalType.preparation"} attributes="" />
+                <@f.radiobutton path="initiative.proposalType" required="required" options={"PREPARATION":"initiative.proposalType.preparation", "LAW":"initiative.proposalType.law"} attributes="" />
             </div>
         </div>
         
