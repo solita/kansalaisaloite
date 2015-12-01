@@ -9,7 +9,8 @@
     .header-content {
         position: relative;
         height: 130px;
-        width: 960px;
+        max-width: 960px;
+        width: 100%;
         margin: 0 auto;
 
         .header-additional-content {
@@ -98,4 +99,17 @@ body.font-size-medium, span.font-size-medium {
 
 body.font-size-large, span.font-size-large {
     font-size: 110%;
+}
+
+@media @sm {
+    #header {
+        padding-bottom: 13px;
+        .header-content {
+            height: 50px;
+        }
+        .logo {
+            width: 240px;
+            margin-left: 15px;
+        }
+    }
 }

@@ -2,19 +2,19 @@
     <div class="container">
         <div class="block">
             <span class="footer-logo om"></span>
-            <p>
+            <p class="hidden-xs">
                 <@u.message "footer.ministerOfJustice"/><br/>
                 <a href="${urls.help(HelpPage.KANSALAISALOITE_FI.getUri(locale))}"><@u.message "common.readMore" /> &gt;</a>
             </p>
         </div>
-        <div class="block">
+        <div class="block hidden-xs">
             <span class="footer-logo vivi"></span>
             <p>
                 <@u.messageHTML "footer.ficora"/><br/>
                 <a href="${urls.help(HelpPage.VIESTINTAVIRASTO.getUri(locale))}"><@u.message "common.readMore" /> &gt;</a>
             </p>
         </div>
-        <div class="footer-links">
+        <div class="footer-links hidden-xs"">
             <ul>
                 <#list footerLinks as footerLink>
                     <li><span class="triangle-right"></span> <a href="${urls.help(footerLink.uri)}">${footerLink.subject}</a></li>

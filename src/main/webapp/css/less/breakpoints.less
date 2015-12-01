@@ -1,6 +1,20 @@
 // Breakpoints
-@narrow:    ~"only screen and (max-width: 520px)";
-@xnarrow:   ~"only screen and (max-width: 320px)";
+
+/* Extra small devices (phones, less than 768px) */
+/* No media query since this is the default in Bootstrap */
+
+/* Very small devices (tablets, 480px and up) */
+@xs:   ~"only screen and (max-width: 480px)";
+
+/* Small devices (tablets, 768px and up) */
+@sm:   ~"only screen and (max-width: 768px)";
+
+/* Medium devices (desktops, 992px and up) */
+@md:   ~"only screen and (max-width: 992px)";
+
+/* Large devices (large desktops, 1200px and up) */
+@lg:   ~"only screen and (max-width: 1200px)";
+
 @highdensity:   ~"only screen and (-webkit-min-device-pixel-ratio: 2)",
                 ~"only screen and (   min--moz-device-pixel-ratio: 2)",
                 ~"only screen and (     -o-min-device-pixel-ratio: 2/1)",

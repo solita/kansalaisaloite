@@ -22,7 +22,7 @@
 
     <link href="${urls.baseUrl}/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" />
 
-    <link rel="stylesheet" type="text/css" href="${urls.baseUrl}/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="${urls.baseUrl}/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="${urls.baseUrl}/css/aloitepalvelu.css" />
 </head>
 <body class="${locale}">
@@ -133,7 +133,7 @@
 
         <link rel="stylesheet" type="text/css" media="print" href="${urls.baseUrl}/css/print.css?version=${resourcesVersion}" />
     <#else>
-        <link rel="stylesheet" type="text/css" media="screen" href="${urls.baseUrl}/css/normalize.css?version=${resourcesVersion}" />
+        <link rel="stylesheet" type="text/css" href="${urls.baseUrl}/css/bootstrap.min.css?version=${resourcesVersion}" />
         <noscript>
             <link rel="stylesheet" type="text/css" media="screen" href="${urls.baseUrl}/css/aloitepalvelu.css" />
             <!--[if IE ]>
@@ -215,7 +215,7 @@
             </a>
 
             <#-- Language toggle, text size -->
-            <div class="header-additional-content">
+            <div class="header-additional-content hidden-xs">
             	<#if currentUser??>
 					<div class="logged-in-info">
 				        <#-- Authenticated = Logged in -->
@@ -233,7 +233,7 @@
 				        </#if>
 				    </div>
 			    </#if>
-		    
+
                 <div class="additional-tools">
                     <a href="${altUri!'/sv'}" class="language-selection"><@u.message "lang.alternative"/></a>
                     <#-- NOTE: ATM the font-size-toggle works only with JS hence the links are also generated with JS. -->
@@ -249,7 +249,7 @@
                 </#if>
             </#if>
             <#if (naviItems?size > 0) >
-                <div id="main-navigation">
+                <div id="main-navigation" class="hidden-xs">
                     <ul>
                         <#list naviItems as item>
                             <li <#if item.naviName == page>class="active"</#if>><a href="${item.naviUrl}"><@u.message item.naviName /></a></li>
@@ -297,7 +297,7 @@
     <#if optimizeResources>
       <script type="text/javascript" src="${urls.baseUrl}/js/script.min.js?version=${resourcesVersion}"></script>
     <#else>
-      <script type="text/javascript" src="${urls.baseUrl}/js/jquery-1.7.2.min.js?version=${resourcesVersion}"></script>
+      <script type="text/javascript" src="${urls.baseUrl}/js/jquery-1.11.3.min.js?version=${resourcesVersion}"></script>
       <script type="text/javascript" src="${urls.baseUrl}/js/jquery.easing.min.js?version=${resourcesVersion}"></script>
       <script type="text/javascript" src="${urls.baseUrl}/js/jquery.tools.min.js?version=${resourcesVersion}"></script>
       <script type="text/javascript" src="${urls.baseUrl}/js/jquery.cookie.js?version=${resourcesVersion}"></script>
@@ -308,6 +308,7 @@
       <script type="text/javascript" src="${urls.baseUrl}/js/jquery.supportvotegraph.js?version=${resourcesVersion}"></script>
       <script type="text/javascript" src="${urls.baseUrl}/js/jquery.headernav.js?version=${resourcesVersion}"></script>
       <script type="text/javascript" src="${urls.baseUrl}/js/aloitepalvelu.js?version=${resourcesVersion}"></script>
+      <script type="text/javascript" src="${urls.baseUrl}/js/bootstrap.min.js?version=${resourcesVersion}"></script>
     </#if>
 
     <#--

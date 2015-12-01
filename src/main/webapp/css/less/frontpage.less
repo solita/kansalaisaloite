@@ -19,11 +19,6 @@
     background-position: center top;
     background-repeat: repeat-x;
 
-    // This does not need to be this exact, if the image edges slips few pixels under the green badge.
-    @media screen and (max-width: 974px) {
-        background-position: -195px 0;
-    }
-
     .frontpage-image(1);
 
     &.image-2 {
@@ -70,31 +65,11 @@
     min-height: 441px;
     padding-top: 10px;
 
-    .faux-columns {
-        width: 960px;
-        background:url("@{imagesPath}/faux-columns.png?version=${timestamp}") 0 0 repeat-y;
-
-        .col-1 {
-            width:470px;
-            float:left;
-        }
-        .col-2 {
-            width:470px;
-            float:right;
-        }
-    }
-
     .front-block {
+        background-color: white;
         position: relative;
         padding: 40px 40px 20px 40px;
-
-        &.block-2 {
-            border-bottom: 20px solid @bodyBackground;
-        }
-
-        &.block-3 {
-            // padding-top: 30px;
-        }
+        margin-bottom: 20px;
 
         i {
             position: absolute;

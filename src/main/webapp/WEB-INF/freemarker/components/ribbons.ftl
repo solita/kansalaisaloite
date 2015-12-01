@@ -20,7 +20,7 @@
     <#assign devIpSite>https://80.69.174.88</#assign>
     <#assign devSite>https://80-69-174-88.fi-hel1.host.upcloud.com</#assign>
 
-    <#assign localSite>https://localhost:8443</#assign>
+    <#assign localSite>http://localhost:8090</#assign>
 
     <#-- For testing ribbons locally:
     <#assign betaIpSite>${localSite}</#assign>
