@@ -64,7 +64,7 @@ public abstract class WebTestBase {
     @BeforeClass
     public static synchronized void initialize() {
         if (jettyServer == null) {
-            jettyServer = StartJetty.startService(PORT, "test");
+            jettyServer = StartJetty.startService(PORT, "test,disableSecureCookie");
             try {
                 while (!jettyServer.isStarted()) {
                     Thread.sleep(250);

@@ -2,6 +2,7 @@ package fi.om.initiative.conf;
 
 
 import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import com.mysema.query.sql.postgres.PostgresQueryFactory;
 import fi.om.initiative.conf.AppConfiguration.AppDevConfiguration;
 import fi.om.initiative.conf.AppConfiguration.ProdPropertiesConfiguration;
@@ -22,6 +23,8 @@ import freemarker.template.utility.XmlEscape;
 import org.joda.time.Period;
 import org.joda.time.format.ISOPeriodFormat;
 import org.joda.time.format.PeriodFormatter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.ehcache.EhCacheCacheManager;
@@ -31,6 +34,7 @@ import org.springframework.context.annotation.*;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.jdbc.support.SQLErrorCodeSQLExceptionTranslator;
 import org.springframework.jdbc.support.SQLExceptionTranslator;
@@ -41,8 +45,12 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.inject.Inject;
+import javax.servlet.ServletContext;
+import javax.servlet.SessionCookieConfig;
+import java.io.File;
 import java.io.IOException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
@@ -58,6 +66,8 @@ import java.util.concurrent.Executors;
 @EnableScheduling
 public class AppConfiguration {
 
+    private static Logger logger = LoggerFactory.getLogger(AppConfiguration.class);
+
     @Inject Environment env;
     
     @Resource JdbcConfiguration jdbcConfiguration; 
@@ -69,6 +79,8 @@ public class AppConfiguration {
     
     private PeriodFormatter periodFormatter = ISOPeriodFormat.standard();
 
+    @Inject ServletContext servletContext;
+
     /**
      * PRODUCTION PROPERTIES CONFIGURATION: encrypted app.properties
      */
@@ -79,7 +91,12 @@ public class AppConfiguration {
 
         @Bean
         public static EncryptablePropertiesConfigurer propertyProcessor() {
-            return new EncryptablePropertiesConfigurer(new ClassPathResource("app.properties"));
+            File appProperties = new File("config/app.properties");
+            if (!appProperties.exists()) {
+                logger.warn("config/app.properties not found: \n USING DEFAULT PROPERTIES!");
+            }
+
+            return new EncryptablePropertiesConfigurer(new FileSystemResource(appProperties));
         }
         
     }
@@ -389,5 +406,17 @@ public class AppConfiguration {
                 pdf_fi,
                 pdf_sv
                 );
+    }
+
+    @PostConstruct
+    public void setSecureCookie() {
+        boolean disableSecureCookie = Sets.newHashSet(env.getActiveProfiles()).contains("disableSecureCookie");
+        SessionCookieConfig sessionCookieConfig = servletContext.getSessionCookieConfig();
+
+        // servletContext is mocked in integrationTests so it will return null.
+        if (sessionCookieConfig != null) {
+            sessionCookieConfig.setSecure(!disableSecureCookie);
+        }
+
     }
 }

@@ -8,7 +8,7 @@
     <artifactId>initiative-web</artifactId>
     <name>Aloitepalvelu</name>
     <version>3.5.1-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
 
     <properties>
         <finalName>root</finalName>
@@ -19,7 +19,7 @@
         <maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
 
         <!-- Dependency Versions -->
-        <jetty.version>7.5.4.v20111024</jetty.version>
+        <jetty.version>9.3.6.v20151106</jetty.version>
         <spring.version>3.1.2.RELEASE</spring.version>
         <querydsl.version>3.3.0</querydsl.version>
         <postgresql.version>9.1-901-1.jdbc4</postgresql.version>
@@ -57,6 +57,12 @@
             <groupId>com.googlecode.jmockit</groupId>
             <artifactId>jmockit</artifactId>
             <version>${jmockit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>1.9.5-rc1</version>
             <scope>test</scope>
         </dependency>
 
@@ -111,12 +117,6 @@
             <version>2.0.6</version>
         </dependency>
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <version>2.5</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
             <groupId>javax.mail</groupId>
             <artifactId>mail</artifactId>
             <version>1.4.5</version>
@@ -143,25 +143,21 @@
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
             <version>${log4j.version}</version>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>${slf4j.version}</version>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
             <version>${slf4j.version}</version>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>jcl-over-slf4j</artifactId>
             <version>1.6.6</version>
-            <scope>provided</scope>
         </dependency>
 
         <!-- Hibernate Validator -->
@@ -287,19 +283,16 @@
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-server</artifactId>
             <version>${jetty.version}</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-servlet</artifactId>
             <version>${jetty.version}</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-webapp</artifactId>
             <version>${jetty.version}</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
@@ -341,6 +334,21 @@
                     <include>pdf/*</include>
                 </includes>
             </resource>
+            <resource>
+                <!-- Minify plugin exports minified css files under target/tmp.
+                    Filtering plugin copies them from target back to src -->
+                <!-- Filtering plugin was not able to filter files if sourcedir=targetdir -->
+                <directory>${project.build.directory}/tmp/css</directory>
+                <includes>
+                    <include>*.css</include>
+                </includes>
+                <filtering>true</filtering>
+                <targetPath>${basedir}/src/main/webapp/css</targetPath>
+            </resource>
+            <resource>
+                <targetPath>src/main/webapp</targetPath>
+                <directory>src/main/webapp</directory>
+            </resource>
         </resources>
         <testResources>
             <testResource>
@@ -349,6 +357,55 @@
             </testResource>
         </testResources>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <finalName>${project.artifactId}-standalone</finalName>
+                            <transformers>
+                                <!-- http://maven.apache.org/plugins/maven-shade-plugin/examples/resource-transformers.html -->
+                                <!-- http://stackoverflow.com/questions/10584752/spring-3-namespacehandler-issues-with-maven-shade-plugin -->
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ApacheLicenseResourceTransformer">
+                                </transformer>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ApacheNoticeResourceTransformer">
+                                    <addHeader>false</addHeader>
+                                </transformer>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                                    <resource>META-INF/spring.handlers</resource>
+                                </transformer>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                                    <resource>META-INF/spring.schemas</resource>
+                                </transformer>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <manifestEntries>
+                                        <Main-Class>fi.om.initiative.server.RunJetty</Main-Class>
+                                        <!--<Build-Number>${buildNumber}</Build-Number> &lt;!&ndash; Git revision &ndash;&gt;-->
+                                    </manifestEntries>
+                                </transformer>
+                            </transformers>
+
+                            <filters>
+                                <filter>
+                                    <artifact>*:*</artifact>
+                                    <excludes>
+                                        <exclude>META-INF/*.SF</exclude>
+                                        <exclude>META-INF/*.DSA</exclude>
+                                        <exclude>META-INF/*.RSA</exclude>
+                                    </excludes>
+                                </filter>
+                            </filters>
+
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
@@ -443,7 +500,7 @@
                         <id>default-minify</id>
                         <phase>process-resources</phase>
                         <configuration>
-                            <webappTargetDir>${basedir}/src/main/webapp</webappTargetDir>
+                            <webappTargetDir>target/tmp</webappTargetDir>
                             <cssSourceDir>css</cssSourceDir>
                             <cssSourceFiles>
                                 <cssSourceFile>normalize.css</cssSourceFile>
@@ -474,7 +531,7 @@
                         <id>iframe-minify</id>
                         <phase>process-resources</phase>
                         <configuration>
-                            <webappTargetDir>${basedir}/src/main/webapp</webappTargetDir>
+                            <webappTargetDir>target/tmp</webappTargetDir>
                             <cssSourceDir>css</cssSourceDir>
                             <cssSourceFiles>
                                 <cssSourceFile>normalize.css</cssSourceFile>
@@ -487,20 +544,6 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <configuration>
-                    <webResources>
-                        <resource>
-                            <!-- this is relative to the pom.xml directory -->
-                            <directory>src/main/webapp/css</directory>
-                            <targetPath>css</targetPath>
-                            <filtering>true</filtering>
-                        </resource>
-                    </webResources>
-                </configuration>
             </plugin>
         </plugins>
     </build>
