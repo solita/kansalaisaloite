@@ -1,8 +1,8 @@
 package fi.om.initiative.web;
 
-import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import fi.om.initiative.conf.EnvironmentSettings;
 import fi.om.initiative.dto.EditMode;
 import fi.om.initiative.dto.InfoTextCategory;
 import fi.om.initiative.dto.InitiativeConstants;
@@ -19,7 +19,6 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -37,30 +36,23 @@ public class BaseController {
     static final String ALT_URI_ATTR = "altUri";
 
     @Resource HttpUserService userService;
-    
+
     @Resource BeansWrapper freemarkerObjectWrapper;
 
     @Resource FlowStateAnalyzer flowStateAnalyzer;
 
     @Resource FooterLinkProvider footerLinkProvider;
-    
-    private final boolean optimizeResources;
-    
-    private final String resourcesVersion;
 
-    private final Optional<Integer> omPiwicId;
-    
-    public BaseController(boolean optimizeResources, String resourcesVersion) {
-        this(optimizeResources, resourcesVersion, Optional.<Integer>absent());
-    }
-    
-    public BaseController(boolean optimizeResources, String resourcesVersion, Optional<Integer> omPiwicId) {
-        this.optimizeResources = optimizeResources;
-        this.resourcesVersion = resourcesVersion;
-        this.omPiwicId = omPiwicId;
+    @Resource
+    protected EnvironmentSettings environmentSettings;
+
+    private final boolean showPiwik;
+
+    BaseController(boolean showPiwik) {
+        this.showPiwik = showPiwik;
         InfoRibbon.refreshInfoRibbonTexts();
     }
-    
+
     @ModelAttribute
     public void addModelDefaults(Locale locale, HttpServletRequest request, Model model) {
         Urls urls = Urls.get(locale);
@@ -72,19 +64,19 @@ public class BaseController {
         model.addAttribute(REQUEST_MESSAGES_KEY, getRequestMessages(request));
         model.addAttribute("flowStateAnalyzer", flowStateAnalyzer);
         model.addAttribute("summaryMethod", SummaryMethod.INSTANCE);
-        model.addAttribute("optimizeResources", optimizeResources);
-        model.addAttribute("resourcesVersion", resourcesVersion);
+        model.addAttribute("optimizeResources", environmentSettings.optimizeResources);
+        model.addAttribute("resourcesVersion", environmentSettings.resourcesVersion);
         model.addAttribute(CURRENT_URI_ATTR, urls.getBaseUrl() + request.getRequestURI());
         model.addAttribute("infoRibbon", InfoRibbon.getInfoRibbonText(locale));
         model.addAttribute("footerLinks", footerLinkProvider.getFooterLinks(locale));
-        
+
         try {
             model.addAttribute("UrlConstants", freemarkerObjectWrapper.getStaticModels().get(Urls.class.getName()));
             model.addAttribute("InitiativeConstants", freemarkerObjectWrapper.getStaticModels().get(InitiativeConstants.class.getName()));
         } catch (TemplateModelException e) {
             throw new RuntimeException(e);
         }
-        
+
         addEnum(InitiativeState.class, model);
         addEnum(EditMode.class, model);
         addEnum(RequestMessage.class, model);
@@ -93,7 +85,7 @@ public class BaseController {
         addEnum(HelpPage.class, model);
         addEnum(InfoTextCategory.class, model);
     }
-    
+
     static void addRequestMessage(RequestMessage requestMessage, Model model, HttpServletRequest request) {
         FlashMap flashMap = RequestContextUtils.getOutputFlashMap(request);
         addListElement(flashMap, REQUEST_MESSAGES_KEY, requestMessage);
@@ -101,7 +93,7 @@ public class BaseController {
             addListElement(model.asMap(), REQUEST_MESSAGES_KEY, requestMessage);
         }
     }
-    
+
     private static <T> void addListElement(Map<? super String, ? super List<T>> map, String key, T value) {
         @SuppressWarnings("unchecked")
         List<T> list = (List<T>) map.get(key);
@@ -116,8 +108,8 @@ public class BaseController {
         addRequestMessage(requestMessage, null, request);
         return contextRelativeRedirect(targetUri);
     }
-    
-    
+
+
 
     @SuppressWarnings("unchecked")
     private List<RequestMessage> getRequestMessages(HttpServletRequest request) {
@@ -138,9 +130,9 @@ public class BaseController {
     }
 
     protected void addPiwicIdIfNotAuthenticated(Model model) {
-        boolean isAuthenticated = userService.getCurrentUser(false).isAuthenticated();
-        if (!isAuthenticated) {
-            model.addAttribute(OM_PICIW_ID, omPiwicId.orNull());
+        if (!userService.getCurrentUser(false).isAuthenticated()
+                && showPiwik) {
+            model.addAttribute(OM_PICIW_ID, environmentSettings.omPiwikId.orNull());
         }
     }
 

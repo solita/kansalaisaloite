@@ -10,7 +10,6 @@ import org.springframework.web.servlet.View;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import java.util.Locale;
 
 import static fi.om.initiative.util.Locales.asLocalizedString;
@@ -24,7 +23,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 public class DevController extends BaseLoginController {
 
     public DevController(String baseUrl, boolean optimizeResources, String resourcesVersion) {
-        super(baseUrl, optimizeResources, resourcesVersion);
+        super(baseUrl);
     }
     
     /*

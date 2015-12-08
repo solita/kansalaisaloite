@@ -1,9 +1,6 @@
 package fi.om.initiative.web;
 
-import com.google.common.base.Optional;
 import fi.om.initiative.dto.initiative.InitiativeInfo;
-import fi.om.initiative.dto.search.InitiativeSearch;
-import fi.om.initiative.dto.search.InitiativeSublistWithTotalCount;
 import fi.om.initiative.service.InitiativeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -24,8 +21,8 @@ public class StaticPageController extends BaseController {
     @Resource
     private InitiativeService initiativeService;
     
-    public StaticPageController(boolean optimizeResources, String resourcesVersion, Optional<Integer> omPiwicId) {
-        super(optimizeResources, resourcesVersion, omPiwicId);
+    public StaticPageController() {
+        super(true);
     }
     
     /*

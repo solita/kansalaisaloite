@@ -94,4 +94,6 @@ public final class PropertyNames {
 
     public static final String commitHash = "commit.hash";
 
+    public static final String appEnvironment = "app.environment";
+
 }

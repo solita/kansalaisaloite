@@ -19,7 +19,6 @@ import javax.annotation.Resource;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
@@ -38,8 +37,8 @@ public class SupportVoteController extends BaseController {
     
     @Resource InitiativeService initiativeService;
     
-    public SupportVoteController(boolean optimizeResources, String resourcesVersion) {
-        super(optimizeResources, resourcesVersion);
+    public SupportVoteController() {
+        super(false);
     }
 
     @RequestMapping(value={ VIEW_FI, VIEW_SV }, method=GET, params=ACTION_VOTE)

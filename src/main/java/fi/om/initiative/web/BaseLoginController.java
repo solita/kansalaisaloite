@@ -1,11 +1,10 @@
 package fi.om.initiative.web;
 
-import java.util.regex.Pattern;
-
+import com.google.common.base.Strings;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.RedirectView;
 
-import com.google.common.base.Strings;
+import java.util.regex.Pattern;
 
 public abstract class BaseLoginController extends BaseController {
     
@@ -16,8 +15,8 @@ public abstract class BaseLoginController extends BaseController {
      */
     private static final Pattern ILLEGAL_TARGET = Pattern.compile(":|//");
 
-    public BaseLoginController(String baseUrl, boolean optimizeResources, String resourcesVersion) {
-        super(optimizeResources, resourcesVersion);
+    public BaseLoginController(String baseUrl) {
+        super(false);
         this.baseUrl = baseUrl;
     }
     

@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-
 import java.net.URISyntaxException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
@@ -24,8 +23,8 @@ public class StatusPageController extends BaseController {
     @Resource
     StatusService statusService;
 
-    public StatusPageController(boolean optimizeResources, String resourcesVersion) {
-        super(optimizeResources, resourcesVersion);
+    public StatusPageController() {
+        super(false);
     }
 
     @RequestMapping(value=STATUS, method=GET)

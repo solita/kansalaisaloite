@@ -194,7 +194,9 @@ public class AppConfiguration {
                 WebConfiguration.resourcesVersion(env),
                 WebConfiguration.omPiwicId(env),
                 WebConfiguration.appVersion(env),
-                WebConfiguration.commitHash(env)
+                WebConfiguration.commitHash(env),
+                WebConfiguration.appEnvironment(env),
+                env.getActiveProfiles()
                 );
     }
     

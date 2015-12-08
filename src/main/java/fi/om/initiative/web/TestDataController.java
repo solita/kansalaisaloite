@@ -18,7 +18,6 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -35,9 +34,8 @@ public class TestDataController extends BaseController {
     @Resource
     TestDataService testDataService;
 
-
-    public TestDataController(boolean optimizeResources, String resourcesVersion) {
-        super(optimizeResources, resourcesVersion);
+    public TestDataController() {
+        super(false);
     }
 
     @RequestMapping(value={TEST_DATA_GENERATION_FI, TEST_DATA_GENERATION_SV}, method=GET)
