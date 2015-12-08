@@ -1,0 +1,4 @@
+GRANT CONNECT, TEMP ON DATABASE initdb TO initiative;
+GRANT USAGE ON SCHEMA initiative TO initiative;
+GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA initiative TO initiative;
+GRANT ALL ON ALL SEQUENCES IN SCHEMA  initiative TO initiative;
