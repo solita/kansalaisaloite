@@ -50,7 +50,6 @@ public class BaseController {
 
     BaseController(boolean showPiwik) {
         this.showPiwik = showPiwik;
-        InfoRibbon.refreshInfoRibbonTexts();
     }
 
     @ModelAttribute
@@ -68,7 +67,7 @@ public class BaseController {
         model.addAttribute("optimizeResources", environmentSettings.optimizeResources);
         model.addAttribute("resourcesVersion", environmentSettings.resourcesVersion);
         model.addAttribute(CURRENT_URI_ATTR, urls.getBaseUrl() + request.getRequestURI());
-        model.addAttribute("infoRibbon", InfoRibbon.getInfoRibbonText(locale));
+        model.addAttribute("infoRibbon", InfoRibbon.getCachedInfoRibbonText(locale));
         model.addAttribute("footerLinks", footerLinkProvider.getFooterLinks(locale));
 
         try {

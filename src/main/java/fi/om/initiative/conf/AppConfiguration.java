@@ -421,6 +421,11 @@ public class AppConfiguration {
 
     }
 
+    @PostConstruct
+    public void refreshInfoRibbon() {
+        InfoRibbon.refreshInfoRibbonTexts();
+    }
+
     private boolean disableSecureCookie() {
         return Sets.newHashSet(env.getActiveProfiles()).contains("disableSecureCookie");
     }

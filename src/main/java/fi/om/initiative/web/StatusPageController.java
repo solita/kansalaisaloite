@@ -40,7 +40,7 @@ public class StatusPageController extends BaseController {
 
         if ("refresh".equals(ribbon)) {
             InfoRibbon.refreshInfoRibbonTexts();
-            model.addAttribute("infoRibbon", InfoRibbon.getInfoRibbonText(Locales.LOCALE_FI));
+            model.addAttribute("infoRibbon", InfoRibbon.getCachedInfoRibbonText(Locales.LOCALE_FI));
         }
 
         return STATUS_VIEW;
