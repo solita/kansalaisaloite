@@ -20,6 +20,10 @@ public final class PropertyNames {
     public static final String jdbcUser = "jdbc.user";
     
     public static final String jdbcPassword = "jdbc.password";
+
+    public static final String flywayPassword = "flyway.password";
+
+    public static final String flywayUser = "flyway.user";
     
    
     public static final String vetumaURL = "vetuma.url";

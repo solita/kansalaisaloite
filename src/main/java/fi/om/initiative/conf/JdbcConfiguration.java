@@ -16,6 +16,7 @@ import fi.om.initiative.dto.author.AuthorRole;
 import fi.om.initiative.dto.initiative.InitiativeState;
 import fi.om.initiative.util.ReviewHistoryType;
 import org.apache.commons.io.FileUtils;
+import org.flywaydb.core.Flyway;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
@@ -25,11 +26,13 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.transaction.PlatformTransactionManager;
 
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Provider;
 import javax.sql.DataSource;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.Connection;
 
 @Configuration
@@ -113,6 +116,26 @@ public class JdbcConfiguration {
             }
             
         });
+    }
+
+    @PostConstruct
+    public void updateDatabase() throws IOException {
+        try {
+            Flyway flyway = new Flyway();
+            flyway.setEncoding("UTF-8");
+            flyway.setTable("flyway_schema");
+            flyway.setLocations("db/migration");
+            flyway.setSchemas(env.getProperty(PropertyNames.jdbcUser));
+            flyway.setDataSource(
+                    env.getProperty(PropertyNames.jdbcURL),
+                    env.getProperty(PropertyNames.flywayUser),
+                    env.getProperty(PropertyNames.flywayPassword));
+
+            flyway.setBaselineOnMigrate(true);
+            flyway.migrate();
+        } catch (Exception e) {
+            log.error("FAILED TO MIGRATE DATABASE", e);
+        }
     }
     
 }
