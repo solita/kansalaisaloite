@@ -173,7 +173,7 @@ public class AppConfiguration {
     
     @Bean
     public HttpUserServiceImpl userService() {
-        return new HttpUserServiceImpl(userDao(), encryptionService());
+        return new HttpUserServiceImpl(userDao(), encryptionService(), disableSecureCookie());
     }
 
     @Bean
@@ -412,13 +412,16 @@ public class AppConfiguration {
 
     @PostConstruct
     public void setSecureCookie() {
-        boolean disableSecureCookie = Sets.newHashSet(env.getActiveProfiles()).contains("disableSecureCookie");
         SessionCookieConfig sessionCookieConfig = servletContext.getSessionCookieConfig();
 
         // servletContext is mocked in integrationTests so it will return null.
         if (sessionCookieConfig != null) {
-            sessionCookieConfig.setSecure(!disableSecureCookie);
+            sessionCookieConfig.setSecure(!disableSecureCookie());
         }
 
+    }
+
+    private boolean disableSecureCookie() {
+        return Sets.newHashSet(env.getActiveProfiles()).contains("disableSecureCookie");
     }
 }

@@ -29,15 +29,18 @@ public class HttpUserServiceImpl implements HttpUserService {
     private static final int CSRF_TOKEN_LENGTH = 24;
     
     private EncryptionService encryptionService;
-    
+
+    private boolean disableSecureCookie;
+
     private UserDao userDao;
     
     private static final User ANON = new User();
 
 
-    public HttpUserServiceImpl(UserDao userDao, EncryptionService encryptionService) {
+    public HttpUserServiceImpl(UserDao userDao, EncryptionService encryptionService, boolean disableSecureCookie) {
         this.userDao = userDao;
         this.encryptionService = encryptionService;
+        this.disableSecureCookie = disableSecureCookie;
     }
     
     /* (non-Javadoc)
@@ -114,7 +117,7 @@ public class HttpUserServiceImpl implements HttpUserService {
     
     private void setCookie(String name, String value, HttpServletRequest request, HttpServletResponse response) {
         // We have to write this cookie directly to header because javax.servlet.http.Cookie does not support httpOnly
-        response.setHeader("Set-Cookie", name + "=" + value + "; Path=/; "+ (request.isSecure() ? "Secure; " : "")+ "HttpOnly");
+        response.setHeader("Set-Cookie", name + "=" + value + "; Path=/; "+ (disableSecureCookie ? "" : "Secure; ")+ "HttpOnly");
     }
 
     @Override
