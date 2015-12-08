@@ -56,6 +56,7 @@ public class BaseController {
     @ModelAttribute
     public void addModelDefaults(Locale locale, HttpServletRequest request, Model model) {
         Urls urls = Urls.get(locale);
+        model.addAttribute("appEnvironment", environmentSettings.appEnvironment);
         model.addAttribute("currentUser", userService.getCurrentUser(false)); // Purely informative at this point
         model.addAttribute("locale", urls.getLang());
         model.addAttribute("altLocale", urls.getAltLang());
