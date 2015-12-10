@@ -21,7 +21,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import java.util.Locale;
 
 import static fi.om.initiative.dto.vetuma.VetumaResponse.Status.CANCELLED;
@@ -46,8 +45,8 @@ public class VetumaController extends BaseLoginController {
     
     private String vetumaURL;
     
-    public VetumaController(String vetumaURL, String baseUrl, boolean optimizeResources, String resourcesVersion) {
-        super(baseUrl, optimizeResources, resourcesVersion);
+    public VetumaController(String vetumaURL, String baseUrl) {
+        super(baseUrl);
         this.vetumaURL = vetumaURL;
     }
 

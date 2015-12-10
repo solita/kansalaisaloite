@@ -1,6 +1,5 @@
 package fi.om.initiative.web;
 
-import com.google.common.base.Optional;
 import fi.om.initiative.dto.InfoTextCategory;
 import fi.om.initiative.dto.InfoTextSubject;
 import fi.om.initiative.dto.User;
@@ -21,7 +20,6 @@ import org.springframework.web.multipart.support.DefaultMultipartHttpServletRequ
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
@@ -45,8 +43,8 @@ public class InfoTextController extends BaseController {
     @Resource
     ImageFinder imageFinder;
 
-    public InfoTextController(boolean optimizeResources, String resourcesVersion, Optional<Integer> omPiwicId) {
-        super(optimizeResources, resourcesVersion, omPiwicId);
+    public InfoTextController() {
+        super(true);
     }
 
     @RequestMapping(value={ HELP_INDEX_FI, HELP_INDEX_SV }, method=GET)

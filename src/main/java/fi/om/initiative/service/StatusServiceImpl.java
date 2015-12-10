@@ -19,6 +19,7 @@ import javax.annotation.Resource;
 import java.lang.management.ManagementFactory;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -46,6 +47,8 @@ public class StatusServiceImpl implements StatusService {
     private final Optional<Integer> omPiwicId;
     private final String appVersion;
     private final String commitHash;
+    private String appEnvironment;
+    private String[] activeProfiles;
 
     public class KeyValueInfo {
         private String key;
@@ -69,7 +72,9 @@ public class StatusServiceImpl implements StatusService {
                              Boolean optimizeResources, String resourcesVersion,
                              Optional<Integer> omPiwicId,
                              String appVersion,
-                             String commitHash) throws KeyManagementException, NoSuchAlgorithmException {
+                             String commitHash,
+                             String appEnvironment,
+                             String[] activeProfiles) throws KeyManagementException, NoSuchAlgorithmException {
         this.testEmailSendTo = testEmailSendTo;
         this.testEmailConsoleOutput = testEmailConsoleOutput; 
         this.messageSourceCacheSeconds = messageSourceCacheSeconds;
@@ -79,6 +84,8 @@ public class StatusServiceImpl implements StatusService {
         this.omPiwicId = omPiwicId;
         this.appVersion = appVersion;
         this.commitHash = commitHash;
+        this.appEnvironment = appEnvironment;
+        this.activeProfiles = activeProfiles;
     }
 
     @Override
@@ -88,6 +95,8 @@ public class StatusServiceImpl implements StatusService {
 
         list.add(new KeyValueInfo("appStartTime", appStartTime.toString(DATETIME_FORMAT)));
         list.add(new KeyValueInfo("appVersion", appVersion));
+        list.add(new KeyValueInfo("appEnvironment", appEnvironment));
+        list.add(new KeyValueInfo("profiles", Arrays.toString(activeProfiles)));
         list.add(new KeyValueInfo("commitHash", commitHash));
         list.add(new KeyValueInfo("appBuildTimeStamp", getFormattedBuildTimeStamp(resourcesVersion)));
         list.add(new KeyValueInfo("initiativeCount", initiativeDao.getInitiativeCount()));

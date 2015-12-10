@@ -2,7 +2,6 @@ package fi.om.initiative.web;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.base.Optional;
 import com.google.common.base.Strings;
 import com.lowagie.text.DocumentException;
 import fi.om.initiative.dto.*;
@@ -70,8 +69,8 @@ public class InitiativeController extends BaseController {
 
     @Resource SupportStatementPdfGenerator supportStatementPdfGenerator;
 
-    public InitiativeController(boolean optimizeResources, String resourcesVersion, Optional<Integer> omPiwicId) {
-        super(optimizeResources, resourcesVersion, omPiwicId);
+    public InitiativeController() {
+        super(true);
     }
 
     /*

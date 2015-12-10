@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import java.text.MessageFormat;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -24,8 +23,8 @@ public class VetumaMockController extends BaseController {
     @Resource
     private EncryptionService encryptionService;
 
-    public VetumaMockController(boolean optimizeResources, String resourcesVersion) {
-        super(optimizeResources, resourcesVersion);
+    public VetumaMockController() {
+        super(false);
     }
 
     @RequestMapping(value="vetumamock", method=POST)

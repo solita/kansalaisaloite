@@ -67,7 +67,7 @@ public class WebConfiguration extends WebMvcConfigurationSupport {
 
         @Bean
         public VetumaMockController vetumaMockController() {
-            return new VetumaMockController(optimizeResources(env), resourcesVersion(env));
+            return new VetumaMockController();
         }
     }
 
@@ -79,8 +79,21 @@ public class WebConfiguration extends WebMvcConfigurationSupport {
 
         @Bean
         public TestDataController testDataController() {
-            return new TestDataController(optimizeResources(env), resourcesVersion(env));
+            return new TestDataController();
         }
+
+    }
+
+
+    @Bean
+    public EnvironmentSettings environmentSettings() {
+        return new EnvironmentSettings(
+                appEnvironment(env),
+                optimizeResources(env),
+                resourcesVersion(env),
+                appVersion(env),
+                commitHash(env),
+                omPiwicId(env));
 
     }
 
@@ -99,6 +112,10 @@ public class WebConfiguration extends WebMvcConfigurationSupport {
 
     public static String commitHash(Environment env) {
         return env.getProperty(PropertyNames.commitHash);
+    }
+
+    public static String appEnvironment(Environment env) {
+        return env.getProperty(PropertyNames.appEnvironment);
     }
 
     public static Optional<Integer> omPiwicId(Environment env) {
@@ -127,10 +144,8 @@ public class WebConfiguration extends WebMvcConfigurationSupport {
 
             return new VetumaController(
                     env.getRequiredProperty(PropertyNames.vetumaURL),
-                    env.getRequiredProperty(PropertyNames.baseURL),
-                    optimizeResources(env),
-                    resourcesVersion(env)
-                );
+                    env.getRequiredProperty(PropertyNames.baseURL)
+            );
         }
 
         @Bean
@@ -214,19 +229,6 @@ public class WebConfiguration extends WebMvcConfigurationSupport {
         converters.add(jsonpConverter());
         converters.add(stringConverter);
 
-//        List<MediaType> mediatypes = Lists.newArrayList();
-//        mediatypes.add(MediaType.IMAGE_PNG);
-//        mediatypes.add(MediaType.IMAGE_JPEG);
-//
-//        ByteArrayHttpMessageConverter e = new ByteArrayHttpMessageConverter();
-//        e.setSupportedMediaTypes(mediatypes);
-//        converters.add(e);
-
-
-//        converters.add(new ResourceHttpMessageConverter());
-//        converters.add(new ByteArrayHttpMessageConverter() {
-//
-//        });
     }
 
     @Bean
@@ -266,40 +268,32 @@ public class WebConfiguration extends WebMvcConfigurationSupport {
 
     @Bean
     public  InitiativeController initiativeController() {
-        return new InitiativeController(
-                optimizeResources(env),
-                resourcesVersion(env),
-                omPiwicId(env));
+        return new InitiativeController();
     }
     
     @Bean
     public StaticPageController staticPageController() {
-        return new StaticPageController(
-                optimizeResources(env),
-                resourcesVersion(env),
-                omPiwicId(env));
+        return new StaticPageController();
     }
 
     @Bean
     public StatusPageController statusPageController() {
-        return new StatusPageController(optimizeResources(env), resourcesVersion(env));
+        return new StatusPageController();
     }
 
     @Bean
     public InfoTextController infoTextController() {
-        return new InfoTextController(optimizeResources(env),
-                resourcesVersion(env),
-                omPiwicId(env));
+        return new InfoTextController();
     }
 
     @Bean
     public SupportVoteController supportVoteController() {
-        return new SupportVoteController(optimizeResources(env), resourcesVersion(env));
+        return new SupportVoteController();
     }
 
     @Bean
     public UserController userController() {
-        return new UserController(optimizeResources(env), resourcesVersion(env));
+        return new UserController();
     }
     
     @Bean
