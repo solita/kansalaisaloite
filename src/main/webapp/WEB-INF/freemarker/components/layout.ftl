@@ -126,6 +126,7 @@
     <link href="${urls.baseUrl}/favicon.ico?version=${resourcesVersion}" rel="shortcut icon" type="image/vnd.microsoft.icon" />
 
    <#if optimizeResources>
+        <link rel="stylesheet" type="text/css" href="${urls.baseUrl}/css/bootstrap.min.css?version=${resourcesVersion}" />
         <link rel="stylesheet" type="text/css" media="screen" href="${urls.baseUrl}/css/style.min.css?version=${resourcesVersion}" />
         <!--[if IE ]>
         <link rel="stylesheet" type="text/css" media="screen" href="${urls.baseUrl}/css/aloitepalvelu-ie.css?version=${resourcesVersion}" />
@@ -333,6 +334,7 @@
 
     <#if optimizeResources>
       <script type="text/javascript" src="${urls.baseUrl}/js/script.min.js?version=${resourcesVersion}"></script>
+      <script type="text/javascript" src="${urls.baseUrl}/js/bootstrap.min.js?version=${resourcesVersion}"></script>
     <#else>
       <script type="text/javascript" src="${urls.baseUrl}/js/jquery-1.11.3.min.js?version=${resourcesVersion}"></script>
       <script type="text/javascript" src="${urls.baseUrl}/js/jquery.easing.min.js?version=${resourcesVersion}"></script>
