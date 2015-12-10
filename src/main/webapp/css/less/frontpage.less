@@ -4,6 +4,7 @@
 @heroBgColor: @mainColor;
 @heroBgColorHover: @mainColorDark;
 
+/* Desktop images */
 .frontpage-image (@index:1) {
     background-image:url("@{imagesPath}/front-images/front-strip-@{index}.jpg?version=${timestamp}");
 }
@@ -55,6 +56,85 @@
 
 }
 
+/* Mobile images */
+.frontpage-image-mobile (@imageset: 1, @index:1) {
+    background-image:url("@{imagesPath}/front-images-mobile/0@{imageset}-0@{index}.jpg?version=${timestamp}");
+}
+.frontpage-image-mobile(@imageset, @index) when (@index = 1) {
+    width: 60%;
+    float: left;
+}
+.frontpage-image-mobile(@imageset, @index) when (@index = 2) {
+    width: 40%;
+    float: right;
+}
+.frontpage-image-mobile(@imageset, @index) when (@index = 3) {
+    width: 40%;
+    float: left;
+}
+
+.image-container-mobile {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0px 10px;
+    background-color: white;
+    overflow: auto;
+
+    .mobile-image{
+        background-size: cover;
+        height: 100px;
+        outline: solid white 5px;
+        margin-top: 5px;
+
+        &.image-1 {
+            &-1{
+                .frontpage-image-mobile(1,1);
+            }
+            &-2{
+                .frontpage-image-mobile(1,2);
+
+            }
+            &-3{
+                .frontpage-image-mobile(1,3);
+            }
+        }
+        &.image-2 {
+            &-1{
+                .frontpage-image-mobile(2,1);
+            }
+            &-2{
+                .frontpage-image-mobile(2,2);
+            }
+            &-3{
+                .frontpage-image-mobile(2,3);
+            }
+        }
+        &.image-3 {
+            &-1{
+                .frontpage-image-mobile(3,1);
+            }
+            &-2{
+                .frontpage-image-mobile(3,2);
+            }
+            &-3{
+                .frontpage-image-mobile(3,3);
+            }
+        }
+        &.image-4 {
+            &-1{
+                .frontpage-image-mobile(4,1);
+            }
+            &-2{
+                .frontpage-image-mobile(4,2);
+            }
+            &-3{
+                .frontpage-image-mobile(4,3);
+            }
+        }
+    }
+    position:relative;
+}
+
 .front {
     .container {
         position: relative;
@@ -94,7 +174,12 @@
     }
 }
 
-.hero-holder {
+.hero-holder,
+.hero-holder-mobile {
+    @media @xs, @sm, @md{
+        display: none;
+    }
+
     display: block;
     position: absolute;
     top: -@frontImageHeight;
@@ -111,6 +196,31 @@
     &:hover {
         background-color: @heroBgColorHover;
     }
+}
+
+.hero-holder-mobile {
+    @media @xs, @sm, @md{
+        display: block;
+    }
+    height: 100px;
+    width: 60%;
+    right: 5px;
+    bottom: 0;
+    top: auto;
+    left: auto;
+    font-size: 28px;
+    line-height: 1em;
+    span {
+        font-size: 1em;
+        line-height: 1em;
+    }
+    .hero {
+        left: 50%;
+        top: 16px;
+        width: 120px;
+        margin-left: -60px;
+    }
+
 }
 
 .hero {

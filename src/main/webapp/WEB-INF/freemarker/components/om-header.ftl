@@ -28,5 +28,4 @@
 		    	<a href="http://www.yhdenvertaisuus.fi/${(locale == "sv")?string("vad_da_equality_fi","")}"><@u.message "otherServices.yhdenvertaisuus"/></a>
 		</ul>
 	</div>
-
 </div>

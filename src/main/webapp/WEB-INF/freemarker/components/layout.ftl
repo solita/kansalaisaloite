@@ -256,6 +256,43 @@
                         </#list>
                     </ul>
                 </div>
+                <nav class="mobilenav navbar navbar-default hidden-sm hidden-lg hidden-md">
+
+                  <div class="container-fluid">
+                    <div class="navbar-header">
+                      <button type="button" id="navbar-toggle" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbarcollapse" aria-expanded="false">
+                        Menu &nbsp; <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
+                      </button>
+                    </div>
+
+                    <div class="collapse navbar-collapse" id="navbarcollapse">
+                      <div class="modal-backdrop"></div>
+                      <ul class="nav navbar-nav">
+                        <#list naviItems as item>
+                          <li <#if item.naviName == page>class="active"</#if>><a href="${item.naviUrl}"><@u.message item.naviName /></a></li>
+                        </#list>
+                        <li><a href="${altUri!'/sv'}"><@u.message "lang.alternative"/></a></li>
+                        <li role="separator" class="divider"></li>
+                        <li>
+                          <#-- Authenticated = Logged in -->
+                          <#if currentUser.authenticated>
+                            <strong>${currentUser.firstNames} ${currentUser.lastName}</strong>
+                            <#-- Registered = Authenticated and has initiatives (except OM/VRK-users) -->
+                            <#if currentUser.registered>
+                              <a class="btn btn-default" href="${urls.searchOwnOnly()}"><@u.message "user.myInitiatives"/></a>
+                            </#if>
+                            <a class="btn btn-default" href="${urls.logout()}" >
+                              <@u.message "common.logout"/>
+                              <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                            </a>
+                          <#else>
+                            <a class="btn btn-default" href="${urls.login(springMacroRequestContext.requestUri)}" title="<@u.message "common.login"/>" class="header-tool-link login"><@u.message "common.login"/></a>
+                          </#if>
+                        </li>
+                      </ul>
+                      </div><!-- /.navbar-collapse -->
+                  </div><!-- /.container-fluid -->
+                </nav>
             </#if>
 
         </div>

@@ -138,7 +138,7 @@
     /**
      *  Prevent double clicks
      */
-    $("button").live('click', function () {
+    $("button:not(#navbar-toggle)").on('click', function () {
       var btnClicked, firstBtnInForm, $loader, $submitInfo, $submitWarning, siblingButtons;
       btnClicked = $(this);
 
@@ -306,7 +306,7 @@
       });
 
       // Matches class-name "input-block-extra" within the same block
-      $('input[type=text],textarea').live('focus', function () {
+      $('input[type=text],textarea').on('focus', function () {
         var $thisHelp = $(this).parents('.input-block-content:first').find('.input-block-extra:first');
         toggleHelpTexts($thisHelp, false);
       });
@@ -384,7 +384,7 @@
       };
 
 
-      $('textarea').live('input propertychange', function () {
+      $('textarea').on('input propertychange', function () {
         var potentialLinks, $thisWarning, $ul, newheight;
 
         if (this.id === "rationale.fi" || this.id === "proposal.fi" || this.id === "rationale.sv" || this.id === "proposal.sv") {
@@ -575,14 +575,14 @@
         createLinkRow();
       }
 
-      $('#add-new-link').live('click', function () {
+      $('#add-new-link').on('click', function () {
         createLinkRow();
 
         return false;
       });
 
       // Remove link (clear values and hide fields)
-      $('.remove-link').live('click', function () {
+      $('.remove-link').on('click', function () {
         var removedLink = $(this).closest('.add-link');
 
         removedLink.slideUp(speedFast, function () {

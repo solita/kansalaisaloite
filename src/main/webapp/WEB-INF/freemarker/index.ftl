@@ -1,5 +1,6 @@
 <#import "components/layout.ftl" as l />
 <#import "components/utils.ftl" as u />
+<#import "components/mobile-components.ftl" as mobile />
 
 <#escape x as x?html>
 <@l.main "page.frontpage">
@@ -21,13 +22,16 @@
 <#assign _rand = 0.36 />
 <#assign imageNumber = rand(1, 5)?c />
 
-<div class="image-container image-${imageNumber}">
+<div class="image-container image-${imageNumber} hidden-xs hidden-sm">
 
 </div>
 
+	<@mobile.mobileFrontPageImageContainer imageNumber />
+
+
 <div class="container">
     <a href="${urls.createNew()}" class="hero-holder noprint">
-        <span class="hero"><@u.messageHTML "index.hero" /><i class="icon-front i-arrow-right"></i></span>
+			<span class="hero"><@u.messageHTML "index.hero" /><i class="icon-front i-arrow-right"></i></span>
     </a>
 
     <div id="content">
