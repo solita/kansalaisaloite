@@ -455,7 +455,6 @@
                             <jsSourceFiles>
                                 <jsSourceFile>jquery-1.11.3.min.js</jsSourceFile>
                                 <jsSourceFile>jquery.easing.min.js</jsSourceFile>
-                                <jsSourceFile>bootstrap.min.js</jsSourceFile>
                                 <jsSourceFile>jquery.tools.min.js</jsSourceFile>
                                 <jsSourceFile>jquery.cookie.js</jsSourceFile>
                                 <jsSourceFile>jquery.dirtyforms.min.js</jsSourceFile>
