@@ -446,6 +446,7 @@
                             <webappTargetDir>${basedir}/src/main/webapp</webappTargetDir>
                             <cssSourceDir>css</cssSourceDir>
                             <cssSourceFiles>
+                                <cssSourceFile>bootstrap.min.css</cssSourceFile>
                                 <cssSourceFile>normalize.css</cssSourceFile>
                                 <cssSourceFile>aloitepalvelu.css</cssSourceFile>
                             </cssSourceFiles>
@@ -454,6 +455,7 @@
                             <jsSourceFiles>
                                 <jsSourceFile>jquery-1.11.3.min.js</jsSourceFile>
                                 <jsSourceFile>jquery.easing.min.js</jsSourceFile>
+                                <jsSourceFile>bootstrap.min.js</jsSourceFile>
                                 <jsSourceFile>jquery.tools.min.js</jsSourceFile>
                                 <jsSourceFile>jquery.cookie.js</jsSourceFile>
                                 <jsSourceFile>jquery.dirtyforms.min.js</jsSourceFile>
