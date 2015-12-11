@@ -140,6 +140,9 @@ public class AppConfiguration {
     @Bean
     public ReviewHistoryDao reviewHistoryDao() {return new ReviewHistoryDaoImpl();}
 
+    @Bean
+    public FollowInitiativeDao followInitiativeDao() {return new FollowInitiativeDaoImpl();}
+
     private PostgresQueryFactory queryFactory() {
         return jdbcConfiguration.queryFactory();
     }
