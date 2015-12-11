@@ -22,7 +22,6 @@ public class JobExecutor {
     private SupportVoteDao supportVoteDao;
 
     @Scheduled(cron = EVERY_DAY_AT_MIDNIGHT)
-    @PostConstruct
     public void updateDenormalizedSupportCountForInitiatives() {
 
         // Support counts are denormalized in one-day-delay (today we will denormalize history until yesterday).
@@ -43,6 +42,17 @@ public class JobExecutor {
 
         }
         log.info("Supportcounts denormalized.");
+
+    }
+
+    @PostConstruct
+    public void executeAllJobs() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                updateDenormalizedSupportCountForInitiatives();
+            }
+        }).start();
 
     }
 
