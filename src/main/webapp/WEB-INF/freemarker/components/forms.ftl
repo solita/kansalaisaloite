@@ -204,9 +204,9 @@
 -->
 <#macro helpText path noscript="" href="">
     <#if noscript!="noscript">
-    <span class="icon-small help trigger-tooltip hidden" title="<@u.message path+".iconTitle" />" data-name="${path!""}"></span>
+    <span class="icon-small help trigger-tooltip hidden-nojs" title="<@u.message path+".iconTitle" />" data-name="${path!""}"></span>
     </#if>    
-    <div class="input-block-extra ${path!""} js-hide ${(noscript="noscript")?string('','hidden')}">
+    <div class="input-block-extra ${path!""} js-hide ${(noscript="noscript")?string('','hidden-nojs')}">
         <div class="input-block-extra-content">
             <h4><@u.message path+".title" /></h4>
             <@u.messageHTML key=path+".description" args=[href] />
@@ -219,7 +219,7 @@
  *
 -->
 <#macro warningText path noscript="" href="">
-    <div class="input-block-extra-warning ${path!""} js-hide ${(noscript="noscript")?string('','hidden')}">
+    <div class="input-block-extra-warning ${path!""} js-hide ${(noscript="noscript")?string('','hidden-nojs')}">
         <div class="input-block-extra-content">
             <h4><@u.message path+".title" /></h4>
             <@u.messageHTML key=path+".description" args=[href] />

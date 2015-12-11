@@ -122,7 +122,7 @@
             
             <#-- Show alt language link if not in edit and current block is 'basicDetails' -->
             <#if managementSettings.editMode == EditMode.FULL || managementSettings.editMode == EditMode.BASIC>
-                <a id="show-alternative-lang" class="show-alternative-lang hidden" data-alttext="<@u.message "altVersion.hide" />" data-translation="${initiative.hasTranslation(altLocale)?string('true','false')}" ><@u.message "altVersion.add" /></a>
+                <a id="show-alternative-lang" class="show-alternative-lang hidden-nojs" data-alttext="<@u.message "altVersion.hide" />" data-translation="${initiative.hasTranslation(altLocale)?string('true','false')}" ><@u.message "altVersion.add" /></a>
             </#if>
         </div>
         
@@ -280,7 +280,7 @@
                             <@f.textField path="initiative.links[${link_index}].label" required="" cssClass="medium" maxLength=InitiativeConstants.LINK_LABEL_MAX?string("#") optional=false />
                         </div>
                         <div class="link-input-url">
-                            <a class="remove-link trigger-tooltip ignoredirty hidden" title="<@u.message "link.remove" />" href="#">x</a>
+                            <a class="remove-link trigger-tooltip ignoredirty hidden-nojs" title="<@u.message "link.remove" />" href="#">x</a>
                             <@f.textField path="initiative.links[${link_index}].uri" required="" cssClass="medium" maxLength=InitiativeConstants.LINK_URI_MAX?string("#") optional=false />
                         </div>
                     </div>
@@ -314,13 +314,13 @@
                             <label>
                                 <@u.message "initiative.links.uri"/>
                                 <input type="text" class="medium" value="" id="links[{{>linkIndex}}].uri" name="links[{{>linkIndex}}].uri" maxlength="${InitiativeConstants.LINK_URI_MAX?string("#")}" />
-                                <a class="remove-link trigger-tooltip ignoredirty hidden" title="<@u.message "link.remove" />" href="#">x</a>
+                                <a class="remove-link trigger-tooltip ignoredirty hidden-nojs" title="<@u.message "link.remove" />" href="#">x</a>
                             </label>
                         </div>
                     </div>
                 </script>
                           
-                <a id="add-new-link" class="small-button gray hidden ignoredirty" href="#"><span class="small-icon add"><@u.message "link.add" /></span></a>
+                <a id="add-new-link" class="small-button gray hidden-nojs ignoredirty" href="#"><span class="small-icon add"><@u.message "link.add" /></span></a>
                 
     
             </div>

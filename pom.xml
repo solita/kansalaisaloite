@@ -464,6 +464,7 @@
                                 <jsSourceFile>raphael.min.js</jsSourceFile>
                                 <jsSourceFile>jquery.supportvotegraph.js</jsSourceFile>
                                 <jsSourceFile>jquery.headernav.js</jsSourceFile>
+                                <jsSourceFile>bootstrap.min.js</jsSourceFile>
                                 <jsSourceFile>aloitepalvelu.js</jsSourceFile>
                             </jsSourceFiles>
                             <jsFinalFile>script.js</jsFinalFile>
