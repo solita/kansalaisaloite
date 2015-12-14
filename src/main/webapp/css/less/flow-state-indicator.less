@@ -2,7 +2,7 @@
 //
 // .active - Active step
 // .checked - Checked step
-// .failed - Failded step
+// .failed - Failed step
 //
 // Styleguide 10.
 
@@ -17,7 +17,7 @@
         display:table-cell;
         vertical-align:middle;
         height:70px;
-        padding:0 55px 0 40px;
+        padding: 0px 10px 0 30px;
 
         background:url("@{imagesPath}/flow-state-indicator.png?version=${timestamp}") no-repeat right -75px;
     }
@@ -26,7 +26,7 @@
     .flow-state-step {
         display: table;
         float: left;
-        width: 239px;
+        width: 25%;
         position: relative;
 
         background:url("@{imagesPath}/flow-state-indicator.png?version=${timestamp}") no-repeat left 0;
@@ -81,6 +81,138 @@
                     font-size:0.8em;
 
                 }
+            }
+        }
+    }
+}
+
+.flow-state-indicator-mobile {
+    text-align: center;
+    padding-bottom: 1em;
+    ol {
+        list-style: none;
+        counter-reset: item;
+        width: 300px;
+        margin: 0 auto;
+        text-align: left;
+        li {
+            padding: 1em 0 1em 0;
+            position: relative;
+            &.checked:before,
+            &.failed:before {
+                font-family: 'Glyphicons Halflings';
+                font-style: normal;
+                font-weight: normal;
+                line-height: 2.4em;
+                -webkit-font-smoothing: antialiased;
+                content: "\e013" !important;
+            }
+            &.failed:before {
+                background-color: @redGradient2 !important;
+                content: "\e014" !important;
+            }
+            &:before {
+                content: counter(item) "  ";
+                counter-increment: item;
+                position: absolute;
+                left: -3.3em;
+                top: 0.55em;
+                border-radius: 50%;
+                color: @tertiaryColor;
+                width: 2.3em;
+                background-color: #FFF;
+                height: 2.3em;
+                line-height: 2.3em;
+                text-align: center;
+            }
+            &:after {
+                content: " ";
+                position: absolute;
+                left: -2.32em;
+                bottom: -0.7em;
+                color: #FFF;
+                width: .4em;
+                background-color: #FFF;
+                height: 2em;
+                display: block;
+                z-index: -1;
+            }
+            &:last-child {
+                &:after {
+                    display: none;
+                }
+            }
+        }
+    }
+    &.first-step-active {
+        li:first-child {
+            color: @mainColor;
+            &:before {
+                background-color: @mainColor;
+                color: white;
+            }
+        }
+    }
+    &.second-step-active {
+        li {
+            &:first-child {
+                color: @progressChecked;
+                &:before,
+                &:after {
+                    background-color: @progressChecked;
+                    color: white;
+                }
+            }
+            &:nth-child(2) {
+                color: @mainColor;
+                &:before {
+                    background-color: @mainColor;
+                    color: white;
+                }
+            }
+        }
+    }
+    &.third-step-active {
+        li:first-child,
+        li:nth-child(2) {
+            color: @progressChecked;
+        }
+        li:first-child:before,
+        li:first-child:after,
+        li:nth-child(2):before,
+        li:nth-child(2):after {
+            background-color: @progressChecked;
+            color: white;
+        }
+        li:nth-child(3) {
+            color: @mainColor;
+            &:before {
+                background-color: @mainColor;
+                color: white;
+            }
+        }
+    }
+    &.fourth-step-active {
+        li:first-child,
+        li:nth-child(2),
+        li:nth-child(3) {
+            color: @progressChecked;
+        }
+
+        li:first-child:before,
+        li:first-child:after,
+        li:nth-child(2):before,
+        li:nth-child(2):after,
+        li:nth-child(3):before,
+        li:nth-child(3):after {
+            background-color: @progressChecked;
+            color: white;
+        }
+        li:nth-child(4) {
+            color: @mainColor;
+            &:before {
+                background-color: @mainColor;
+                color: white;
             }
         }
     }

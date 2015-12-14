@@ -154,8 +154,33 @@
         <#assign indicatorActive=true />
         
     </#if>
+
+    <div class="flow-state-indicator-mobile ${indicatorState} container-fluid hidden-sm hidden-md hidden-lg">
+      <div class="row">
+        <div class="col-xs-12">
+          <#if indicatorActive>
+            <ol>
+              <li class="${firstState!""}">
+                <span><@u.message "FlowStateIndicator.first" /></span>
+              </li>
+              <li class="${secondState!""}">
+                <span><@u.message "FlowStateIndicator.second" /></span>
+              </li>
+              <li class="${thirdState!""}">
+                <span><@u.message "FlowStateIndicator.third" /></span>
+              </li>
+              <li class="${fourthState!""}">
+                <span><@u.message "FlowStateIndicator.fourth" /></span>
+              </li>
+            </ol>
+          <#elseif flowState == FlowState.DONE>
+          <#elseif flowState == FlowState.CANCELED>
+          </#if>
+        </div>
+      </div>
+    </div>
     
-    <div class="flow-state-indicator ${indicatorState} cf">
+    <div class="flow-state-indicator ${indicatorState} cf hidden-xs">
         <#if indicatorActive>
           <div class="flow-state-step ${firstState!""}">
             <div class="flow-state-content">
