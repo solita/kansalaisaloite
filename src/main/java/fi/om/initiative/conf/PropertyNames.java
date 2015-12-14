@@ -8,8 +8,10 @@ public final class PropertyNames {
 
     public static final String omImageDirection = "om.image.directory";
 
-    public static final String baseURL = "app.baseURL"; 
-    
+    public static final String baseURL = "app.baseURL";
+
+    public static final String superSearchBaseUrl = "supersearch.baseurl";
+
     public static final String registeredUserSecret = "security.registeredUserSecret";
     
     

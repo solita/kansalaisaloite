@@ -19,7 +19,6 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -77,7 +76,9 @@ public class BaseController {
         model.addAttribute(CURRENT_URI_ATTR, urls.getBaseUrl() + request.getRequestURI());
         model.addAttribute("infoRibbon", InfoRibbon.getInfoRibbonText(locale));
         model.addAttribute("footerLinks", footerLinkProvider.getFooterLinks(locale));
-        
+        model.addAttribute("superSearchEnabled", urls.getSuperSearchUrl()!=null);
+        model.addAttribute("superSearchUrl", urls.getSuperSearchUrl()!=null?urls.getSuperSearchUrl():"");
+
         try {
             model.addAttribute("UrlConstants", freemarkerObjectWrapper.getStaticModels().get(Urls.class.getName()));
             model.addAttribute("InitiativeConstants", freemarkerObjectWrapper.getStaticModels().get(InitiativeConstants.class.getName()));

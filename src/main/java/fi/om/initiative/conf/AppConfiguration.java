@@ -41,6 +41,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.inject.Inject;
 import java.io.IOException;
@@ -279,7 +280,6 @@ public class AppConfiguration {
     
     @Bean
     public EmailService emailService(FreeMarkerConfigurer freeMarkerConfigurer) {
-        Urls.initUrls(env.getRequiredProperty(PropertyNames.baseURL)); // this could be moved to a right place!
         
         String baseURL = env.getRequiredProperty(PropertyNames.baseURL);
         String defaultReplyTo = env.getRequiredProperty(PropertyNames.emailDefaultReplyTo);
@@ -389,5 +389,13 @@ public class AppConfiguration {
                 pdf_fi,
                 pdf_sv
                 );
+    }
+
+    @PostConstruct
+    public void initUrls() {
+
+        String baseUrl = env.getRequiredProperty(PropertyNames.baseURL);
+        Urls.initUrls(baseUrl,
+            env.getProperty(PropertyNames.superSearchBaseUrl));
     }
 }

@@ -73,7 +73,7 @@
   $(document).ready(function () {
     // Define general variables
     var $body, speedFast, speedSlow, speedVeryFast, speedAutoHide, vpHeight, vpWidth, validateEmail,
-      locale, isIE7, $topRibbon, myConsole, fireSupportVoteGraph, headerNav;
+      locale, isIE6, isIE7, isIE8, $topRibbon, myConsole, fireSupportVoteGraph, headerNav;
 
     $body = $('body');
     speedFast = '200'; // General speeds for animations
@@ -83,7 +83,9 @@
     vpHeight = $(window).height(); // Viewport height
     vpWidth = $(window).width(); // Viewport width
     locale = Init.getLocale();     // Current locale: fi, sv
+    isIE6 = $('html').hasClass('ie6'); // Boolean for IE7. Used browser detection instead of jQuery.support().
     isIE7 = $('html').hasClass('ie7'); // Boolean for IE7. Used browser detection instead of jQuery.support().
+    isIE8 = $('html').hasClass('ie8'); // Boolean for IE7. Used browser detection instead of jQuery.support().
 
     // Console fix for IE
     if (typeof console === "undefined") {
@@ -105,6 +107,12 @@
       setTimeout(function () {
         $('.auto-hide').fadeOut(speedSlow);
       }, speedAutoHide);
+    }
+
+    if (typeof window.showSuperSearch !== 'undefined' && window.showSuperSearch && !isIE6 && !isIE7 && !isIE8) {
+      $(".super-search-placeholder").show();
+      $(".super-search-placeholder").append("<iframe id=\"searchIframe\" src=" + window.superSearchUrl  + " ></iframe>");
+      $(".om-header").hide();
     }
 
     // Validate emails
