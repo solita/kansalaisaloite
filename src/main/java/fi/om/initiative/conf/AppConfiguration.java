@@ -201,7 +201,12 @@ public class AppConfiguration {
                 env.getProperty(PropertyNames.vetumaSharedSecret)
             );
     }
-    
+
+    @Bean
+    public FollowService followService(){
+        return new FollowService();
+    }
+
     @Bean
     public XmlEscape fmXmlEscape() {
         return new XmlEscape();
