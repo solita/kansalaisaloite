@@ -77,7 +77,6 @@ public class BaseController {
         model.addAttribute("infoRibbon", InfoRibbon.getInfoRibbonText(locale));
         model.addAttribute("footerLinks", footerLinkProvider.getFooterLinks(locale));
         model.addAttribute("superSearchEnabled", urls.getSuperSearchUrl()!=null);
-        model.addAttribute("superSearchUrl", urls.getSuperSearchUrl()!=null?urls.getSuperSearchUrl():"");
 
         try {
             model.addAttribute("UrlConstants", freemarkerObjectWrapper.getStaticModels().get(Urls.class.getName()));

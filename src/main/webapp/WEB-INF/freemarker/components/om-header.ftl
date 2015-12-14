@@ -28,7 +28,7 @@
 </style>
 
 <script type="text/javascript">
-
+<#if urls.getSuperSearchBaseUrl()??>
     window.onmessage = function(e){
         if (e.origin === "${urls.getSuperSearchBaseUrl()}") {
             var newHeight = e.data;
@@ -37,7 +37,7 @@
             }
         }
     };
-
+</#if>
 </script>
 
 <div class="super-search-placeholder"></div>
