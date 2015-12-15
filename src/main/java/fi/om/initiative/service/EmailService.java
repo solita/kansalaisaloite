@@ -30,4 +30,11 @@ public interface EmailService {
 
     void sendAuthorRemovedInfoToVEVs(InitiativeManagement initiative, Author removedAuthor, List<String> authorEmails);
 
+    void sendFollowersNotificationAboutEnd(InitiativeManagement initiativeManagement);
+
+    void sendFollowersNotificationAboutVRK(InitiativeManagement initiative);
+
+    void sendFollowersNotificationAboutParliament(InitiativeManagement initiativeManagement);
+
+
 }
