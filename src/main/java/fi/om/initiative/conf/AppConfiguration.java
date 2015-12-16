@@ -157,6 +157,9 @@ public class AppConfiguration {
     @Bean
     public ReviewHistoryDao reviewHistoryDao() {return new ReviewHistoryDaoImpl();}
 
+    @Bean
+    public FollowInitiativeDao followInitiativeDao() {return new FollowInitiativeDaoImpl();}
+
     private PostgresQueryFactory queryFactory() {
         return jdbcConfiguration.queryFactory();
     }
@@ -217,7 +220,12 @@ public class AppConfiguration {
                 env.getProperty(PropertyNames.vetumaSharedSecret)
             );
     }
-    
+
+    @Bean
+    public FollowService followService(){
+        return new FollowService();
+    }
+
     @Bean
     public XmlEscape fmXmlEscape() {
         return new XmlEscape();

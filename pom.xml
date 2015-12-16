@@ -7,8 +7,9 @@
     <groupId>fi.om.initiative</groupId>
     <artifactId>initiative-web</artifactId>
     <name>Aloitepalvelu</name>
-    <version>3.5.1-SNAPSHOT</version>
+    <version>3.5.2-SNAPSHOT</version>
     <packaging>jar</packaging>
+
 
     <properties>
         <finalName>root</finalName>

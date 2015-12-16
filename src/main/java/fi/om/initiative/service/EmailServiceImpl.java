@@ -29,7 +29,6 @@ import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 import javax.annotation.Resource;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
@@ -44,6 +43,8 @@ public class EmailServiceImpl implements EmailService {
     @Resource MessageSource messageSource;
     @Resource JavaMailSender javaMailSender;
     @Resource HashCreator hashCreator;
+
+
     private static final Logger log = LoggerFactory.getLogger(EmailServiceImpl.class);
 
     private final String baseURL;
@@ -62,7 +63,11 @@ public class EmailServiceImpl implements EmailService {
             return super.toString().toLowerCase();
         }
     }
-    
+    private enum FollowerNotificationKey {
+        END,
+        VRK,
+        PARLIAMENT
+    }
     public EmailServiceImpl(FreeMarkerConfigurer freemarkerConfig, MessageSource messageSource, JavaMailSender javaMailSender, 
                         String baseURL, String defaultReplyTo, String sendToOM, String sendToVRK, 
                         int invitationExpirationDays, String testSendTo, boolean testConsoleOutput) {
@@ -188,7 +193,26 @@ public class EmailServiceImpl implements EmailService {
     public void sendAuthorRemovedInfoToVEVs(InitiativeManagement initiative, Author removedAuthor, List<String> authorEmails) {
         sendAuthorStatusInfoToVEVs(initiative, removedAuthor, authorEmails, EmailMessageType.AUTHOR_REMOVED);
     }
-    
+
+    @Override
+    public void sendFollowersNotificationAboutEnd(InitiativeManagement initiativeManagement) {
+        sendFollowersNotificationAbout(initiativeManagement, FollowerNotificationKey.END);
+    }
+
+    @Override
+    public void sendFollowersNotificationAboutVRK(InitiativeManagement initiativeManagement) {
+        sendFollowersNotificationAbout(initiativeManagement, FollowerNotificationKey.VRK);
+    }
+
+    @Override
+    public void sendFollowersNotificationAboutParliament(InitiativeManagement initiativeManagement) {
+        sendFollowersNotificationAbout(initiativeManagement, FollowerNotificationKey.PARLIAMENT);
+    }
+
+    private void sendFollowersNotificationAbout(InitiativeManagement initiative, FollowerNotificationKey about){
+
+    }
+
     private void sendAuthorStatusInfoToVEVs(InitiativeManagement initiative, Author changedAuthor, List<String> authorEmails, EmailMessageType emailMessageType) {
         Assert.notNull(initiative, "initiative");
         Assert.notNull(changedAuthor, "changedAuthor");
