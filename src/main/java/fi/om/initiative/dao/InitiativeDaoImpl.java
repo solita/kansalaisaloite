@@ -35,7 +35,6 @@ import org.slf4j.Logger;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-
 import java.util.List;
 import java.util.Map;
 
@@ -203,6 +202,25 @@ public class InitiativeDaoImpl implements InitiativeDao {
                 }
                 
             };
+
+    private static final MappingProjection<SchemaVersion> flywaySchemaVersionMapping =
+            new MappingProjection<SchemaVersion>(SchemaVersion.class, QFlywaySchema.flywaySchema.all()) {
+
+                private static final long serialVersionUID = -1940230714453573464L;
+
+                @Override
+                protected SchemaVersion map(Tuple tuple) {
+                    if (tuple == null) {
+                        return null;
+                    }
+                    return new SchemaVersion(
+                            tuple.get(QFlywaySchema.flywaySchema.script),
+                            tuple.get(QFlywaySchema.flywaySchema.installedOn)
+                    );
+                }
+
+            };
+
 
     static Expression<?>[] projection(Expression<?> first, Expression<?>... rest) {
         Expression<?>[] fields = new Expression<?>[rest.length + 1];
@@ -976,10 +994,16 @@ public class InitiativeDaoImpl implements InitiativeDao {
     @Override
     @Transactional(readOnly=true)
     public List<SchemaVersion> getSchemaVersions() {
-        PostgresQuery qry = queryFactory
+
+        List<SchemaVersion> oldMigrations = queryFactory
                 .from(qSchemaVersion)
-                .orderBy(qSchemaVersion.executed.asc());
-        return qry.list(schemaVersionMapping);
+                .orderBy(qSchemaVersion.executed.asc()).list(schemaVersionMapping);
+        oldMigrations.addAll(queryFactory.from(QFlywaySchema.flywaySchema)
+                .orderBy(QFlywaySchema.flywaySchema.installedOn.asc())
+                .list(flywaySchemaVersionMapping));
+
+        return oldMigrations;
+
     }
 
     @Override

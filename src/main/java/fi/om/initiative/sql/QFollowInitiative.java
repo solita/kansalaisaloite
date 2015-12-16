@@ -23,13 +23,11 @@ public class QFollowInitiative extends com.mysema.query.sql.RelationalPathBase<Q
 
     public final StringPath email = createString("email");
 
-    public final NumberPath<Long> id = createNumber("id", Long.class);
-
     public final NumberPath<Long> initiativeId = createNumber("initiativeId", Long.class);
 
     public final StringPath unsubscribeHash = createString("unsubscribeHash");
 
-    public final com.mysema.query.sql.PrimaryKey<QFollowInitiative> followInitiativeId = createPrimaryKey(id);
+    public final com.mysema.query.sql.PrimaryKey<QFollowInitiative> followInitiativePkey = createPrimaryKey(initiativeId, email);
 
     public final com.mysema.query.sql.ForeignKey<QInitiative> followInitiativeInitiativeId = createForeignKey(initiativeId, "id");
 
@@ -50,7 +48,6 @@ public class QFollowInitiative extends com.mysema.query.sql.RelationalPathBase<Q
 
     public void addMetadata() {
         addMetadata(email, ColumnMetadata.named("email").ofType(12).withSize(100).notNull());
-        addMetadata(id, ColumnMetadata.named("id").ofType(-5).withSize(19).notNull());
         addMetadata(initiativeId, ColumnMetadata.named("initiative_id").ofType(-5).withSize(19).notNull());
         addMetadata(unsubscribeHash, ColumnMetadata.named("unsubscribe_hash").ofType(12).withSize(40).notNull());
     }

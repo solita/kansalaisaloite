@@ -6,7 +6,6 @@ import com.mysema.query.types.PathMetadata;
 import com.mysema.query.types.path.*;
 
 import javax.annotation.Generated;
-import java.util.Arrays;
 
 import static com.mysema.query.types.PathMetadataFactory.forVariable;
 
@@ -99,7 +98,7 @@ public class QInitiative extends com.mysema.query.sql.RelationalPathBase<QInitia
 
     public final com.mysema.query.sql.ForeignKey<QInitiativeInvitation> _invitationInitiativeIdFk = createInvForeignKey(id, "initiative_id");
 
-    public final com.mysema.query.sql.ForeignKey<QReviewHistory> _reviewHistoryInitiativeId = createInvForeignKey(Arrays.asList(id, id), Arrays.asList("initiative_id", "initiative_id"));
+    public final com.mysema.query.sql.ForeignKey<QReviewHistory> _reviewHistoryInitiativeId = createInvForeignKey(id, "initiative_id");
 
     public final com.mysema.query.sql.ForeignKey<QFollowInitiative> _followInitiativeInitiativeId = createInvForeignKey(id, "initiative_id");
 
