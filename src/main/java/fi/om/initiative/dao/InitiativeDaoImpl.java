@@ -805,6 +805,17 @@ public class InitiativeDaoImpl implements InitiativeDao {
         }
     }
 
+    @Override
+    public List<InitiativeInfo> listInitiativesWithEndDate(LocalDate endDate) {
+
+        PostgresQuery qry = queryFactory
+                .from(qInitiative)
+                .leftJoin(qInitiative._authorInitiativeIdFk, qAuthor)
+                .where(qInitiative.enddate.eq( endDate));
+
+        return qry.list(initiativeInfoMapping);
+    }
+
     private static void generateSearchWhere(MinSupportCountSettings minSupportCountSettings, BooleanBuilder where, Show show) {
         switch (show) {
             case preparation:
