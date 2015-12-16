@@ -35,7 +35,6 @@ import org.slf4j.Logger;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-
 import java.util.List;
 import java.util.Map;
 
@@ -785,6 +784,17 @@ public class InitiativeDaoImpl implements InitiativeDao {
         if (update.execute() != 1) {
             throw new NotFoundException(qInitiative.getTableName(), initiativeId);
         }
+    }
+
+    @Override
+    public List<InitiativeInfo> listInitiativesWithEndDate(LocalDate endDate) {
+
+        PostgresQuery qry = queryFactory
+                .from(qInitiative)
+                .leftJoin(qInitiative._authorInitiativeIdFk, qAuthor)
+                .where(qInitiative.enddate.eq( endDate));
+
+        return qry.list(initiativeInfoMapping);
     }
 
     private static void generateSearchWhere(MinSupportCountSettings minSupportCountSettings, BooleanBuilder where, Show show) {

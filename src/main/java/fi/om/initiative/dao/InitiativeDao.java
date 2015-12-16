@@ -81,4 +81,8 @@ public interface InitiativeDao {
     void updateSendToParliament(Long initiativeId, SendToParliamentData data);
 
     void endInitiative(Long initiativeId, LocalDate endDate);
+
+    List<InitiativeInfo> listInitiativesWithEndDate(LocalDate endDate);
+
+
 }

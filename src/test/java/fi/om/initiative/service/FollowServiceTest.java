@@ -3,10 +3,12 @@ package fi.om.initiative.service;
 
 import fi.om.initiative.conf.IntegrationTestConfiguration;
 import fi.om.initiative.dao.TestHelper;
+import fi.om.initiative.dto.initiative.InitiativeInfo;
 import fi.om.initiative.dto.initiative.InitiativeManagement;
 import fi.om.initiative.dto.initiative.InitiativeState;
 import mockit.Expectations;
 import mockit.Mocked;
+import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -17,6 +19,7 @@ import org.springframework.validation.MapBindingResult;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
+import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -30,7 +33,7 @@ public class FollowServiceTest extends ServiceTestBase {
 
     private Long userId;
 
-    @Mocked
+    @Resource
     FollowService followService;
 
     @Mocked
@@ -49,19 +52,20 @@ public class FollowServiceTest extends ServiceTestBase {
     }
 
     @Test
-    @Ignore
     public void get_initiatives_that_have_ended_yesterday(){
+
+        LocalDate today = LocalDate.now();
 
         final Long initiativeEndedYesterDay = testHelper.create(
                 new TestHelper.InitiativeDraft(userId)
                         .withState(InitiativeState.ACCEPTED)
-                        .isRunning(testHelper.getDbCurrentTime().toLocalDate().minusMonths(6).minusDays(1), testHelper.getDbCurrentTime().toLocalDate().minusDays(1))
+                        .isRunning(today.minusMonths(6).minusDays(1), today.minusDays(1))
 
         );
         final Long initiativeEndedTwoDaysAgo = testHelper.create(
                 new TestHelper.InitiativeDraft(userId)
                         .withState(InitiativeState.ACCEPTED)
-                        .isRunning(testHelper.getDbCurrentTime().toLocalDate().minusMonths(6).minusDays(2), testHelper.getDbCurrentTime().toLocalDate().minusDays(2))
+                        .isRunning(today.minusMonths(6).minusDays(2), today.minusDays(2))
 
         );
         final Long initiativehasNotEnded = testHelper.create(
@@ -71,8 +75,9 @@ public class FollowServiceTest extends ServiceTestBase {
 
         );
 
-        assertThat(followService.getInitiativesThatEndedYesterday().size(), is(1));
-        assertThat(followService.getInitiativesThatEndedYesterday().get(0).getId(), is(initiativeEndedYesterDay));
+        List<InitiativeInfo> endedYesterday = followService.getInitiativesThatEndedYesterday();
+        assertThat(endedYesterday.size(), is(1));
+        assertThat(endedYesterday.get(0).getId(), is(initiativeEndedYesterDay));
 
     }
 
