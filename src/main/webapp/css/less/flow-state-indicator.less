@@ -17,7 +17,7 @@
         display:table-cell;
         vertical-align:middle;
         height:70px;
-        padding: 0px 10px 0 30px;
+        padding: 0px 15px 0 30px;
 
         background:url("@{imagesPath}/flow-state-indicator.png?version=${timestamp}") no-repeat right -75px;
     }
@@ -26,10 +26,15 @@
     .flow-state-step {
         display: table;
         float: left;
-        width: 25%;
+        max-width: 27%;
         position: relative;
 
         background:url("@{imagesPath}/flow-state-indicator.png?version=${timestamp}") no-repeat left 0;
+
+        @media @md {
+            max-width: 23%;
+            font-size: 14px;
+        }
 
         &.active {
             background-position:left -150px;

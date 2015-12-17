@@ -629,9 +629,12 @@ a.block-link {
 }
 
 .input-block-content {
-    width: 585px;
+    width: 72%;
     position:relative;
     margin-top:2em;
+    @media @xs, @sm {
+        width: 100%;
+    }
 }
 
 .initiative-finance-url-area, .initiative-external-support-count {
