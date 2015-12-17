@@ -14,6 +14,14 @@ public class FollowInitiativeDaoImpl implements  FollowInitiativeDao{
 
     @Override
     public void addFollow(Long initiativeId, String email, String hash) {
+
+        if (queryFactory.from(QFollowInitiative.followInitiative)
+                .where(QFollowInitiative.followInitiative.email.eq(email))
+                .where(QFollowInitiative.followInitiative.initiativeId.eq(initiativeId))
+                .count() != 0) {
+            throw new DuplicateException("Already following initiative.");
+        }
+
         queryFactory.insert(QFollowInitiative.followInitiative)
                 .set(QFollowInitiative.followInitiative.email, email)
                 .set(QFollowInitiative.followInitiative.unsubscribeHash, hash)

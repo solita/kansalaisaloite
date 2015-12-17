@@ -1,7 +1,6 @@
 package fi.om.initiative.dao;
 
 
-import com.mysema.query.QueryException;
 import fi.om.initiative.conf.IntegrationTestConfiguration;
 import fi.om.initiative.dto.initiative.InitiativeState;
 import org.junit.Before;
@@ -69,14 +68,11 @@ public class JdbcFollowInitiativeDaoTest {
 
             followInitiativeDao.addFollow(initiativeId, TESTEMAIL, RANDOM_HASH);
             followers = followInitiativeDao.listFollowers(initiativeId);
-        } catch (QueryException e) {
-            e.printStackTrace();
-        }finally {
-            assertThat(followers.values(), hasSize(before +1));
+        } catch (DuplicateException e) {
+
         }
 
-
-
+        assertThat(followers.values(), hasSize(before +1));
     }
 
     @Test
