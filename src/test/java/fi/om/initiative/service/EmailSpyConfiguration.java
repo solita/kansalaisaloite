@@ -3,7 +3,6 @@ package fi.om.initiative.service;
 import com.google.common.collect.Lists;
 import fi.om.initiative.conf.IntegrationTestConfiguration;
 import fi.om.initiative.util.TaskExecutorAspect;
-import jdk.nashorn.internal.ir.annotations.Ignore;
 import mockit.Delegate;
 import mockit.Mocked;
 import mockit.NonStrictExpectations;
@@ -25,7 +24,6 @@ import static org.junit.Assert.fail;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes={IntegrationTestConfiguration.class})
-@Ignore
 public abstract class EmailSpyConfiguration {
 
     public static final int WAIT_FOR_EMAILS_TO_BE_SENT = 10000;
@@ -63,7 +61,6 @@ public abstract class EmailSpyConfiguration {
                 @SuppressWarnings("unused")
                 public void send(MimeMessage message) throws MessagingException {
 
-                    System.out.println(message.getSubject());
                     sentEmails.add(message);
                 }
 

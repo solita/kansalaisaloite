@@ -192,7 +192,7 @@ public class TestHelper {
                 .set(qInitiative.acceptanceidentifier, initiativeDraft.acceptedByOm ? "acceptance number" : null)
                 .set(qInitiative.enddate, endDate)
                 .set(qInitiative.state, initiativeDraft.state)
-                .set(qInitiative.modifierId, initiativeDraft.userId)
+                .set(qInitiative.modifierId, initiativeDraft.representativeId)
                 .set(qInitiative.supportcount, initiativeDraft.supportCount)
                 .set(qInitiative.proposaltype, ProposalType.LAW)
                 .set(qInitiative.nameFi, initiativeDraft.name)
@@ -207,7 +207,7 @@ public class TestHelper {
         Long initiativeId = insert.executeWithKey(qInitiative.id);
 
         queryFactory.insert(initiativeAuthor)
-                .set(initiativeAuthor.userId, initiativeDraft.userId)
+                .set(initiativeAuthor.userId, initiativeDraft.representativeId)
                 .set(initiativeAuthor.initiativeId, initiativeId)
                 .set(initiativeAuthor.lastname, randomAlphabetic(10))
                 .set(initiativeAuthor.firstnames, randomAlphabetic(10))
@@ -221,6 +221,22 @@ public class TestHelper {
 
         return initiativeId;
 
+    }
+
+    @Transactional
+    public void makeAuthorFor(Long initiativeId, String email, AuthorRole role, Long userId) {
+        queryFactory.insert(initiativeAuthor)
+                .set(initiativeAuthor.userId, userId)
+                .set(initiativeAuthor.initiativeId, initiativeId)
+                .set(initiativeAuthor.lastname, randomAlphabetic(10))
+                .set(initiativeAuthor.firstnames, randomAlphabetic(10))
+                .set(initiativeAuthor.homemunicipalityFi, "Helsinki")
+                .set(initiativeAuthor.homemunicipalitySv, "Helsinki")
+                .set(initiativeAuthor.role, role)
+                .set(initiativeAuthor.confirmed, DateTime.now())
+                .set(initiativeAuthor.initiator, role == AuthorRole.INITIATOR)
+                .set(initiativeAuthor.email, email)
+                .execute();
     }
 
     @Transactional(readOnly = false)
@@ -280,7 +296,7 @@ public class TestHelper {
         public static final String DEFAULT_NAME = "dummy name";
         public static final String DEFAULT_DENORMALIZED_SUPPORTCOUNT_DATA = "some-uninitialized-data";
 
-        private Long userId;
+        private Long representativeId;
         private String name = DEFAULT_NAME;
         private InitiativeState state = InitiativeState.ACCEPTED;
         private Boolean running = true;
@@ -290,8 +306,8 @@ public class TestHelper {
         private LocalDate endTime;
         private boolean hasDenormalizedSupportCounts = false;
 
-        public InitiativeDraft(Long userId) {
-            this.userId = userId;
+        public InitiativeDraft(Long representativeId) {
+            this.representativeId = representativeId;
         }
 
         public InitiativeDraft withState(InitiativeState state) {

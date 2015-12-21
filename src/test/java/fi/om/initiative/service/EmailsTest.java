@@ -3,6 +3,7 @@ package fi.om.initiative.service;
 
 import fi.om.initiative.dao.TestHelper;
 import fi.om.initiative.dto.User;
+import fi.om.initiative.dto.author.AuthorRole;
 import fi.om.initiative.dto.initiative.InitiativeState;
 import fi.om.initiative.web.HttpUserServiceImpl;
 import mockit.Delegate;
@@ -28,6 +29,9 @@ public class EmailsTest extends EmailSpyConfiguration {
 
     @Resource
     private SupportVoteService supportVoteService;
+
+    @Resource
+    private InitiativeService initiativeService;
 
     @Before
     public void init() {
@@ -64,6 +68,27 @@ public class EmailsTest extends EmailSpyConfiguration {
 
         assertSentEmailCount(1);
         assertSentEmail("kansalaisaloite.tarkastus@vrk.fi", "Kannatusilmoitusten määrän vahvistuspyyntö / Ansökan om bekräftelse av antalet stödförklaringar");
+    }
+
+    @Test
+    public void sending_initiative_to_review_sends_email_to_om() {
+
+        final Long initiative = testHelper.create(
+                new TestHelper.InitiativeDraft(userId)
+                        .withName("Testialoite")
+                        .withState(InitiativeState.PROPOSAL)
+        );
+
+        testHelper.makeAuthorFor(initiative, "initiator@example.com", AuthorRole.INITIATOR, testHelper.createTestUser());
+        testHelper.makeAuthorFor(initiative, "reserve@example.com", AuthorRole.RESERVE, testHelper.createTestUser());
+
+        initiativeService.sendToOM(initiative);
+
+        assertSentEmailCount(3);
+        assertSentEmail("kansalaisaloite.tarkastus@om.fi", "Kansalaisaloite tarkastettavaksi: Testialoite / Ett medborgarinitiativ för granskning: Testialoite");
+        assertSentEmail("initiator@example.com", "Aloite on lähetetty tarkastettavaksi oikeusministeriön / Medborgarinitiativet har skickats till justitieministeriet för granskning");
+        assertSentEmail("reserve@example.com", "Aloite on lähetetty tarkastettavaksi oikeusministeriön / Medborgarinitiativet har skickats till justitieministeriet för granskning");
+
     }
 
 }
