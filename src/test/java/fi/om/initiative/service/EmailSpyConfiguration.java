@@ -19,6 +19,10 @@ import javax.mail.Session;
 import javax.mail.internet.MimeMessage;
 import java.util.List;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasSize;
+import static org.junit.Assert.fail;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes={IntegrationTestConfiguration.class})
 @Ignore
@@ -85,9 +89,35 @@ public abstract class EmailSpyConfiguration {
         }
     }
 
-    public List<MimeMessage> getAllSentEmails() {
+    protected List<MimeMessage> getAllSentEmails() {
         waitUntilQueueEmpty();
         return sentEmails;
+    }
+
+    protected  void assertSentEmail(String to, String subject) {
+        StringBuilder sentEmails = new StringBuilder();
+        for (MimeMessage mimeMessage : getAllSentEmails()) {
+            try {
+                if (mimeMessage.getSubject().equals(subject)
+                        && mimeMessage.getAllRecipients()[0].toString().equals(to)) {
+                    return;
+                }
+                sentEmails
+                        .append("\n")
+                        .append(mimeMessage.getAllRecipients()[0].toString())
+                        .append(": ")
+                        .append(mimeMessage.getSubject());
+            } catch (MessagingException e) {
+                throw new RuntimeException("Something wrong with mimemessage");
+            }
+        }
+
+        fail("Email to " + to + " with subject '" + subject + "' not sent. Emails sent: " + sentEmails.toString());
+
+    }
+
+    protected void assertSentEmailCount(int i) {
+        assertThat(getAllSentEmails(), hasSize(i));
     }
 
 }

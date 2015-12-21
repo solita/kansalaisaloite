@@ -14,14 +14,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import javax.annotation.Resource;
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
-import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasSize;
-import static org.junit.Assert.fail;
 
 public class EmailsTest extends EmailSpyConfiguration {
 
@@ -69,38 +62,8 @@ public class EmailsTest extends EmailSpyConfiguration {
 
         supportVoteService.sendToVRK(initiative);
 
-        List<MimeMessage> allSentEmails = getAllSentEmails();
-        assertThat(allSentEmails, hasSize(1));
-
-        assertSentMessageCount(1);
-        assertSentMessage("kansalaisaloite.tarkastus@vrk.fi", "Kannatusilmoitusten määrän vahvistuspyyntö / Ansökan om bekräftelse av antalet stödförklaringar");
+        assertSentEmailCount(1);
+        assertSentEmail("kansalaisaloite.tarkastus@vrk.fi", "Kannatusilmoitusten määrän vahvistuspyyntö / Ansökan om bekräftelse av antalet stödförklaringar");
     }
 
-    private void assertSentMessage(String email, String subject) {
-        StringBuilder sentEmails = new StringBuilder();
-        for (MimeMessage mimeMessage : getAllSentEmails()) {
-            try {
-                if (mimeMessage.getSubject().equals(subject)
-                        && mimeMessage.getAllRecipients()[0].toString().equals(email)) {
-                    return;
-                }
-                sentEmails
-                        .append("\n")
-                        .append(mimeMessage.getAllRecipients()[0].toString())
-                        .append(": ")
-                        .append(mimeMessage.getSubject());
-            } catch (MessagingException e) {
-                throw new RuntimeException("Something wrong with mimemessage");
-            }
-        }
-
-
-        fail("Email to " + email + " with subject '" + subject + "' not sent. Emails sent: " + sentEmails.toString());
-
-
-    }
-
-    private void assertSentMessageCount(int i) {
-        assertThat(getAllSentEmails(), hasSize(i));
-    }
 }
