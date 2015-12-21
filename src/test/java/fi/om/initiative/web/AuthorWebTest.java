@@ -3,11 +3,9 @@ package fi.om.initiative.web;
 import fi.om.initiative.conf.PropertyNames;
 import fi.om.initiative.dto.Invitation;
 import fi.om.initiative.dto.initiative.InitiativeManagement;
-import fi.om.initiative.service.EmailServiceImpl;
 import fi.om.initiative.service.HashCreator;
 import fi.om.initiative.util.MutableObject;
 import mockit.Delegate;
-import mockit.Mocked;
 import mockit.NonStrictExpectations;
 import org.joda.time.LocalDate;
 import org.junit.Test;
@@ -25,7 +23,7 @@ public class AuthorWebTest extends WebTestBase {
     
 //    private static final Municipality HELSINKI = new Municipality("90", "Helsinki", "Helsingfors");
     
-    @Mocked EmailServiceImpl emailService;
+
 
     /**
      * Localization keys as constants.

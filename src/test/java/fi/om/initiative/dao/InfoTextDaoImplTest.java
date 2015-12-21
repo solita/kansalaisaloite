@@ -1,16 +1,12 @@
 package fi.om.initiative.dao;
 
-import fi.om.initiative.conf.IntegrationTestConfiguration;
 import fi.om.initiative.dto.*;
+import fi.om.initiative.service.EmailSpyConfiguration;
 import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
-
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.not;
@@ -18,9 +14,7 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.internal.matchers.StringContains.containsString;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes={IntegrationTestConfiguration.class})
-public class InfoTextDaoImplTest {
+public class InfoTextDaoImplTest extends EmailSpyConfiguration {
 
     public static final String URI_FI = "uri_fi";
     public static final String URI_SV = "uri_sv";

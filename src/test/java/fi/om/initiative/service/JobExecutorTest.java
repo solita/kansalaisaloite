@@ -1,15 +1,11 @@
 package fi.om.initiative.service;
 
-import fi.om.initiative.conf.IntegrationTestConfiguration;
 import fi.om.initiative.dao.SupportVoteDao;
 import fi.om.initiative.dao.TestHelper;
 import fi.om.initiative.dto.initiative.InitiativeState;
 import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
 
@@ -17,9 +13,7 @@ import static fi.om.initiative.dao.TestHelper.InitiativeDraft.DEFAULT_DENORMALIZ
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes={IntegrationTestConfiguration.class})
-public class JobExecutorTest {
+public class JobExecutorTest extends EmailSpyConfiguration {
 
     @Resource
     private JobExecutor jobExecutor;

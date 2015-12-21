@@ -1,13 +1,10 @@
 package fi.om.initiative.dao;
 
 
-import fi.om.initiative.conf.IntegrationTestConfiguration;
 import fi.om.initiative.dto.initiative.InitiativeState;
+import fi.om.initiative.service.EmailSpyConfiguration;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
@@ -16,10 +13,9 @@ import java.util.Map;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes={IntegrationTestConfiguration.class})
+
 @Transactional(readOnly = false)
-public class JdbcFollowInitiativeDaoTest {
+public class JdbcFollowInitiativeDaoTest extends EmailSpyConfiguration {
 
     public static final String TESTEMAIL = "test@test.fi";
     public static final String RANDOM_HASH = "randomHash";

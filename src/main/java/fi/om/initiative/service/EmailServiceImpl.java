@@ -63,11 +63,7 @@ public class EmailServiceImpl implements EmailService {
             return super.toString().toLowerCase();
         }
     }
-    private enum FollowerNotificationKey {
-        END,
-        VRK,
-        PARLIAMENT
-    }
+
     public EmailServiceImpl(FreeMarkerConfigurer freemarkerConfig, MessageSource messageSource, JavaMailSender javaMailSender, 
                         String baseURL, String defaultReplyTo, String sendToOM, String sendToVRK, 
                         int invitationExpirationDays, String testSendTo, boolean testConsoleOutput) {
@@ -194,25 +190,6 @@ public class EmailServiceImpl implements EmailService {
         sendAuthorStatusInfoToVEVs(initiative, removedAuthor, authorEmails, EmailMessageType.AUTHOR_REMOVED);
     }
 
-    @Override
-    public void sendFollowersNotificationAboutEnd(InitiativeManagement initiativeManagement) {
-        sendFollowersNotificationAbout(initiativeManagement, FollowerNotificationKey.END);
-    }
-
-    @Override
-    public void sendFollowersNotificationAboutVRK(InitiativeManagement initiativeManagement) {
-        sendFollowersNotificationAbout(initiativeManagement, FollowerNotificationKey.VRK);
-    }
-
-    @Override
-    public void sendFollowersNotificationAboutParliament(InitiativeManagement initiativeManagement) {
-        sendFollowersNotificationAbout(initiativeManagement, FollowerNotificationKey.PARLIAMENT);
-    }
-
-    private void sendFollowersNotificationAbout(InitiativeManagement initiative, FollowerNotificationKey about){
-
-    }
-
     private void sendAuthorStatusInfoToVEVs(InitiativeManagement initiative, Author changedAuthor, List<String> authorEmails, EmailMessageType emailMessageType) {
         Assert.notNull(initiative, "initiative");
         Assert.notNull(changedAuthor, "changedAuthor");
@@ -258,6 +235,19 @@ public class EmailServiceImpl implements EmailService {
         sendStatusInfoToVEVs(initiative, getConfirmedAuthorEmails(initiative.getAuthors()), emailMessageType, dataMap);
     }
 
+    @Override
+    public void sendFollowersNotificationsAbout(FollowerNotificationType type, InitiativeManagement initiative, List<String> followers) {
+
+        String emailSubject = getEmailSubject("follow.info." + type);
+
+        Map<String, Object> dataMap = initMap(initiative);
+        addEnum(EmailMessageType.class, dataMap);
+        dataMap.put("type", type);
+
+        sendEmails(followers, null, emailSubject, "follow.info", dataMap);
+
+    }
+
     private void sendStatusInfoToVEVs(InitiativeBase initiative, List<String> authorEmails, EmailMessageType emailMessageType, Map<String, Object> dataMap) {
         Assert.notNull(initiative, "initiative");
 
@@ -287,6 +277,7 @@ public class EmailServiceImpl implements EmailService {
     }
     
     private Map<String, Object> initMap(InitiativeBase initiative, AuthorInfo currentAuthor) {
+
         Map<String, Object> dataMap = new HashMap<String, Object>();
         dataMap.put("baseURL", baseURL);
         dataMap.put("urlsFi", Urls.get(Locales.LOCALE_FI));
@@ -333,9 +324,9 @@ public class EmailServiceImpl implements EmailService {
     private void sendEmail(String sendTo, String replyTo, String subject, String templateName,  Map<String, Object> dataMap) {
         Assert.notNull(sendTo, "sendTo");
 
-        String text = processTemplate(templateName + "-text", dataMap); 
-        String html = processTemplate(templateName + "-html", dataMap); 
-        
+        String text = processTemplate(templateName + "-text", dataMap);
+        String html = processTemplate(templateName + "-html", dataMap);
+
         text = stripTextRows(text, 2);
         
         if (testSendTo != null) {

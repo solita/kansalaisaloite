@@ -5,7 +5,9 @@ import fi.om.initiative.StartJetty;
 import fi.om.initiative.conf.PropertyNames;
 import fi.om.initiative.conf.WebTestConfiguration;
 import fi.om.initiative.dao.TestHelper;
+import fi.om.initiative.service.EmailServiceImpl;
 import fi.om.initiative.util.Locales;
+import mockit.Mocked;
 import org.eclipse.jetty.server.Server;
 import org.joda.time.ReadablePeriod;
 import org.joda.time.format.ISOPeriodFormat;
@@ -43,8 +45,12 @@ public abstract class WebTestBase {
     
     @Resource 
     protected TestHelper testHelper;
+
     @Resource 
     protected MessageSource messageSource;
+
+    @Mocked
+    EmailServiceImpl emailService;
 
     protected Urls urls;
     

@@ -1,21 +1,18 @@
 package fi.om.initiative.dao;
 
 import com.google.common.collect.Lists;
-import fi.om.initiative.conf.IntegrationTestConfiguration;
 import fi.om.initiative.dto.*;
 import fi.om.initiative.dto.author.Author;
 import fi.om.initiative.dto.author.ContactInfo;
 import fi.om.initiative.dto.initiative.*;
 import fi.om.initiative.dto.search.InitiativeSearch;
 import fi.om.initiative.dto.search.SearchView;
+import fi.om.initiative.service.EmailSpyConfiguration;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.Years;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
@@ -25,9 +22,7 @@ import java.util.List;
 import static fi.om.initiative.util.Locales.asLocalizedString;
 import static junit.framework.Assert.*;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes={IntegrationTestConfiguration.class})
-public class InitiativeDaoTest {
+public class InitiativeDaoTest extends EmailSpyConfiguration {
 
     @Resource
     private InitiativeDao initiativeDao;

@@ -9,6 +9,7 @@ import fi.om.initiative.dto.InfoTextCategory;
 import fi.om.initiative.dto.LanguageCode;
 import fi.om.initiative.dto.LocalizedString;
 import fi.om.initiative.dto.ProposalType;
+import fi.om.initiative.dto.author.AuthorRole;
 import fi.om.initiative.dto.initiative.InitiativeInfo;
 import fi.om.initiative.dto.initiative.InitiativeManagement;
 import fi.om.initiative.dto.initiative.InitiativeState;
@@ -24,7 +25,9 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static fi.om.initiative.sql.QInitiativeAuthor.initiativeAuthor;
 import static fi.om.initiative.util.Locales.asLocalizedString;
+import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 
 public class TestHelper {
 
@@ -58,7 +61,7 @@ public class TestHelper {
     public void dbCleanup() {
         queryFactory.delete(QSupportVote.supportVote).execute();
         queryFactory.delete(QSupportVoteBatch.supportVoteBatch).execute();
-        queryFactory.delete(QInitiativeAuthor.initiativeAuthor).execute();
+        queryFactory.delete(initiativeAuthor).execute();
         queryFactory.delete(QInitiativeSupportVoteDay.initiativeSupportVoteDay).execute();
         queryFactory.delete(QReviewHistory.reviewHistory).execute();
         queryFactory.delete(QInitiative.initiative).execute();
@@ -201,7 +204,22 @@ public class TestHelper {
             insert.set(qInitiative.supportCountData, InitiativeDraft.DEFAULT_DENORMALIZED_SUPPORTCOUNT_DATA);
         }
 
-        return insert.executeWithKey(qInitiative.id);
+        Long initiativeId = insert.executeWithKey(qInitiative.id);
+
+        queryFactory.insert(initiativeAuthor)
+                .set(initiativeAuthor.userId, initiativeDraft.userId)
+                .set(initiativeAuthor.initiativeId, initiativeId)
+                .set(initiativeAuthor.lastname, randomAlphabetic(10))
+                .set(initiativeAuthor.firstnames, randomAlphabetic(10))
+                .set(initiativeAuthor.homemunicipalityFi, "Helsinki")
+                .set(initiativeAuthor.homemunicipalitySv, "Helsinki")
+                .set(initiativeAuthor.role, AuthorRole.REPRESENTATIVE)
+                .set(initiativeAuthor.confirmed, DateTime.now())
+                .set(initiativeAuthor.initiator, false)
+                .set(initiativeAuthor.phone, "040")
+                .execute();
+
+        return initiativeId;
 
     }
 

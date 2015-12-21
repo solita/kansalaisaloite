@@ -1,6 +1,5 @@
 package fi.om.initiative.service;
 
-import fi.om.initiative.conf.IntegrationTestConfiguration;
 import fi.om.initiative.dao.SupportVoteDao;
 import fi.om.initiative.dto.SupportVote;
 import fi.om.initiative.dto.initiative.InitiativeState;
@@ -11,18 +10,14 @@ import mockit.Expectations;
 import mockit.Mocked;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.validation.Errors;
 import org.springframework.validation.SmartValidator;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes={IntegrationTestConfiguration.class})
+
 public class SupportVoteServiceTest extends ServiceTestBase {
     
     @Mocked SupportVoteDao supportVoteDao;
