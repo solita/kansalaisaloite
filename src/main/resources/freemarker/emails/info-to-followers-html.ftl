@@ -4,9 +4,12 @@
 
 <#escape x as x?html>
 
+    <#if type == FollowerNotificationType.SENT_TO_VRK>
+        <#assign titleHTMLFi>Aloitteen vastuuhenkilö on lähettänyt aloitteen kannatusilmoitukset Väestörekisterikeskuksen tarkastettavaksi.</#assign>
+        <#assign titleHTMLSv>Ansvarspersonen för initiativet har skickat stödförklaringarna till Befolkningsregistercentralen för kontroll.</#assign>
+    </#if>
 
-    <#assign titleHTMLFi>Otsikko</#assign>
-    <#assign titleHTMLSv>Otsikko SV</#assign>
+
 
     <@el.emailHtml "info-to-followers" statusTitleHTMLFi!"">
 

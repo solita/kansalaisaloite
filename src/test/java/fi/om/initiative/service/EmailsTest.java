@@ -90,7 +90,7 @@ public class EmailsTest extends EmailSpyConfiguration {
 
         assertSentEmailCount(2);
         assertSentEmail("kansalaisaloite.tarkastus@vrk.fi", "Kannatusilmoitusten määrän vahvistuspyyntö / Ansökan om bekräftelse av antalet stödförklaringar");
-        assertSentEmail("follower@example.com", "Kannatusilmoitukset lähetetty VRK:lle / Pliplop");
+        assertSentEmail("follower@example.com", "Seuraamasi kansalaisaloitteen tila on muuttunut / Pliplop");
     }
 
     @Test

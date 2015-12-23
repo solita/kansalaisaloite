@@ -241,7 +241,7 @@ public class EmailServiceImpl implements EmailService {
         String emailSubject = getEmailSubject("follow.info." + type);
 
         Map<String, Object> dataMap = initMap(initiative);
-        addEnum(EmailMessageType.class, dataMap);
+        addEnum(FollowerNotificationType.class, dataMap);
         dataMap.put("type", type);
 
         sendEmails(followers, null, emailSubject, "info-to-followers", dataMap);
