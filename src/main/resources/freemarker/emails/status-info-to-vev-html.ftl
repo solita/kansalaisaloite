@@ -7,12 +7,12 @@
 <#-- Use statusTitleHTMLFi and statusInfoHTMLFi for HTML message -->
 <#include "../includes/status-info.ftl" />
 
-<@el.emailHtml "status-info-to-vev" statusTitleHTMLFi!"">
+<@el.emailHtml "status-info-to-vev" "Jee okei">
 
     <#-- FINNISH -->
-    <@eb.emailTemplate "fi" statusTitleHTMLFi!"">
+    <@eb.emailTemplate "fi" "Jotain tekstiä">
         <@eb.initiativeDetails "fi" "html" />
-        <#noescape>${statusInfoHTMLFi!""}</#noescape>
+        <#noescape>"Otsake</#noescape>
         <@eb.emailBottom "fi" "html" />
     </@eb.emailTemplate>
     

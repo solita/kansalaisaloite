@@ -4,8 +4,7 @@ import com.mysema.query.sql.postgres.PostgresQueryFactory;
 import fi.om.initiative.sql.QFollowInitiative;
 
 import javax.annotation.Resource;
-import java.util.Map;
-
+import java.util.List;
 
 
 public class FollowInitiativeDaoImpl implements  FollowInitiativeDao{
@@ -38,9 +37,9 @@ public class FollowInitiativeDaoImpl implements  FollowInitiativeDao{
     }
 
     @Override
-    public Map<String, String> listFollowers(Long initiativeId) {
+    public List<String> listFollowers(Long initiativeId) {
         return queryFactory.from(QFollowInitiative.followInitiative)
                 .where(QFollowInitiative.followInitiative.initiativeId.eq(initiativeId))
-                .map(QFollowInitiative.followInitiative.email, QFollowInitiative.followInitiative.unsubscribeHash);
+                .list(QFollowInitiative.followInitiative.email);
     }
 }

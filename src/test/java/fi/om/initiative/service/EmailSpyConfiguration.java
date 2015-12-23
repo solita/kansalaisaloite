@@ -16,6 +16,7 @@ import javax.annotation.Resource;
 import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.internet.MimeMessage;
+import java.io.IOException;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -37,7 +38,7 @@ public abstract class EmailSpyConfiguration {
     private List<MimeMessage> sentEmails = Lists.newArrayList();
 
     @Before
-    public void setupEmailSpy() throws InterruptedException {
+    public void setupEmailSpy() throws InterruptedException, IOException {
 
         waitUntilQueueEmpty();
         new NonStrictExpectations() {{
@@ -115,7 +116,6 @@ public abstract class EmailSpyConfiguration {
 
     protected void assertSentEmailCount(int i) {
         List<MimeMessage> allSentEmails = getAllSentEmails();
-        System.out.println(allSentEmails.size());
         assertThat(allSentEmails, hasSize(i));
     }
 

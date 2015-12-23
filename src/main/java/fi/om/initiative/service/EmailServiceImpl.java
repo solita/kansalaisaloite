@@ -244,7 +244,7 @@ public class EmailServiceImpl implements EmailService {
         addEnum(EmailMessageType.class, dataMap);
         dataMap.put("type", type);
 
-        sendEmails(followers, null, emailSubject, "follow.info", dataMap);
+        sendEmails(followers, null, emailSubject, "info-to-followers", dataMap);
 
     }
 

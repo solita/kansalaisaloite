@@ -15,6 +15,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import javax.annotation.Resource;
+import javax.mail.MessagingException;
+import java.io.IOException;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class EmailsTest extends EmailSpyConfiguration {
@@ -72,7 +74,7 @@ public class EmailsTest extends EmailSpyConfiguration {
     }
 
     @Test
-    public void send_initiative_to_vrk_sends_emails_to_followers() {
+    public void send_initiative_to_vrk_sends_emails_to_followers() throws IOException, MessagingException {
 
         final Long initiative = testHelper.create(
                 new TestHelper.InitiativeDraft(userId)

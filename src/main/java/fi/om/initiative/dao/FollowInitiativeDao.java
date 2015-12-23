@@ -1,7 +1,7 @@
 package fi.om.initiative.dao;
 
 
-import java.util.Map;
+import java.util.List;
 
 public interface FollowInitiativeDao {
 
@@ -9,5 +9,5 @@ public interface FollowInitiativeDao {
 
     void removeFollow(String hash);
 
-    Map<String, String> listFollowers(Long initiativeId);
+    List<String> listFollowers(Long initiativeId);
 }

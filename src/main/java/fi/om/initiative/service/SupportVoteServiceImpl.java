@@ -3,6 +3,7 @@ package fi.om.initiative.service;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.mysema.commons.lang.Assert;
+import fi.om.initiative.dao.FollowInitiativeDao;
 import fi.om.initiative.dao.SupportVoteDao;
 import fi.om.initiative.dto.*;
 import fi.om.initiative.dto.initiative.InitiativeBase;
@@ -32,18 +33,27 @@ public class SupportVoteServiceImpl implements SupportVoteService {
     private static final User ANON = new User();
     
     static DateTimeFormatter VRK_DTF = DateTimeFormat.forPattern("yyyyMMdd");
-    
-    @Resource UserService userService;
 
-    @Resource SupportVoteDao supportVoteDao;
+    @Resource
+    UserService userService;
 
-    @Resource EmailService emailService;
-    
-    @Resource EncryptionService encryptionService;
-    
-    @Resource InitiativeService initiativeService;
+    @Resource
+    SupportVoteDao supportVoteDao;
 
-    @Resource InitiativeSettings initiativeSettings;
+    @Resource
+    EmailService emailService;
+
+    @Resource
+    EncryptionService encryptionService;
+
+    @Resource
+    InitiativeService initiativeService;
+
+    @Resource
+    InitiativeSettings initiativeSettings;
+
+    @Resource
+    FollowInitiativeDao followInitiativeDao;
     
     public SupportVoteServiceImpl() {}
     
@@ -172,11 +182,13 @@ public class SupportVoteServiceImpl implements SupportVoteService {
         if (!managementSettings.isAllowSendToVRK()) {
             throw new AccessDeniedException("Not allowed for current user or current state");
         }
-        
+
         int batchSize = supportVoteDao.createBatch(initiativeId);
         
         emailService.sendNotificationToVRK(initiative, batchSize);
         emailService.sendStatusInfoToVEVs(initiative, EmailMessageType.SENT_TO_VRK);
+
+        emailService.sendFollowersNotificationsAbout(FollowerNotificationType.SENT_TO_VRK, initiative, followInitiativeDao.listFollowers(initiativeId));
 
         initiativeService.endInitiative(initiativeId);
         
