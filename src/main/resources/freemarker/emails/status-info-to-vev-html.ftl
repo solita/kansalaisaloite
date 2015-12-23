@@ -5,24 +5,24 @@
 <#escape x as x?html>
 
 <#-- Use statusTitleHTMLFi and statusInfoHTMLFi for HTML message -->
-<#include "../includes/status-info.ftl" />
+    <#include "../includes/status-info.ftl" />
 
-<@el.emailHtml "status-info-to-vev" "Jee okei">
+    <@el.emailHtml "status-info-to-vev" statusTitleHTMLFi!"">
 
     <#-- FINNISH -->
-    <@eb.emailTemplate "fi" "Jotain tekstiä">
-        <@eb.initiativeDetails "fi" "html" />
-        <#noescape>"Otsake</#noescape>
-        <@eb.emailBottom "fi" "html" />
-    </@eb.emailTemplate>
-    
-    <#-- SWEDISH -->      
-    <@eb.emailTemplate "sv" statusTitleHTMLSv!"">
-        <@eb.initiativeDetails "sv" "html" />
-        <#noescape>${statusInfoHTMLSv!""}</#noescape>
-        <@eb.emailBottom "sv" "html" />
-    </@eb.emailTemplate>
-    
-</@el.emailHtml>
+        <@eb.emailTemplate "fi" statusTitleHTMLFi!"">
+            <@eb.initiativeDetails "fi" "html" />
+            <#noescape>${statusInfoHTMLFi!""}</#noescape>
+            <@eb.emailBottom "fi" "html" />
+        </@eb.emailTemplate>
+
+    <#-- SWEDISH -->
+        <@eb.emailTemplate "sv" statusTitleHTMLSv!"">
+            <@eb.initiativeDetails "sv" "html" />
+            <#noescape>${statusInfoHTMLSv!""}</#noescape>
+            <@eb.emailBottom "sv" "html" />
+        </@eb.emailTemplate>
+
+    </@el.emailHtml>
 
 </#escape> 
