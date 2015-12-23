@@ -19,7 +19,7 @@ import javax.mail.internet.MimeMessage;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.junit.Assert.fail;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -114,7 +114,9 @@ public abstract class EmailSpyConfiguration {
     }
 
     protected void assertSentEmailCount(int i) {
-        assertThat(getAllSentEmails(), hasSize(i));
+        List<MimeMessage> allSentEmails = getAllSentEmails();
+        System.out.println(allSentEmails.size());
+        assertThat(allSentEmails, hasSize(i));
     }
 
 }

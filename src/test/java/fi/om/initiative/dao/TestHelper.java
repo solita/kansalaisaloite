@@ -64,6 +64,7 @@ public class TestHelper {
         queryFactory.delete(initiativeAuthor).execute();
         queryFactory.delete(QInitiativeSupportVoteDay.initiativeSupportVoteDay).execute();
         queryFactory.delete(QReviewHistory.reviewHistory).execute();
+        queryFactory.delete(QFollowInitiative.followInitiative).execute();
         queryFactory.delete(QInitiative.initiative).execute();
         queryFactory.delete(QInituser.inituser).execute();
         queryFactory.delete(QInfoText.infoText).execute();
@@ -288,6 +289,16 @@ public class TestHelper {
                 .set(QSupportVote.supportVote.initiativeId, initiativeId)
                 .set(QSupportVote.supportVote.supportid, RandomStringUtils.random(64));
         insert.execute();
+
+    }
+
+    @Transactional(readOnly = false)
+    public void addFollower(Long initiative, String email) {
+        queryFactory.insert(QFollowInitiative.followInitiative)
+                .set(QFollowInitiative.followInitiative.initiativeId, initiative)
+                .set(QFollowInitiative.followInitiative.email, email)
+                .set(QFollowInitiative.followInitiative.unsubscribeHash, randomAlphabetic(20))
+                .execute();
 
     }
 

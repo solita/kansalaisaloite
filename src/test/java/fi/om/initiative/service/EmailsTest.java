@@ -62,12 +62,33 @@ public class EmailsTest extends EmailSpyConfiguration {
 
         );
 
+        // There must be at least one support to avoid EmptyBatchException. It's ok to throw it, because in production its really a problem if batch is empty.
         testHelper.createSupport(initiative, LocalDate.now());
 
         supportVoteService.sendToVRK(initiative);
 
         assertSentEmailCount(1);
         assertSentEmail("kansalaisaloite.tarkastus@vrk.fi", "Kannatusilmoitusten määrän vahvistuspyyntö / Ansökan om bekräftelse av antalet stödförklaringar");
+    }
+
+    @Test
+    public void send_initiative_to_vrk_sends_emails_to_followers() {
+
+        final Long initiative = testHelper.create(
+                new TestHelper.InitiativeDraft(userId)
+                        .withState(InitiativeState.ACCEPTED)
+                        .withSupportCount(50001)
+
+        );
+
+        testHelper.createSupport(initiative, LocalDate.now());
+        testHelper.addFollower(initiative, "follower@example.com");
+
+        supportVoteService.sendToVRK(initiative);
+
+        assertSentEmailCount(2);
+        assertSentEmail("kansalaisaloite.tarkastus@vrk.fi", "Kannatusilmoitusten määrän vahvistuspyyntö / Ansökan om bekräftelse av antalet stödförklaringar");
+        assertSentEmail("follower@example.com", "Kannatusilmoitukset lähetetty VRK:lle / Pliplop");
     }
 
     @Test
