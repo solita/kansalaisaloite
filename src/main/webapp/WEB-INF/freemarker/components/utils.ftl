@@ -461,4 +461,46 @@ ${email?split("@")?first}&#064;<span class="hide">null</span>${email?split("@")?
     </#if>
 </#macro>
 
+<#macro mobileSearch >
+    <div class="open-filters"><b><@message "mobile.open.search.filters" /></b> <span class="arrow"></span> </br>
+        <@message "mobile.filters.selected"/>&nbsp;
+    </div>
+
+    <div class="search-options-mobile">
+      <div class="search-parameters-wrapper">
+        <form action="${springMacroRequestContext.requestUri}" method="get">
+
+            <h3><@message "mobile.open.search.status"/></h3>
+            <@mobileCheckBox path=currentSearch.show  prefix="withStateAll" name="show" value="all" id="show-all"  />
+            <@mobileCheckBox path=currentSearch.show  prefix="withStateWaiting" name="show" value="starting" id="starting"  />
+            <@mobileCheckBox path=currentSearch.show  prefix="withStateRunning" name="show" value="ongoing" id="ongoing"  />
+            <@mobileCheckBox path=currentSearch.show  prefix="withStateEnded" name="show" value="ended" id="ended"  />
+            <@mobileCheckBox path=currentSearch.show  prefix="withStateSentToParliament" name="show" value="delivered" id="delivered"  />
+
+          <br/>
+          <h3><@message "searchOptions.sort" /></h3>
+            <h4><@message "mobile.open.search.sort.bytime" /></h4>
+            <@mobileCheckBox path=currentSearch.orderBy prefix="withOrderByMostTimeLeft" name="orderBy" value="latest" id="latest"  />
+            <@mobileCheckBox path=currentSearch.orderBy prefix="withOrderByLeastSupports" name="orderBy" value="oldest" id="oldest"  />
+
+            <h4><@message "mobile.open.search.sort.bypolls" /></h4>
+            <@mobileCheckBox path=currentSearch.orderBy prefix="withOrderByMostSupports" name="orderBy" value="mostParticipants" id="mostParticipants"  />
+            <@mobileCheckBox path=currentSearch.orderBy prefix="withOrderByLeastSupports" name="orderBy" value="leastParticipants" id="leastParticipants"  />
+
+          <input class="run-search-mobile" type="submit" value="OK">
+
+        </form>
+      </div>
+    </div>
+</#macro>
+
+<#macro mobileCheckBox path prefix name value id cssClass="">
+    <input type="radio" id=${id} name=${name} value=${value}
+        <#if (path == value)>
+            checked
+        </#if>>
+    </input>
+    <label for=${id}><@message key="searchParameters."+prefix /></label>
+</#macro>
+
 </#escape>

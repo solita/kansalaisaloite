@@ -147,6 +147,8 @@
         </div>
     </#if>
 
+    <@u.mobileSearch />
+
     <div class="search-results">
     <#if initiatives?? && (initiatives?size > 0)>
         <#list initiatives as initiative>
@@ -169,7 +171,6 @@
                 <span class="support-votes-details">
 
                     <span class="support-votes">${totalSupportCount}</span>
-
 
                     <#if (initiative.supportCount > 0)>
                         <#assign args><span class="internal-count">${initiative.supportCount}</span></#assign>
