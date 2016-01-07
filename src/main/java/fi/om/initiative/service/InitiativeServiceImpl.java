@@ -2,6 +2,7 @@ package fi.om.initiative.service;
 
 import com.google.common.collect.Sets;
 import com.mysema.commons.lang.Assert;
+import fi.om.initiative.dao.FollowInitiativeDao;
 import fi.om.initiative.dao.InitiativeDao;
 import fi.om.initiative.dao.NotFoundException;
 import fi.om.initiative.dao.ReviewHistoryDao;
@@ -36,7 +37,6 @@ import org.springframework.validation.SmartValidator;
 
 import javax.annotation.Nullable;
 import javax.annotation.Resource;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -65,6 +65,9 @@ public class InitiativeServiceImpl implements InitiativeService {
     @Resource HashCreator hashCreator;
 
     @Resource ReviewHistoryDao reviewHistoryDao;
+
+    @Resource
+    private FollowInitiativeDao followInitiativeDao;
 
     private final int invitationCodeLength = 12; // Multiples of 3 work best
     
@@ -745,14 +748,20 @@ public class InitiativeServiceImpl implements InitiativeService {
 
         InitiativeManagement persistedInitiative = initiativeDao.getInitiativeForManagement(initiative.getId(), true);
         ManagementSettings managementSettings = initiativeSettings.getManagementSettings(persistedInitiative, user);
-        
+
+
+        System.out.println(managementSettings.isAllowRespondByVRK());
         if (managementSettings.isAllowRespondByVRK() && validate(initiative, user, bindingResult, VRK.class)) {
             initiativeDao.updateVRKResolution(
                     initiative.getId(), 
                     initiative.getVerifiedSupportCount(),
                     initiative.getVerified(),
                     initiative.getVerificationIdentifier(), user.getId());
-            emailService.sendVRKResolutionToVEVs(initiativeDao.getInitiativeForManagement(initiative.getId(), false));
+            InitiativeManagement initiativeAfterUpdating = initiativeDao.getInitiativeForManagement(initiative.getId(), false);
+
+            emailService.sendVRKResolutionToVEVs(initiativeAfterUpdating);
+
+            emailService.sendFollowersNotificationsAbout(FollowerNotificationType.RESPONDED_BY_VRK, initiativeAfterUpdating, followInitiativeDao.listFollowers(initiativeAfterUpdating.getId()));
 
             log(METHOD_NAME, initiative.getId(), user, true);
             return true;

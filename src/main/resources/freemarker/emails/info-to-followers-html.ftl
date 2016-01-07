@@ -9,6 +9,11 @@
         <#assign titleHTMLSv>Ansvarspersonen för initiativet har skickat stödförklaringarna till Befolkningsregistercentralen för kontroll.</#assign>
     </#if>
 
+    <#if type == FollowerNotificationType.RESPONDED_BY_VRK>
+        <#assign titleHTMLFi>Väestörekisterikeskus on vahvistanut kannatusilmoitusten määrän</#assign>
+        <#assign titleHTMLSv>Befolkningsregistercentralen har bekräftat antalet stödförklaringar</#assign>
+    </#if>
+
 
 
     <@el.emailHtml "info-to-followers" statusTitleHTMLFi!"">

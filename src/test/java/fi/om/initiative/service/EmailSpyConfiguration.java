@@ -92,6 +92,11 @@ public abstract class EmailSpyConfiguration {
         return sentEmails;
     }
 
+    protected void clearAllSentEmails() {
+        waitUntilQueueEmpty();
+        sentEmails.clear();
+    }
+
     protected  void assertSentEmail(String to, String subject) {
         StringBuilder sentEmails = new StringBuilder();
         for (MimeMessage mimeMessage : getAllSentEmails()) {

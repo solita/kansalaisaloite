@@ -4,6 +4,7 @@ package fi.om.initiative.service;
 import fi.om.initiative.dao.TestHelper;
 import fi.om.initiative.dto.User;
 import fi.om.initiative.dto.author.AuthorRole;
+import fi.om.initiative.dto.initiative.InitiativeManagement;
 import fi.om.initiative.dto.initiative.InitiativeState;
 import fi.om.initiative.web.HttpUserServiceImpl;
 import mockit.Delegate;
@@ -13,11 +14,15 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.validation.Errors;
 
 import javax.annotation.Resource;
 import javax.mail.MessagingException;
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
 
 public class EmailsTest extends EmailSpyConfiguration {
 
@@ -46,7 +51,7 @@ public class EmailsTest extends EmailSpyConfiguration {
                 private AtomicInteger count = new AtomicInteger(0);
                 @SuppressWarnings("unused")
                 public User getUserInRole(Role... roles) {
-                    return new User(userId, DateTime.now(), "Joku", "Käyttäjä", new LocalDate(1990, 1, 1), false, false);
+                    return new User(userId, DateTime.now(), "Kaikki", "Oikeudet", new LocalDate(1990, 1, 1), true, true);
                 }
             };
             times = -1;
@@ -90,7 +95,40 @@ public class EmailsTest extends EmailSpyConfiguration {
 
         assertSentEmailCount(2);
         assertSentEmail("kansalaisaloite.tarkastus@vrk.fi", "Kannatusilmoitusten määrän vahvistuspyyntö / Ansökan om bekräftelse av antalet stödförklaringar");
-        assertSentEmail("follower@example.com", "Seuraamasi kansalaisaloitteen tila on muuttunut / Pliplop");
+        assertSentEmail("follower@example.com", "Pyyntö kannatusilmoitusten tarkastamisesta on lähetetty Väestörekisterikeskukseen / Begäran om att kontrollera stödförklaringarna har skickats till Befolkningsregistercentralen");
+    }
+
+    @Test
+    public void vrk_accept_supports_sents_email_to_followers() {
+
+        final Long initiative = testHelper.create(
+                new TestHelper.InitiativeDraft(userId)
+                        .withState(InitiativeState.ACCEPTED)
+                        .withSupportCount(50001)
+
+        );
+
+        testHelper.createSupport(initiative, LocalDate.now());
+        supportVoteService.sendToVRK(initiative);
+        clearAllSentEmails();
+
+        // Action and assertion
+
+        testHelper.addFollower(initiative, "follower@example.com");
+
+        InitiativeManagement vrkData = new InitiativeManagement(initiative);
+        // = initiativeService.getInitiativeForManagement(initiative);
+
+        vrkData.setVerificationIdentifier("lol");
+        vrkData.setVerified(LocalDate.now());
+        vrkData.setVerifiedSupportCount(10);
+
+        assertTrue(initiativeService.updateVRKResolution(vrkData, mock(Errors.class)));
+
+        assertSentEmailCount(1);
+        assertSentEmail("follower@example.com", "Väestörekisterikeskus on vahvistanut kannatusilmoitusten määrän / Befolkningsregistercentralen har bekräftat antalet stödförklaringar");
+
+
     }
 
     @Test
