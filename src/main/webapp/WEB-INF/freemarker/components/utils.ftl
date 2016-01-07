@@ -480,8 +480,8 @@ ${email?split("@")?first}&#064;<span class="hide">null</span>${email?split("@")?
           <br/>
           <h3><@message "searchOptions.sort" /></h3>
             <h4><@message "mobile.open.search.sort.bytime" /></h4>
-            <@mobileCheckBox path=currentSearch.orderBy prefix="withOrderByMostTimeLeft" name="orderBy" value="createdNewest" id="latest"  />
-            <@mobileCheckBox path=currentSearch.orderBy prefix="withOrderByLeastSupports" name="orderBy" value="createdOldest" id="oldest"  />
+            <@mobileCheckBox path=currentSearch.orderBy prefix="withOrderByMostTimeLeft" name="orderBy" value="mostTimeLeft" id="latest"  />
+            <@mobileCheckBox path=currentSearch.orderBy prefix="withOrderByLeastSupports" name="orderBy" value="leastTimeLeft" id="oldest"  />
 
             <h4><@message "mobile.open.search.sort.bypolls" /></h4>
             <@mobileCheckBox path=currentSearch.orderBy prefix="withOrderByMostSupports" name="orderBy" value="mostSupports" id="mostParticipants"  />
