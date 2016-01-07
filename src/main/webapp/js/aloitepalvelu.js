@@ -11,14 +11,14 @@
    */
   if ($(".search-options-mobile").length > 0) {
     (function () {
-      var filtersWidth = "100%", filtersHeight = "100%";
-      var filters = $(".search-options-mobile"),
-        pageWrapper = $("#wrapper"),
-        content = $("#content"),
-        container = $(".container"),
-        resultList = $(".search-results"),
-        footer = $(".om-footer"),
-        paginationBottom = $(".pagination .bottom");
+      var filtersWidth = "100%", filtersHeight = "100%",
+          filters = $(".search-options-mobile"),
+          pageWrapper = $("#wrapper"),
+          content = $("#content"),
+          container = $(".container"),
+          resultList = $(".search-results"),
+          footer = $(".om-footer"),
+          paginationBottom = $(".pagination .bottom");
 
       var contentPaddingBottom = content.css("padding-bottom");
 

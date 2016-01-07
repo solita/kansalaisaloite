@@ -227,7 +227,7 @@
         margin:  0 auto;
         color: white;
         padding: 7px 50px 7px 15px ;
-        background-color: @mainColorLight;
+        background-color: @mainColor;
         border-radius: 2px;
         position: relative;
         box-sizing: border-box;
@@ -265,7 +265,7 @@
         padding: 0;
         top: 10px;
         border: none;
-        background-color: @mainColorLight;
+        background-color: @mainColor;
         color: white;
 
 
@@ -280,12 +280,16 @@
 
             }
         }
-        input[type=radio] {
+        input[type=radio],
+        input[type=checkbox]{
             display: none;
         }
         label {
             padding: 5px 0;
             margin: 1em 0;
+            font-weight: normal;
+            position: relative;
+            cursor: pointer;
         }
         label:before  {
             content: "";
@@ -296,14 +300,29 @@
             margin-right: 10px;
             background-color: white;
             border-radius: 10px;
-
         }
-        input[type=radio]:checked  + label:before {
-
+        input[type=radio]:checked  + label:before,
+        input[type=checkbox]:checked  + label:before {
             border: solid 5px @mainColorDark;
-            height: 10px;
-            width: 10px;
-
+            height: 20px;
+            width: 20px;
+        }
+        input[type=checkbox]:checked  + label:before,
+        input[type=checkbox]  + label:before{
+            border-radius: 0px;
+            border: 0;
+        }
+        input[type=checkbox]:checked  + label:after {
+            position: absolute;
+            top: 7px;
+            left: 1px;
+            content: "\e013";
+            font-family: 'Glyphicons Halflings';
+            font-style: normal;
+            font-weight: 400;
+            line-height: 1;
+            -webkit-font-smoothing: antialiased;
+            color: @mainColor;
 
         }
         .run-search-mobile {
@@ -320,13 +339,14 @@
 
         }
         .search-parameters-wrapper {
-            padding: 10px;
+            padding: 30px 20px;
 
             h3 {
-                margin: 2px 0 0 0;
+                margin: 2px 0 1em 0;
                 font-weight: bold;
                 font-size: 14px;
                 color: white;
+                text-transform: uppercase;
             }
 
             .search-filters-title {
