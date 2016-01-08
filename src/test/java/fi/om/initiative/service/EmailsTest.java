@@ -109,9 +109,9 @@ public class EmailsTest extends EmailSpyConfiguration {
 
         initiativeService.updateSendToParliament(omToParliament, mock(BindingResult.class));
 
-//        assertSentEmailCount(2);
-//        assertSentEmail(followerEmail, "Aloite on lähetetty eduskuntaan / Initiativet har skickats till riksdagen");
-//        assertSentEmail(authorEmail, "Aloite on lähetetty eduskuntaan / Initiativet har skickats till riksdagen");
+        assertSentEmailCount(2);
+        assertSentEmail(followerEmail, "Aloite on lähetetty eduskuntaan / Initiativet har skickats till riksdagen");
+        assertSentEmail(authorEmail, "Aloite on lähetetty eduskuntaan / Initiativet har skickats till riksdagen");
 
     }
 

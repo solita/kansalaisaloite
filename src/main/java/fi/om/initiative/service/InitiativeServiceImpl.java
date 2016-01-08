@@ -474,7 +474,9 @@ public class InitiativeServiceImpl implements InitiativeService {
             data.setParliamentIdentifier(initiative.getParliamentIdentifier());
             data.setParliamentSentTime(initiative.getParliamentSentTime());
             initiativeDao.updateSendToParliament(initiative.getId(), data);
-            emailService.sendStatusInfoToVEVs(initiativeDao.getInitiativeForManagement(initiative.getId(), false), EmailMessageType.SENT_TO_PARLIAMENT);
+            InitiativeManagement initiativeAfterUpdate = initiativeDao.getInitiativeForManagement(initiative.getId(), false);
+            emailService.sendStatusInfoToVEVs(initiativeAfterUpdate, EmailMessageType.SENT_TO_PARLIAMENT);
+            emailService.sendStatusInfoToFollowers(initiativeAfterUpdate, EmailMessageType.SENT_TO_PARLIAMENT, followInitiativeDao.listFollowers(initiative.getId()));
         }
     }
 
