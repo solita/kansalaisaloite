@@ -11,18 +11,21 @@
    */
   if ($(".search-options-mobile").length > 0) {
     (function () {
-      var filtersWidth = "100%", filtersHeight = "100%";
-      var filters = $(".search-options-mobile"),
+      var filtersWidth = "100%",
+        filtersHeight = "100%",
+        filters = $(".search-options-mobile"),
         pageWrapper = $("#wrapper"),
         content = $("#content"),
         container = $(".container"),
         resultList = $(".search-results"),
         footer = $(".om-footer"),
-        paginationBottom = $(".pagination .bottom");
+        paginationBottom = $(".pagination .bottom"),
+        contentPaddingBottom = content.css("padding-bottom"),
+        openSearchFilter,
+        closeSearchFilter;
 
-      var contentPaddingBottom = content.css("padding-bottom");
 
-      var openSearchFilter = function () {
+      openSearchFilter = function () {
         filters.addClass("open");
 
         $(".chzn-container-multi").css("width", filtersWidth);
@@ -38,7 +41,7 @@
         paginationBottom.hide();
 
       };
-      var closeSearchFilter = function () {
+      closeSearchFilter = function () {
         filters.removeClass("open");
 
         pageWrapper.height("auto");
@@ -59,7 +62,7 @@
         }
 
       });
-    })();
+    }());
   }
 
   /**
