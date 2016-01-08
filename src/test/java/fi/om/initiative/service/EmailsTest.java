@@ -80,7 +80,7 @@ public class EmailsTest extends EmailSpyConfiguration {
 
         assertSentEmailCount(3);
         assertSentEmail("kansalaisaloite.tarkastus@vrk.fi", "Kannatusilmoitusten määrän vahvistuspyyntö / Ansökan om bekräftelse av antalet stödförklaringar");
-        assertSentEmail(followerEmail, "Pyyntö kannatusilmoitusten tarkastamisesta on lähetetty Väestörekisterikeskukseen / Begäran om att kontrollera stödförklaringarna har skickats till Befolkningsregistercentralen");
+        assertSentEmail(followerEmail, "Kannatusilmoitusten tarkastuspyyntö on lähetetty Väestörekisterikeskukseen / Ansökan om att granska stödförklaringarna har skickats till Befolkningsregistercentralen");
         assertSentEmail(authorEmail, "Kannatusilmoitusten tarkastuspyyntö on lähetetty Väestörekisterikeskukseen / Ansökan om att granska stödförklaringarna har skickats till Befolkningsregistercentralen");
         clearAllSentEmails();
 
@@ -110,8 +110,8 @@ public class EmailsTest extends EmailSpyConfiguration {
         initiativeService.updateSendToParliament(omToParliament, mock(BindingResult.class));
 
 //        assertSentEmailCount(2);
-//        assertSentEmail(followerEmail, "Väestörekisterikeskus on vahvistanut kannatusilmoitusten määrän / Befolkningsregistercentralen har bekräftat antalet stödförklaringar");
-//        assertSentEmail(authorEmail, "Väestörekisterikeskus on vahvistanut kannatusilmoitusten määrän / Befolkningsregistercentralen har bekräftat antalet stödförklaringar");
+//        assertSentEmail(followerEmail, "Aloite on lähetetty eduskuntaan / Initiativet har skickats till riksdagen");
+//        assertSentEmail(authorEmail, "Aloite on lähetetty eduskuntaan / Initiativet har skickats till riksdagen");
 
     }
 

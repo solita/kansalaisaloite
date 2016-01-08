@@ -759,9 +759,8 @@ public class InitiativeServiceImpl implements InitiativeService {
                     initiative.getVerificationIdentifier(), user.getId());
             InitiativeManagement initiativeAfterUpdating = initiativeDao.getInitiativeForManagement(initiative.getId(), false);
 
-            emailService.sendVRKResolutionToVEVs(initiativeAfterUpdating);
-
-            // emailService.sendFollowersNotificationsAbout(FollowerNotificationType.RESPONDED_BY_VRK, initiativeAfterUpdating, followInitiativeDao.listFollowers(initiativeAfterUpdating.getId()));
+            emailService.sendStatusInfoToVEVs(initiativeAfterUpdating, EmailMessageType.VRK_RESOLUTION);
+            emailService.sendStatusInfoToFollowers(initiativeAfterUpdating, EmailMessageType.VRK_RESOLUTION, followInitiativeDao.listFollowers(initiative.getId()));
 
             log(METHOD_NAME, initiative.getId(), user, true);
             return true;

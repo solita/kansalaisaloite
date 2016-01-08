@@ -3,9 +3,11 @@ package fi.om.initiative.service;
 import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.mysema.commons.lang.Assert;
+import fi.om.initiative.dto.Follower;
 import fi.om.initiative.dto.Invitation;
 import fi.om.initiative.dto.author.Author;
 import fi.om.initiative.dto.author.AuthorInfo;
@@ -236,6 +238,40 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
+    public void sendStatusInfoToFollowers(InitiativeManagement initiative, EmailMessageType emailMessageType, List<Follower> followers) {
+
+        Map<String, Object> baseDataMap = initMap(initiative);
+
+        addEnum(EmailMessageType.class, baseDataMap);
+        baseDataMap.put("emailMessageType", emailMessageType);
+
+        ImmutableMap<String, Object> dataMap = new ImmutableMap.Builder<String, Object>().putAll(baseDataMap).build();
+
+        String emailSubject = getEmailSubject("status.info." + emailMessageType);
+
+        for (Follower follower : followers) {
+            ImmutableMap<String, Object> dataMapWithUnsubscribeHash = new ImmutableMap.Builder<String, Object>()
+                    .putAll(dataMap)
+                    .put("unsubscribeHash", follower.unsubscribeHash)
+                    .build();
+            sendEmail(follower.email, null, emailSubject, "status-info-to-vev", dataMapWithUnsubscribeHash);
+        }
+
+        // Fuuuuu. Want immutability.
+
+        // (run!
+        //   #(send-email
+        //     (:email %)
+        //     email-subject
+        //     "status-info-to-vev"
+        //     (merge
+        //       (initMap initiative)
+        //       (select-keys % [:unsubscribeHash])))
+        //   followers)
+
+    }
+
+    @Override
     public void sendFollowersNotificationsAbout(FollowerNotificationType type, InitiativeManagement initiative, List<String> followers) {
 
         String emailSubject = getEmailSubject("follow.info." + type);
@@ -380,11 +416,6 @@ public class EmailServiceImpl implements EmailService {
         } catch (TemplateException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    @Override
-    public void sendVRKResolutionToVEVs(InitiativeManagement initiative) {
-        sendStatusInfoToVEVs(initiative, EmailMessageType.VRK_RESOLUTION);
     }
 
     private String stripTextRows(String text, int maxEmptyRows) {

@@ -186,9 +186,9 @@ public class SupportVoteServiceImpl implements SupportVoteService {
         int batchSize = supportVoteDao.createBatch(initiativeId);
         
         emailService.sendNotificationToVRK(initiative, batchSize);
-        emailService.sendStatusInfoToVEVs(initiative, EmailMessageType.SENT_TO_VRK);
 
-        // emailService.sendFollowersNotificationsAbout(FollowerNotificationType.SENT_TO_VRK, initiative, followInitiativeDao.listFollowers(initiativeId));
+        emailService.sendStatusInfoToVEVs(initiative, EmailMessageType.SENT_TO_VRK);
+        emailService.sendStatusInfoToFollowers(initiative, EmailMessageType.SENT_TO_VRK, followInitiativeDao.listFollowers(initiativeId));
 
         initiativeService.endInitiative(initiativeId);
         
