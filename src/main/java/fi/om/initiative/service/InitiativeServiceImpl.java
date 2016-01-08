@@ -761,7 +761,7 @@ public class InitiativeServiceImpl implements InitiativeService {
 
             emailService.sendVRKResolutionToVEVs(initiativeAfterUpdating);
 
-            emailService.sendFollowersNotificationsAbout(FollowerNotificationType.RESPONDED_BY_VRK, initiativeAfterUpdating, followInitiativeDao.listFollowers(initiativeAfterUpdating.getId()));
+            // emailService.sendFollowersNotificationsAbout(FollowerNotificationType.RESPONDED_BY_VRK, initiativeAfterUpdating, followInitiativeDao.listFollowers(initiativeAfterUpdating.getId()));
 
             log(METHOD_NAME, initiative.getId(), user, true);
             return true;

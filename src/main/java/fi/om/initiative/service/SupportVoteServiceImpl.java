@@ -188,7 +188,7 @@ public class SupportVoteServiceImpl implements SupportVoteService {
         emailService.sendNotificationToVRK(initiative, batchSize);
         emailService.sendStatusInfoToVEVs(initiative, EmailMessageType.SENT_TO_VRK);
 
-        emailService.sendFollowersNotificationsAbout(FollowerNotificationType.SENT_TO_VRK, initiative, followInitiativeDao.listFollowers(initiativeId));
+        // emailService.sendFollowersNotificationsAbout(FollowerNotificationType.SENT_TO_VRK, initiative, followInitiativeDao.listFollowers(initiativeId));
 
         initiativeService.endInitiative(initiativeId);
         

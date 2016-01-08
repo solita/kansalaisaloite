@@ -1,13 +1,15 @@
 package fi.om.initiative.dao;
 
 
+import fi.om.initiative.dto.Follower;
+
 import java.util.List;
 
 public interface FollowInitiativeDao {
 
-    void addFollow(Long initiativeId, String email, String hash);
+    void addFollow(Long initiativeId, Follower follower);
 
     void removeFollow(String hash);
 
-    List<String> listFollowers(Long initiativeId);
+    List<Follower> listFollowers(Long initiativeId);
 }

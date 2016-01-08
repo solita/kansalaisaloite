@@ -1,6 +1,7 @@
 package fi.om.initiative.dao;
 
 
+import fi.om.initiative.dto.Follower;
 import fi.om.initiative.dto.initiative.InitiativeState;
 import fi.om.initiative.service.EmailSpyConfiguration;
 import org.junit.Before;
@@ -8,7 +9,9 @@ import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.List;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.Assert.assertThat;
 
@@ -42,19 +45,23 @@ public class JdbcFollowInitiativeDaoTest extends EmailSpyConfiguration {
     public void follow_initiative() {
 
         String hash = RANDOM_HASH;
-        followInitiativeDao.addFollow(initiativeId, TESTEMAIL, hash);
+        followInitiativeDao.addFollow(initiativeId, new Follower(TESTEMAIL, hash));
 
-        assertThat(followInitiativeDao.listFollowers(initiativeId), hasSize(1));
+        List<Follower> follower = followInitiativeDao.listFollowers(initiativeId);
+        assertThat(follower, hasSize(1));
+
+        assertThat(follower.get(0).email, is(TESTEMAIL));
+        assertThat(follower.get(0).unsubscribeHash, is(hash));
 
     }
 
     @Test
     public void cant_follow_initiative_twice() {
 
-        followInitiativeDao.addFollow(initiativeId, TESTEMAIL, RANDOM_HASH);
+        followInitiativeDao.addFollow(initiativeId, new Follower(TESTEMAIL, RANDOM_HASH));
 
         try{
-            followInitiativeDao.addFollow(initiativeId, TESTEMAIL, RANDOM_HASH);
+            followInitiativeDao.addFollow(initiativeId, new Follower(TESTEMAIL, RANDOM_HASH));
         } catch (DuplicateException e) {
 
         }
@@ -65,7 +72,7 @@ public class JdbcFollowInitiativeDaoTest extends EmailSpyConfiguration {
     @Test
     public void remove_follow() {
 
-        followInitiativeDao.addFollow(initiativeId, TESTEMAIL, RANDOM_HASH);
+        followInitiativeDao.addFollow(initiativeId, new Follower(TESTEMAIL, RANDOM_HASH));
 
         assertThat(followInitiativeDao.listFollowers(initiativeId), hasSize(1));
 
