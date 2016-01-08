@@ -11,6 +11,7 @@
    */
   if ($(".search-options-mobile").length > 0) {
     (function () {
+
       var filtersWidth = "100%",
         filtersHeight = "100%",
         filters = $(".search-options-mobile"),
