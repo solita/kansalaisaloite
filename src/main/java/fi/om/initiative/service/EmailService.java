@@ -31,7 +31,5 @@ public interface EmailService {
 
     void sendAuthorRemovedInfoToVEVs(InitiativeManagement initiative, Author removedAuthor, List<String> authorEmails);
 
-    void sendFollowersNotificationsAbout(FollowerNotificationType type, InitiativeManagement initiative, List<String> followers);
-
 
 }

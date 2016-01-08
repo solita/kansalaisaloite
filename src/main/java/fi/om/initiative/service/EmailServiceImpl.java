@@ -271,19 +271,6 @@ public class EmailServiceImpl implements EmailService {
 
     }
 
-    @Override
-    public void sendFollowersNotificationsAbout(FollowerNotificationType type, InitiativeManagement initiative, List<String> followers) {
-
-        String emailSubject = getEmailSubject("follow.info." + type);
-
-        Map<String, Object> dataMap = initMap(initiative);
-        addEnum(FollowerNotificationType.class, dataMap);
-        dataMap.put("type", type);
-
-        sendEmails(followers, null, emailSubject, "info-to-followers", dataMap);
-
-    }
-
     private void sendStatusInfoToVEVs(InitiativeBase initiative, List<String> authorEmails, EmailMessageType emailMessageType, Map<String, Object> dataMap) {
         Assert.notNull(initiative, "initiative");
 
