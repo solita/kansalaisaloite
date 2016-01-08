@@ -14,11 +14,10 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 
 import javax.annotation.Resource;
-import javax.mail.MessagingException;
-import java.io.IOException;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.junit.Assert.assertTrue;
@@ -60,74 +59,59 @@ public class EmailsTest extends EmailSpyConfiguration {
     }
 
     @Test
-    public void send_initiative_to_vrk_sends_email_to_vrk() throws InterruptedException {
+    public void emails_after_publication_are_sent() {
+
+        String followerEmail = "follower@example.com";
+        String authorEmail = "author@example.com";
 
         final Long initiative = testHelper.create(
-                new TestHelper.InitiativeDraft(userId)
+                new TestHelper.InitiativeDraft(userId, authorEmail)
                         .withState(InitiativeState.ACCEPTED)
                         .withSupportCount(50001)
 
         );
 
-        // There must be at least one support to avoid EmptyBatchException. It's ok to throw it, because in production its really a problem if batch is empty.
         testHelper.createSupport(initiative, LocalDate.now());
+        testHelper.addFollower(initiative, followerEmail);
+
+        // When sent to VRK: Assert that emails to VRK and follower are sent
 
         supportVoteService.sendToVRK(initiative);
 
-        assertSentEmailCount(1);
+        assertSentEmailCount(3);
         assertSentEmail("kansalaisaloite.tarkastus@vrk.fi", "Kannatusilmoitusten määrän vahvistuspyyntö / Ansökan om bekräftelse av antalet stödförklaringar");
-    }
-
-    @Test
-    public void send_initiative_to_vrk_sends_emails_to_followers() throws IOException, MessagingException {
-
-        final Long initiative = testHelper.create(
-                new TestHelper.InitiativeDraft(userId)
-                        .withState(InitiativeState.ACCEPTED)
-                        .withSupportCount(50001)
-
-        );
-
-        testHelper.createSupport(initiative, LocalDate.now());
-        testHelper.addFollower(initiative, "follower@example.com");
-
-        supportVoteService.sendToVRK(initiative);
-
-        assertSentEmailCount(2);
-        assertSentEmail("kansalaisaloite.tarkastus@vrk.fi", "Kannatusilmoitusten määrän vahvistuspyyntö / Ansökan om bekräftelse av antalet stödförklaringar");
-        assertSentEmail("follower@example.com", "Pyyntö kannatusilmoitusten tarkastamisesta on lähetetty Väestörekisterikeskukseen / Begäran om att kontrollera stödförklaringarna har skickats till Befolkningsregistercentralen");
-    }
-
-    @Test
-    public void vrk_accept_supports_sents_email_to_followers() {
-
-        final Long initiative = testHelper.create(
-                new TestHelper.InitiativeDraft(userId)
-                        .withState(InitiativeState.ACCEPTED)
-                        .withSupportCount(50001)
-
-        );
-
-        testHelper.createSupport(initiative, LocalDate.now());
-        supportVoteService.sendToVRK(initiative);
+        assertSentEmail(followerEmail, "Pyyntö kannatusilmoitusten tarkastamisesta on lähetetty Väestörekisterikeskukseen / Begäran om att kontrollera stödförklaringarna har skickats till Befolkningsregistercentralen");
+        assertSentEmail(authorEmail, "Kannatusilmoitusten tarkastuspyyntö on lähetetty Väestörekisterikeskukseen / Ansökan om att granska stödförklaringarna har skickats till Befolkningsregistercentralen");
         clearAllSentEmails();
 
-        // Action and assertion
-
-        testHelper.addFollower(initiative, "follower@example.com");
+        // When accepted by VRK: Assert that emails for follower are sent
 
         InitiativeManagement vrkData = new InitiativeManagement(initiative);
-        // = initiativeService.getInitiativeForManagement(initiative);
 
         vrkData.setVerificationIdentifier("lol");
         vrkData.setVerified(LocalDate.now());
-        vrkData.setVerifiedSupportCount(10);
+        vrkData.setVerifiedSupportCount(51000);
 
         assertTrue(initiativeService.updateVRKResolution(vrkData, mock(Errors.class)));
 
-        assertSentEmailCount(1);
-        assertSentEmail("follower@example.com", "Väestörekisterikeskus on vahvistanut kannatusilmoitusten määrän / Befolkningsregistercentralen har bekräftat antalet stödförklaringar");
+        assertSentEmailCount(2);
+        assertSentEmail(followerEmail, "Väestörekisterikeskus on vahvistanut kannatusilmoitusten määrän / Befolkningsregistercentralen har bekräftat antalet stödförklaringar");
+        assertSentEmail(authorEmail, "Väestörekisterikeskus on vahvistanut kannatusilmoitusten määrän / Befolkningsregistercentralen har bekräftat antalet stödförklaringar");
 
+        clearAllSentEmails();
+
+        // When marking as sent to parliament, assert that emails are sent.
+
+        InitiativeManagement omToParliament = new InitiativeManagement(initiative);
+        omToParliament.setParliamentURL("url");
+        omToParliament.setParliamentIdentifier("identifier");
+        omToParliament.setParliamentSentTime(LocalDate.now());
+
+        initiativeService.updateSendToParliament(omToParliament, mock(BindingResult.class));
+
+//        assertSentEmailCount(2);
+//        assertSentEmail(followerEmail, "Väestörekisterikeskus on vahvistanut kannatusilmoitusten määrän / Befolkningsregistercentralen har bekräftat antalet stödförklaringar");
+//        assertSentEmail(authorEmail, "Väestörekisterikeskus on vahvistanut kannatusilmoitusten määrän / Befolkningsregistercentralen har bekräftat antalet stödförklaringar");
 
     }
 

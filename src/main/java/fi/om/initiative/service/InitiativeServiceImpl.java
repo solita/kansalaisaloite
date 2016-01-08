@@ -461,14 +461,14 @@ public class InitiativeServiceImpl implements InitiativeService {
     @Override
     @Transactional(readOnly = false)
     public void updateSendToParliament(InitiativeManagement initiative, BindingResult errors) {
-        userService.getUserInRole(Role.OM);
-        ManagementSettings managementSettings = initiativeSettings.getManagementSettings(initiativeDao.get(initiative.getId()), userService.getCurrentUser());
+        User currentUser = userService.getUserInRole(Role.OM);
+        ManagementSettings managementSettings = initiativeSettings.getManagementSettings(initiativeDao.get(initiative.getId()), currentUser);
 
         if (!managementSettings.isAllowMarkAsSentToParliament()) {
             throw new IllegalStateException("Not allowed to send to parliament");
         }
 
-        if (validate(initiative, userService.getCurrentUser(), errors, OM.class)) {
+        if (validate(initiative, currentUser, errors, OM.class)) {
             SendToParliamentData data = new SendToParliamentData();
             data.setParliamentURL(initiative.getParliamentURL());
             data.setParliamentIdentifier(initiative.getParliamentIdentifier());
