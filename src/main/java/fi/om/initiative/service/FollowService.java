@@ -61,11 +61,12 @@ public class FollowService {
         }
     }
 
-    private static boolean hasEndedBetween(LocalDate today, LocalDate yesterday, InitiativeInfo initiative) {
-        return (initiative.isVotingSuspended(0, null, today)
-                && !initiative.isVotingSuspended(0, null, yesterday))
+    private boolean hasEndedBetween(LocalDate today, LocalDate yesterday, InitiativeInfo initiative) {
+        return (initiative.isVotingSuspended(initiativeSettings.getMinSupportCountForSearch(), initiativeSettings.getRequiredMinSupportCountDuration(), today)
+                && !initiative.isVotingSuspended(initiativeSettings.getMinSupportCountForSearch(), initiativeSettings.getRequiredMinSupportCountDuration(), yesterday))
                 ||
                 (initiative.isVotingEnded(today)
-                && !initiative.isVotingEnded(yesterday));
+                && !initiative.isVotingEnded(yesterday)
+                && !initiative.isVotingSuspended(initiativeSettings.getMinSupportCountForSearch(), initiativeSettings.getRequiredMinSupportCountDuration(), yesterday));
     }
 }

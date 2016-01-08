@@ -20,6 +20,8 @@ import org.springframework.validation.Errors;
 import javax.annotation.Resource;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 
@@ -28,6 +30,7 @@ public class EmailsTest extends EmailSpyConfiguration {
     public static final String FOLLOWER_EMAIL = "follower@example.com";
 
     public static final String AUTHOR_EMAIL = "author@example.com";
+
     @Resource
     private TestHelper testHelper;
 
@@ -157,20 +160,17 @@ public class EmailsTest extends EmailSpyConfiguration {
 
         testHelper.addFollower(initiative, FOLLOWER_EMAIL);
 
-        followService.sendEmailsForEndedInitiatives(initiativeStartDate);
-        assertSentEmailCount(0);
-
-        followService.sendEmailsForEndedInitiatives(initiativeEndDate);
-        assertSentEmailCount(0);
-
         followService.sendEmailsForEndedInitiatives(initiativeEndDate.plusDays(1));
         assertSentEmailCount(2);
         assertSentEmail(FOLLOWER_EMAIL, "Kannatusilmoitusten keruuaika on päättynyt / Insamlingen av stödförklaringar har avslutats");
         assertSentEmail(AUTHOR_EMAIL, "Kannatusilmoitusten keruuaika on päättynyt / Insamlingen av stödförklaringar har avslutats");
 
-        clearAllSentEmails();
-        followService.sendEmailsForEndedInitiatives(initiativeEndDate.plusDays(2));
-        assertSentEmailCount(0);
+        assertMailsSentOnlyForDate(
+                initiativeEndDate.plusDays(1),
+                2,
+                initiativeStartDate.minusDays(10),
+                initiativeEndDate.plusDays(10)
+        );
 
     }
 
@@ -179,6 +179,59 @@ public class EmailsTest extends EmailSpyConfiguration {
     // default.properties has:
     // initiative.minSupportCountForSearch = 50
     // initiative.requiredMinSupportCountDuration = P1M
+
+    @Test
+    public void send_emails_for_vevs_and_followers_when_initiative_ends_due_not_enough_support_votes_in_month() {
+
+        LocalDate initiativeStartDate = new LocalDate(2000, 1, 1);
+        LocalDate initiativeEndDate = initiativeStartDate.plusMonths(6);
+
+        final Long initiative = testHelper.create(
+                new TestHelper.InitiativeDraft(userId, AUTHOR_EMAIL)
+                        .withName("Testialoite")
+                        .withState(InitiativeState.PROPOSAL)
+                        .isRunning(initiativeStartDate, initiativeEndDate)
+                        .withSupportCount(49)
+        );
+
+        testHelper.addFollower(initiative, FOLLOWER_EMAIL);
+
+        assertMailsSentOnlyForDate(
+                initiativeStartDate.plusMonths(1).plusDays(1),
+                2,
+                initiativeStartDate.minusDays(10),
+                initiativeEndDate.plusDays(10)
+        );
+
+        clearAllSentEmails();
+        followService.sendEmailsForEndedInitiatives(initiativeStartDate.plusMonths(1).plusDays(1));
+        assertSentEmailCount(2);
+        assertSentEmail(FOLLOWER_EMAIL, "Kannatusilmoitusten keruuaika on päättynyt / Insamlingen av stödförklaringar har avslutats");
+        assertSentEmail(AUTHOR_EMAIL, "Kannatusilmoitusten keruuaika on päättynyt / Insamlingen av stödförklaringar har avslutats");
+
+    }
+
+    /**
+     * Assert that when sending emails daily from dateSpanStart to dateSpanEnd, emails are only sent once on given date and given amount.
+     */
+    private void assertMailsSentOnlyForDate(LocalDate dateToSendMails, int amountOfEmailsToSend, LocalDate dateSpanStart, LocalDate dateSpanEnd) {
+
+        LocalDate dateIteration = dateSpanStart;
+        while (!dateIteration.isAfter(dateSpanEnd)) {
+            clearAllSentEmails();
+            followService.sendEmailsForEndedInitiatives(dateIteration);
+
+            if (dateToSendMails.equals(dateIteration)) {
+                assertThat("Emails sent for " + dateIteration, getAllSentEmails(), hasSize(amountOfEmailsToSend));
+            }
+            else {
+                assertThat("Emails sent for " + dateIteration, getAllSentEmails(), hasSize(0));
+            }
+            dateIteration = dateIteration.plusDays(1);
+
+        }
+
+    }
 
 
 }
