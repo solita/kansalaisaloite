@@ -82,7 +82,7 @@ public interface InitiativeDao {
 
     void endInitiative(Long initiativeId, LocalDate endDate);
 
-    List<InitiativeInfo> listInitiativesWithEndDate(LocalDate endDate);
+    List<InitiativeInfo> listAllInitiatives();
 
 
 }

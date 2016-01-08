@@ -25,6 +25,9 @@ import static org.mockito.Mockito.mock;
 
 public class EmailsTest extends EmailSpyConfiguration {
 
+    public static final String FOLLOWER_EMAIL = "follower@example.com";
+
+    public static final String AUTHOR_EMAIL = "author@example.com";
     @Resource
     private TestHelper testHelper;
 
@@ -38,6 +41,9 @@ public class EmailsTest extends EmailSpyConfiguration {
 
     @Resource
     private InitiativeService initiativeService;
+
+    @Resource
+    private FollowService followService;
 
     @Before
     public void init() {
@@ -61,18 +67,15 @@ public class EmailsTest extends EmailSpyConfiguration {
     @Test
     public void emails_after_publication_are_sent() {
 
-        String followerEmail = "follower@example.com";
-        String authorEmail = "author@example.com";
-
         final Long initiative = testHelper.create(
-                new TestHelper.InitiativeDraft(userId, authorEmail)
+                new TestHelper.InitiativeDraft(userId, AUTHOR_EMAIL)
                         .withState(InitiativeState.ACCEPTED)
                         .withSupportCount(50001)
 
         );
 
         testHelper.createSupport(initiative, LocalDate.now());
-        testHelper.addFollower(initiative, followerEmail);
+        testHelper.addFollower(initiative, FOLLOWER_EMAIL);
 
         // When sent to VRK: Assert that emails to VRK and follower are sent
 
@@ -80,8 +83,8 @@ public class EmailsTest extends EmailSpyConfiguration {
 
         assertSentEmailCount(3);
         assertSentEmail("kansalaisaloite.tarkastus@vrk.fi", "Kannatusilmoitusten määrän vahvistuspyyntö / Ansökan om bekräftelse av antalet stödförklaringar");
-        assertSentEmail(followerEmail, "Kannatusilmoitusten tarkastuspyyntö on lähetetty Väestörekisterikeskukseen / Ansökan om att granska stödförklaringarna har skickats till Befolkningsregistercentralen");
-        assertSentEmail(authorEmail, "Kannatusilmoitusten tarkastuspyyntö on lähetetty Väestörekisterikeskukseen / Ansökan om att granska stödförklaringarna har skickats till Befolkningsregistercentralen");
+        assertSentEmail(FOLLOWER_EMAIL, "Kannatusilmoitusten tarkastuspyyntö on lähetetty Väestörekisterikeskukseen / Ansökan om att granska stödförklaringarna har skickats till Befolkningsregistercentralen");
+        assertSentEmail(AUTHOR_EMAIL, "Kannatusilmoitusten tarkastuspyyntö on lähetetty Väestörekisterikeskukseen / Ansökan om att granska stödförklaringarna har skickats till Befolkningsregistercentralen");
         clearAllSentEmails();
 
         // When accepted by VRK: Assert that emails for follower are sent
@@ -95,8 +98,8 @@ public class EmailsTest extends EmailSpyConfiguration {
         assertTrue(initiativeService.updateVRKResolution(vrkData, mock(Errors.class)));
 
         assertSentEmailCount(2);
-        assertSentEmail(followerEmail, "Väestörekisterikeskus on vahvistanut kannatusilmoitusten määrän / Befolkningsregistercentralen har bekräftat antalet stödförklaringar");
-        assertSentEmail(authorEmail, "Väestörekisterikeskus on vahvistanut kannatusilmoitusten määrän / Befolkningsregistercentralen har bekräftat antalet stödförklaringar");
+        assertSentEmail(FOLLOWER_EMAIL, "Väestörekisterikeskus on vahvistanut kannatusilmoitusten määrän / Befolkningsregistercentralen har bekräftat antalet stödförklaringar");
+        assertSentEmail(AUTHOR_EMAIL, "Väestörekisterikeskus on vahvistanut kannatusilmoitusten määrän / Befolkningsregistercentralen har bekräftat antalet stödförklaringar");
 
         clearAllSentEmails();
 
@@ -110,8 +113,8 @@ public class EmailsTest extends EmailSpyConfiguration {
         initiativeService.updateSendToParliament(omToParliament, mock(BindingResult.class));
 
         assertSentEmailCount(2);
-        assertSentEmail(followerEmail, "Aloite on lähetetty eduskuntaan / Initiativet har skickats till riksdagen");
-        assertSentEmail(authorEmail, "Aloite on lähetetty eduskuntaan / Initiativet har skickats till riksdagen");
+        assertSentEmail(FOLLOWER_EMAIL, "Aloite on lähetetty eduskuntaan / Initiativet har skickats till riksdagen");
+        assertSentEmail(AUTHOR_EMAIL, "Aloite on lähetetty eduskuntaan / Initiativet har skickats till riksdagen");
 
     }
 
@@ -135,5 +138,47 @@ public class EmailsTest extends EmailSpyConfiguration {
         assertSentEmail("reserve@example.com", "Aloite on lähetetty tarkastettavaksi oikeusministeriön / Medborgarinitiativet har skickats till justitieministeriet för granskning");
 
     }
+
+
+    @Test
+    public void send_emails_for_vevs_and_followers_when_initiative_has_ended_normally() {
+
+
+        LocalDate initiativeEndDate = new LocalDate(2000, 1, 1);
+        LocalDate initiativeStartDate = initiativeEndDate.minusMonths(6);
+
+        final Long initiative = testHelper.create(
+                new TestHelper.InitiativeDraft(userId, AUTHOR_EMAIL)
+                        .withName("Testialoite")
+                        .withState(InitiativeState.PROPOSAL)
+                        .isRunning(initiativeStartDate, initiativeEndDate)
+                        .withSupportCount(51000)
+        );
+
+        testHelper.addFollower(initiative, FOLLOWER_EMAIL);
+
+        followService.sendEmailsForEndedInitiatives(initiativeStartDate);
+        assertSentEmailCount(0);
+
+        followService.sendEmailsForEndedInitiatives(initiativeEndDate);
+        assertSentEmailCount(0);
+
+        followService.sendEmailsForEndedInitiatives(initiativeEndDate.plusDays(1));
+        assertSentEmailCount(2);
+        assertSentEmail(FOLLOWER_EMAIL, "Kannatusilmoitusten keruuaika on päättynyt / Insamlingen av stödförklaringar har avslutats");
+        assertSentEmail(AUTHOR_EMAIL, "Kannatusilmoitusten keruuaika on päättynyt / Insamlingen av stödförklaringar har avslutats");
+
+        clearAllSentEmails();
+        followService.sendEmailsForEndedInitiatives(initiativeEndDate.plusDays(2));
+        assertSentEmailCount(0);
+
+    }
+
+
+
+    // default.properties has:
+    // initiative.minSupportCountForSearch = 50
+    // initiative.requiredMinSupportCountDuration = P1M
+
 
 }

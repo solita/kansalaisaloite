@@ -299,6 +299,28 @@
         <p>Befolkningsregistercentralen har bekräftat att stödförklaringarna är <strong>${initiative.verifiedSupportCount}</strong> till antalet <@eu.localDate initiative.verified "sv" />.</p>
         <p>Beslutets diarienummer är <strong>${initiative.verificationIdentifier}</strong>.</p>
     </#assign>
+
+<#elseif emailMessageType == EmailMessageType.VOTING_ENDED>
+
+    <#-- TEXT -->
+    <#assign statusTitleFi>Kannatusilmoitusten keräys on päättynyt</#assign>
+    <#assign statusTitleSv>Pliplop</#assign>
+    <#assign statusInfoFi>
+    Aloite keräsi palvelussa ${initiative.supportCount} kpl kannatusilmoituksia. Paperilla kannatusilmoituksia on ilmoitettu kerätyksi ${initiative.externalSupportCount} kpl.
+    </#assign>
+    <#assign statusInfoSv>
+    Pliploploo
+    </#assign>
+
+    <#-- HTML -->
+    <#assign statusTitleHTMLFi>${statusTitleFi}</#assign>
+    <#assign statusTitleHTMLSv>${statusTitleSv}</#assign>
+    <#assign statusInfoHTMLFi>
+        <p>${statusInfoFi}</p>
+    </#assign>
+    <#assign statusInfoHTMLSv>
+        <p>${statusInfoSv}</p>
+    </#assign>
     
 <#elseif emailMessageType == EmailMessageType.REMOVED_SUPPORT_VOTES>
     <#-- TEXT -->
