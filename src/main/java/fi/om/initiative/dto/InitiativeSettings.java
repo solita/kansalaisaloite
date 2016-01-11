@@ -1,6 +1,7 @@
 package fi.om.initiative.dto;
 
 import fi.om.initiative.dto.initiative.InitiativeManagement;
+import org.joda.time.DurationFieldType;
 import org.joda.time.LocalDate;
 import org.joda.time.ReadablePeriod;
 
@@ -61,6 +62,10 @@ public class InitiativeSettings {
     }
 
     public ReadablePeriod getRequiredMinSupportCountDuration() {
+
+
+        int kuukaudet = requiredMinSupportCountDuration.get(DurationFieldType.months());
+
         return requiredMinSupportCountDuration;
     }
 

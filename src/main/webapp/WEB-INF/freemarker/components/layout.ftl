@@ -22,7 +22,7 @@
 
     <link href="${urls.baseUrl}/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" />
 
-    <link rel="stylesheet" type="text/css" href="${urls.baseUrl}/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="${urls.baseUrl}/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="${urls.baseUrl}/css/aloitepalvelu.css" />
 </head>
 <body class="${locale}">
@@ -133,7 +133,7 @@
 
         <link rel="stylesheet" type="text/css" media="print" href="${urls.baseUrl}/css/print.css?version=${resourcesVersion}" />
     <#else>
-        <link rel="stylesheet" type="text/css" media="screen" href="${urls.baseUrl}/css/normalize.css?version=${resourcesVersion}" />
+        <link rel="stylesheet" type="text/css" href="${urls.baseUrl}/css/bootstrap.min.css?version=${resourcesVersion}" />
         <noscript>
             <link rel="stylesheet" type="text/css" media="screen" href="${urls.baseUrl}/css/aloitepalvelu.css" />
             <!--[if IE ]>
@@ -215,7 +215,7 @@
             </a>
 
             <#-- Language toggle, text size -->
-            <div class="header-additional-content">
+            <div class="header-additional-content hidden-xs">
             	<#if currentUser??>
 					<div class="logged-in-info">
 				        <#-- Authenticated = Logged in -->
@@ -233,7 +233,7 @@
 				        </#if>
 				    </div>
 			    </#if>
-		    
+
                 <div class="additional-tools">
                     <a href="${altUri!'/sv'}" class="language-selection"><@u.message "lang.alternative"/></a>
                     <#-- NOTE: ATM the font-size-toggle works only with JS hence the links are also generated with JS. -->
@@ -249,13 +249,50 @@
                 </#if>
             </#if>
             <#if (naviItems?size > 0) >
-                <div id="main-navigation">
+                <div id="main-navigation" class="hidden-xs">
                     <ul>
                         <#list naviItems as item>
                             <li <#if item.naviName == page>class="active"</#if>><a href="${item.naviUrl}"><@u.message item.naviName /></a></li>
                         </#list>
                     </ul>
                 </div>
+                <nav class="mobilenav navbar navbar-default hidden-sm hidden-lg hidden-md">
+
+                  <div class="container-fluid">
+                    <div class="navbar-header">
+                      <button type="button" id="navbar-toggle" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbarcollapse" aria-expanded="false">
+                        Menu &nbsp; <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
+                      </button>
+                    </div>
+
+                    <div class="collapse navbar-collapse" id="navbarcollapse">
+                      <div class="modal-backdrop"></div>
+                      <ul class="nav navbar-nav">
+                        <#list naviItems as item>
+                          <li <#if item.naviName == page>class="active"</#if>><a href="${item.naviUrl}"><@u.message item.naviName /></a></li>
+                        </#list>
+                        <li><a href="${altUri!'/sv'}"><@u.message "lang.alternative"/></a></li>
+                        <li role="separator" class="divider"></li>
+                        <li>
+                          <#-- Authenticated = Logged in -->
+                          <#if currentUser.authenticated>
+                            <strong>${currentUser.firstNames} ${currentUser.lastName}</strong>
+                            <#-- Registered = Authenticated and has initiatives (except OM/VRK-users) -->
+                            <#if currentUser.registered>
+                              <a class="btn btn-default" href="${urls.searchOwnOnly()}"><@u.message "user.myInitiatives"/></a>
+                            </#if>
+                            <a class="btn btn-default" href="${urls.logout()}" >
+                              <@u.message "common.logout"/>
+                              <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                            </a>
+                          <#else>
+                            <a class="btn btn-default" href="${urls.login(springMacroRequestContext.requestUri)}" title="<@u.message "common.login"/>" class="header-tool-link login"><@u.message "common.login"/></a>
+                          </#if>
+                        </li>
+                      </ul>
+                      </div><!-- /.navbar-collapse -->
+                  </div><!-- /.container-fluid -->
+                </nav>
             </#if>
 
         </div>
@@ -297,9 +334,8 @@
     <#if optimizeResources>
       <script type="text/javascript" src="${urls.baseUrl}/js/script.min.js?version=${resourcesVersion}"></script>
     <#else>
-      <script type="text/javascript" src="${urls.baseUrl}/js/jquery-1.7.2.min.js?version=${resourcesVersion}"></script>
+      <script type="text/javascript" src="${urls.baseUrl}/js/jquery-1.11.3.min.js?version=${resourcesVersion}"></script>
       <script type="text/javascript" src="${urls.baseUrl}/js/jquery.easing.min.js?version=${resourcesVersion}"></script>
-      <script type="text/javascript" src="${urls.baseUrl}/js/jquery.tools.min.js?version=${resourcesVersion}"></script>
       <script type="text/javascript" src="${urls.baseUrl}/js/jquery.cookie.js?version=${resourcesVersion}"></script>
       <script type="text/javascript" src="${urls.baseUrl}/js/jquery.dirtyforms.min.js?version=${resourcesVersion}"></script>
       <script type="text/javascript" src="${urls.baseUrl}/js/jsrender.min.js?version=${resourcesVersion}"></script>
@@ -307,6 +343,8 @@
       <script type="text/javascript" src="${urls.baseUrl}/js/raphael.min.js?version=${resourcesVersion}"></script>
       <script type="text/javascript" src="${urls.baseUrl}/js/jquery.supportvotegraph.js?version=${resourcesVersion}"></script>
       <script type="text/javascript" src="${urls.baseUrl}/js/jquery.headernav.js?version=${resourcesVersion}"></script>
+      <script type="text/javascript" src="${urls.baseUrl}/js/jquery.tools.min.js?version=${resourcesVersion}"></script>
+      <script type="text/javascript" src="${urls.baseUrl}/js/bootstrap.min.js?version=${resourcesVersion}"></script>
       <script type="text/javascript" src="${urls.baseUrl}/js/aloitepalvelu.js?version=${resourcesVersion}"></script>
     </#if>
 

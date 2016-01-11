@@ -225,17 +225,24 @@ public final class Urls {
 
     public static final int MAX_INITIATIVE_SEARCH_LIMIT = 500;
 
+    private static final String  SUPERSEARCH_LAN_PARAMETER = "/#/?lan=";
+
+    private static final String SUPERSEARCH_SITE_PARAMETER = "&site=";
+
     private final String baseUrl;
-    
+
+    private final String superSearchUrl;
+
     private final Locale locale;
     
-    public static void initUrls(String baseUrl) {
-        FI = new Urls(baseUrl, LOCALE_FI);
-        SV = new Urls(baseUrl, LOCALE_SV);
+    public static void initUrls(String baseUrl, String superSearchUrl) {
+        FI = new Urls(baseUrl, superSearchUrl, LOCALE_FI);
+        SV = new Urls(baseUrl, superSearchUrl, LOCALE_SV);
     }
     
-    private Urls(String baseUrl, Locale locale) {
+    private Urls(String baseUrl, String superSearchUrl, Locale locale) {
         this.baseUrl = baseUrl;
+        this.superSearchUrl = superSearchUrl;
         this.locale = locale;
     }
 
@@ -243,6 +250,12 @@ public final class Urls {
         return baseUrl;
     }
 
+    public String getSuperSearchBaseUrl(){
+        return superSearchUrl;
+    }
+    public String getSuperSearchUrl() {
+        return superSearchUrl + SUPERSEARCH_LAN_PARAMETER + (this.equals(FI) ? "fi" : "sv") + SUPERSEARCH_SITE_PARAMETER + "kansalaisaloite.fi";
+    }
     private String getLocalizedPageUrl(String fiSuffix, String svSuffix) {
         StringBuilder stringBuilder = new StringBuilder(baseUrl);
         if (this == FI) {

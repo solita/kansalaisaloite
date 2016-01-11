@@ -1,5 +1,6 @@
 package fi.om.initiative.service;
 
+import fi.om.initiative.dto.Follower;
 import fi.om.initiative.dto.Invitation;
 import fi.om.initiative.dto.author.Author;
 import fi.om.initiative.dto.initiative.InitiativeManagement;
@@ -22,15 +23,13 @@ public interface EmailService {
 
     void sendStatusInfoToVEVs(InitiativeManagement initiative, EmailMessageType emailMessageType);
 
-    void sendVRKResolutionToVEVs(InitiativeManagement initiative);
+    void sendStatusInfoToFollowers(InitiativeManagement initiative, EmailMessageType emailMessageType, List<Follower> followers);
 
     void sendInvitationAcceptedInfoToVEVs(InitiativeManagement initiative, List<String> authorEmails);
 
     void sendAuthorConfirmedInfoToVEVs(InitiativeManagement initiative, List<String> authorEmails);
 
     void sendAuthorRemovedInfoToVEVs(InitiativeManagement initiative, Author removedAuthor, List<String> authorEmails);
-
-    void sendFollowersNotificationsAbout(FollowerNotificationType type, InitiativeManagement initiative, List<String> followers);
 
 
 }

@@ -6,10 +6,15 @@
 
     border-bottom: 1px solid @borderGray;
 
+    @media @xs, @sm {
+        border: 0;
+    }
+
     .header-content {
         position: relative;
         height: 130px;
-        width: 960px;
+        max-width: 960px;
+        width: 100%;
         margin: 0 auto;
 
         .header-additional-content {
@@ -21,6 +26,10 @@
     }
     .height-200 {
         height: 200px;
+    }
+    .navbar-default {
+        background-color: transparent;
+        border: 0;
     }
 }
 
@@ -98,4 +107,25 @@ body.font-size-medium, span.font-size-medium {
 
 body.font-size-large, span.font-size-large {
     font-size: 110%;
+}
+
+@media @sm {
+    .om-header {
+        padding-bottom: 122px;
+    }
+    #header {
+        position: absolute;
+        top: 40px;
+        z-index: 100;
+        padding-bottom: 13px;
+        .header-content {
+            height: 50px;
+        }
+        .logo {
+            width: 240px;
+            margin-left: 15px;
+            float: left;
+            height: 50px;
+        }
+    }
 }

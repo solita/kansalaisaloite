@@ -299,6 +299,45 @@
         <p>Befolkningsregistercentralen har bekräftat att stödförklaringarna är <strong>${initiative.verifiedSupportCount}</strong> till antalet <@eu.localDate initiative.verified "sv" />.</p>
         <p>Beslutets diarienummer är <strong>${initiative.verificationIdentifier}</strong>.</p>
     </#assign>
+
+<#elseif emailMessageType == EmailMessageType.VOTING_ENDED>
+
+    <#-- TEXT -->
+    <#assign statusTitleFi>Kannatusilmoitusten kerääminen on päättynyt</#assign>
+    <#assign statusTitleSv>SV Kannatusilmoitusten kerääminen on päättynyt</#assign>
+
+    <#if initiative.votingDaysLeft gt 0>
+        <#assign statusInfoFi>
+        Aloite ei kerännyt vaadittua ${initiativeSettings.minSupportCountForSearch} kannatusilmoitusta ${initiativeSettings.requiredMinSupportCountDuration.toString()?replace('[^\\d]*', '', 'r')} kuukauden aikana.
+        Aloite keräsi ${initiative.totalSupportCount} kannatusilmoitusta, joista ${initiative.supportCount} kpl palvelussa kansalaisaloite.fi ja muissa palveluissa ${initiative.externalSupportCount} kpl.
+        </#assign>
+
+    <#elseif initiative.totalSupportCount gte initiativeSettings.requiredVoteCount>
+        <#assign statusInfoFi>
+        Aloite keräsi ${initiative.totalSupportCount} kannatusilmoitusta, joista ${initiative.supportCount} palvelussa kansalaisaloite.fi ja muissa palveluissa ${initiative.externalSupportCount} kpl.
+        Vastuuhenkilöt ovat nyt velvollisia lähettämään kannatusilmoitukset väestörekisterikeskuksen tarkastettavaksi.
+        </#assign>
+    <#else >
+        <#assign statusInfoFi>
+        Aloite keräsi ${initiative.totalSupportCount} kannatusilmoitusta, joista ${initiative.supportCount} palvelussa kansalaisaloite.fi ja muissa palveluissa ${initiative.externalSupportCount} kpl.
+        Kerääminen jäi ${initiativeSettings.requiredVoteCount - initiative.totalSupportCount} kpl vaille vaaditun ${initiativeSettings.requiredVoteCount} kannatusilmoituksen, jotta aloite etenisi eduskunnan käsittelyyn.
+        </#assign>
+    </#if>
+
+    <#assign statusInfoSv>
+        ${statusInfoFi}
+    </#assign>
+
+
+    <#-- HTML -->
+    <#assign statusTitleHTMLFi>${statusTitleFi}</#assign>
+    <#assign statusTitleHTMLSv>${statusTitleSv}</#assign>
+    <#assign statusInfoHTMLFi>
+        <p>${statusInfoFi}</p>
+    </#assign>
+    <#assign statusInfoHTMLSv>
+        <p>${statusInfoSv}</p>
+    </#assign>
     
 <#elseif emailMessageType == EmailMessageType.REMOVED_SUPPORT_VOTES>
     <#-- TEXT -->

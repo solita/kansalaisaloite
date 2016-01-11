@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import java.util.Locale;
 import java.util.Map;
 
@@ -63,6 +62,7 @@ public class ErrorController {
         model.addAttribute("urls", urls);
         model.addAttribute("locale", urls.getLang());
         model.addAttribute("footerLinks", footerLinkProvider.getFooterLinks(locale));
+        model.addAttribute("superSearchEnabled", false);
 
         Map<String, HelpPage> values = Maps.newHashMap();
         for (HelpPage value : HelpPage.values()) {

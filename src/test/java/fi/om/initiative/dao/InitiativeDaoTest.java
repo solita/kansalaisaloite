@@ -13,7 +13,6 @@ import org.joda.time.LocalDate;
 import org.joda.time.Years;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.net.MalformedURLException;
@@ -163,26 +162,6 @@ public class InitiativeDaoTest extends EmailSpyConfiguration {
         assertEquals(sendToParliamentData.getParliamentSentTime(), updated.getParliamentSentTime());
         assertEquals(InitiativeState.DONE, updated.getState());
     }
-
-    @Test
-    @Transactional
-    public void get_initiative_with_end_date(){
-
-        Long yesterday = create(createInitiativeWithEndDate(new LocalDate(new DateTime(2010, 5, 5, 0, 0, 0)), 1L), userId);
-        Long twodaysago = create(createInitiativeWithEndDate(new LocalDate(2010, 5, 3), 2L), userId);
-        Long notended = create(createNotEndedInitiative(3L), userId);
-        Long today = create(createInitiativeWithEndDate(new LocalDate(new DateTime(2010, 5, 6, 1, 0, 0)), 4L), userId);
-
-
-        List<InitiativeInfo> initiatives = initiativeDao.listInitiativesWithEndDate(new LocalDate(2010, 5, 5));
-
-        assertEquals(initiatives.size(), 1);
-        assertEquals(initiatives.get(0).getId(), yesterday);
-
-    }
-
-
-
 
     private void authorFromInitiativeTest(Long initiativeId, Author expected) {
         InitiativeManagement initiative = initiativeDao.getInitiativeForManagement(initiativeId, false);

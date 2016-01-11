@@ -2,6 +2,7 @@ package fi.om.initiative.service;
 
 import com.google.common.collect.Sets;
 import com.mysema.commons.lang.Assert;
+import fi.om.initiative.dao.FollowInitiativeDao;
 import fi.om.initiative.dao.InitiativeDao;
 import fi.om.initiative.dao.NotFoundException;
 import fi.om.initiative.dao.ReviewHistoryDao;
@@ -36,7 +37,6 @@ import org.springframework.validation.SmartValidator;
 
 import javax.annotation.Nullable;
 import javax.annotation.Resource;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -65,6 +65,9 @@ public class InitiativeServiceImpl implements InitiativeService {
     @Resource HashCreator hashCreator;
 
     @Resource ReviewHistoryDao reviewHistoryDao;
+
+    @Resource
+    private FollowInitiativeDao followInitiativeDao;
 
     private final int invitationCodeLength = 12; // Multiples of 3 work best
     
@@ -458,20 +461,22 @@ public class InitiativeServiceImpl implements InitiativeService {
     @Override
     @Transactional(readOnly = false)
     public void updateSendToParliament(InitiativeManagement initiative, BindingResult errors) {
-        userService.getUserInRole(Role.OM);
-        ManagementSettings managementSettings = initiativeSettings.getManagementSettings(initiativeDao.get(initiative.getId()), userService.getCurrentUser());
+        User currentUser = userService.getUserInRole(Role.OM);
+        ManagementSettings managementSettings = initiativeSettings.getManagementSettings(initiativeDao.get(initiative.getId()), currentUser);
 
         if (!managementSettings.isAllowMarkAsSentToParliament()) {
             throw new IllegalStateException("Not allowed to send to parliament");
         }
 
-        if (validate(initiative, userService.getCurrentUser(), errors, OM.class)) {
+        if (validate(initiative, currentUser, errors, OM.class)) {
             SendToParliamentData data = new SendToParliamentData();
             data.setParliamentURL(initiative.getParliamentURL());
             data.setParliamentIdentifier(initiative.getParliamentIdentifier());
             data.setParliamentSentTime(initiative.getParliamentSentTime());
             initiativeDao.updateSendToParliament(initiative.getId(), data);
-            emailService.sendStatusInfoToVEVs(initiativeDao.getInitiativeForManagement(initiative.getId(), false), EmailMessageType.SENT_TO_PARLIAMENT);
+            InitiativeManagement initiativeAfterUpdate = initiativeDao.getInitiativeForManagement(initiative.getId(), false);
+            emailService.sendStatusInfoToVEVs(initiativeAfterUpdate, EmailMessageType.SENT_TO_PARLIAMENT);
+            emailService.sendStatusInfoToFollowers(initiativeAfterUpdate, EmailMessageType.SENT_TO_PARLIAMENT, followInitiativeDao.listFollowers(initiative.getId()));
         }
     }
 
@@ -745,14 +750,19 @@ public class InitiativeServiceImpl implements InitiativeService {
 
         InitiativeManagement persistedInitiative = initiativeDao.getInitiativeForManagement(initiative.getId(), true);
         ManagementSettings managementSettings = initiativeSettings.getManagementSettings(persistedInitiative, user);
-        
+
+
+        System.out.println(managementSettings.isAllowRespondByVRK());
         if (managementSettings.isAllowRespondByVRK() && validate(initiative, user, bindingResult, VRK.class)) {
             initiativeDao.updateVRKResolution(
                     initiative.getId(), 
                     initiative.getVerifiedSupportCount(),
                     initiative.getVerified(),
                     initiative.getVerificationIdentifier(), user.getId());
-            emailService.sendVRKResolutionToVEVs(initiativeDao.getInitiativeForManagement(initiative.getId(), false));
+            InitiativeManagement initiativeAfterUpdating = initiativeDao.getInitiativeForManagement(initiative.getId(), false);
+
+            emailService.sendStatusInfoToVEVs(initiativeAfterUpdating, EmailMessageType.VRK_RESOLUTION);
+            emailService.sendStatusInfoToFollowers(initiativeAfterUpdating, EmailMessageType.VRK_RESOLUTION, followInitiativeDao.listFollowers(initiative.getId()));
 
             log(METHOD_NAME, initiative.getId(), user, true);
             return true;

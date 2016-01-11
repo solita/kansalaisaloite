@@ -21,6 +21,9 @@ public class JobExecutor {
     @Resource
     private SupportVoteDao supportVoteDao;
 
+    @Resource
+    private FollowService followService;
+
     @Scheduled(cron = EVERY_DAY_AT_MIDNIGHT)
     public void updateDenormalizedSupportCountForInitiatives() {
 
@@ -43,6 +46,11 @@ public class JobExecutor {
         }
         log.info("Supportcounts denormalized.");
 
+    }
+
+    @Scheduled(cron = EVERY_DAY_AT_MIDNIGHT)
+    public void sendEmailsForEndedInitiatives() {
+        followService.sendEmailsForEndedInitiatives(LocalDate.now());
     }
 
     @PostConstruct

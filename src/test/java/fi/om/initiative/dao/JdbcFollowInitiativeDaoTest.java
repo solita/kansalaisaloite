@@ -1,6 +1,7 @@
 package fi.om.initiative.dao;
 
 
+import fi.om.initiative.dto.Follower;
 import fi.om.initiative.dto.initiative.InitiativeState;
 import fi.om.initiative.service.EmailSpyConfiguration;
 import org.junit.Before;
@@ -8,9 +9,10 @@ import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.Map;
+import java.util.List;
 
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.hasSize;
 import static org.junit.Assert.assertThat;
 
 
@@ -41,52 +43,41 @@ public class JdbcFollowInitiativeDaoTest extends EmailSpyConfiguration {
 
     @Test
     public void follow_initiative() {
-        Map<String, String> followers = followInitiativeDao.listFollowers(initiativeId);
-        int before = followers.size();
+
         String hash = RANDOM_HASH;
-        followInitiativeDao.addFollow(initiativeId, TESTEMAIL, hash);
+        followInitiativeDao.addFollow(initiativeId, new Follower(TESTEMAIL, hash));
 
-        followers = followInitiativeDao.listFollowers(initiativeId);
+        List<Follower> follower = followInitiativeDao.listFollowers(initiativeId);
+        assertThat(follower, hasSize(1));
 
-        assertThat(followers.values(), hasSize(before +1));
+        assertThat(follower.get(0).email, is(TESTEMAIL));
+        assertThat(follower.get(0).unsubscribeHash, is(hash));
 
     }
 
     @Test
     public void cant_follow_initiative_twice() {
-        Map<String, String> followers = followInitiativeDao.listFollowers(initiativeId);
-        int before = followers.size();
 
-        followInitiativeDao.addFollow(initiativeId, TESTEMAIL, RANDOM_HASH);
-        followers = followInitiativeDao.listFollowers(initiativeId);
+        followInitiativeDao.addFollow(initiativeId, new Follower(TESTEMAIL, RANDOM_HASH));
 
         try{
-
-            followInitiativeDao.addFollow(initiativeId, TESTEMAIL, RANDOM_HASH);
-            followers = followInitiativeDao.listFollowers(initiativeId);
+            followInitiativeDao.addFollow(initiativeId, new Follower(TESTEMAIL, RANDOM_HASH));
         } catch (DuplicateException e) {
 
         }
 
-        assertThat(followers.values(), hasSize(before +1));
+        assertThat(followInitiativeDao.listFollowers(initiativeId), hasSize(1));
     }
 
     @Test
     public void remove_follow() {
-        Map<String, String> followers = followInitiativeDao.listFollowers(initiativeId);
-        int before = followers.size();
 
-        followInitiativeDao.addFollow(initiativeId, TESTEMAIL, RANDOM_HASH);
+        followInitiativeDao.addFollow(initiativeId, new Follower(TESTEMAIL, RANDOM_HASH));
 
-        followers = followInitiativeDao.listFollowers(initiativeId);
+        assertThat(followInitiativeDao.listFollowers(initiativeId), hasSize(1));
 
-        assertThat(followers.values(), hasSize(before +1));
+        followInitiativeDao.removeFollow(RANDOM_HASH);
 
-        followInitiativeDao.removeFollow(followers.get(TESTEMAIL));
-
-        followers = followInitiativeDao.listFollowers(initiativeId);
-
-        assertThat(followers.values(), hasSize(before));
-        assertThat(followers.values(), not(contains(TESTEMAIL)));
+        assertThat(followInitiativeDao.listFollowers(initiativeId), hasSize(0));
     }
 }

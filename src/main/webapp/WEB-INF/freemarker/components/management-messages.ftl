@@ -71,7 +71,7 @@
         <#if managementSettings.extraWarningforRemoveSupportVotes>
             <div class="minimized">
                 <div class="top">
-                    <a href="#" class="more toggler hidden" data-alttext="<@u.message "removeSupportVotes.hideDetails" />"><span class="text"><@u.message "removeSupportVotes.showDetails" /></span><span class="icon-small more"></span></a>
+                    <a href="#" class="more toggler hidden-nojs" data-alttext="<@u.message "removeSupportVotes.hideDetails" />"><span class="text"><@u.message "removeSupportVotes.showDetails" /></span><span class="icon-small more"></span></a>
                     <h4 class="subtle"><@u.message "removeSupportVotes.title" /></h4>
                 </div>
                 

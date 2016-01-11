@@ -18,6 +18,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -84,7 +85,7 @@ public abstract class WebTestBase {
     @Before
     public void init() {
         if (urls == null) {
-            Urls.initUrls(env.getRequiredProperty(PropertyNames.baseURL)); 
+            Urls.initUrls(env.getRequiredProperty(PropertyNames.baseURL), env.getProperty(PropertyNames.superSearchBaseUrl));
             urls = Urls.FI;
         }
 
@@ -109,10 +110,11 @@ public abstract class WebTestBase {
 
         driver.manage().timeouts().implicitlyWait(50, TimeUnit.SECONDS); // default is 0!!!
         driver.manage().timeouts().setScriptTimeout(50, TimeUnit.SECONDS); // default is 0!!!
+        driver.manage().window().setSize(new Dimension(1024, 768));
         //driver.manage().timeouts().pageLoadTimeout(50, TimeUnit.SECONDS); // default is 0!!!
         
         if (urls == null) {
-            Urls.initUrls("https://localhost:" + PORT); 
+            Urls.initUrls("https://localhost:" + PORT, env.getProperty(PropertyNames.superSearchBaseUrl));
             urls = Urls.FI;
         }
         testHelper.dbCleanup();
