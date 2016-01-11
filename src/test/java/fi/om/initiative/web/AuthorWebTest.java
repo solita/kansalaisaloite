@@ -188,9 +188,10 @@ public class AuthorWebTest extends WebTestBase {
     }
 
     private void assertInitiativeResultCount(int expectedCount) {
+
         List<WebElement> listElements = driver
                 .findElement(By.className("search-results"))
-                .findElement(By.tagName("ul"))
+                .findElement(By.cssSelector("ul.mobile"))
                 .findElements(By.tagName("li"));
 
         assertThat("Search result count", listElements.size(), is(expectedCount));
