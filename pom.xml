@@ -523,13 +523,14 @@
                             <webappSourceDir>${basedir}/src/main/webapp</webappSourceDir>
                             <cssSourceDir>css</cssSourceDir>
                             <cssSourceFiles>
+                                <cssSourceFile>bootstrap.min.css</cssSourceFile>
                                 <cssSourceFile>normalize.css</cssSourceFile>
                                 <cssSourceFile>aloitepalvelu.css</cssSourceFile>
                             </cssSourceFiles>
                             <cssFinalFile>style.css</cssFinalFile>
                             <jsSourceDir>js</jsSourceDir>
                             <jsSourceFiles>
-                                <jsSourceFile>jquery-1.7.2.min.js</jsSourceFile>
+                                <jsSourceFile>jquery-1.11.3.min.js</jsSourceFile>
                                 <jsSourceFile>jquery.easing.min.js</jsSourceFile>
                                 <jsSourceFile>jquery.tools.min.js</jsSourceFile>
                                 <jsSourceFile>jquery.cookie.js</jsSourceFile>
@@ -539,6 +540,7 @@
                                 <jsSourceFile>raphael.min.js</jsSourceFile>
                                 <jsSourceFile>jquery.supportvotegraph.js</jsSourceFile>
                                 <jsSourceFile>jquery.headernav.js</jsSourceFile>
+                                <jsSourceFile>bootstrap.min.js</jsSourceFile>
                                 <jsSourceFile>aloitepalvelu.js</jsSourceFile>
                             </jsSourceFiles>
                             <jsFinalFile>script.js</jsFinalFile>

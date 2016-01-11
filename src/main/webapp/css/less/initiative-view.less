@@ -5,7 +5,6 @@
 .input-block, .view-block {
     margin-bottom: 3em;
     position: relative;
-    //z-index: 3;
     background: #fff url("@{imagesPath}/input-block-extra-bg.png?version=${timestamp}") repeat-y top right;
     border-left: 4px solid @mainColor;
 
@@ -24,9 +23,15 @@
     .system-msg {
         margin:5px 0;
         border:0;
-        //-webkit-border-radius: 0;
-        //-moz-border-radius: 0;
-        //border-radius: 0;
+    }
+    @media @md {
+        background: #fff url("@{imagesPath}/input-block-extra-bg.png?version=${timestamp}") repeat-y 514px;
+    }
+    @media @sm {
+        background: white;
+    }
+    @media @xs, @sm {
+        padding: 10px;
     }
 }
 .view-block {

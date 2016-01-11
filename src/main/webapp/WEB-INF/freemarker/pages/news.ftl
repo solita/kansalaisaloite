@@ -14,7 +14,7 @@
 <@l.main "page.news">
 
     <#if omUser>
-        <div class="editor-buttons bootstrap-icons hidden">
+        <div class="editor-buttons bootstrap-icons hidden-nojs">
             <a href="${urls.helpEdit(pageUri)}" class="btn" href="#"><@u.message "editor.switchToEdit" />&nbsp;&nbsp;<i class="icon-chevron-right"></i></a>
         </div>
     </#if>

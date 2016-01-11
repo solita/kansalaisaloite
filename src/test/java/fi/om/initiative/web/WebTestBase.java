@@ -84,7 +84,7 @@ public abstract class WebTestBase {
     @Before
     public void init() {
         if (urls == null) {
-            Urls.initUrls(env.getRequiredProperty(PropertyNames.baseURL)); 
+            Urls.initUrls(env.getRequiredProperty(PropertyNames.baseURL), env.getProperty(PropertyNames.superSearchBaseUrl));
             urls = Urls.FI;
         }
 
@@ -112,7 +112,7 @@ public abstract class WebTestBase {
         //driver.manage().timeouts().pageLoadTimeout(50, TimeUnit.SECONDS); // default is 0!!!
         
         if (urls == null) {
-            Urls.initUrls("https://localhost:" + PORT); 
+            Urls.initUrls("https://localhost:" + PORT, env.getProperty(PropertyNames.superSearchBaseUrl));
             urls = Urls.FI;
         }
         testHelper.dbCleanup();

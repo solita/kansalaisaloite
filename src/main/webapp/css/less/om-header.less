@@ -119,9 +119,6 @@
             overflow: hidden;
             text-align: center;
 
-            @media screen and (max-width: 991px) {
-                text-align: left;
-            }
 
             &.push {
                 position: relative;
@@ -200,7 +197,7 @@
     }
 
     // Header-nav Dropdown CSS for NOSCRIPT users
-    @media screen and (max-width: 1023px) {
+    @media @lg {
         .no-js & .header-nav {
             &:before {
                 content: '';

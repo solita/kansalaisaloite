@@ -1,5 +1,6 @@
 <#import "components/layout.ftl" as l />
 <#import "components/utils.ftl" as u />
+<#import "components/mobile-components.ftl" as mobile />
 
 <#escape x as x?html>
 <@l.main "page.frontpage">
@@ -21,80 +22,71 @@
 <#assign _rand = 0.36 />
 <#assign imageNumber = rand(1, 5)?c />
 
-<div class="image-container image-${imageNumber}">
+<div class="image-container image-${imageNumber} hidden-xs hidden-sm">
 
 </div>
+
+	<@mobile.mobileFrontPageImageContainer imageNumber />
+
 
 <div class="container">
     <a href="${urls.createNew()}" class="hero-holder noprint">
-        <span class="hero"><@u.messageHTML "index.hero" /><i class="icon-front i-arrow-right"></i></span>
+			<span class="hero"><@u.messageHTML "index.hero" /><i class="icon-front i-arrow-right"></i></span>
     </a>
 
     <div id="content">
-	    <div class="front-container">
+	    <div class="row front-container">
+				<div class="col-md-6">
+          <div class="front-block">
+						<h1><@u.message "index.block-1.title" /></h1>
 
-	        <div class="faux-columns cf">
-	            <div class="col-1">
+						<p><@u.message "index.block-1.p-1" /></p>
 
-	                <div class="front-block block-1">
-	                    <h1><@u.message "index.block-1.title" /></h1>
+						<ul>
+							<li><@u.message "index.block-1.li-1" /></li>
+							<li><@u.message "index.block-1.li-2" /></li>
+							<li><@u.message "index.block-1.li-3" /></li>
+						</ul>
 
-	                    <p><@u.message "index.block-1.p-1" /></p>
+						<p><@u.message "index.block-1.p-2" /></p>
+						<p><@u.message "index.block-1.p-3" /></p>
 
-	                    <ul>
-	                    	<li><@u.message "index.block-1.li-1" /></li>
-	                    	<li><@u.message "index.block-1.li-2" /></li>
-	                    	<li><@u.message "index.block-1.li-3" /></li>
-	                    </ul>
+						<a href="${urls.helpIndex()}" class="block-link"><@u.message "index.block-1.link" /></a>
+					</div>
+				</div>
 
-	                    <p><@u.message "index.block-1.p-2" /></p>
-	                    <p><@u.message "index.block-1.p-3" /></p>
+        <div class="col-md-6">
+					<div class="front-block">
+						<i class="icon-front i-list"></i>
+							<h2><@u.message "index.block-2.title" /></h2>
 
-	                    <a href="${urls.helpIndex()}" class="block-link"><@u.message "index.block-1.link" /></a>
-	                </div>
+							<p><@u.message "index.block-2" /></p>
 
-	            </div>
-	            <div class="col-2">
+							<#if initiatives?? && initiatives?size gt 0>
+								<ul class="initiative-list no-style">
+									<#list initiatives as initiative>
+										<li>
+											<span class="date"><@u.localDate initiative.startDate /></span>
+											<a href="${urls.view(initiative.id)}"><@u.text initiative.name /></a>
+										</li>
+									</#list>
+								</ul>
+							</#if>
 
-	                <div class="front-block block-2">
-	                	<i class="icon-front i-list"></i>
-	                    <h2><@u.message "index.block-2.title" /></h2>
+							<a href="${urls.search()}" class="block-link"><@u.message "index.block-2.link" /></a>
+						</div>
+						<div class="front-block">
+							<i class="icon-front i-help"></i>
+							<h2><@u.message "index.block-3.title" /></h2>
 
-	                    <p><@u.message "index.block-2" /></p>
-
-	                    <#if initiatives?? && initiatives?size gt 0>
-		                    <ul class="initiative-list no-style">
-		                    	<#list initiatives as initiative>
-			                    	<li>
-			                    		<span class="date"><@u.localDate initiative.startDate /></span>
-			                    		<a href="${urls.view(initiative.id)}"><@u.text initiative.name /></a>
-			                    	</li>
-		                    	</#list>
-		                    </ul>
-	                    </#if>
-
-	                    <a href="${urls.search()}" class="block-link"><@u.message "index.block-2.link" /></a>
-	                </div>
-
-	                <div class="front-block block-3">
-	                	<i class="icon-front i-help"></i>
-	                    <h2><@u.message "index.block-3.title" /></h2>
-
-	                    <#assign href1>${urls.helpIndex()}</#assign>
-	                    <#assign href2>${urls.help(HelpPage.CONTACT.getUri(locale))}</#assign>
-	                    <p><@u.messageHTML key="index.block-3.p-1" args=[href1, href2] /></p>
-	                </div>
-
-	            </div>
-
-	        </div>
-
-	    </div>
-    </div>
+							<#assign href1>${urls.helpIndex()}</#assign>
+							<#assign href2>${urls.help(HelpPage.CONTACT.getUri(locale))}</#assign>
+							<p><@u.messageHTML key="index.block-3.p-1" args=[href1, href2] /></p>
+						</div>
+				</div>
+			</div>
+		</div>
 </div>
-
-
-
 
 </@l.main>
 </#escape>

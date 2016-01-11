@@ -24,15 +24,15 @@
 <@l.main "page.search" pageTitle!"">
 
     <h1>
-        ${pageTitle} <span class="icon-small help-tooltip pull-down trigger-tooltip" title="<@u.message key="initiative.search.${searchMode}.description" args=[minSupportCountForSearch!""] />" ></span>
+        ${pageTitle} <span class="icon-small help-tooltip pull-down trigger-tooltip hidden-xs" title="<@u.message key="initiative.search.${searchMode}.description" args=[minSupportCountForSearch!""] />" ></span>
         <#if currentUser.om && !currentSearch.viewOm>
-           <span class="switch-view"><a href="${urls.searchOmView()}"><@u.message "user.omSearchView"/></a></span>
+           <span class="switch-view hidden-xs"><a href="${urls.searchOmView()}"><@u.message "user.omSearchView"/></a></span>
         </#if>
         <#if !currentSearch.viewPublic>
-           <span class="switch-view"><a href="${urls.search()}"><@u.message "initiative.search.public.link"/></a></span>
+           <span class="switch-view hidden-xs"><a href="${urls.search()}"><@u.message "initiative.search.public.link"/></a></span>
         </#if>
         <#if currentUser.registered && !currentSearch.viewOwn>
-           <span class="switch-view"><a href="${urls.searchOwnOnly()}"><@u.message "user.myInitiatives"/></a></span>
+           <span class="switch-view hidden-xs"><a href="${urls.searchOwnOnly()}"><@u.message "user.myInitiatives"/></a></span>
         </#if>
     </h1>
 
@@ -50,8 +50,8 @@
      * Search filters for public and OM view
     -->
     <#if currentSearch.viewPublic>
-        <span class="search-parameters-title filter"><@u.message "searchOptions.filter" /></span>
-        <div class="search-parameters-container js-search-filter-row">
+        <span class="search-parameters-title filter hidden-xs"><@u.message "searchOptions.filter" /></span>
+        <div class="search-parameters-container js-search-filter-row hidden-xs">
             <div class="search-parameters">
                 <@u.searchLink parameter="withStateWaiting" cssClass=(currentSearch.show == "waiting")?string('active','') count=initiativeCounts.waiting />
                 <@u.searchLink parameter="withStateRunning" cssClass=(currentSearch.show == "running")?string('active','') count=initiativeCounts.running />
@@ -63,8 +63,8 @@
             <br class="clear" />
         </div>
     <#elseif currentSearch.viewOm>
-        <span class="search-parameters-title filter"><@u.message "searchOptions.filter" /></span>
-        <div class="search-parameters-container js-search-filter-row">
+        <span class="search-parameters-title filter hidden-xs"><@u.message "searchOptions.filter" /></span>
+        <div class="search-parameters-container js-search-filter-row hidden-xs">
             <div class="search-parameters">
                 <@u.searchLink parameter="withStatePreparation" cssClass=(currentSearch.show == "preparation")?string('active','') count=initiativeCounts.preparation />
                 <@u.searchLink parameter="withStateReview" cssClass=(currentSearch.show == "review")?string('active','') count=initiativeCounts.review />
@@ -89,7 +89,7 @@
      * Sort only if more than 1 to sort
     -->
     <#if (initiativeCounts[currentSearch.show] > 1)>
-        <span class="search-parameters-title sort"><@u.message "searchOptions.sort" /></span>
+        <span class="search-parameters-title sort hidden-xs"><@u.message "searchOptions.sort" /></span>
         <div class="column search-sort">
             <#if currentSearch.show == "running">
                 <span class="small-icon icon-search-sort by-time-left"><@u.message "searchOptions.runningTimeLeft" /></span>
@@ -131,7 +131,7 @@
     -->
     <#if !currentSearch.viewOwn &&
          (currentSearch.show == "running" ||  currentSearch.show == "ended" || currentSearch.show == "all"  || currentSearch.show == "omAll" || currentSearch.show == "closeToTermination")>
-        <div class="toggle-under-50">
+        <div class="toggle-under-50 hidden-xs">
         <span><@u.message "searchParameters.showUnder50.title" /></span>
         <#if currentSearch.minSupportCount == 0>
             <div class="switch-buttons">
@@ -158,7 +158,7 @@
             </#if>
 
 
-            <#if initiative_index == 0><ul></#if>
+            <#if initiative_index == 0><ul class="hidden-xs"></#if>
             <li <#if initiative_index == 0>class="first"</#if>>
                 <a href="${urls.view(initiative.id)}">
             
@@ -213,8 +213,53 @@
                 </a>
             </li>
             <#if !initiative_has_next></ul></#if>
+
+            <#if initiative_index == 0><ul class="mobile hidden-sm hidden-md hidden-lg"></#if>
+              <li <#if initiative_index == 0>class="first"</#if>>
+                <div class="row">
+                <#if    (initiative.state != InitiativeState.DRAFT && initiative.state != InitiativeState.PROPOSAL
+                && initiative.state != InitiativeState.REVIEW && initiative.state != InitiativeState.CANCELED)
+                && flowStateAnalyzer.getFlowState(initiative) != FlowState.ACCEPTED_NOT_STARTED>
+                    <div class="col-xs-10">
+                      <span class="date" title="<@u.message "searchResults.initiative."+searchMode+".startDate" />" ><@u.localDate initiative.startDate /></span>
+                      <span class="info"><@flow.flowStateDescription initiative /></span>
+                      <a href="${urls.view(initiative.id)}"><@u.text initiative.name /></a>
+                    </div>
+                    <div class="col-xs-2">
+                      <span class="support-votes">${totalSupportCount}</span>
+
+                          <#if (initiative.votingDaysLeft > 0 && initiative.totalVotingDays > 0)>
+                              <#assign progressBarTooltip><@u.messageHTML key="searchResults.initiative.bar" args=[totalSupportCount, initiative.votingDaysLeft, initiative.totalVotingDays] /></#assign>
+                          <#else>
+                              <#assign progressBarTooltip><@u.messageHTML key="searchResults.initiative.bar.votingEnded" args=[totalSupportCount] /></#assign>
+                          </#if>
+
+                        <span class="progress-bars trigger-tooltip" title="${progressBarTooltip}">
+                            <span class="bar-container count ${(totalSupportCount < requiredVoteCount)?string("","completed")}">
+                                <#assign countWidth = (100-100*totalSupportCount/requiredVoteCount) />
+                                <#if countWidth lt 0>
+                                    <#assign countWidth = 0 />
+                                </#if>
+                              <span class="bar js-animate"style="width:${countWidth?string("#")}%;"></span>
+                            </span>
+
+                            <#if (initiative.totalVotingDays > 0)>
+                              <span class="bar-container time">
+                                    <#assign timeWidth = (100*initiative.votingDaysLeft/initiative.totalVotingDays) />
+                                  <#if timeWidth lt 0>
+                                      <#assign timeWidth = 0 />
+                                  </#if>
+                                <span class="bar js-animate" style="width:${timeWidth?string("#")}%;"></span>
+                              </span>
+                            </#if>
+                        </span>
+                    </div>
+                </#if>
+                <#if searchMode == "public"><#assign showTitle="show"></#if>
+                </div>
+              </li>
+            <#if !initiative_has_next></ul></#if>
         </#list>
-    
     <#else>
         
         <#--

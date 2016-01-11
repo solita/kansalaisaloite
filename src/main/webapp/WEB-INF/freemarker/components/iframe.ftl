@@ -49,7 +49,7 @@
 	<#assign digit = "\\d+" />
 
     <h2><@u.message "iframeGenerator.settings.title" /></h2>
-    <div class="hidden">
+    <div class="hidden-nojs">
         <div class="column col-1of5">
             <label for="initiativeId" class="input-header">
                 <@u.message "iframeGenerator.initiativeId" />

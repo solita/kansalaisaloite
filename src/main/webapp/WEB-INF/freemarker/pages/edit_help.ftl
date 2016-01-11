@@ -74,7 +74,7 @@
             </div>
             
             <#-- Include content editor -->
-            <div id="wysihtml5-container" class="bootstrap-icons js-hide hidden" style="margin-top:1em;">
+            <div id="wysihtml5-container" class="bootstrap-icons js-hide hidden-nojs" style="margin-top:1em;">
                 <@editor.form content!"" />
             </div>
         </div>

@@ -19,6 +19,7 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -69,6 +70,7 @@ public class BaseController {
         model.addAttribute(CURRENT_URI_ATTR, urls.getBaseUrl() + request.getRequestURI());
         model.addAttribute("infoRibbon", InfoRibbon.getCachedInfoRibbonText(locale));
         model.addAttribute("footerLinks", footerLinkProvider.getFooterLinks(locale));
+        model.addAttribute("superSearchEnabled", urls.getSuperSearchUrl()!=null);
 
         try {
             model.addAttribute("UrlConstants", freemarkerObjectWrapper.getStaticModels().get(Urls.class.getName()));
@@ -76,7 +78,7 @@ public class BaseController {
         } catch (TemplateModelException e) {
             throw new RuntimeException(e);
         }
-
+        
         addEnum(InitiativeState.class, model);
         addEnum(EditMode.class, model);
         addEnum(RequestMessage.class, model);
@@ -85,7 +87,7 @@ public class BaseController {
         addEnum(HelpPage.class, model);
         addEnum(InfoTextCategory.class, model);
     }
-
+    
     static void addRequestMessage(RequestMessage requestMessage, Model model, HttpServletRequest request) {
         FlashMap flashMap = RequestContextUtils.getOutputFlashMap(request);
         addListElement(flashMap, REQUEST_MESSAGES_KEY, requestMessage);
@@ -93,7 +95,7 @@ public class BaseController {
             addListElement(model.asMap(), REQUEST_MESSAGES_KEY, requestMessage);
         }
     }
-
+    
     private static <T> void addListElement(Map<? super String, ? super List<T>> map, String key, T value) {
         @SuppressWarnings("unchecked")
         List<T> list = (List<T>) map.get(key);
@@ -108,8 +110,8 @@ public class BaseController {
         addRequestMessage(requestMessage, null, request);
         return contextRelativeRedirect(targetUri);
     }
-
-
+    
+    
 
     @SuppressWarnings("unchecked")
     private List<RequestMessage> getRequestMessages(HttpServletRequest request) {

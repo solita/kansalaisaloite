@@ -228,7 +228,7 @@
                     
                     <#-- Save initiative and send invitations -->
                     <#if requestMessage == "success.save-and-send-invitations">
-                        <a class="small-button gray close hidden"><@message "modal.close" /></a>
+                        <a class="small-button gray close hidden-nojs"><@message "modal.close" /></a>
                     </#if>
                     <#-- Voted successfully -->
                     <#if requestMessage == "success.confirm-vote">

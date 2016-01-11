@@ -100,7 +100,7 @@
 
     <#-- Show refresh-button only when voting is in progress -->
 	        <#if votingInfo?? && votingInfo.votingInProggress>
-	            <span class="js-update-support-count icon-small refresh push rounded trigger-tooltip hidden" data-id="${initiative.id?c}" data-target-total="support-count-${initiative.id?c}" data-target-internal="internal-support-count-${initiative.id?c}" title="<@u.message "initiative.supportCount.refresh" />"></span>
+	            <span class="js-update-support-count icon-small refresh push rounded trigger-tooltip hidden-nojs" data-id="${initiative.id?c}" data-target-total="support-count-${initiative.id?c}" data-target-internal="internal-support-count-${initiative.id?c}" title="<@u.message "initiative.supportCount.refresh" />"></span>
 	        </#if>
         </p>
 	</#if>

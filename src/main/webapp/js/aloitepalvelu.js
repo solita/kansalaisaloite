@@ -73,7 +73,7 @@
   $(document).ready(function () {
     // Define general variables
     var $body, speedFast, speedSlow, speedVeryFast, speedAutoHide, vpHeight, vpWidth, validateEmail,
-      locale, isIE7, $topRibbon, myConsole, fireSupportVoteGraph, headerNav;
+      locale, isIE6, isIE7, isIE8, $topRibbon, myConsole, fireSupportVoteGraph, headerNav;
 
     $body = $('body');
     speedFast = '200'; // General speeds for animations
@@ -83,7 +83,9 @@
     vpHeight = $(window).height(); // Viewport height
     vpWidth = $(window).width(); // Viewport width
     locale = Init.getLocale();     // Current locale: fi, sv
+    isIE6 = $('html').hasClass('ie6'); // Boolean for IE7. Used browser detection instead of jQuery.support().
     isIE7 = $('html').hasClass('ie7'); // Boolean for IE7. Used browser detection instead of jQuery.support().
+    isIE8 = $('html').hasClass('ie8'); // Boolean for IE7. Used browser detection instead of jQuery.support().
 
     // Console fix for IE
     if (typeof console === "undefined") {
@@ -105,6 +107,12 @@
       setTimeout(function () {
         $('.auto-hide').fadeOut(speedSlow);
       }, speedAutoHide);
+    }
+
+    if (typeof window.showSuperSearch !== 'undefined' && window.showSuperSearch && !isIE6 && !isIE7 && !isIE8) {
+      $(".super-search-placeholder").show();
+      $(".super-search-placeholder").append("<iframe id=\"searchIframe\" src=" + window.superSearchUrl  + " ></iframe>");
+      $(".om-header").hide();
     }
 
     // Validate emails
@@ -138,7 +146,7 @@
     /**
      *  Prevent double clicks
      */
-    $("button").live('click', function () {
+    $("button:not(#navbar-toggle)").on('click', function () {
       var btnClicked, firstBtnInForm, $loader, $submitInfo, $submitWarning, siblingButtons;
       btnClicked = $(this);
 
@@ -306,7 +314,7 @@
       });
 
       // Matches class-name "input-block-extra" within the same block
-      $('input[type=text],textarea').live('focus', function () {
+      $('input[type=text],textarea').on('focus', function () {
         var $thisHelp = $(this).parents('.input-block-content:first').find('.input-block-extra:first');
         toggleHelpTexts($thisHelp, false);
       });
@@ -384,7 +392,7 @@
       };
 
 
-      $('textarea').live('input propertychange', function () {
+      $('textarea').on('input propertychange', function () {
         var potentialLinks, $thisWarning, $ul, newheight;
 
         if (this.id === "rationale.fi" || this.id === "proposal.fi" || this.id === "rationale.sv" || this.id === "proposal.sv") {
@@ -575,14 +583,14 @@
         createLinkRow();
       }
 
-      $('#add-new-link').live('click', function () {
+      $('#add-new-link').on('click', function () {
         createLinkRow();
 
         return false;
       });
 
       // Remove link (clear values and hide fields)
-      $('.remove-link').live('click', function () {
+      $('.remove-link').on('click', function () {
         var removedLink = $(this).closest('.add-link');
 
         removedLink.slideUp(speedFast, function () {
