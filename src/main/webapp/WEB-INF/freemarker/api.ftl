@@ -20,7 +20,15 @@ Maximum amount of initiatives to return is ${UrlConstants.MAX_INITIATIVE_JSON_RE
 The list includes only initiatives with at least 50 support counts by default. This can be changed with <tt>${UrlConstants.JSON_MINSUPPORTCOUNT}</tt>.
 </p>
 
-<p><a href="${urls.initiatives()}?${UrlConstants.JSON_OFFSET}=10&${UrlConstants.JSON_LIMIT}=10&${UrlConstants.JSON_MINSUPPORTCOUNT}=100">${urls.initiatives()}&${UrlConstants.JSON_OFFSET}=10&${UrlConstants.JSON_LIMIT}=10&${UrlConstants.JSON_MINSUPPORTCOUNT}=100</a></p>
+<p>Results might be ordered with parameter <tt>${UrlConstants.JSON_ORDER_BY}</tt>. Possible values are
+    <tt>
+    <#list orderByValues as o>
+    ${o}<#if orderByValues?size - 2 = o_index>  and<#elseif o_has_next>,<#elseif orderByValues?size - 1 = o_index>.</#if>
+    </#list>
+    </tt>
+</p>
+
+<p><a href="${urls.initiatives()}?${UrlConstants.JSON_OFFSET}=10&${UrlConstants.JSON_LIMIT}=10&${UrlConstants.JSON_MINSUPPORTCOUNT}=100&${UrlConstants.JSON_ORDER_BY}=mostTimeLeft">${urls.initiatives()}&${UrlConstants.JSON_OFFSET}=10&${UrlConstants.JSON_LIMIT}=10&${UrlConstants.JSON_MINSUPPORTCOUNT}=100${UrlConstants.JSON_ORDER_BY}=mostTimeLeft</a></p>
 
 <h3>Initiative Details</h3>
 <p>${urls.baseUrl}${UrlConstants.INITIATIVE}</p>

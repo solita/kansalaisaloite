@@ -460,7 +460,8 @@ public class InitiativeController extends BaseController {
     @RequestMapping(value=INITIATIVES, method=GET, produces=JSON)
     public @ResponseBody List<InitiativeInfo> jsonList(@RequestParam(value = JSON_OFFSET, required = false) Integer offset,
                                                        @RequestParam(value = JSON_LIMIT, required = false) Integer limit,
-                                                       @RequestParam(value = JSON_MINSUPPORTCOUNT, required = false) Integer minSupportCount) {
+                                                       @RequestParam(value = JSON_MINSUPPORTCOUNT, required = false) Integer minSupportCount,
+                                                       @RequestParam(value = JSON_ORDER_BY, required = false) OrderBy orderBy) {
 
         if (limit == null) {
             limit = DEFAULT_INITIATIVE_JSON_RESULT_COUNT;
@@ -479,14 +480,18 @@ public class InitiativeController extends BaseController {
         if (offset != null) {
             search.setOffset(offset);
         }
+        if (orderBy != null) {
+            search.setOrderBy(orderBy);
+        }
         return initiativeService.findInitiatives(search).list;
     }
     @RequestMapping(value=INITIATIVES, method=GET, produces=JSONP, params=JSONP_CALLBACK)
     public @ResponseBody JsonpObject<List<InitiativeInfo>> jsonpList(@RequestParam(JSONP_CALLBACK) String callback,
                                                                      @RequestParam(value = JSON_OFFSET, required = false) Integer offset,
                                                                      @RequestParam(value = JSON_LIMIT, required = false) Integer limit,
-                                                                     @RequestParam(value = JSON_MINSUPPORTCOUNT, required = false) Integer minSupportCount) {
-        return new JsonpObject<>(callback, jsonList(offset, limit, minSupportCount));
+                                                                     @RequestParam(value = JSON_MINSUPPORTCOUNT, required = false) Integer minSupportCount,
+                                                                     @RequestParam(value = JSON_ORDER_BY, required = false) OrderBy orderBy) {
+        return new JsonpObject<>(callback, jsonList(offset, limit, minSupportCount, orderBy));
     }
 
     @RequestMapping(value = SUPPORT_COUNT, method = GET, produces = JSON)

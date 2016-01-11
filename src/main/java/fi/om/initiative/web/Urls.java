@@ -201,6 +201,8 @@ public final class Urls {
 
     public static final String JSON_MINSUPPORTCOUNT = "minSupportCount";
 
+    public static final String JSON_ORDER_BY = "orderBy";
+
     // Actions for the content editor 
     
     public static final String ACTION_EDITOR_SAVE_DRAFT = "action-editor-save-draft";
