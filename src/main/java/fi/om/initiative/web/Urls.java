@@ -160,6 +160,8 @@ public final class Urls {
     public static final String SEARCH_OM_VIEW = "searchView="+ SearchView.om.name();
 
     public static final String ACTION_SAVE_AND_SEND_INVITATIONS = "action-save-and-send-invitations";
+
+    public static final String ACTION_FOLLOW = "action-follow-initiative";
     
     public static final String ACTION_SEND_INVITATIONS = "action-send-invitations";
     

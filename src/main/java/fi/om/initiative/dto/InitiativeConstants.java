@@ -13,4 +13,5 @@ public class InitiativeConstants {
     public static final int ACCEPTANCE_IDENTIFIER_MAX = 128;
     public static final int VERIFICATION_IDENTIFIER_MAX = 128;
     public static final int SUPPORT_STATEMENT_ADDRESS_MAX = 1024;
+    public static final int CONTACT_EMAIL_MAX = 100;
 }

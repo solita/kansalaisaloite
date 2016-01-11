@@ -2,72 +2,59 @@ package fi.om.initiative.service;
 
 
 import fi.om.initiative.dao.TestHelper;
-import fi.om.initiative.dto.User;
-import fi.om.initiative.dto.initiative.InitiativeState;
-import fi.om.initiative.web.HttpUserServiceImpl;
-import jdk.nashorn.internal.ir.annotations.Ignore;
-import mockit.Delegate;
-import mockit.Expectations;
-import mockit.Mocked;
-import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
+import fi.om.initiative.dto.FollowInitiativeDto;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.validation.DirectFieldBindingResult;
 
 import javax.annotation.Resource;
-import java.util.concurrent.atomic.AtomicInteger;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class FollowServiceTest extends EmailSpyConfiguration {
 
     @Resource
     private TestHelper testHelper;
 
-    private Long userId;
-
     @Resource
-    FollowService followService;
-
-    @Mocked
-    HttpUserServiceImpl userService;
-
-    @Resource
-    private SupportVoteService supportVoteService;
+    private FollowService followService;
 
     @Before
-    public void init() {
+    public void setup() {
         testHelper.dbCleanup();
-        userId = testHelper.createTestUser();
-
-        new Expectations() {{
-            userService.getUserInRole((Role[]) withNotNull());
-            result = new Delegate() {
-                private AtomicInteger count = new AtomicInteger(0);
-                @SuppressWarnings("unused")
-                public User getUserInRole(Role... roles) {
-                    return new User(userId, DateTime.now(), "Joku", "Käyttäjä", new LocalDate(1990, 1, 1), false, false);
-                }
-            };
-            times = -1;
-        }};
-
     }
 
     @Test
-    @Ignore
-    public void send_email_to_followers_when_initiative_goes_to_VRK() throws InterruptedException {
+    public void follow_initiative_email_is_validated() {
+        Long initiativeId = testHelper.createRunningPublicInitiative(testHelper.createTestUser(), "test");
 
-        final Long initiative = testHelper.create(
-                new TestHelper.InitiativeDraft(userId)
-                        .withState(InitiativeState.ACCEPTED)
-                        .withSupportCount(50001)
+        FollowInitiativeDto followInitiativeDto = new FollowInitiativeDto();
+        followInitiativeDto.setEmail("INVALID EMAIL");
 
-        );
+        assertFalse(followService.followInitiative(initiativeId, followInitiativeDto, emailValidationErrors(followInitiativeDto)));
 
-        testHelper.createSupport(initiative, LocalDate.now());
-
-        supportVoteService.sendToVRK(initiative);
-
-        // TODO: getAllSentEmails().size() == 2
-        // TODO: Assert emails sent to vrk and followers
+        assertSentEmailCount(0);
     }
+
+    @Test
+    public void follow_initiative_sends_confirmation_email() {
+
+        Long initiativeId = testHelper.createRunningPublicInitiative(testHelper.createTestUser(), "test");
+
+        FollowInitiativeDto followInitiativeDto = new FollowInitiativeDto();
+        followInitiativeDto.setEmail("follower@example.com");
+
+        assertTrue(followService.followInitiative(initiativeId, followInitiativeDto, emailValidationErrors(followInitiativeDto)));
+
+        assertSentEmailCount(1);
+        assertSentEmail("follower@example.com", "Olet tilannut aloitteen sähköpostitiedotteet / SV Olet tilannut aloitteen sähköpostitiedotteet");
+
+    }
+
+    // This tries to be the BindingResult created by spring while validating.
+    private static DirectFieldBindingResult emailValidationErrors(FollowInitiativeDto followInitiativeDto) {
+        return new DirectFieldBindingResult(followInitiativeDto, "email");
+    }
+
 }

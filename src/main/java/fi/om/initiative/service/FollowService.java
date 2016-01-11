@@ -5,6 +5,7 @@ import com.google.common.collect.Lists;
 import fi.om.initiative.dao.DuplicateException;
 import fi.om.initiative.dao.FollowInitiativeDao;
 import fi.om.initiative.dao.InitiativeDao;
+import fi.om.initiative.dto.FollowInitiativeDto;
 import fi.om.initiative.dto.Follower;
 import fi.om.initiative.dto.InitiativeSettings;
 import fi.om.initiative.dto.initiative.InitiativeInfo;
@@ -13,6 +14,8 @@ import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.SmartValidator;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -29,23 +32,12 @@ public class FollowService {
     private EmailService emailService;
 
     @Resource
-    InitiativeSettings initiativeSettings;
+    private InitiativeSettings initiativeSettings;
+
+    @Resource
+    private SmartValidator validator;
 
     private final Logger log = LoggerFactory.getLogger(FollowService.class);
-
-    @Transactional(readOnly = false)
-    public void followInitiative(String email, Long initiativeId) {
-
-        String unsubscribeHash = new HashCreator(email).hash(initiativeId);
-
-        try {
-            followInitiativeDao.addFollow(initiativeId, new Follower(email, unsubscribeHash));
-            emailService.sendFollowConfirmationEmail(initiativeDao.getInitiativeForManagement(initiativeId, false), email, unsubscribeHash);
-        } catch (DuplicateException e) {
-            log.warn("Duplicate following on " + initiativeId + ": " + email);
-        }
-
-    }
 
     @Transactional(readOnly = true)
     public void sendEmailsForEndedInitiatives(LocalDate today) {
@@ -87,5 +79,24 @@ public class FollowService {
                 (initiative.isVotingEnded(today)
                 && !initiative.isVotingEnded(yesterday)
                 && !initiative.isVotingSuspended(initiativeSettings.getMinSupportCountForSearch(), initiativeSettings.getRequiredMinSupportCountDuration(), yesterday));
+    }
+
+    @Transactional
+    public boolean followInitiative(long id, FollowInitiativeDto followInitiativeDto, BindingResult bindingResult) {
+        validator.validate(followInitiativeDto, bindingResult);
+
+        if (bindingResult.hasErrors()) {
+            return false;
+        }
+
+        try {
+            String unsubscribeHash = new HashCreator(followInitiativeDto.getEmail()).hash(id);
+            followInitiativeDao.addFollow(id, new Follower(followInitiativeDto.getEmail(), unsubscribeHash));
+            emailService.sendFollowConfirmationEmail(initiativeDao.getInitiativeForManagement(id, false), followInitiativeDto.getEmail(), unsubscribeHash);
+        } catch (DuplicateException e) {
+            log.warn("Duplicate following on " + id + ": " + followInitiativeDto.getEmail());
+        }
+
+        return true;
     }
 }

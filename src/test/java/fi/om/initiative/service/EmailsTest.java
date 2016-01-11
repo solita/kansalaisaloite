@@ -2,6 +2,7 @@ package fi.om.initiative.service;
 
 
 import fi.om.initiative.dao.TestHelper;
+import fi.om.initiative.dto.FollowInitiativeDto;
 import fi.om.initiative.dto.User;
 import fi.om.initiative.dto.author.AuthorRole;
 import fi.om.initiative.dto.initiative.InitiativeManagement;
@@ -15,6 +16,7 @@ import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.DirectFieldBindingResult;
 import org.springframework.validation.Errors;
 
 import javax.annotation.Resource;
@@ -22,6 +24,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 
@@ -277,17 +280,35 @@ public class EmailsTest extends EmailSpyConfiguration {
     }
 
     @Test
-    public void follow_initiative_sends_confirmation_email() {
+    public void follow_initiative_email_is_validated() {
+        Long initiativeId = testHelper.createRunningPublicInitiative(userId, "test");
 
+        FollowInitiativeDto followInitiativeDto = new FollowInitiativeDto();
+        followInitiativeDto.setEmail("INVALID EMAIL");
+
+        assertFalse(followService.followInitiative(initiativeId, followInitiativeDto, emailValidationErrors(followInitiativeDto)));
+
+        assertSentEmailCount(0);
+    }
+
+    @Test
+    public void follow_initiative_sends_confirmation_email() {
 
         Long initiativeId = testHelper.createRunningPublicInitiative(userId, "test");
 
-        followService.followInitiative("follower@example.com", initiativeId);
+        FollowInitiativeDto followInitiativeDto = new FollowInitiativeDto();
+        followInitiativeDto.setEmail("follower@example.com");
 
+        assertTrue(followService.followInitiative(initiativeId, followInitiativeDto, emailValidationErrors(followInitiativeDto)));
 
         assertSentEmailCount(1);
         assertSentEmail("follower@example.com", "Olet tilannut aloitteen sähköpostitiedotteet / SV Olet tilannut aloitteen sähköpostitiedotteet");
 
+    }
+
+    // This tries to be the BindingResult created by spring while validating.
+    private static DirectFieldBindingResult emailValidationErrors(FollowInitiativeDto followInitiativeDto) {
+        return new DirectFieldBindingResult(followInitiativeDto, "email");
     }
 
 
