@@ -319,7 +319,7 @@
         </#assign>
     <#else >
         <#assign statusInfoFi>
-        Aloite keräsi ${initiative.totalSupportCount} kannatusilmoitusta, joista ${initiative.supportCount} kpl palvelussa kansalaisaloite.fi ja muissa palveluissa ${initiative.externalSupportCount} kpl.
+        Aloite keräsi ${initiative.totalSupportCount} kannatusilmoitusta, joista ${initiative.supportCount} palvelussa kansalaisaloite.fi ja muissa palveluissa ${initiative.externalSupportCount} kpl.
         Kerääminen jäi ${initiativeSettings.requiredVoteCount - initiative.totalSupportCount} kpl vaille vaaditun ${initiativeSettings.requiredVoteCount} kannatusilmoituksen, jotta aloite etenisi eduskunnan käsittelyyn.
         </#assign>
     </#if>

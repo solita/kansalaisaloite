@@ -196,6 +196,8 @@ public class TestHelper {
                 .set(qInitiative.state, initiativeDraft.state)
                 .set(qInitiative.modifierId, initiativeDraft.representativeId)
                 .set(qInitiative.supportcount, initiativeDraft.supportCount)
+                .set(qInitiative.externalsupportcount, initiativeDraft.externalSupportCount)
+                .set(qInitiative.supportstatementsinweb, initiativeDraft.externalSupportCount > 0)
                 .set(qInitiative.proposaltype, ProposalType.LAW)
                 .set(qInitiative.nameFi, initiativeDraft.name)
                 .set(qInitiative.rationaleFi, "rationale")
@@ -322,6 +324,7 @@ public class TestHelper {
         private LocalDate startTime;
         private LocalDate endTime;
         private boolean hasDenormalizedSupportCounts = false;
+        private int externalSupportCount = 0;
 
         public InitiativeDraft(Long representativeId) {
             this.representativeId = representativeId;
@@ -372,6 +375,11 @@ public class TestHelper {
 
         public InitiativeDraft withSupportCount(int supportCount) {
             this.supportCount = supportCount;
+            return this;
+        }
+
+        public InitiativeDraft withExternalSupportCount(int externalSupportCount) {
+            this.externalSupportCount = externalSupportCount;
             return this;
         }
 

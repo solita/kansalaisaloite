@@ -178,11 +178,46 @@ public class EmailsTest extends EmailSpyConfiguration {
 
     }
 
-
-
     // default.properties has:
     // initiative.minSupportCountForSearch = 50
     // initiative.requiredMinSupportCountDuration = P1M
+
+    @Test
+    public void send_emails_for_vevs_and_followers_when_initiative_has_ended_normally_and_has_not_enough_support_votes() {
+
+
+        LocalDate initiativeEndDate = LocalDate.now().minusDays(1);
+        LocalDate initiativeStartDate = initiativeEndDate.minusMonths(6);
+
+        final Long initiative = testHelper.create(
+                new TestHelper.InitiativeDraft(userId, AUTHOR_EMAIL)
+                        .withName("Testialoite")
+                        .withState(InitiativeState.PROPOSAL)
+                        .isRunning(initiativeStartDate, initiativeEndDate)
+                        .withExternalSupportCount(10000)
+                        .withSupportCount(39000)
+        );
+
+        testHelper.addFollower(initiative, FOLLOWER_EMAIL);
+
+        followService.sendEmailsForEndedInitiatives(initiativeEndDate.plusDays(1));
+        assertSentEmailCount(2);
+        assertSentEmail(FOLLOWER_EMAIL, "Kannatusilmoitusten keruuaika on päättynyt / Insamlingen av stödförklaringar har avslutats");
+
+        assertSentEmail(AUTHOR_EMAIL, "Kannatusilmoitusten keruuaika on päättynyt / Insamlingen av stödförklaringar har avslutats",
+                "Kannatusilmoitusten kerääminen on päättynyt",
+                "Aloite keräsi 49,000 kannatusilmoitusta, joista 39,000 palvelussa kansalaisaloite.fi ja muissa palveluissa 10,000 kpl",
+                "Kerääminen jäi 1,000 kpl vaille vaaditun 50,000 kannatusilmoituksen, jotta aloite etenisi eduskunnan käsittelyyn");
+
+        assertMailsSentOnlyForDate(
+                initiativeEndDate.plusDays(1),
+                2,
+                initiativeStartDate.minusDays(10),
+                initiativeEndDate.plusDays(10)
+        );
+
+    }
+
 
     @Test
     public void send_emails_for_vevs_and_followers_when_initiative_ends_due_not_enough_support_votes_in_month() {
