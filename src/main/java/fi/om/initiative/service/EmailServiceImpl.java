@@ -224,6 +224,15 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
+    public void sendFollowConfirmationEmail(InitiativeManagement initiative, String email, String unsubscribeHash) {
+        Map<String, Object> dataMap = initMap(initiative);
+        dataMap.put("unsubscribeHash", unsubscribeHash);
+
+        sendEmail(email, null, getEmailSubject("follow.confirmed"), "follow-confirmed", dataMap);
+
+    }
+
+    @Override
     public void sendStatusInfoToVEVs(InitiativeManagement initiative, EmailMessageType emailMessageType) {
         Assert.notNull(initiative, "initiative");
         

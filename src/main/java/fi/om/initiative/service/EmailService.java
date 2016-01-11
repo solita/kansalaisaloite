@@ -31,5 +31,5 @@ public interface EmailService {
 
     void sendAuthorRemovedInfoToVEVs(InitiativeManagement initiative, Author removedAuthor, List<String> authorEmails);
 
-
+    void sendFollowConfirmationEmail(InitiativeManagement initiative, String email, String unsubscribeHash);
 }

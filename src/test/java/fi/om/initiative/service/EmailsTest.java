@@ -276,5 +276,19 @@ public class EmailsTest extends EmailSpyConfiguration {
 
     }
 
+    @Test
+    public void follow_initiative_sends_confirmation_email() {
+
+
+        Long initiativeId = testHelper.createRunningPublicInitiative(userId, "test");
+
+        followService.followInitiative("follower@example.com", initiativeId);
+
+
+        assertSentEmailCount(1);
+        assertSentEmail("follower@example.com", "Olet tilannut aloitteen sähköpostitiedotteet / SV Olet tilannut aloitteen sähköpostitiedotteet");
+
+    }
+
 
 }
