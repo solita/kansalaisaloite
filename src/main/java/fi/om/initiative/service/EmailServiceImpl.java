@@ -8,6 +8,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.mysema.commons.lang.Assert;
 import fi.om.initiative.dto.Follower;
+import fi.om.initiative.dto.InitiativeSettings;
 import fi.om.initiative.dto.Invitation;
 import fi.om.initiative.dto.author.Author;
 import fi.om.initiative.dto.author.AuthorInfo;
@@ -25,12 +26,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 
 import javax.annotation.Resource;
 import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
@@ -45,7 +44,7 @@ public class EmailServiceImpl implements EmailService {
     @Resource MessageSource messageSource;
     @Resource JavaMailSender javaMailSender;
     @Resource HashCreator hashCreator;
-
+    @Resource InitiativeSettings initiativeSettings;
 
     private static final Logger log = LoggerFactory.getLogger(EmailServiceImpl.class);
 
@@ -303,6 +302,7 @@ public class EmailServiceImpl implements EmailService {
 
         Map<String, Object> dataMap = new HashMap<String, Object>();
         dataMap.put("baseURL", baseURL);
+        dataMap.put("initiativeSettings", initiativeSettings);
         dataMap.put("urlsFi", Urls.get(Locales.LOCALE_FI));
         dataMap.put("urlsSv", Urls.get(Locales.LOCALE_SV));
         dataMap.put("summaryMethod", SummaryMethod.INSTANCE);
@@ -372,19 +372,17 @@ public class EmailServiceImpl implements EmailService {
             return;
         }
 
-        MimeMessage message = javaMailSender.createMimeMessage();
+        EmailHelper emailHelper = new EmailHelper();
         try {
-            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
-            helper.setTo(sendTo);
-            helper.setFrom(defaultReplyTo); //to avoid spam filters
-            helper.setReplyTo(replyTo);
-            helper.setSubject(subject);
-            helper.setText(text, html);
+            emailHelper.setTo(sendTo);
+            emailHelper.setFrom(defaultReplyTo); //to avoid spam filters
+            emailHelper.setReplyTo(replyTo);
+            emailHelper.setSubject(subject);
+            emailHelper.setText(text, html);
+            EmailSender.send(emailHelper, javaMailSender);
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }
-
-        javaMailSender.send(message);
         log.info("Email message sent to " + sendTo + ": " + subject);
     }
 

@@ -144,10 +144,10 @@ public class EmailsTest extends EmailSpyConfiguration {
 
 
     @Test
-    public void send_emails_for_vevs_and_followers_when_initiative_has_ended_normally() {
+    public void send_emails_for_vevs_and_followers_when_initiative_has_ended_normally_and_has_enough_support_votes() {
 
 
-        LocalDate initiativeEndDate = new LocalDate(2000, 1, 1);
+        LocalDate initiativeEndDate = LocalDate.now().minusDays(1);
         LocalDate initiativeStartDate = initiativeEndDate.minusMonths(6);
 
         final Long initiative = testHelper.create(
@@ -163,7 +163,11 @@ public class EmailsTest extends EmailSpyConfiguration {
         followService.sendEmailsForEndedInitiatives(initiativeEndDate.plusDays(1));
         assertSentEmailCount(2);
         assertSentEmail(FOLLOWER_EMAIL, "Kannatusilmoitusten keruuaika on päättynyt / Insamlingen av stödförklaringar har avslutats");
-        assertSentEmail(AUTHOR_EMAIL, "Kannatusilmoitusten keruuaika on päättynyt / Insamlingen av stödförklaringar har avslutats");
+
+        assertSentEmail(AUTHOR_EMAIL, "Kannatusilmoitusten keruuaika on päättynyt / Insamlingen av stödförklaringar har avslutats",
+                "Kannatusilmoitusten kerääminen on päättynyt",
+                "Aloite keräsi 51,000 kannatusilmoitusta, joista 51,000 palvelussa kansalaisaloite.fi ja muissa palveluissa 0 kpl",
+                "Vastuuhenkilöt ovat nyt velvollisia lähettämään kannatusilmoitukset väestörekisterikeskuksen tarkastettavaksi");
 
         assertMailsSentOnlyForDate(
                 initiativeEndDate.plusDays(1),
@@ -183,7 +187,7 @@ public class EmailsTest extends EmailSpyConfiguration {
     @Test
     public void send_emails_for_vevs_and_followers_when_initiative_ends_due_not_enough_support_votes_in_month() {
 
-        LocalDate initiativeStartDate = new LocalDate(2000, 1, 1);
+        LocalDate initiativeStartDate = LocalDate.now().minusMonths(1);
         LocalDate initiativeEndDate = initiativeStartDate.plusMonths(6);
 
         final Long initiative = testHelper.create(
@@ -207,7 +211,11 @@ public class EmailsTest extends EmailSpyConfiguration {
         followService.sendEmailsForEndedInitiatives(initiativeStartDate.plusMonths(1).plusDays(1));
         assertSentEmailCount(2);
         assertSentEmail(FOLLOWER_EMAIL, "Kannatusilmoitusten keruuaika on päättynyt / Insamlingen av stödförklaringar har avslutats");
-        assertSentEmail(AUTHOR_EMAIL, "Kannatusilmoitusten keruuaika on päättynyt / Insamlingen av stödförklaringar har avslutats");
+
+        assertSentEmail(AUTHOR_EMAIL, "Kannatusilmoitusten keruuaika on päättynyt / Insamlingen av stödförklaringar har avslutats",
+                "Kannatusilmoitusten kerääminen on päättynyt",
+                "Aloite ei kerännyt vaadittua 50 kannatusilmoitusta 1 kuukauden aikana",
+                "Aloite keräsi 49 kannatusilmoitusta, joista 49 kpl palvelussa kansalaisaloite.fi ja muissa palveluissa 0 kpl.");
 
     }
 
