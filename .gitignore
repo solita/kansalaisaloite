@@ -33,3 +33,4 @@ src/main/webapp/js/script.min.js
 initiative-web.iml
 
 config/app.properties
+config/info-ribbon_*.txt
