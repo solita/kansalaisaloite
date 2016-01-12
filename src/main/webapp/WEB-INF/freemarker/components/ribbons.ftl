@@ -39,7 +39,6 @@
                 </#if>
             </div>
         </div>
-        <div class="container relative"><div class="test-padge <#if infoRibbon??>has-info-ribbon</#if>"> </div></div>
     </#if>
     
     <#if infoRibbon??>
