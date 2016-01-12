@@ -377,6 +377,4 @@
     </div>
         
 </#macro>
-
-
 </#escape> 

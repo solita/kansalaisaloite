@@ -111,7 +111,7 @@
 -->
 <#macro confirmModal id name>
 
-    <div class="bootstrap-${id} bootstrap-icons modal hide fade"> 
+    <div class="bootstrap-${id} bootstrap-icons modal fade">
         <div class="modal-header"> 
             <a class="close" data-dismiss="modal">&times;</a> 
             <h4><@u.message "editor."+id /></h4> 

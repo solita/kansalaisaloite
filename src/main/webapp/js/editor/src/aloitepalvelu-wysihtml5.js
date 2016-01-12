@@ -145,7 +145,7 @@
 	    $(prettyPrint);
 	});
 
-	$('.js-submit').live('click', function(){
+	$('.js-submit').click(function(){
 		var btn 	= $(this),
 			form 	= $("#"+btn.data('form'));
 

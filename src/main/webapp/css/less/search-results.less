@@ -101,6 +101,9 @@
     .title {
         display:block;
         margin:0 15em 0 100px;
+        @media @xs, @sm {
+            margin: 0;
+        }
     }
     .info {
         display:block;
@@ -201,6 +204,165 @@
             // use 0 to animate from right to left
             // use 100% to animate from left to right
             width:100% !important;
+        }
+    }
+}
+
+.show-more {
+    display: none;
+}
+
+.search-options-mobile, .open-filters {
+    display: none;
+}
+
+@media @sm {
+    .show-more {
+        display: block;
+    }
+    .open-filters{
+
+        display: block;
+        width: 94%;
+        margin:  0 auto;
+        color: white;
+        padding: 10px;
+        background-color: @mainColor;
+        border-radius: 2px;
+        position: relative;
+        box-sizing: border-box;
+        cursor: pointer;
+
+        h1 {
+            margin: 10px auto;
+
+        }
+        #open-filters-icon {
+            font-size: 20px;
+        }
+    }
+
+    .search-options-mobile {
+        display: none;
+        &.open{
+            display: block;
+        }
+        height: 300%;
+        position: relative;
+        z-index: 100;
+        width: 100%;
+        padding: 0;
+        top: 10px;
+        border: none;
+        background-color: @mainColor;
+        color: white;
+
+
+
+        .mobile-search-link{
+
+            display: block;
+            margin-top: 1em;
+            a {
+                display: block;
+                color: white;
+
+            }
+        }
+        input[type=radio],
+        input[type=checkbox]{
+            display: none;
+        }
+        label {
+            padding: 5px 0;
+            margin: 1em 0;
+            font-weight: normal;
+            position: relative;
+            cursor: pointer;
+        }
+        label:before  {
+            content: "";
+            display: inline;
+            float: left;
+            height: 20px;
+            width: 20px;
+            margin-right: 10px;
+            background-color: white;
+            border-radius: 10px;
+        }
+        input[type=radio]:checked  + label:before,
+        input[type=checkbox]:checked  + label:before {
+            border: solid 5px @mainColorDark;
+            height: 20px;
+            width: 20px;
+        }
+        input[type=checkbox]:checked  + label:before,
+        input[type=checkbox]  + label:before{
+            border-radius: 0px;
+            border: 0;
+        }
+        input[type=checkbox]:checked  + label:after {
+            position: absolute;
+            top: 7px;
+            left: 1px;
+            content: "\e013";
+            font-family: 'Glyphicons Halflings';
+            font-style: normal;
+            font-weight: 400;
+            line-height: 1;
+            -webkit-font-smoothing: antialiased;
+            color: @mainColor;
+
+        }
+        .run-search-mobile {
+
+            display: block;
+            width: 125px;
+            margin: 1em auto;
+            background-color: white;
+            color: @mainColorLight;
+            text-align: center;
+            padding: 10px 0;
+            border: none;
+            border-radius: 2px;
+
+        }
+        .search-parameters-wrapper {
+            padding: 30px 20px;
+
+            h3 {
+                margin: 2px 0 1em 0;
+                font-weight: bold;
+                font-size: 14px;
+                color: white;
+                text-transform: uppercase;
+            }
+
+            .search-filters-title {
+                color: white;
+                text-align: center;
+                font-size: 18px;
+                font-weight: bold;
+                margin: 1em;
+                position: relative;
+                height: 29px;
+
+                .arrow {
+                    position: absolute;
+                    left: -0.7em;
+                    display: inline-block;
+                    width: 29px;
+                    height: 29px;
+                    background: url("@{imagesPath}/icons-sprite.png?version=${timestamp}") -192px -96px no-repeat;
+
+                    -webkit-transform: rotate(180deg);
+                    -moz-transform: rotate(180deg);
+                    -ms-transform: rotate(180deg);
+                    -o-transform: rotate(180deg);
+                    transform: rotate(180deg);
+
+                }
+            }
         }
     }
 }

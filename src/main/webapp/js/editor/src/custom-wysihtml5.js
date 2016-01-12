@@ -43,11 +43,11 @@ bootWysiOverrides = {
       });
     }
 
-    $('.js-choose-image').live('click', function(){
+    $('.js-choose-image').click(function(){
       urlInput.val($(this).data('src'));
     });
 
-    $('.image-holder').live('click', function(){
+    $('.image-holder').click(function(){
       urlInput.val($(this).find('img').attr('src'));
       urlInput.data('title', $(this).find('img').attr('title'));  // Store the file name for later use
     });
