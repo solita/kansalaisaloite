@@ -6,6 +6,7 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.util.thread.QueuedThreadPool;
 import org.eclipse.jetty.webapp.WebAppContext;
+import org.flywaydb.core.internal.util.scanner.filesystem.FileSystemResource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.util.Log4jConfigListener;
 
@@ -56,7 +57,13 @@ public class JettyServer {
         context.setInitParameter("log4jExposeWebAppRoot", "false");
 
         context.setDescriptor(new ClassPathResource("src/main/webapp/WEB-INF/web.xml").getURI().toString());
-        context.setResourceBase(new ClassPathResource("src/main/webapp").getURI().toString());
+
+        if (properties.customWebappContextPath.isPresent()) {
+            context.setResourceBase(properties.customWebappContextPath.get());
+        } else {
+            context.setResourceBase(new ClassPathResource("src/main/webapp").getURI().toString());
+        }
+
 
         context.setContextPath("/");
         context.setParentLoaderPriority(true);
