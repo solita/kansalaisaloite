@@ -232,6 +232,7 @@ public class EmailServiceImpl implements EmailService {
 
     }
 
+
     @Override
     public void sendStatusInfoToVEVs(InitiativeManagement initiative, EmailMessageType emailMessageType) {
         Assert.notNull(initiative, "initiative");
@@ -241,7 +242,10 @@ public class EmailServiceImpl implements EmailService {
             dataMap.put("stateComment", initiative.getStateComment());
             dataMap.put("acceptanceIdentifier", initiative.getAcceptanceIdentifier());
         }
-        
+        if (emailMessageType == EmailMessageType.VOTING_HALFWAY) {
+            dataMap.put("percentFromGoal", percentageOfRequiredVoteCount(initiative));
+        }
+
         sendStatusInfoToVEVs(initiative, getConfirmedAuthorEmails(initiative.getAuthors()), emailMessageType, dataMap);
     }
 
@@ -252,10 +256,15 @@ public class EmailServiceImpl implements EmailService {
 
         addEnum(EmailMessageType.class, baseDataMap);
         baseDataMap.put("emailMessageType", emailMessageType);
+        if(emailMessageType.equals(EmailMessageType.VOTING_HALFWAY)) {
+            baseDataMap.put("percentFromGoal", percentageOfRequiredVoteCount(initiative));
+        }
 
         ImmutableMap<String, Object> dataMap = new ImmutableMap.Builder<String, Object>().putAll(baseDataMap).build();
 
         String emailSubject = getEmailSubject("status.info." + emailMessageType);
+
+
 
         for (Follower follower : followers) {
             ImmutableMap<String, Object> dataMapWithUnsubscribeHash = new ImmutableMap.Builder<String, Object>()
@@ -278,6 +287,11 @@ public class EmailServiceImpl implements EmailService {
         //   followers)
 
     }
+
+    private String percentageOfRequiredVoteCount(InitiativeManagement initiative) {
+        return Integer.toString((int) ((initiative.getTotalSupportCount() * 100.0f) / initiativeSettings.getRequiredVoteCount()));
+    }
+
 
     private void sendStatusInfoToVEVs(InitiativeBase initiative, List<String> authorEmails, EmailMessageType emailMessageType, Map<String, Object> dataMap) {
         Assert.notNull(initiative, "initiative");

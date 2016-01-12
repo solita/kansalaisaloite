@@ -39,20 +39,20 @@ public class FollowService {
 
     private final Logger log = LoggerFactory.getLogger(FollowService.class);
 
+    private class InitiativeForSending {
+        private final InitiativeManagement initiativeManagement;
+        private final List<Follower> followers;
+
+        public InitiativeForSending(InitiativeManagement initiativeManagement, List<Follower> followers) {
+            this.initiativeManagement = initiativeManagement;
+            this.followers = followers;
+        }
+    }
+
     @Transactional(readOnly = true)
     public void sendEmailsForEndedInitiatives(LocalDate today) {
 
         LocalDate yesterday = today.minusDays(1);
-
-        class InitiativeForSending {
-            private final InitiativeManagement initiativeManagement;
-            private final List<Follower> followers;
-
-            public InitiativeForSending(InitiativeManagement initiativeManagement, List<Follower> followers) {
-                this.initiativeManagement = initiativeManagement;
-                this.followers = followers;
-            }
-        }
 
         List<InitiativeForSending> initiativeForSendingList = Lists.newArrayList();
 
@@ -99,4 +99,30 @@ public class FollowService {
 
         return true;
     }
+
+    @Transactional(readOnly = true)
+    public void sendEmailsHalfwayBetweenForStillRunningInitiatives(LocalDate today) {
+
+        List<InitiativeForSending> initiativeForSendingList = Lists.newArrayList();
+
+        for (InitiativeInfo initiative : initiativeDao.listAllInitiatives()) {
+            if (hasBeenOpenForHalfOfTheVotingTime(initiative, today) && initiative.isVotingSuspended(initiativeSettings.getMinSupportCountForSearch(), initiativeSettings.getRequiredMinSupportCountDuration(), today)) {
+                initiativeForSendingList.add(
+                        new InitiativeForSending(
+                                initiativeDao.getInitiativeForManagement(initiative.getId(), false),
+                                followInitiativeDao.listFollowers(initiative.getId()))
+                );
+            }
+        }
+        for (InitiativeForSending initiativeForSending : initiativeForSendingList) {
+            emailService.sendStatusInfoToVEVs(initiativeForSending.initiativeManagement, EmailMessageType.VOTING_HALFWAY);
+            emailService.sendStatusInfoToFollowers(initiativeForSending.initiativeManagement, EmailMessageType.VOTING_HALFWAY, initiativeForSending.followers);
+        }
+    }
+
+    private boolean hasBeenOpenForHalfOfTheVotingTime(InitiativeInfo initiative, LocalDate today) {
+        return initiative.getStartDate().equals(today.minusMonths(3));
+    }
+
+
 }

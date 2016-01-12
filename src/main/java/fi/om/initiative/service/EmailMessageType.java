@@ -13,7 +13,8 @@ public enum EmailMessageType {
     VRK_RESOLUTION,
     SENT_TO_PARLIAMENT, 
     REMOVED_SUPPORT_VOTES,
-    VOTING_ENDED;
+    VOTING_ENDED,
+    VOTING_HALFWAY;
 
     private final String messageKeySuffix;
     

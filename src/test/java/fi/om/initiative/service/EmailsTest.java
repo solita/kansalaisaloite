@@ -306,10 +306,62 @@ public class EmailsTest extends EmailSpyConfiguration {
 
     }
 
+    @Test
+    public void vevs_and_followers_get_email_half_way_between_if_the_initiative_is_still_running(){
+
+        LocalDate initiativeStartDate = LocalDate.now().minusMonths(3);
+        LocalDate initiativeEndDate = initiativeStartDate.plusMonths(6);
+
+        final Long initiative = testHelper.create(
+                new TestHelper.InitiativeDraft(userId, AUTHOR_EMAIL)
+                        .withName("Testialoite")
+                        .withState(InitiativeState.ACCEPTED)
+                        .isRunning(initiativeStartDate, initiativeEndDate)
+                        .withSupportCount(5000)
+        );
+        final Long ended = testHelper.create(
+                new TestHelper.InitiativeDraft(userId, AUTHOR_EMAIL)
+                        .withName("Testialoite")
+                        .withState(InitiativeState.ACCEPTED)
+                        .isRunning(initiativeStartDate, initiativeEndDate)
+                        .withSupportCount(49)
+        );
+        final Long old = testHelper.create(
+                new TestHelper.InitiativeDraft(userId, AUTHOR_EMAIL)
+                        .withName("Testialoite")
+                        .withState(InitiativeState.ACCEPTED)
+                        .isRunning(initiativeStartDate.minusMonths(1), initiativeEndDate.minusMonths(1))
+                        .withSupportCount(49)
+        );
+        final Long young = testHelper.create(
+                new TestHelper.InitiativeDraft(userId, AUTHOR_EMAIL)
+                        .withName("Testialoite")
+                        .withState(InitiativeState.ACCEPTED)
+                        .isRunning(initiativeStartDate.minusMonths(1), initiativeEndDate.minusMonths(1))
+                        .withSupportCount(49)
+        );
+
+        testHelper.addFollower(initiative, FOLLOWER_EMAIL);
+        testHelper.addFollower(ended, FOLLOWER_EMAIL);
+        testHelper.addFollower(old, FOLLOWER_EMAIL);
+        testHelper.addFollower(young, FOLLOWER_EMAIL);
+
+        LocalDate today =  LocalDate.now();
+        followService.sendEmailsHalfwayBetweenForStillRunningInitiatives(today);
+
+        assertSentEmailCount(2);
+
+        assertSentEmail(FOLLOWER_EMAIL, "Kannatusten kerääminen on nyt puolivälissä Kansalaisaloite -palvelussa.", String.valueOf(10));
+
+        assertSentEmail(AUTHOR_EMAIL, "Kannatusten kerääminen on nyt puolivälissä Kansalaisaloite -palvelussa.", String.valueOf(10));
+
+    }
+
     // This tries to be the BindingResult created by spring while validating.
     private static DirectFieldBindingResult emailValidationErrors(FollowInitiativeDto followInitiativeDto) {
         return new DirectFieldBindingResult(followInitiativeDto, "email");
     }
+
 
 
 }
