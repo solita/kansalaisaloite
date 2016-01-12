@@ -462,8 +462,7 @@ ${email?split("@")?first}&#064;<span class="hide">null</span>${email?split("@")?
 </#macro>
 
 <#macro mobileSearch >
-    <div class="open-filters"><b><@message "mobile.open.search.filters" /></b> <span class="arrow"></span> </br>
-        <@message "mobile.filters.selected"/>&nbsp;
+    <div class="open-filters"><b><@message "mobile.open.search.filters" /></b> <span id="open-filters-icon" class="pull-right glyphicon glyphicon-chevron-down"></span>
     </div>
 
     <div class="search-options-mobile">

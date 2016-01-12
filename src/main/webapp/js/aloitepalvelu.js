@@ -58,8 +58,12 @@
       $(".open-filters").click(function () {
         if (filters.hasClass("open")) {
           closeSearchFilter();
+          $("#open-filters-icon").removeClass("glyphicon-remove-sign");
+          $("#open-filters-icon").addClass("glyphicon-chevron-down");
         } else {
           openSearchFilter();
+          $("#open-filters-icon").addClass("glyphicon-remove-sign");
+          $("#open-filters-icon").removeClass("glyphicon-chevron-down");
         }
 
       });
