@@ -34,7 +34,6 @@
 
         pageWrapper.height(filtersHeight);
         container.height(filtersHeight);
-        content.height(filtersHeight);
 
         content.css("padding-bottom", 0);
         resultList.hide();
