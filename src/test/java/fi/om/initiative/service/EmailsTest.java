@@ -351,9 +351,11 @@ public class EmailsTest extends EmailSpyConfiguration {
 
         assertSentEmailCount(2);
 
-        assertSentEmail(FOLLOWER_EMAIL, "Kannatusten kerääminen on nyt puolivälissä Kansalaisaloite -palvelussa.", String.valueOf(10));
+        assertSentEmail(FOLLOWER_EMAIL, "Kannatusten kerääminen on nyt puolivälissä Kansalaisaloite -palvelussa.",
+                "Tämä on " +String.valueOf((int)(5000.0 / 50000 * 100))+ " prosenttia kokonaistavoitteesta");
 
-        assertSentEmail(AUTHOR_EMAIL, "Kannatusten kerääminen on nyt puolivälissä Kansalaisaloite -palvelussa.", String.valueOf(10));
+        assertSentEmail(AUTHOR_EMAIL, "Kannatusten kerääminen on nyt puolivälissä Kansalaisaloite -palvelussa.",
+                "Tämä on " +String.valueOf((int)(5000.0 / 50000 * 100))+ " prosenttia kokonaistavoitteesta");
 
     }
 
