@@ -106,7 +106,7 @@ public class FollowService {
         List<InitiativeForSending> initiativeForSendingList = Lists.newArrayList();
 
         for (InitiativeInfo initiative : initiativeDao.listAllInitiatives()) {
-            if (hasBeenOpenForHalfOfTheVotingTime(initiative, today) && initiative.isVotingSuspended(initiativeSettings.getMinSupportCountForSearch(), initiativeSettings.getRequiredMinSupportCountDuration(), today)) {
+            if (hasBeenOpenForHalfOfTheVotingTime(initiative, today) && !initiative.isVotingSuspended(initiativeSettings.getMinSupportCountForSearch(), initiativeSettings.getRequiredMinSupportCountDuration(), today)) {
                 initiativeForSendingList.add(
                         new InitiativeForSending(
                                 initiativeDao.getInitiativeForManagement(initiative.getId(), false),

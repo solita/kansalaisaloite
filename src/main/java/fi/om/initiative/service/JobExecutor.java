@@ -53,6 +53,11 @@ public class JobExecutor {
         followService.sendEmailsForEndedInitiatives(LocalDate.now());
     }
 
+    @Scheduled(cron=EVERY_DAY_AT_MIDNIGHT)
+    public void sendEmailsForHalfWayInitiatives() {
+        followService.sendEmailsHalfwayBetweenForStillRunningInitiatives(LocalDate.now());
+    }
+
     @PostConstruct
     public void executeAllJobs() {
         new Thread(new Runnable() {
