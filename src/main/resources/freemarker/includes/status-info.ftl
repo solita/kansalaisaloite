@@ -357,7 +357,7 @@
 
         <p>Kannatusten kerääminen on nyt puolivälissä Kansalaisaloite -palvelussa.</p>
         <p>Aloitteelle on kerätty kannatusilmoituksia yhteensä ${initiative.totalSupportCount} kpl, joista kansalaisaloite.fi-palvelussa ${initiative.supportCount}.</p>
-        <p>Tämä on ${percentFromGoal} prosenttia kokonaistavoitteesta.</p>
+        <p>Tämä on ${percentFromGoal?string["0.##"]} prosenttia kokonaistavoitteesta.</p>
     </#assign>
     <#assign statusInfoHTMLSv>
         <p>SV Kannatusten kerääminen on nyt puolivälissä Kansalaisaloite -palvelussa.</p>

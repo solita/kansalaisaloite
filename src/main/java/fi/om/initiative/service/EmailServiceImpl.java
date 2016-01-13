@@ -288,8 +288,8 @@ public class EmailServiceImpl implements EmailService {
 
     }
 
-    private String percentageOfRequiredVoteCount(InitiativeManagement initiative) {
-        return Integer.toString((int) ((initiative.getTotalSupportCount() * 100.0f) / initiativeSettings.getRequiredVoteCount()));
+    private float percentageOfRequiredVoteCount(InitiativeManagement initiative) {
+        return  (initiative.getTotalSupportCount() * 100.0f) / initiativeSettings.getRequiredVoteCount();
     }
 
 
