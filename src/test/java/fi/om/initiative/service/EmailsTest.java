@@ -309,36 +309,35 @@ public class EmailsTest extends EmailSpyConfiguration {
     @Test
     public void vevs_and_followers_get_email_half_way_between_if_the_initiative_is_still_running(){
 
-        LocalDate initiativeStartDate = LocalDate.now().minusMonths(3);
-        LocalDate initiativeEndDate = initiativeStartDate.plusMonths(6);
+        LocalDate today =  LocalDate.now();
 
         final Long initiative = testHelper.create(
                 new TestHelper.InitiativeDraft(userId, AUTHOR_EMAIL)
                         .withName("Testialoite")
                         .withState(InitiativeState.ACCEPTED)
-                        .isRunning(initiativeStartDate, initiativeEndDate)
+                        .isRunning(today.minusMonths(3), today.plusMonths(3))
                         .withSupportCount(5000)
         );
         final Long ended = testHelper.create(
                 new TestHelper.InitiativeDraft(userId, AUTHOR_EMAIL)
                         .withName("Testialoite")
                         .withState(InitiativeState.ACCEPTED)
-                        .isRunning(initiativeStartDate, initiativeEndDate)
+                        .isRunning(today.minusMonths(3), today.plusMonths(3))
                         .withSupportCount(49)
         );
         final Long old = testHelper.create(
                 new TestHelper.InitiativeDraft(userId, AUTHOR_EMAIL)
                         .withName("Testialoite")
                         .withState(InitiativeState.ACCEPTED)
-                        .isRunning(initiativeStartDate.minusMonths(1), initiativeEndDate.minusMonths(1))
-                        .withSupportCount(49)
+                        .isRunning(today.minusMonths(4), today.plusMonths(2))
+                        .withSupportCount(490)
         );
         final Long young = testHelper.create(
                 new TestHelper.InitiativeDraft(userId, AUTHOR_EMAIL)
                         .withName("Testialoite")
                         .withState(InitiativeState.ACCEPTED)
-                        .isRunning(initiativeStartDate.minusMonths(1), initiativeEndDate.minusMonths(1))
-                        .withSupportCount(49)
+                        .isRunning(today.minusMonths(1), today.minusMonths(1))
+                        .withSupportCount(390)
         );
 
         testHelper.addFollower(initiative, FOLLOWER_EMAIL);
@@ -346,7 +345,7 @@ public class EmailsTest extends EmailSpyConfiguration {
         testHelper.addFollower(old, FOLLOWER_EMAIL);
         testHelper.addFollower(young, FOLLOWER_EMAIL);
 
-        LocalDate today =  LocalDate.now();
+
         followService.sendEmailsHalfwayBetweenForStillRunningInitiatives(today);
 
         assertSentEmailCount(2);
