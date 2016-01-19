@@ -5,6 +5,7 @@ import com.mysema.query.sql.dml.SQLInsertClause;
 import com.mysema.query.sql.postgres.PostgresQuery;
 import com.mysema.query.sql.postgres.PostgresQueryFactory;
 import com.mysema.query.types.Expression;
+import com.mysema.query.types.Path;
 import com.mysema.query.types.expr.DateTimeExpression;
 import fi.om.initiative.dto.InfoTextCategory;
 import fi.om.initiative.dto.LanguageCode;
@@ -167,6 +168,14 @@ public class TestHelper {
                 .set(qInitiative.financialsupporturl, initiative.getFinancialSupportURL() == null ? null : initiative.getFinancialSupportURL().toString())
                 .set(qInitiative.supportcount, initiative.getSupportCount())
                 .where(qInitiative.id.eq(initiative.getId()))
+                .execute();
+    }
+
+    @Transactional
+    public void updateForTesting(Long initiativeId, Path path, Object value) {
+        queryFactory.update(qInitiative)
+                .set(path, value)
+                .where(qInitiative.id.eq(initiativeId))
                 .execute();
     }
 

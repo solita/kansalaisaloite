@@ -7,6 +7,7 @@ import fi.om.initiative.dto.User;
 import fi.om.initiative.dto.author.AuthorRole;
 import fi.om.initiative.dto.initiative.InitiativeManagement;
 import fi.om.initiative.dto.initiative.InitiativeState;
+import fi.om.initiative.sql.QInitiative;
 import fi.om.initiative.web.HttpUserServiceImpl;
 import mockit.Delegate;
 import mockit.Expectations;
@@ -156,7 +157,7 @@ public class EmailsTest extends EmailSpyConfiguration {
         final Long initiative = testHelper.create(
                 new TestHelper.InitiativeDraft(userId, AUTHOR_EMAIL)
                         .withName("Testialoite")
-                        .withState(InitiativeState.PROPOSAL)
+                        .withState(InitiativeState.ACCEPTED)
                         .isRunning(initiativeStartDate, initiativeEndDate)
                         .withSupportCount(51000)
         );
@@ -195,7 +196,7 @@ public class EmailsTest extends EmailSpyConfiguration {
         final Long initiative = testHelper.create(
                 new TestHelper.InitiativeDraft(userId, AUTHOR_EMAIL)
                         .withName("Testialoite")
-                        .withState(InitiativeState.PROPOSAL)
+                        .withState(InitiativeState.ACCEPTED)
                         .isRunning(initiativeStartDate, initiativeEndDate)
                         .withExternalSupportCount(10000)
                         .withSupportCount(39000)
@@ -231,7 +232,7 @@ public class EmailsTest extends EmailSpyConfiguration {
         final Long initiative = testHelper.create(
                 new TestHelper.InitiativeDraft(userId, AUTHOR_EMAIL)
                         .withName("Testialoite")
-                        .withState(InitiativeState.PROPOSAL)
+                        .withState(InitiativeState.ACCEPTED)
                         .isRunning(initiativeStartDate, initiativeEndDate)
                         .withSupportCount(49)
         );
@@ -254,6 +255,43 @@ public class EmailsTest extends EmailSpyConfiguration {
                 "Kannatusilmoitusten kerääminen on päättynyt",
                 "Aloite ei kerännyt vaadittua 50 kannatusilmoitusta 1 kuukauden aikana",
                 "Aloite keräsi 49 kannatusilmoitusta, joista 49 kpl palvelussa kansalaisaloite.fi ja muissa palveluissa 0 kpl.");
+
+    }
+
+    @Test
+    public void do_not_send_ending_emails_for_initiatives_that_are_not_published() {
+
+        LocalDate initiativeStartDate = LocalDate.now().minusMonths(1);
+        LocalDate initiativeEndDate = initiativeStartDate.plusMonths(6);
+
+        final Long initiative = testHelper.create(
+                new TestHelper.InitiativeDraft(userId, AUTHOR_EMAIL)
+                        .withName("Testialoite")
+                        .withState(InitiativeState.PROPOSAL)
+                        .isRunning(initiativeStartDate, initiativeEndDate)
+                        .withExternalSupportCount(0)
+                        .withSupportCount(0)
+        );
+
+        testHelper.addFollower(initiative, FOLLOWER_EMAIL);
+
+        LocalDate theDayTosend = initiativeStartDate.plusMonths(1).plusDays(1);
+        assertMailsSentOnlyForDate(
+                theDayTosend,
+                0,
+                initiativeStartDate.minusDays(10),
+                initiativeEndDate.plusDays(10)
+        );
+
+        clearAllSentEmails();
+        testHelper.updateForTesting(initiative, QInitiative.initiative.state, InitiativeState.ACCEPTED);
+        followService.sendEmailsForEndedInitiatives(theDayTosend);
+        assertMailsSentOnlyForDate(
+                theDayTosend,
+                2,
+                initiativeStartDate.minusDays(10),
+                initiativeEndDate.plusDays(10)
+        );
 
     }
 
