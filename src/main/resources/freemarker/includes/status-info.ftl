@@ -359,10 +359,20 @@
         <p>Aloitteelle on kerätty kannatusilmoituksia yhteensä ${initiative.totalSupportCount} kpl, joista kansalaisaloite.fi-palvelussa ${initiative.supportCount}.</p>
         <p>Tämä on ${percentFromGoal?string["0.##"]} prosenttia kokonaistavoitteesta.</p>
     </#assign>
+    <#assign statusInfoFi>
+        Kannatusten kerääminen on nyt puolivälissä Kansalaisaloite -palvelussa.
+        Aloitteelle on kerätty kannatusilmoituksia yhteensä ${initiative.totalSupportCount} kpl, joista kansalaisaloite.fi-palvelussa ${initiative.supportCount}.
+        Tämä on ${percentFromGoal?string["0.##"]} prosenttia kokonaistavoitteesta.
+    </#assign>
     <#assign statusInfoHTMLSv>
         <p>SV Kannatusten kerääminen on nyt puolivälissä Kansalaisaloite -palvelussa.</p>
         <p>SV Initiativet har sammanlagt ${initiative.totalSupportCount} stödröster, varav ${initiative.supportCount} på webbtjänsten medborgarinitiativ.fi. </p>
         <p>SV Tämä on ${percentFromGoal} prosenttia kokonaistavoitteesta.</p>
+    </#assign>
+    <#assign statusInfoSv>
+        SV Kannatusten kerääminen on nyt puolivälissä Kansalaisaloite -palvelussa.
+        SV Initiativet har sammanlagt ${initiative.totalSupportCount} stödröster, varav ${initiative.supportCount} på webbtjänsten medborgarinitiativ.fi.
+        SV Tämä on ${percentFromGoal} prosenttia kokonaistavoitteesta.
     </#assign>
 </#if>
 
