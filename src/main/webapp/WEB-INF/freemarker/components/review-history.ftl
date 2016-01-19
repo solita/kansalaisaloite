@@ -24,7 +24,7 @@
 		                <input type="hidden" name="CSRFToken" value="${CSRFToken}"/>
 		
 		                <div class="input-block-content no-top-margin">
-		                    <textarea class="collapse" name="${UrlConstants.ACTION_MODERATOR_ADD_COMMENT}" maxlength="${InitiativeConstants.STATE_COMMENT_MAX?string("#")}"></textarea>
+		                    <textarea class="" name="${UrlConstants.ACTION_MODERATOR_ADD_COMMENT}" maxlength="${InitiativeConstants.STATE_COMMENT_MAX?string("#")}"></textarea>
 		                </div>
 
 		                <div class="input-block-content">

@@ -10,6 +10,7 @@ import fi.om.initiative.dto.Follower;
 import fi.om.initiative.dto.InitiativeSettings;
 import fi.om.initiative.dto.initiative.InitiativeInfo;
 import fi.om.initiative.dto.initiative.InitiativeManagement;
+import fi.om.initiative.dto.initiative.InitiativeState;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -73,12 +74,13 @@ public class FollowService {
     }
 
     private boolean hasEndedBetween(LocalDate today, LocalDate yesterday, InitiativeInfo initiative) {
-        return (initiative.isVotingSuspended(initiativeSettings.getMinSupportCountForSearch(), initiativeSettings.getRequiredMinSupportCountDuration(), today)
+        return (initiative.getState() == InitiativeState.ACCEPTED &&
+                (initiative.isVotingSuspended(initiativeSettings.getMinSupportCountForSearch(), initiativeSettings.getRequiredMinSupportCountDuration(), today)
                 && !initiative.isVotingSuspended(initiativeSettings.getMinSupportCountForSearch(), initiativeSettings.getRequiredMinSupportCountDuration(), yesterday))
                 ||
                 (initiative.isVotingEnded(today)
                 && !initiative.isVotingEnded(yesterday)
-                && !initiative.isVotingSuspended(initiativeSettings.getMinSupportCountForSearch(), initiativeSettings.getRequiredMinSupportCountDuration(), yesterday));
+                && !initiative.isVotingSuspended(initiativeSettings.getMinSupportCountForSearch(), initiativeSettings.getRequiredMinSupportCountDuration(), yesterday)));
     }
 
     @Transactional
