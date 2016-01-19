@@ -245,14 +245,15 @@
       <#if initiative_index == 0><ul class="mobile hidden-sm hidden-md hidden-lg"></#if>
       <li <#if initiative_index == 0>class="first"</#if>>
         <div class="row">
+            <div class="col-xs-10">
+                <span class="date" title="<@u.message "searchResults.initiative."+searchMode+".startDate" />" ><@u.localDate initiative.startDate /></span>
+                <span class="info"><@flow.flowStateDescription initiative /></span>
+                <a href="${urls.view(initiative.id)}"><@u.text initiative.name /></a>
+            </div>
           <#if    (initiative.state != InitiativeState.DRAFT && initiative.state != InitiativeState.PROPOSAL
           && initiative.state != InitiativeState.REVIEW && initiative.state != InitiativeState.CANCELED)
           && flowStateAnalyzer.getFlowState(initiative) != FlowState.ACCEPTED_NOT_STARTED>
-            <div class="col-xs-10">
-              <span class="date" title="<@u.message "searchResults.initiative."+searchMode+".startDate" />" ><@u.localDate initiative.startDate /></span>
-              <span class="info"><@flow.flowStateDescription initiative /></span>
-              <a href="${urls.view(initiative.id)}"><@u.text initiative.name /></a>
-            </div>
+
             <div class="col-xs-2">
               <span class="support-votes">${totalSupportCount}</span>
 
