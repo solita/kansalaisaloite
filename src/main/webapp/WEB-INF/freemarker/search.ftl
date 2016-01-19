@@ -152,7 +152,9 @@
     <div class="search-results">
     <#if initiatives?? && (initiatives?size > 0)>
         <#list initiatives as initiative>
+
             <#assign totalSupportCount = initiative.totalSupportCount />
+
 
             <#assign verifiedByVRK = initiative.verifiedSupportCount gt 0/>
             <#if verifiedByVRK>
@@ -214,52 +216,6 @@
                 </a>
             </li>
             <#if !initiative_has_next></ul></#if>
-
-            <#if initiative_index == 0><ul class="mobile hidden-sm hidden-md hidden-lg"></#if>
-              <li <#if initiative_index == 0>class="first"</#if>>
-                <div class="row">
-                <#if    (initiative.state != InitiativeState.DRAFT && initiative.state != InitiativeState.PROPOSAL
-                && initiative.state != InitiativeState.REVIEW && initiative.state != InitiativeState.CANCELED)
-                && flowStateAnalyzer.getFlowState(initiative) != FlowState.ACCEPTED_NOT_STARTED>
-                    <div class="col-xs-10">
-                      <span class="date" title="<@u.message "searchResults.initiative."+searchMode+".startDate" />" ><@u.localDate initiative.startDate /></span>
-                      <span class="info"><@flow.flowStateDescription initiative /></span>
-                      <a href="${urls.view(initiative.id)}"><@u.text initiative.name /></a>
-                    </div>
-                    <div class="col-xs-2">
-                      <span class="support-votes">${totalSupportCount}</span>
-
-                          <#if (initiative.votingDaysLeft > 0 && initiative.totalVotingDays > 0)>
-                              <#assign progressBarTooltip><@u.messageHTML key="searchResults.initiative.bar" args=[totalSupportCount, initiative.votingDaysLeft, initiative.totalVotingDays] /></#assign>
-                          <#else>
-                              <#assign progressBarTooltip><@u.messageHTML key="searchResults.initiative.bar.votingEnded" args=[totalSupportCount] /></#assign>
-                          </#if>
-
-                        <span class="progress-bars trigger-tooltip" title="${progressBarTooltip}">
-                            <span class="bar-container count ${(totalSupportCount < requiredVoteCount)?string("","completed")}">
-                                <#assign countWidth = (100-100*totalSupportCount/requiredVoteCount) />
-                                <#if countWidth lt 0>
-                                    <#assign countWidth = 0 />
-                                </#if>
-                              <span class="bar js-animate"style="width:${countWidth?string("#")}%;"></span>
-                            </span>
-
-                            <#if (initiative.totalVotingDays > 0)>
-                              <span class="bar-container time">
-                                    <#assign timeWidth = (100*initiative.votingDaysLeft/initiative.totalVotingDays) />
-                                  <#if timeWidth lt 0>
-                                      <#assign timeWidth = 0 />
-                                  </#if>
-                                <span class="bar js-animate" style="width:${timeWidth?string("#")}%;"></span>
-                              </span>
-                            </#if>
-                        </span>
-                    </div>
-                </#if>
-                <#if searchMode == "public"><#assign showTitle="show"></#if>
-                </div>
-              </li>
-            <#if !initiative_has_next></ul></#if>
         </#list>
     <#else>
         
@@ -274,14 +230,73 @@
         -->
         <p class="title"><@u.message "searchResults.${searchMode}.empty" /></p>
     </#if>
-    
-    </div>
-    
-    <#--
-     * Search pagination
-     *
-     *  - Do not display in OWN initiatives view.
-    -->
+
+  <#-- MOBILE -->
+  <#if initiatives?? && (initiatives?size > 0)>
+    <#list initiatives as initiative>
+      <#assign totalSupportCount = initiative.totalSupportCount />
+
+      <#assign verifiedByVRK = initiative.verifiedSupportCount gt 0/>
+      <#if verifiedByVRK>
+        <#assign totalSupportCount = initiative.verifiedSupportCount />
+      </#if>
+
+
+      <#if initiative_index == 0><ul class="mobile hidden-sm hidden-md hidden-lg"></#if>
+      <li <#if initiative_index == 0>class="first"</#if>>
+        <div class="row">
+          <#if    (initiative.state != InitiativeState.DRAFT && initiative.state != InitiativeState.PROPOSAL
+          && initiative.state != InitiativeState.REVIEW && initiative.state != InitiativeState.CANCELED)
+          && flowStateAnalyzer.getFlowState(initiative) != FlowState.ACCEPTED_NOT_STARTED>
+            <div class="col-xs-10">
+              <span class="date" title="<@u.message "searchResults.initiative."+searchMode+".startDate" />" ><@u.localDate initiative.startDate /></span>
+              <span class="info"><@flow.flowStateDescription initiative /></span>
+              <a href="${urls.view(initiative.id)}"><@u.text initiative.name /></a>
+            </div>
+            <div class="col-xs-2">
+              <span class="support-votes">${totalSupportCount}</span>
+
+              <#if (initiative.votingDaysLeft > 0 && initiative.totalVotingDays > 0)>
+                <#assign progressBarTooltip><@u.messageHTML key="searchResults.initiative.bar" args=[totalSupportCount, initiative.votingDaysLeft, initiative.totalVotingDays] /></#assign>
+              <#else>
+                <#assign progressBarTooltip><@u.messageHTML key="searchResults.initiative.bar.votingEnded" args=[totalSupportCount] /></#assign>
+              </#if>
+
+                        <span class="progress-bars trigger-tooltip" title="${progressBarTooltip}">
+                            <span class="bar-container count ${(totalSupportCount < requiredVoteCount)?string("","completed")}">
+                                <#assign countWidth = (100-100*totalSupportCount/requiredVoteCount) />
+                              <#if countWidth lt 0>
+                                <#assign countWidth = 0 />
+                              </#if>
+                              <span class="bar js-animate"style="width:${countWidth?string("#")}%;"></span>
+                            </span>
+
+                          <#if (initiative.totalVotingDays > 0)>
+                            <span class="bar-container time">
+                                    <#assign timeWidth = (100*initiative.votingDaysLeft/initiative.totalVotingDays) />
+                              <#if timeWidth lt 0>
+                                <#assign timeWidth = 0 />
+                              </#if>
+                              <span class="bar js-animate" style="width:${timeWidth?string("#")}%;"></span>
+                              </span>
+                          </#if>
+                        </span>
+            </div>
+          </#if>
+          <#if searchMode == "public"><#assign showTitle="show"></#if>
+        </div>
+      </li>
+      <#if !initiative_has_next></ul></#if>
+    </#list>
+  </#if>
+
+</div>
+
+<#--
+* Search pagination
+*
+*  - Do not display in OWN initiatives view.
+-->
     <#if searchMode != "own">
         <@p.pagination currentSearch.limit currentSearch.offset!0 "bottom" />
     </#if>
