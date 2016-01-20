@@ -90,7 +90,7 @@
     -->
     <#if (initiativeCounts[currentSearch.show] > 1)>
         <span class="search-parameters-title sort hidden-xs"><@u.message "searchOptions.sort" /></span>
-        <div class="column search-sort">
+        <div class="column search-sort hidden-xs">
             <#if currentSearch.show == "running">
                 <span class="small-icon icon-search-sort by-time-left"><@u.message "searchOptions.runningTimeLeft" /></span>
                 <div class="switch-buttons">
@@ -104,7 +104,7 @@
                 </div>
             </#if>
         </div>
-        <div class="column search-sort">
+        <div class="column search-sort hidden-xs">
             <span class="small-icon icon-search-sort by-support-statements"><@u.message "searchOptions.supportStatements" /></span>
             <div class="switch-buttons">
                 <@u.searchLink parameter="withOrderByMostSupports" cssClass=(currentSearch.orderBy == "mostSupports")?string('active','') tooltip=false />
