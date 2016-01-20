@@ -82,7 +82,10 @@
 
     .mobile-image{
         background-size: cover;
-        height: 100px;
+        height: 140px;
+        @media @xs {
+            height: 100px;
+        }
         outline: solid white 5px;
         margin-top: 5px;
 
@@ -202,7 +205,10 @@
     @media @xs, @sm, @md{
         display: block;
     }
-    height: 100px;
+    height: 140px;
+    @media @xs {
+        height: 100px;
+    }
     width: 60%;
     right: 5px;
     bottom: 0;
@@ -216,9 +222,12 @@
     }
     .hero {
         left: 50%;
-        top: 16px;
+        top: 33px;
         width: 120px;
         margin-left: -60px;
+        @media @xs {
+            top: 16px;
+        }
     }
 
 }
