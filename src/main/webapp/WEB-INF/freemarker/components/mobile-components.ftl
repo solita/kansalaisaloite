@@ -11,8 +11,5 @@
   <a href="${urls.createNew()}" class="hero-holder-mobile noprint">
     <span class="hero"><@u.messageHTML "index.hero" /><i class="icon-front i-arrow-right"></i></span>
   </a>
-  <#if requestMessages?? && (requestMessages?size > 0)>
-      <@u.frontpageRequestMessage requestMessages />
-  </#if>
 </div>
 </#macro>
