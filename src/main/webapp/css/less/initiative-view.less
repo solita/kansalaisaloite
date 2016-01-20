@@ -2,11 +2,20 @@
     position:relative;
 }
 
+h1.name {
+    @media @xs, @sm {
+        text-align: center;
+    }
+}
+
 .input-block, .view-block {
     margin-bottom: 3em;
     position: relative;
     background: #fff url("@{imagesPath}/input-block-extra-bg.png?version=${timestamp}") repeat-y top right;
     border-left: 4px solid @mainColor;
+    @media @xs, @sm {
+        border: 0;
+    }
 
     padding:0 35px 30px 55px;
 

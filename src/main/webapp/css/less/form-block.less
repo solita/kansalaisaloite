@@ -5,6 +5,9 @@
     background: #fff url("@{imagesPath}/input-block-extra-bg.png?version=${timestamp}") repeat-y top right;
     border-left: 4px solid @mainColor;
     padding:20px 25px 0 55px;
+    @media @xs, @sm {
+        border: 0;
+    }
 
     &.view {
         z-index:3;
