@@ -156,12 +156,18 @@
 
 .initiative-content-row {
     border-bottom: 1px solid @borderGray;
+    @media @xs, @sm {
+        border-bottom: 2px solid @borderGrayLight;
+    }
     margin-bottom: 0.7em;
     padding-bottom: 0.7em;
 
     .header {
         display: block;
         font-weight: bold;
+        @media @xs, @sm {
+            font-size: 16px;
+        }
     }
 
     &.last{

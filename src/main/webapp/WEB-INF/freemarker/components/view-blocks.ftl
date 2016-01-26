@@ -28,22 +28,22 @@
             <@u.text initiative.name /> 
         </div>
         
-        <div class="initiative-content-row cf">
+        <div class="initiative-content-row row">
             <#-- Date -->
-            <div class="column">
+            <div class="col-xs-6">
                 <h4 class="header"><@u.message "initiative.startDate" /></h4>
                 <@u.localDate initiative.startDate />
             </div>
             
             <#-- Proposal type -->
-            <div class="column">
+            <div class="col-xs-6"">
                 <h4 class="header"><@u.message "initiative.proposalType" /></h4>
                 <@u.message "initiative.proposalType." + initiative.proposalType?lower_case />
             </div>
 
             <#-- OM acceptance identifier -->
             <#if initiative.acceptanceIdentifier??>
-                <div class="column last">
+                <div class="col-xs-6">
                     <h4 class="header"><@u.message "initiative.acceptanceIdentifier" /></h4>
                     ${initiative.acceptanceIdentifier!""}
                 </div>

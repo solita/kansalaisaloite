@@ -1,28 +1,29 @@
 <div class="om-footer">
-    <div class="container">
-        <div class="block">
+    <div class="container row">
+        <div class="block col-sm-4">
             <span class="footer-logo om"></span>
-            <p class="hidden-xs">
+            <p>
                 <@u.message "footer.ministerOfJustice"/><br/>
                 <a href="${urls.help(HelpPage.KANSALAISALOITE_FI.getUri(locale))}"><@u.message "common.readMore" /> &gt;</a>
             </p>
         </div>
-        <div class="block hidden-xs">
+        <div class="block col-sm-4">
             <span class="footer-logo vivi"></span>
             <p>
                 <@u.messageHTML "footer.ficora"/><br/>
                 <a href="${urls.help(HelpPage.VIESTINTAVIRASTO.getUri(locale))}"><@u.message "common.readMore" /> &gt;</a>
             </p>
         </div>
-        <div class="footer-links hidden-xs"">
+        <div class="footer-links col-sm-4">
             <ul>
                 <#list footerLinks as footerLink>
                     <li><span class="triangle-right"></span> <a href="${urls.help(footerLink.uri)}">${footerLink.subject}</a></li>
                 </#list>
+                  <li><span class="triangle-right"></span> <a href="#">Henkilötietojen suoja ja tietoturva</a></li>
+                  <li><span class="triangle-right"></span> <a href="#">Yhteystiedot</a></li>
+                  <li><span class="triangle-right"></span> <a href="#">Briefly in English</a></li>
             </ul>
         </div>
-        <br class="clear"/>
+      <a href="#header-tools" accesskey="3" id="back-to-top"><@u.message "accesskey.backToTop" /></a>
     </div>
-
-    <a href="#header-tools" accesskey="3" id="back-to-top"><@u.message "accesskey.backToTop" /></a>
 </div>
