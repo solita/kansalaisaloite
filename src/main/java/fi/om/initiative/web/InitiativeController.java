@@ -10,7 +10,10 @@ import fi.om.initiative.dto.initiative.*;
 import fi.om.initiative.dto.search.*;
 import fi.om.initiative.json.SupportCount;
 import fi.om.initiative.pdf.SupportStatementPdfGenerator;
-import fi.om.initiative.service.*;
+import fi.om.initiative.service.AuthenticationRequiredException;
+import fi.om.initiative.service.InitiativeService;
+import fi.om.initiative.service.Role;
+import fi.om.initiative.service.SupportVoteService;
 import fi.om.initiative.util.Locales;
 import fi.om.initiative.util.Maybe;
 import fi.om.initiative.util.ReviewHistoryDiff;
@@ -66,8 +69,6 @@ public class InitiativeController extends BaseController {
 
     @Resource SupportStatementPdfGenerator supportStatementPdfGenerator;
 
-    @Resource FollowService followService;
-
     public InitiativeController() {
         super(true);
     }
@@ -95,18 +96,6 @@ public class InitiativeController extends BaseController {
         InitiativeManagement initiative = new InitiativeManagement(author, Locales.LOCALE_SV.equals(locale) ? LanguageCode.SV : LanguageCode.FI);
 
         return managementView(model, initiative, null, FULL, request, null);
-    }
-
-    @RequestMapping(value={ VIEW_FI, VIEW_SV }, method=POST, params= ACTION_FOLLOW)
-    public String followInitiative(@PathVariable long id, @ModelAttribute("followInitiative") FollowInitiativeDto followInitiativeDto, Model model, BindingResult bindingResult, Locale locale, HttpServletRequest request) {
-
-        if (followService.followInitiative(id, followInitiativeDto, bindingResult)) {
-            return redirectWithMessage(Urls.get(locale).view(id), RequestMessage.FOLLOW_ACCEPTED, request);
-        }
-        else {
-            return view(id, null, null, model, locale, request);
-        }
-
     }
 
     @RequestMapping(value={ CREATE_FI, CREATE_SV }, method=POST) // , params=ACTION_SAVE - default action
