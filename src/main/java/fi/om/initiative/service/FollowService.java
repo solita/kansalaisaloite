@@ -11,7 +11,9 @@ import fi.om.initiative.dto.InitiativeSettings;
 import fi.om.initiative.dto.initiative.InitiativeInfo;
 import fi.om.initiative.dto.initiative.InitiativeManagement;
 import fi.om.initiative.dto.initiative.InitiativeState;
+import org.joda.time.DurationFieldType;
 import org.joda.time.LocalDate;
+import org.joda.time.ReadablePeriod;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
@@ -123,7 +125,9 @@ public class FollowService {
     }
 
     private boolean hasBeenOpenForHalfOfTheVotingTime(InitiativeInfo initiative, LocalDate today) {
-        return initiative.getStartDate().equals(today.minusMonths(3));
+        ReadablePeriod votingDuration = initiativeSettings.getVotingDuration();
+        int daysUntilHalfDay = votingDuration.get(DurationFieldType.days()) / 2;
+        return initiative.getStartDate().equals(today.plusDays(daysUntilHalfDay));
     }
 
 

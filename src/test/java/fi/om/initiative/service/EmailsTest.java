@@ -3,6 +3,7 @@ package fi.om.initiative.service;
 
 import fi.om.initiative.dao.TestHelper;
 import fi.om.initiative.dto.FollowInitiativeDto;
+import fi.om.initiative.dto.InitiativeSettings;
 import fi.om.initiative.dto.User;
 import fi.om.initiative.dto.author.AuthorRole;
 import fi.om.initiative.dto.initiative.InitiativeManagement;
@@ -13,7 +14,9 @@ import mockit.Delegate;
 import mockit.Expectations;
 import mockit.Mocked;
 import org.joda.time.DateTime;
+import org.joda.time.DurationFieldType;
 import org.joda.time.LocalDate;
+import org.joda.time.ReadablePeriod;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.validation.BindingResult;
@@ -51,6 +54,9 @@ public class EmailsTest extends EmailSpyConfiguration {
 
     @Resource
     private FollowService followService;
+
+    @Resource
+    private InitiativeSettings initiativeSettings;
 
     @Before
     public void init() {
@@ -345,46 +351,25 @@ public class EmailsTest extends EmailSpyConfiguration {
     }
 
     @Test
-    public void vevs_and_followers_get_email_half_way_between_if_the_initiative_is_still_running(){
+    public void vevs_and_followers_get_email_half_way_between_if_the_initiative_is_still_running_dynamic_test(){
 
-        LocalDate today =  LocalDate.now();
+        ReadablePeriod votingDuration = initiativeSettings.getVotingDuration();
+
+        LocalDate startDate = LocalDate.now();
+        LocalDate endDate = startDate.plus(votingDuration);
+        LocalDate notificationDate = startDate.plusDays(votingDuration.get(DurationFieldType.days()) / 2);
 
         final Long initiative = testHelper.create(
                 new TestHelper.InitiativeDraft(userId, AUTHOR_EMAIL)
                         .withName("Testialoite")
                         .withState(InitiativeState.ACCEPTED)
-                        .isRunning(today.minusMonths(3), today.plusMonths(3))
+                        .isRunning(startDate, endDate)
                         .withSupportCount(5000)
-        );
-        final Long ended = testHelper.create(
-                new TestHelper.InitiativeDraft(userId, AUTHOR_EMAIL)
-                        .withName("Testialoite")
-                        .withState(InitiativeState.ACCEPTED)
-                        .isRunning(today.minusMonths(3), today.plusMonths(3))
-                        .withSupportCount(49)
-        );
-        final Long old = testHelper.create(
-                new TestHelper.InitiativeDraft(userId, AUTHOR_EMAIL)
-                        .withName("Testialoite")
-                        .withState(InitiativeState.ACCEPTED)
-                        .isRunning(today.minusMonths(4), today.plusMonths(2))
-                        .withSupportCount(490)
-        );
-        final Long young = testHelper.create(
-                new TestHelper.InitiativeDraft(userId, AUTHOR_EMAIL)
-                        .withName("Testialoite")
-                        .withState(InitiativeState.ACCEPTED)
-                        .isRunning(today.minusMonths(1), today.minusMonths(1))
-                        .withSupportCount(390)
         );
 
         testHelper.addFollower(initiative, FOLLOWER_EMAIL);
-        testHelper.addFollower(ended, FOLLOWER_EMAIL);
-        testHelper.addFollower(old, FOLLOWER_EMAIL);
-        testHelper.addFollower(young, FOLLOWER_EMAIL);
 
-
-        followService.sendEmailsHalfwayBetweenForStillRunningInitiatives(today);
+        followService.sendEmailsHalfwayBetweenForStillRunningInitiatives(notificationDate);
 
         assertSentEmailCount(2);
 
@@ -393,6 +378,12 @@ public class EmailsTest extends EmailSpyConfiguration {
 
         assertSentEmail(AUTHOR_EMAIL, "Kannatusten kerääminen on nyt puolivälissä Kansalaisaloite -palvelussa.",
                 "Tämä on " +String.valueOf((int)(5000.0 / 50000 * 100))+ " prosenttia kokonaistavoitteesta");
+
+        clearAllSentEmails();
+        followService.sendEmailsHalfwayBetweenForStillRunningInitiatives(notificationDate.minusDays(1));
+        assertSentEmailCount(0);
+        followService.sendEmailsHalfwayBetweenForStillRunningInitiatives(notificationDate.plusDays(1));
+        assertSentEmailCount(0);
 
     }
 
