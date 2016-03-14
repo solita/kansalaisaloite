@@ -1,4 +1,4 @@
-# WHAT AND WHY
+# What and why
 
 Kansalaisaloite.fi / Medborgarinitiativ.fi is a web service for launching citizens’ initiatives and collecting statements of support for these initiatives.  If an initiative gets 50000 statements of support the initiative’s organizer may submit the initiative to the Parliament for consideration.
  
@@ -7,74 +7,54 @@ The web service has been implemented by the Ministry of Justice Finland together
 The Ministry of Justice decided to publish the source code for the software together with Solita Oy after the service has been in use for one year.
 Commit history prior to the source code publication is not provided, but future commits will be viewable.
 
-Solita Oy is responsible for the future development of the software. Any pull-requests or suggestions for improvement to the source code are considered separately between the Ministry of Justice and Solita Oy. Reports for possible issues in the code might be rewarded. The Ministry of Justice will handle all the feedback sent to kansalaisaloite.om@om.fi.
+Solita Oy is responsible for the future development of the software. Any pull-requests or suggestions for improvement to the source code are considered separately between the Ministry of Justice and Solita Oy. Reports for possible issues in the code might be rewarded by Solita. The Ministry of Justice will handle all the feedback sent to kansalaisaloite.om@om.fi.
 
 # LICENSE
 
 Apache License 2.0, see COPYING and LICENSE
 
-# INSTALLATION
+# Installation
 
-* Download and install "Java Cryptography Extension (JCE) Unlimited Strength Jurisdiction Policy Files 7"
-	* Overwrite `US_export_policy.jar` and `local_policy.jar` in `JRE_HOME/lib/security`
+* Application is packaged as standalone jar with embedded jetty server. Following command-line parameters must be used when starting the application
+	* -Djetty.port
+	* -Djetty.thread.pool
+	* -Dspring.profiles.active
 
-* Set configuration password in `~/.initpass` for Jetty user with minimal visibility. File should contain only password.
+* Some dev-related stuff can be enabled with spring.profiles.active
+    * 'dev' enables simple dev-login-implementation
+    * 'vetumamock' enables fake-vetuma-login
+    * 'prod' should be used in production
+    * 'disableSecureCookie' can be used when running application locally or without ssl.
 
-* Default configuration properties are in `src/main/resources/default.properties`
-	* You can override the parameters by creating `src/main/resources/app.properties` with the overriding parameters
-
-* These can be overridden in `classpath:app.properties` (e.g. `src/test/resources/app.properties`)
-	* For passwords, sharedSecrets etc. you should use encrypt values (see DEVELOPMENT below and Jasypt)!
-
-* Development vs production dependencies are decided using Spring 3.1's environments/profiles (dev/prod)
-	* Default profile prod is defined in `web.xml`
-	* Default profile can be overridden by setting `spring.profiles.active` e.g. as environment variable 
-   or as `-D` startup parameter
-	* dev profile uses dummy authentication
-	* vetumamock profile uses VetumaController but mocks the real Vetuma 
-	* prod profile uses VETUMA authentication 
-
-* Use `initdb-xxx.sh` to create local (unit) test and "production" databases (in Windows use Cygwin)
-
-* For database creation script, set Postgresql passwords for users "postgres", "initiative" and "initest" in  `~/.pgpass`, e.g. 
-
-	`localhost:5432:*:postgres:<superuser password>`
-	
-    `localhost:5432:*:initiative:<application user password>`
-    
-    ` localhost:5432:*:initest:1nitest`
-
-* Create production DB in `etc`-folder using `sh ./createdb.sh <locale> <application user password>`
+* Setting up database
+	* Use `initdb-xxx.sh` to create local test and local production-like PostgreSQL-databases
+	* Create production DB in `etc`-folder using `sh ./createdb.sh <locale> <application user password>`
 	* Note that `<locale>` is system dependent. In Mac it's `fi_FI.utf-8`.
 	* Script creates initiative user with password `<application user password>`
+	* DB-creation-scripts mentioned above are responsible for executing pre-flyway-time migrations to database.
+	* For Flyway, Superuser must be created with `createuser -s -P flyway_user`. Application migrates database on startup if necessary when 'flyway.password' for flyway_user is overriden properly in app.properties
 
-* BoneCP configuration: Add `bonecp-config.xml` into classpath (an example in `etc/bonecp-config-sample.xml`).
-	* NOTE: Postgresql's `max_connections` should be `> partitionCount + maxConnectionsPerPartition + 3`
+* Overriding configurations in different environments 
+	* Default configuration properties are in `src/main/resources/default.properties`
+	* You can override the parameters in different environments by creating `config/app.properties` with the overriding parameters
+	* Logging config can be overriden with config/log4j.properties
+	* Override BoneCP configuration by adding your custom `bonecp-config.xml` into config/bonecp-config.xml
 
-# DEVELOPMENT
+* Encrypting secret properties with EncryptablePropertiesConfigurer
+	* Encryption key must be located as text file in ~/.initpass
+	* Encrypt passwords and secrets with maven: `mvn exec:java -Dexec.mainClass="fi.om.initiative.conf.EncryptablePropertiesConfigurer" -Dexec.args="encrypt <message-to-be-encrypted>"`
+	* Encrypted values are defined in app.properties like this: 
+ 	  `property.key = ENC(Okbz86n6+NnffnKmAPhedp8DIi51zSVZa1Jx88ZthVI=)`
+ 	  properties will be decrypted runtime when needed via EncryptablePropertiesConfigurer
 
-* When DB schema is changed, update Querydsl model by running ExportQTypes (src/test) as application
+# Development
+
+* Create local database and flyway-user as told above. Encryptions are optional.
+
+* Start application with IDE: fi.om.initiative.StartJetty.main
+
+* When DB schema is changed, 
+	* New sql-increments must be saved in `src/main/resources/db/migration`. If flyway information is set up correctly to app.properties, application will migrate itself on startup 
+	* Update Querydsl model by running ExportQTypes (src/test) when changes to schema are made
 	* Postgresql enum columns need to be configured in `JdbcConfiguration.querydslConfiguration()`
 	* Querydsl model generated by ExportQTypes is in `src/main/java/fi/om/initiative/sql`
-
-* Encrypt your personal settings using `EncryptablePropertiesConfigurer`. 
-
-	* With Eclipse you should
-  	  use "Run Configurations..." to set Program arguments:
-
-  	  `encrypt "${string_prompt:Message:}"`
-  
-      with `~/.initpass` password or with given password: 
-  
-      `encrypt "${string_prompt:Password:}" "${string_prompt:Message:}"`
-
-	* With CLI, use Maven: 
-
-  `mvn exec:java -Dexec.mainClass="fi.om.initiative.conf.EncryptablePropertiesConfigurer" -Dexec.args="encrypt <message-to-be-encrypted>"`
-
-	* Encrypted values are defined in app.properties like this: 
-
- 	  `property.key = ENC(Okbz86n6+NnffnKmAPhedp8DIi51zSVZa1Jx88ZthVI=)`
-
-* VETUMA configuration should be encrypted in personal `app.properties`
-  
