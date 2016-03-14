@@ -3,7 +3,6 @@ package fi.om.initiative.service;
 
 import fi.om.initiative.dao.TestHelper;
 import fi.om.initiative.dto.FollowInitiativeDto;
-import fi.om.initiative.dto.InitiativeSettings;
 import fi.om.initiative.dto.User;
 import fi.om.initiative.dto.author.AuthorRole;
 import fi.om.initiative.dto.initiative.InitiativeManagement;
@@ -14,9 +13,7 @@ import mockit.Delegate;
 import mockit.Expectations;
 import mockit.Mocked;
 import org.joda.time.DateTime;
-import org.joda.time.DurationFieldType;
 import org.joda.time.LocalDate;
-import org.joda.time.ReadablePeriod;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.validation.BindingResult;
@@ -54,9 +51,6 @@ public class EmailsTest extends EmailSpyConfiguration {
 
     @Resource
     private FollowService followService;
-
-    @Resource
-    private InitiativeSettings initiativeSettings;
 
     @Before
     public void init() {
@@ -179,7 +173,7 @@ public class EmailsTest extends EmailSpyConfiguration {
                 "Aloite keräsi 51,000 kannatusilmoitusta, joista 51,000 palvelussa kansalaisaloite.fi ja muissa palveluissa 0 kpl",
                 "Vastuuhenkilöt ovat nyt velvollisia lähettämään kannatusilmoitukset väestörekisterikeskuksen tarkastettavaksi");
 
-        assertMailsSentOnlyForDate(
+        assertEndingEmailsAreSentOnlyForDate(
                 initiativeEndDate.plusDays(1),
                 2,
                 initiativeStartDate.minusDays(10),
@@ -219,7 +213,7 @@ public class EmailsTest extends EmailSpyConfiguration {
                 "Aloite keräsi 49,000 kannatusilmoitusta, joista 39,000 palvelussa kansalaisaloite.fi ja muissa palveluissa 10,000 kpl",
                 "Kerääminen jäi 1,000 kpl vaille vaaditun 50,000 kannatusilmoituksen, jotta aloite etenisi eduskunnan käsittelyyn");
 
-        assertMailsSentOnlyForDate(
+        assertEndingEmailsAreSentOnlyForDate(
                 initiativeEndDate.plusDays(1),
                 2,
                 initiativeStartDate.minusDays(10),
@@ -245,7 +239,7 @@ public class EmailsTest extends EmailSpyConfiguration {
 
         testHelper.addFollower(initiative, FOLLOWER_EMAIL);
 
-        assertMailsSentOnlyForDate(
+        assertEndingEmailsAreSentOnlyForDate(
                 initiativeStartDate.plusMonths(1).plusDays(1),
                 2,
                 initiativeStartDate.minusDays(10),
@@ -282,7 +276,7 @@ public class EmailsTest extends EmailSpyConfiguration {
         testHelper.addFollower(initiative, FOLLOWER_EMAIL);
 
         LocalDate theDayTosend = initiativeStartDate.plusMonths(1).plusDays(1);
-        assertMailsSentOnlyForDate(
+        assertEndingEmailsAreSentOnlyForDate(
                 theDayTosend,
                 0,
                 initiativeStartDate.minusDays(10),
@@ -292,7 +286,7 @@ public class EmailsTest extends EmailSpyConfiguration {
         clearAllSentEmails();
         testHelper.updateForTesting(initiative, QInitiative.initiative.state, InitiativeState.ACCEPTED);
         followService.sendEmailsForEndedInitiatives(theDayTosend);
-        assertMailsSentOnlyForDate(
+        assertEndingEmailsAreSentOnlyForDate(
                 theDayTosend,
                 2,
                 initiativeStartDate.minusDays(10),
@@ -304,12 +298,34 @@ public class EmailsTest extends EmailSpyConfiguration {
     /**
      * Assert that when sending emails daily from dateSpanStart to dateSpanEnd, emails are only sent once on given date and given amount.
      */
-    private void assertMailsSentOnlyForDate(LocalDate dateToSendMails, int amountOfEmailsToSend, LocalDate dateSpanStart, LocalDate dateSpanEnd) {
+    private void assertEndingEmailsAreSentOnlyForDate(LocalDate dateToSendMails, int amountOfEmailsToSend, LocalDate dateSpanStart, LocalDate dateSpanEnd) {
 
         LocalDate dateIteration = dateSpanStart;
         while (!dateIteration.isAfter(dateSpanEnd)) {
             clearAllSentEmails();
             followService.sendEmailsForEndedInitiatives(dateIteration);
+
+            if (dateToSendMails.equals(dateIteration)) {
+                assertThat("Emails sent for " + dateIteration, getAllSentEmails(), hasSize(amountOfEmailsToSend));
+            }
+            else {
+                assertThat("Emails sent for " + dateIteration, getAllSentEmails(), hasSize(0));
+            }
+            dateIteration = dateIteration.plusDays(1);
+
+        }
+
+    }
+
+    /**
+     * Assert that when sending half-way emails daily from dateSpanStart to dateSpanEnd, emails are only sent once on given date and given amount.
+     */
+    private void assertHalfwayEmailsAreSentOnlyForDate(LocalDate dateToSendMails, int amountOfEmailsToSend, LocalDate dateSpanStart, LocalDate dateSpanEnd) {
+
+        LocalDate dateIteration = dateSpanStart;
+        while (!dateIteration.isAfter(dateSpanEnd)) {
+            clearAllSentEmails();
+            followService.sendEmailsHalfwayBetweenForStillRunningInitiatives(dateIteration);
 
             if (dateToSendMails.equals(dateIteration)) {
                 assertThat("Emails sent for " + dateIteration, getAllSentEmails(), hasSize(amountOfEmailsToSend));
@@ -351,13 +367,11 @@ public class EmailsTest extends EmailSpyConfiguration {
     }
 
     @Test
-    public void vevs_and_followers_get_email_half_way_between_if_the_initiative_is_still_running_dynamic_test(){
+    public void vevs_and_followers_get_email_half_way_between_if_the_initiative_is_still_running_static_test(){
 
-        ReadablePeriod votingDuration = initiativeSettings.getVotingDuration();
-
-        LocalDate startDate = LocalDate.now();
-        LocalDate endDate = startDate.plus(votingDuration);
-        LocalDate notificationDate = startDate.plusDays(votingDuration.get(DurationFieldType.days()) / 2);
+        LocalDate startDate = new LocalDate(2015, 12, 1);
+        LocalDate endDate = new LocalDate(2016, 6, 1);
+        LocalDate notificationDate = new LocalDate(2016, 3, 1);
 
         final Long initiative = testHelper.create(
                 new TestHelper.InitiativeDraft(userId, AUTHOR_EMAIL)
@@ -380,12 +394,11 @@ public class EmailsTest extends EmailSpyConfiguration {
                 "Tämä on " +String.valueOf((int)(5000.0 / 50000 * 100))+ " prosenttia kokonaistavoitteesta");
 
         clearAllSentEmails();
-        followService.sendEmailsHalfwayBetweenForStillRunningInitiatives(notificationDate.minusDays(1));
-        assertSentEmailCount(0);
-        followService.sendEmailsHalfwayBetweenForStillRunningInitiatives(notificationDate.plusDays(1));
-        assertSentEmailCount(0);
+
+        assertHalfwayEmailsAreSentOnlyForDate(notificationDate, 2, startDate.minusMonths(1), endDate.plusMonths(1));
 
     }
+
 
     // This tries to be the BindingResult created by spring while validating.
     private static DirectFieldBindingResult emailValidationErrors(FollowInitiativeDto followInitiativeDto) {
