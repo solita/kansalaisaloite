@@ -353,6 +353,12 @@
     <#assign statusInfoHTMLSv>${statusInfoSv}</#assign>
     
 <#elseif emailMessageType == EmailMessageType.VOTING_HALFWAY>
+§§
+    <#assign statusTitleFi>Kannatusilmoitusten kerääminen on puolivälissä</#assign>
+    <#assign statusTitleSv>SV Kannatusilmoitusten kerääminen on puolivälissä</#assign>
+    <#assign statusTitleHTMLFi>${statusTitleFi}</#assign>
+    <#assign statusTitleHTMLSv>${statusTitleSv}</#assign>
+
     <#assign statusInfoHTMLFi>
 
         <p>Kannatusten kerääminen on nyt puolivälissä Kansalaisaloite -palvelussa.</p>
