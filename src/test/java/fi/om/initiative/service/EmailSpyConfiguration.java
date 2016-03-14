@@ -6,7 +6,12 @@ import fi.om.initiative.util.TaskExecutorAspect;
 import mockit.Delegate;
 import mockit.Mocked;
 import mockit.NonStrictExpectations;
+import org.apache.commons.io.FileUtils;
+import org.aspectj.util.FileUtil;
+import org.joda.time.LocalDateTime;
+import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -15,6 +20,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
 import javax.mail.MessagingException;
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -34,7 +40,15 @@ public abstract class EmailSpyConfiguration {
 
     private List<EmailHelper> sentEmails = Lists.newArrayList();
 
-    @Mocked EmailSender emailHelper;
+    @Mocked EmailSender emailSender;
+
+    private static final String EMAIL_TEMP_DIR = "target/test-emails/";
+
+    @BeforeClass
+    public static void removeSentEmailsFromFilesystem() throws IOException {
+        FileUtils.forceMkdir(new File(EMAIL_TEMP_DIR));
+        FileUtils.cleanDirectory(new File(EMAIL_TEMP_DIR));
+    }
 
     @Before
     public void setupEmailSpy() throws InterruptedException, IOException, MessagingException {
@@ -54,6 +68,11 @@ public abstract class EmailSpyConfiguration {
 
         }};
 
+    }
+
+    @After
+    public void writeEmails() {
+        clearAllSentEmails();
     }
 
     private void waitUntilQueueEmpty()  {
@@ -80,6 +99,7 @@ public abstract class EmailSpyConfiguration {
 
     protected void clearAllSentEmails() {
         waitUntilQueueEmpty();
+        writeEmailsToHtml();
         sentEmails.clear();
     }
 
@@ -109,6 +129,21 @@ public abstract class EmailSpyConfiguration {
     protected void assertSentEmailCount(int i) {
         List<EmailHelper> allSentEmails = getAllSentEmails();
         assertThat(allSentEmails, hasSize(i));
+    }
+
+    private void writeEmailsToHtml() {
+        for (EmailHelper sentEmail : sentEmails) {
+            File file = new File(EMAIL_TEMP_DIR
+                    + new LocalDateTime().toString("mmssSSS")
+                    + "_"
+                    + sentEmail.subject.replace("/", " - ")
+                    + "_"
+                    + sentEmail.to
+                    + ".html");
+            FileUtil.writeAsString(file, sentEmail.html);
+        }
+
+
     }
 
 }
