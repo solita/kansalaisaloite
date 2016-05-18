@@ -109,8 +109,8 @@ public abstract class EmailSpyConfiguration {
             if (emailHelper.subject.equals(subject)
                     && emailHelper.to.equals(to)) {
                 for (String s : content) {
-                    assertThat(emailHelper.text, containsString(s));
-                    assertThat(emailHelper.html, containsString(s));
+                    assertThat("Email PLAINTEXT content mismatch", emailHelper.text, containsString(s));
+                    assertThat("Email HTML content mismatch", emailHelper.html, containsString(s));
                 }
 
                 return;
@@ -119,7 +119,7 @@ public abstract class EmailSpyConfiguration {
                     .append("\n")
                     .append(emailHelper.to)
                     .append(": ")
-                    .append(emailHelper.to);
+                    .append(emailHelper.subject);
         }
 
         fail("Email to " + to + " with subject '" + subject + "' not sent. Emails sent: " + sentEmails.toString());

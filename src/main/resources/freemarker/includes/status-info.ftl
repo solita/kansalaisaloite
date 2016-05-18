@@ -256,23 +256,21 @@
         
 <#elseif emailMessageType == EmailMessageType.SENT_TO_PARLIAMENT>
     <#-- TEXT -->
-    <#assign statusTitleFi>Aloite on merkittu toimitetuksi eduskuntaan</#assign>
-    <#assign statusTitleSv>SV Aloite on merkittu toimitetuksi eduskuntaan</#assign>
-    <#assign statusInfoFi>Aloite on merkitty toimitetuksi eduskuntaan</#assign>
-    <#assign statusInfoSv>SV Aloite on merkitty toimitetuksi eduskuntaan</#assign>
+    <#assign statusTitleFi>Aloite on toimitettu eduskuntaan</#assign>
+    <#assign statusTitleSv>Initiativet har överlämnats till riksdagen</#assign>
+    <#assign statusInfoFi>Aloite on toimitettu eduskuntaan</#assign>
+    <#assign statusInfoSv>Initiativet har överlämnats till riksdagen</#assign>
     
     <#-- HTML -->
     <#assign statusTitleHTMLFi>${statusTitleFi}</#assign>
     <#assign statusTitleHTMLSv>${statusTitleSv}</#assign>
     <#assign statusInfoHTMLFi>
-        <p>${statusInfoFi}</p>
-        Toimituspäivämäärä: <@eu.localDate initiative.parliamentSentTime "fi" /><br/>
+        Aloite on toimitettu eduskuntaan <@eu.localDate initiative.parliamentSentTime "fi" /><br/>
         Linkki eduskunnan sivulle: <a href="${initiative.parliamentURL}">${initiative.parliamentIdentifier}</a>
     </#assign>
     <#assign statusInfoHTMLSv>
-        <p>${statusInfoSv}</p>
-        SV Toimituspäivämäärä: <@eu.localDate initiative.parliamentSentTime "fi" /><br/>
-        SV Linkki eduskunnan sivulle: <a href="${initiative.parliamentURL}">${initiative.parliamentIdentifier}</a>
+        Initiativet har överlämnats till riksdagen <@eu.localDate initiative.parliamentSentTime "fi" /><br/>
+        Länk till riksdagens webbplats: <a href="${initiative.parliamentURL}">${initiative.parliamentIdentifier}</a>
     </#assign>
     
 <#elseif emailMessageType == EmailMessageType.VRK_RESOLUTION>
@@ -304,30 +302,40 @@
 
     <#-- TEXT -->
     <#assign statusTitleFi>Kannatusilmoitusten kerääminen on päättynyt</#assign>
-    <#assign statusTitleSv>SV Kannatusilmoitusten kerääminen on päättynyt</#assign>
+    <#assign statusTitleSv>Insamlingen av stödförklaringar har avslutats</#assign>
 
     <#if initiative.votingDaysLeft gt 0>
         <#assign statusInfoFi>
-        Aloite ei kerännyt vaadittua ${initiativeSettings.minSupportCountForSearch} kannatusilmoitusta ${initiativeSettings.requiredMinSupportCountDuration.toString()?replace('[^\\d]*', '', 'r')} kuukauden aikana.
-        Aloite keräsi ${initiative.totalSupportCount} kannatusilmoitusta, joista ${initiative.supportCount} kpl palvelussa kansalaisaloite.fi ja muissa palveluissa ${initiative.externalSupportCount} kpl.
+        ${statusTitleFi}. Aloite ei kerännyt vaadittua ${initiativeSettings.minSupportCountForSearch} kannatusilmoitusta yhden kuukauden aikana.
+        Aloite keräsi ${initiative.totalSupportCount} kannatusilmoitusta, joista ${initiative.supportCount} kpl kansalaisaloite.fi-palvelussa ja ${initiative.externalSupportCount} kpl muilla menetelmillä.
         </#assign>
+        <#assign statusInfoSv>
+        ${statusTitleSv}. Initiativet uppnådde inte det förutsatta kravet på ${initiativeSettings.minSupportCountForSearch} stödförklaringar inom en månad.
+        Initiativet samlade in ${initiative.totalSupportCount} stödförklaringar, av vilka ${initiative.supportCount} undertecknades på medborgarinitiativ.fi och ${initiative.externalSupportCount} på annat sätt.
+        </#assign>
+
 
     <#elseif initiative.totalSupportCount gte initiativeSettings.requiredVoteCount>
         <#assign statusInfoFi>
-        Aloite keräsi ${initiative.totalSupportCount} kannatusilmoitusta, joista ${initiative.supportCount} palvelussa kansalaisaloite.fi ja muissa palveluissa ${initiative.externalSupportCount} kpl.
-        Vastuuhenkilöt ovat nyt velvollisia lähettämään kannatusilmoitukset väestörekisterikeskuksen tarkastettavaksi.
+        ${statusTitleFi}. Aloite keräsi ${initiative.totalSupportCount} kannatusilmoitusta, joista ${initiative.supportCount} kpl kansalaisaloite.fi-palvelussa ja ${initiative.externalSupportCount} kpl muilla menetelmillä.
+        Aloitteen vastuuhenkilöiden tulee toimittaa kannatusilmoitukset Väestörekisterikeskuksen tarkastettaviksi kuuden kuukauden sisällä keräyksen päättymisestä, jotta aloite voi edetä eduskunnan käsiteltäväksi.
         </#assign>
+        <#assign statusInfoSv>
+        ${statusTitleSv}. Initiativet samlade in ${initiative.totalSupportCount} stödförklaringar, av vilka ${initiative.supportCount} undertecknades på medborgarinitiativ.fi och ${initiative.externalSupportCount} på annat sätt.
+        Ansvarspersonerna ska skicka stödförklaringarna till Befolkningsregistercentralen för kontroll inom sex månader efter att insamlingen avslutades för att initiativet ska kunna överlämnas till riksdagen för behandling.
+        </#assign>
+
     <#else >
         <#assign statusInfoFi>
-        Aloite keräsi ${initiative.totalSupportCount} kannatusilmoitusta, joista ${initiative.supportCount} palvelussa kansalaisaloite.fi ja muissa palveluissa ${initiative.externalSupportCount} kpl.
-        Kerääminen jäi ${initiativeSettings.requiredVoteCount - initiative.totalSupportCount} kpl vaille vaaditun ${initiativeSettings.requiredVoteCount} kannatusilmoituksen, jotta aloite etenisi eduskunnan käsittelyyn.
+        ${statusTitleFi}. Aloite keräsi ${initiative.totalSupportCount} kannatusilmoitusta, joista ${initiative.supportCount} kpl kansalaisaloite.fi-palvelussa ja ${initiative.externalSupportCount} kpl muilla menetelmillä.
+        Aloitteen olisi pitänyt kerätä vähintään ${initiativeSettings.requiredVoteCount} kannatusilmoitusta edetäkseen eduskunnan käsittelyyn.
         </#assign>
+        <#assign statusInfoSv>
+        ${statusTitleSv}. Initiativet samlade in ${initiative.totalSupportCount} stödförklaringar, av vilka ${initiative.supportCount} undertecknades på medborgarinitiativ.fi och ${initiative.externalSupportCount} på annat sätt.
+        Initiativet skulle ha behövt minst ${initiativeSettings.requiredVoteCount} stödförklaringar för att kunna överlämnas till riksdagen för behandling.
+        </#assign>
+
     </#if>
-
-    <#assign statusInfoSv>
-        ${statusInfoFi}
-    </#assign>
-
 
     <#-- HTML -->
     <#assign statusTitleHTMLFi>${statusTitleFi}</#assign>
@@ -353,33 +361,25 @@
     <#assign statusInfoHTMLSv>${statusInfoSv}</#assign>
     
 <#elseif emailMessageType == EmailMessageType.VOTING_HALFWAY>
-§§
+
     <#assign statusTitleFi>Kannatusilmoitusten kerääminen on puolivälissä</#assign>
     <#assign statusTitleSv>SV Kannatusilmoitusten kerääminen on puolivälissä</#assign>
     <#assign statusTitleHTMLFi>${statusTitleFi}</#assign>
     <#assign statusTitleHTMLSv>${statusTitleSv}</#assign>
 
-    <#assign statusInfoHTMLFi>
-
-        <p>Kannatusten kerääminen on nyt puolivälissä Kansalaisaloite -palvelussa.</p>
-        <p>Aloitteelle on kerätty kannatusilmoituksia yhteensä ${initiative.totalSupportCount} kpl, joista kansalaisaloite.fi-palvelussa ${initiative.supportCount}.</p>
-        <p>Tämä on ${percentFromGoal?string["0.##"]} prosenttia kokonaistavoitteesta.</p>
-    </#assign>
     <#assign statusInfoFi>
-        Kannatusten kerääminen on nyt puolivälissä Kansalaisaloite -palvelussa.
-        Aloitteelle on kerätty kannatusilmoituksia yhteensä ${initiative.totalSupportCount} kpl, joista kansalaisaloite.fi-palvelussa ${initiative.supportCount}.
-        Tämä on ${percentFromGoal?string["0.##"]} prosenttia kokonaistavoitteesta.
-    </#assign>
-    <#assign statusInfoHTMLSv>
-        <p>SV Kannatusten kerääminen on nyt puolivälissä Kansalaisaloite -palvelussa.</p>
-        <p>SV Initiativet har sammanlagt ${initiative.totalSupportCount} stödröster, varav ${initiative.supportCount} på webbtjänsten medborgarinitiativ.fi. </p>
-        <p>SV Tämä on ${percentFromGoal} prosenttia kokonaistavoitteesta.</p>
+        Aloite on kerännyt ${initiative.totalSupportCount} kannatusilmoitusta, joista ${initiative.supportCount} kpl kansalaisaloite.fi-palvelussa ja ${initiative.externalSupportCount} kpl muilla menetelmillä.
+        Keruuaika päättyy <@eu.localDate initiative.endDate "fi" />. Edetäkseen eduskunnan käsittelyyn aloitteen tulee kerätä vähintään ${initiativeSettings.requiredVoteCount} kannatusilmoitusta kuuden kuukauden aikana.
+        <#--<p>Tämä on ${percentFromGoal?string["0.##"]} prosenttia kokonaistavoitteesta.</p>-->
     </#assign>
     <#assign statusInfoSv>
-        SV Kannatusten kerääminen on nyt puolivälissä Kansalaisaloite -palvelussa.
-        SV Initiativet har sammanlagt ${initiative.totalSupportCount} stödröster, varav ${initiative.supportCount} på webbtjänsten medborgarinitiativ.fi.
-        SV Tämä on ${percentFromGoal} prosenttia kokonaistavoitteesta.
+        Initiativet har samlat in ${initiative.totalSupportCount} stödförklaringar, av vilka ${initiative.supportCount} har undertecknats på medborgarinitiativ.fi och ${initiative.externalSupportCount} på annat sätt.
+        Insamlingstiden går ut <@eu.localDate initiative.endDate "fi" />. För att initiativet ska kunna överlämnas till riskdagen för behandling ska det samla in minst ${initiativeSettings.requiredVoteCount} stödförklaringar inom sex månader.
     </#assign>
+
+    <#assign statusInfoHTMLFi>${statusInfoFi}</#assign>
+    <#assign statusInfoHTMLSv>${statusInfoSv}</#assign>
+
 </#if>
 
 

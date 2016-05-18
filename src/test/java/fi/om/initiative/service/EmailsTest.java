@@ -159,6 +159,7 @@ public class EmailsTest extends EmailSpyConfiguration {
                         .withName("Testialoite")
                         .withState(InitiativeState.ACCEPTED)
                         .isRunning(initiativeStartDate, initiativeEndDate)
+                        .withExternalSupportCount(1)
                         .withSupportCount(51000)
         );
 
@@ -166,12 +167,12 @@ public class EmailsTest extends EmailSpyConfiguration {
 
         followService.sendEmailsForEndedInitiatives(initiativeEndDate.plusDays(1));
         assertSentEmailCount(2);
-        assertSentEmail(FOLLOWER_EMAIL, "Kannatusilmoitusten keruuaika on päättynyt / Insamlingen av stödförklaringar har avslutats");
+        assertSentEmail(FOLLOWER_EMAIL, "Kannatusilmoitusten kerääminen on päättynyt / Insamlingen av stödförklaringar har avslutats");
 
-        assertSentEmail(AUTHOR_EMAIL, "Kannatusilmoitusten keruuaika on päättynyt / Insamlingen av stödförklaringar har avslutats",
+        assertSentEmail(AUTHOR_EMAIL, "Kannatusilmoitusten kerääminen on päättynyt / Insamlingen av stödförklaringar har avslutats",
                 "Kannatusilmoitusten kerääminen on päättynyt",
-                "Aloite keräsi 51,000 kannatusilmoitusta, joista 51,000 palvelussa kansalaisaloite.fi ja muissa palveluissa 0 kpl",
-                "Vastuuhenkilöt ovat nyt velvollisia lähettämään kannatusilmoitukset väestörekisterikeskuksen tarkastettavaksi");
+                "Aloite keräsi 51,001 kannatusilmoitusta, joista 51,000 kpl kansalaisaloite.fi-palvelussa ja 1 kpl muilla menetelmillä",
+                "Aloitteen vastuuhenkilöiden tulee toimittaa kannatusilmoitukset Väestörekisterikeskuksen tarkastettaviksi kuuden kuukauden sisällä keräyksen päättymisestä, jotta aloite voi edetä eduskunnan käsiteltäväksi");
 
         assertEndingEmailsAreSentOnlyForDate(
                 initiativeEndDate.plusDays(1),
@@ -206,12 +207,12 @@ public class EmailsTest extends EmailSpyConfiguration {
 
         followService.sendEmailsForEndedInitiatives(initiativeEndDate.plusDays(1));
         assertSentEmailCount(2);
-        assertSentEmail(FOLLOWER_EMAIL, "Kannatusilmoitusten keruuaika on päättynyt / Insamlingen av stödförklaringar har avslutats");
+        assertSentEmail(FOLLOWER_EMAIL, "Kannatusilmoitusten kerääminen on päättynyt / Insamlingen av stödförklaringar har avslutats");
 
-        assertSentEmail(AUTHOR_EMAIL, "Kannatusilmoitusten keruuaika on päättynyt / Insamlingen av stödförklaringar har avslutats",
+        assertSentEmail(AUTHOR_EMAIL, "Kannatusilmoitusten kerääminen on päättynyt / Insamlingen av stödförklaringar har avslutats",
                 "Kannatusilmoitusten kerääminen on päättynyt",
-                "Aloite keräsi 49,000 kannatusilmoitusta, joista 39,000 palvelussa kansalaisaloite.fi ja muissa palveluissa 10,000 kpl",
-                "Kerääminen jäi 1,000 kpl vaille vaaditun 50,000 kannatusilmoituksen, jotta aloite etenisi eduskunnan käsittelyyn");
+                "Aloite keräsi 49,000 kannatusilmoitusta, joista 39,000 kpl kansalaisaloite.fi-palvelussa ja 10,000 kpl muilla menetelmillä.",
+                "Aloitteen olisi pitänyt kerätä vähintään 50,000 kannatusilmoitusta edetäkseen eduskunnan käsittelyyn.");
 
         assertEndingEmailsAreSentOnlyForDate(
                 initiativeEndDate.plusDays(1),
@@ -249,12 +250,12 @@ public class EmailsTest extends EmailSpyConfiguration {
         clearAllSentEmails();
         followService.sendEmailsForEndedInitiatives(initiativeStartDate.plusMonths(1).plusDays(1));
         assertSentEmailCount(2);
-        assertSentEmail(FOLLOWER_EMAIL, "Kannatusilmoitusten keruuaika on päättynyt / Insamlingen av stödförklaringar har avslutats");
+        assertSentEmail(FOLLOWER_EMAIL, "Kannatusilmoitusten kerääminen on päättynyt / Insamlingen av stödförklaringar har avslutats");
 
-        assertSentEmail(AUTHOR_EMAIL, "Kannatusilmoitusten keruuaika on päättynyt / Insamlingen av stödförklaringar har avslutats",
+        assertSentEmail(AUTHOR_EMAIL, "Kannatusilmoitusten kerääminen on päättynyt / Insamlingen av stödförklaringar har avslutats",
                 "Kannatusilmoitusten kerääminen on päättynyt",
-                "Aloite ei kerännyt vaadittua 50 kannatusilmoitusta 1 kuukauden aikana",
-                "Aloite keräsi 49 kannatusilmoitusta, joista 49 kpl palvelussa kansalaisaloite.fi ja muissa palveluissa 0 kpl.");
+                "Aloite ei kerännyt vaadittua 50 kannatusilmoitusta yhden kuukauden aikana.",
+                "Aloite keräsi 49 kannatusilmoitusta, joista 49 kpl kansalaisaloite.fi-palvelussa ja 0 kpl muilla menetelmillä.");
 
     }
 
@@ -388,10 +389,15 @@ public class EmailsTest extends EmailSpyConfiguration {
         assertSentEmailCount(2);
 
         assertSentEmail(FOLLOWER_EMAIL, "Kannatusten kerääminen on nyt puolivälissä Kansalaisaloite -palvelussa.",
-                "Tämä on " +String.valueOf((int)(5000.0 / 50000 * 100))+ " prosenttia kokonaistavoitteesta");
+                "Keruuaika päättyy 1.6.2016."
+//                "Tämä on " +String.valueOf((int)(5000.0 / 50000 * 100))+ " prosenttia kokonaistavoitteesta"
+
+        );
 
         assertSentEmail(AUTHOR_EMAIL, "Kannatusten kerääminen on nyt puolivälissä Kansalaisaloite -palvelussa.",
-                "Tämä on " +String.valueOf((int)(5000.0 / 50000 * 100))+ " prosenttia kokonaistavoitteesta");
+//                "Tämä on " +String.valueOf((int)(5000.0 / 50000 * 100))+ " prosenttia kokonaistavoitteesta"
+                "Keruuaika päättyy 1.6.2016."
+        );
 
         clearAllSentEmails();
 
