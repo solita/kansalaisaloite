@@ -363,7 +363,7 @@
 <#elseif emailMessageType == EmailMessageType.VOTING_HALFWAY>
 
     <#assign statusTitleFi>Kannatusilmoitusten kerääminen on puolivälissä</#assign>
-    <#assign statusTitleSv>Insamling av stödförklarigar är halvvägs</#assign>
+    <#assign statusTitleSv>Insamling av stödförklaringar är halvvägs</#assign>
     <#assign statusTitleHTMLFi>${statusTitleFi}</#assign>
     <#assign statusTitleHTMLSv>${statusTitleSv}</#assign>
 

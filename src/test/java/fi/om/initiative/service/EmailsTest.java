@@ -388,14 +388,14 @@ public class EmailsTest extends EmailSpyConfiguration {
 
         assertSentEmailCount(2);
 
-        assertSentEmail(FOLLOWER_EMAIL, "Kannatusten kerääminen on nyt puolivälissä / Insamling av stödförklarigar är halvvägs",
+        assertSentEmail(FOLLOWER_EMAIL, "Kannatusten kerääminen on nyt puolivälissä / Insamling av stödförklaringar är halvvägs",
                 "Aloite on kerännyt 5,000 kannatusilmoitusta, joista 5,000 kpl kansalaisaloite.fi-palvelussa ja 0 kpl muilla menetelmillä",
                 "Keruuaika päättyy 1.6.2016. Edetäkseen eduskunnan käsittelyyn aloitteen tulee kerätä vähintään 50,000 kannatusilmoitusta kuuden kuukauden aikana."
 //                "Tämä on " +String.valueOf((int)(5000.0 / 50000 * 100))+ " prosenttia kokonaistavoitteesta"
 
         );
 
-        assertSentEmail(AUTHOR_EMAIL, "Kannatusten kerääminen on nyt puolivälissä / Insamling av stödförklarigar är halvvägs",
+        assertSentEmail(AUTHOR_EMAIL, "Kannatusten kerääminen on nyt puolivälissä / Insamling av stödförklaringar är halvvägs",
 //                "Tämä on " +String.valueOf((int)(5000.0 / 50000 * 100))+ " prosenttia kokonaistavoitteesta"
                 "Keruuaika päättyy 1.6.2016."
         );
