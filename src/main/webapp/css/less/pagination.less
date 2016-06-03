@@ -4,10 +4,19 @@
 .pagination {
     margin:2em 0 1em;
 
+    @media @xs, @sm {
+        width: 100%;
+        text-align: center;
+    }
+
     &.top {
         margin-bottom:-1em;
         padding-bottom:0.5em;
         border-bottom: 1px solid @borderGray;
+        @media @xs, @sm {
+            border: 0;
+            margin-bottom: 1em;
+        }
     }
     &.bottom {
         margin-top:0;
@@ -23,10 +32,20 @@
         .active {
             font-weight:bold;
         }
+        @media @xs, @sm {
+            width: 100%;
+            text-align: center;
+            float: none;
+        }
     }
 
     .pagination-links {
         float:left;
+        @media @xs, @sm {
+            float: none;
+            width: 100%;
+            text-align: center;
+        }
     }
 
     .separator {

@@ -157,6 +157,9 @@ public class AppConfiguration {
     @Bean
     public ReviewHistoryDao reviewHistoryDao() {return new ReviewHistoryDaoImpl();}
 
+    @Bean
+    public FollowInitiativeDao followInitiativeDao() {return new FollowInitiativeDaoImpl();}
+
     private PostgresQueryFactory queryFactory() {
         return jdbcConfiguration.queryFactory();
     }
@@ -218,6 +221,11 @@ public class AppConfiguration {
             );
     }
     
+    @Bean
+    public FollowService followService(){
+        return new FollowService();
+    }
+
     @Bean
     public XmlEscape fmXmlEscape() {
         return new XmlEscape();
@@ -298,7 +306,6 @@ public class AppConfiguration {
     
     @Bean
     public EmailService emailService(FreeMarkerConfigurer freeMarkerConfigurer) {
-        Urls.initUrls(env.getRequiredProperty(PropertyNames.baseURL)); // this could be moved to a right place!
         
         String baseURL = env.getRequiredProperty(PropertyNames.baseURL);
         String defaultReplyTo = env.getRequiredProperty(PropertyNames.emailDefaultReplyTo);
@@ -408,6 +415,14 @@ public class AppConfiguration {
                 pdf_fi,
                 pdf_sv
                 );
+    }
+
+    @PostConstruct
+    public void initUrls() {
+
+        String baseUrl = env.getRequiredProperty(PropertyNames.baseURL);
+        Urls.initUrls(baseUrl,
+            env.getProperty(PropertyNames.superSearchBaseUrl));
     }
 
     @PostConstruct

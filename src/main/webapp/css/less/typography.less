@@ -28,9 +28,12 @@ h1 {
     color: #111;
     font-weight:normal;
 }
+
 .extra-info {
     display:block;
-    margin:-1em 0 1em 0;
+    @media @xs, @sm {
+        text-align: center;
+    }
 }
 
 
@@ -54,6 +57,9 @@ h3 {
     &.navi-title {
         margin-right:1em;
         border-bottom:1px solid @borderGray;
+        @media @sm {
+            font-size: 18px;
+        }
     }
 }
 
@@ -62,6 +68,7 @@ h3 {
 // Styleguide 7.4
 h4 {
     margin-bottom:0.5em;
+    font-weight: bold;
 
     &.header { margin-bottom:0; }
     &.subtle {
@@ -130,6 +137,7 @@ pre {
 // .internal-vote-count - Internal vote count
 //
 // Styleguide 7.8
+
 .vote-count-container {
     display:inline-block;
     position:relative;
@@ -147,3 +155,14 @@ pre {
     font-weight:bold;
 }
 
+@media @xs, @sm {
+    .js-update-support-count {
+        display: none;
+    }
+    .vote-count-container {
+        display: block;
+    }
+    .supportCount {
+        text-align: center;
+    }
+}

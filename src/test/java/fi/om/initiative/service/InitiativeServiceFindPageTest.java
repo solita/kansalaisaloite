@@ -1,7 +1,6 @@
 package fi.om.initiative.service;
 
 import com.google.common.collect.Lists;
-import fi.om.initiative.conf.IntegrationTestConfiguration;
 import fi.om.initiative.dao.InitiativeDao;
 import fi.om.initiative.dao.ReviewHistoryDao;
 import fi.om.initiative.dao.TestHelper;
@@ -22,12 +21,8 @@ import org.joda.time.Months;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
-
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
@@ -38,9 +33,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes={IntegrationTestConfiguration.class})
-public class InitiativeServiceFindPageTest {
+public class InitiativeServiceFindPageTest extends EmailSpyConfiguration {
 
     private InitiativeServiceImpl initiativeService;
 

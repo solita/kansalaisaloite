@@ -13,6 +13,9 @@
     padding: 15px 25px 15px 60px;
     box-shadow: none;
     margin:1em 0;
+    @media @xs, @sm {
+        margin: 10px 0;
+    }
     border-width:1px; // separated for better overriding
     border-style:solid;
 
@@ -26,6 +29,9 @@
         border-left:4px solid @secondaryColor;
         padding-left:126px;
         background:#fff url("@{imagesPath}/icon-msg-summary.png?version=${timestamp}") no-repeat 32px 27px;
+        @media @xs, @sm {
+            margin-bottom: 10px;
+        }
 
         // Using nested messages so that it'd be easier to use wether combined or singular system-messages
         .msg-info {
@@ -34,6 +40,21 @@
             padding:1em 0;
             border:none;
             font-size:1em;
+            @media @xs, @sm {
+                padding: 10px;
+                margin: 0;
+                span.arrow-right-3 {
+                    display: none;
+                }
+                a.small-button {
+                    margin-left: 25%;
+                }
+            }
+        }
+        @media @xs, @sm {
+            background: none;
+            border: 0;
+            padding: 0px;
         }
     }
 

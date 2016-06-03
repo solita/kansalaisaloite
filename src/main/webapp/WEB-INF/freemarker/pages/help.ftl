@@ -32,24 +32,20 @@
  * @param pageTitle used in HTML title.
 -->
 <@l.main "page.help" pageTitle!"">
+    <#if omUser>
+    <div class="editor-buttons bootstrap-icons hidden-nojs">
+      <a href="${urls.helpEdit(helpPage)}" class="btn" href="#"><@u.message "editor.switchToEdit" />&nbsp;&nbsp;<i class="icon-chevron-right"></i></a>
+    </div>
+    </#if>
 
-    <div class="columns cf">
-
-        <div class="column col-1of4 navigation">
+    <div class="container-fluid">
+        <div class="col-sm-3">
             <@navigation categoryLinksMap['MAIN'] "" />
             <@navigation categoryLinksMap['KANSALAISALOITE_FI'] "help.service.title" />
             <@navigation categoryLinksMap['KANSALAISALOITE'] "help.general.title" />
         </div>
-
-        <#if omUser>
-            <div class="editor-buttons bootstrap-icons hidden">
-                <a href="${urls.helpEdit(helpPage)}" class="btn" href="#"><@u.message "editor.switchToEdit" />&nbsp;&nbsp;<i class="icon-chevron-right"></i></a>
-            </div>
-        </#if>
-
-        <div class="column col-3of4 last">
+        <div class="col-sm-9">
             <h1>${content.subject!""}</h1>
-
             <#noescape>${content.content!""}</#noescape>
         </div>
     </div>

@@ -1,14 +1,17 @@
 package fi.om.initiative.dao;
 
+import com.google.common.base.Optional;
 import com.mysema.query.sql.dml.SQLInsertClause;
 import com.mysema.query.sql.postgres.PostgresQuery;
 import com.mysema.query.sql.postgres.PostgresQueryFactory;
 import com.mysema.query.types.Expression;
+import com.mysema.query.types.Path;
 import com.mysema.query.types.expr.DateTimeExpression;
 import fi.om.initiative.dto.InfoTextCategory;
 import fi.om.initiative.dto.LanguageCode;
 import fi.om.initiative.dto.LocalizedString;
 import fi.om.initiative.dto.ProposalType;
+import fi.om.initiative.dto.author.AuthorRole;
 import fi.om.initiative.dto.initiative.InitiativeInfo;
 import fi.om.initiative.dto.initiative.InitiativeManagement;
 import fi.om.initiative.dto.initiative.InitiativeState;
@@ -24,7 +27,9 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static fi.om.initiative.sql.QInitiativeAuthor.initiativeAuthor;
 import static fi.om.initiative.util.Locales.asLocalizedString;
+import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 
 public class TestHelper {
 
@@ -58,9 +63,10 @@ public class TestHelper {
     public void dbCleanup() {
         queryFactory.delete(QSupportVote.supportVote).execute();
         queryFactory.delete(QSupportVoteBatch.supportVoteBatch).execute();
-        queryFactory.delete(QInitiativeAuthor.initiativeAuthor).execute();
+        queryFactory.delete(initiativeAuthor).execute();
         queryFactory.delete(QInitiativeSupportVoteDay.initiativeSupportVoteDay).execute();
         queryFactory.delete(QReviewHistory.reviewHistory).execute();
+        queryFactory.delete(QFollowInitiative.followInitiative).execute();
         queryFactory.delete(QInitiative.initiative).execute();
         queryFactory.delete(QInituser.inituser).execute();
         queryFactory.delete(QInfoText.infoText).execute();
@@ -166,6 +172,14 @@ public class TestHelper {
     }
 
     @Transactional
+    public void updateForTesting(Long initiativeId, Path path, Object value) {
+        queryFactory.update(qInitiative)
+                .set(path, value)
+                .where(qInitiative.id.eq(initiativeId))
+                .execute();
+    }
+
+    @Transactional
     // Not that initiatives created with this function cannot be updated with updateForTesting() for some reason.
     // Other issues might also occur...?
     public Long create(InitiativeDraft initiativeDraft) {
@@ -189,8 +203,10 @@ public class TestHelper {
                 .set(qInitiative.acceptanceidentifier, initiativeDraft.acceptedByOm ? "acceptance number" : null)
                 .set(qInitiative.enddate, endDate)
                 .set(qInitiative.state, initiativeDraft.state)
-                .set(qInitiative.modifierId, initiativeDraft.userId)
+                .set(qInitiative.modifierId, initiativeDraft.representativeId)
                 .set(qInitiative.supportcount, initiativeDraft.supportCount)
+                .set(qInitiative.externalsupportcount, initiativeDraft.externalSupportCount)
+                .set(qInitiative.supportstatementsinweb, initiativeDraft.externalSupportCount > 0)
                 .set(qInitiative.proposaltype, ProposalType.LAW)
                 .set(qInitiative.nameFi, initiativeDraft.name)
                 .set(qInitiative.rationaleFi, "rationale")
@@ -201,8 +217,43 @@ public class TestHelper {
             insert.set(qInitiative.supportCountData, InitiativeDraft.DEFAULT_DENORMALIZED_SUPPORTCOUNT_DATA);
         }
 
-        return insert.executeWithKey(qInitiative.id);
+        Long initiativeId = insert.executeWithKey(qInitiative.id);
 
+        SQLInsertClause authorInsert = queryFactory.insert(initiativeAuthor)
+                .set(initiativeAuthor.userId, initiativeDraft.representativeId)
+                .set(initiativeAuthor.initiativeId, initiativeId)
+                .set(initiativeAuthor.lastname, randomAlphabetic(10))
+                .set(initiativeAuthor.firstnames, randomAlphabetic(10))
+                .set(initiativeAuthor.homemunicipalityFi, "Helsinki")
+                .set(initiativeAuthor.homemunicipalitySv, "Helsinki")
+                .set(initiativeAuthor.role, AuthorRole.REPRESENTATIVE)
+                .set(initiativeAuthor.confirmed, DateTime.now())
+                .set(initiativeAuthor.initiator, false)
+                .set(initiativeAuthor.phone, "040");
+
+        if (initiativeDraft.representativeEmail.isPresent()) {
+            authorInsert.set(initiativeAuthor.email, initiativeDraft.representativeEmail.get());
+        }
+        authorInsert.execute();
+
+        return initiativeId;
+
+    }
+
+    @Transactional
+    public void makeAuthorFor(Long initiativeId, String email, AuthorRole role, Long userId) {
+        queryFactory.insert(initiativeAuthor)
+                .set(initiativeAuthor.userId, userId)
+                .set(initiativeAuthor.initiativeId, initiativeId)
+                .set(initiativeAuthor.lastname, randomAlphabetic(10))
+                .set(initiativeAuthor.firstnames, randomAlphabetic(10))
+                .set(initiativeAuthor.homemunicipalityFi, "Helsinki")
+                .set(initiativeAuthor.homemunicipalitySv, "Helsinki")
+                .set(initiativeAuthor.role, role)
+                .set(initiativeAuthor.confirmed, DateTime.now())
+                .set(initiativeAuthor.initiator, role == AuthorRole.INITIATOR)
+                .set(initiativeAuthor.email, email)
+                .execute();
     }
 
     @Transactional(readOnly = false)
@@ -257,12 +308,23 @@ public class TestHelper {
 
     }
 
+    @Transactional(readOnly = false)
+    public void addFollower(Long initiative, String email) {
+        queryFactory.insert(QFollowInitiative.followInitiative)
+                .set(QFollowInitiative.followInitiative.initiativeId, initiative)
+                .set(QFollowInitiative.followInitiative.email, email)
+                .set(QFollowInitiative.followInitiative.unsubscribeHash, randomAlphabetic(20))
+                .execute();
+
+    }
+
     public static class InitiativeDraft {
 
         public static final String DEFAULT_NAME = "dummy name";
         public static final String DEFAULT_DENORMALIZED_SUPPORTCOUNT_DATA = "some-uninitialized-data";
+        private final Optional<String> representativeEmail;
 
-        private Long userId;
+        private Long representativeId;
         private String name = DEFAULT_NAME;
         private InitiativeState state = InitiativeState.ACCEPTED;
         private Boolean running = true;
@@ -271,9 +333,16 @@ public class TestHelper {
         private LocalDate startTime;
         private LocalDate endTime;
         private boolean hasDenormalizedSupportCounts = false;
+        private int externalSupportCount = 0;
 
-        public InitiativeDraft(Long userId) {
-            this.userId = userId;
+        public InitiativeDraft(Long representativeId) {
+            this.representativeId = representativeId;
+            this.representativeEmail = Optional.absent();
+        }
+
+        public InitiativeDraft(Long representativeId, String representativeEmail) {
+            this.representativeId = representativeId;
+            this.representativeEmail = Optional.of(representativeEmail);
         }
 
         public InitiativeDraft withState(InitiativeState state) {
@@ -315,6 +384,11 @@ public class TestHelper {
 
         public InitiativeDraft withSupportCount(int supportCount) {
             this.supportCount = supportCount;
+            return this;
+        }
+
+        public InitiativeDraft withExternalSupportCount(int externalSupportCount) {
+            this.externalSupportCount = externalSupportCount;
             return this;
         }
 

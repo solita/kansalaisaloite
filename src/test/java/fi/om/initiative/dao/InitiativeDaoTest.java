@@ -1,33 +1,27 @@
 package fi.om.initiative.dao;
 
 import com.google.common.collect.Lists;
-import fi.om.initiative.conf.IntegrationTestConfiguration;
 import fi.om.initiative.dto.*;
 import fi.om.initiative.dto.author.Author;
 import fi.om.initiative.dto.author.ContactInfo;
 import fi.om.initiative.dto.initiative.*;
 import fi.om.initiative.dto.search.InitiativeSearch;
 import fi.om.initiative.dto.search.SearchView;
+import fi.om.initiative.service.EmailSpyConfiguration;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.Years;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
-
 import java.net.MalformedURLException;
 import java.util.List;
 
 import static fi.om.initiative.util.Locales.asLocalizedString;
 import static junit.framework.Assert.*;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes={IntegrationTestConfiguration.class})
-public class InitiativeDaoTest {
+public class InitiativeDaoTest extends EmailSpyConfiguration {
 
     @Resource
     private InitiativeDao initiativeDao;
@@ -168,7 +162,7 @@ public class InitiativeDaoTest {
         assertEquals(sendToParliamentData.getParliamentSentTime(), updated.getParliamentSentTime());
         assertEquals(InitiativeState.DONE, updated.getState());
     }
-    
+
     private void authorFromInitiativeTest(Long initiativeId, Author expected) {
         InitiativeManagement initiative = initiativeDao.getInitiativeForManagement(initiativeId, false);
         Author actual;
@@ -315,6 +309,27 @@ public class InitiativeDaoTest {
             assertEquals(old.getStateDate(), i.getStateDate());
         }
         assertEquals(0, i.getSupportCount());
+    }
+
+    private InitiativeManagement createInitiativeWithEndDate(LocalDate localDate, Long id) {
+        InitiativeManagement initiative = new InitiativeManagement();
+        initiative.assignId(id);
+        initiative.setFinancialSupport(true);
+        initiative.setFinancialSupportURL(new InitURI("http://www.solita.fi"));
+        initiative.setName(asLocalizedString("Nimi", "Nimi-sv"));
+        initiative.setProposal(asLocalizedString("Ehdotus", "Ehdotus-sv"));
+        initiative.setAcceptanceIdentifier("some acceptance identifier");
+        initiative.setProposalType(ProposalType.LAW);
+        initiative.setRationale(asLocalizedString("Perustelut", "Perustelut-sv"));
+        initiative.setPrimaryLanguage(LanguageCode.FI);
+        initiative.setStartDate(today);
+        initiative.assignEndDate(localDate);
+        initiative.setSupportStatementsInWeb(true);
+        initiative.setSupportStatementsOnPaper(true);
+
+        initiative.setLinks(Lists.newArrayList(intiativeLinkCreateValuesWithConstantValues(), intiativeLinkCreateValuesWithConstantValues()));
+
+        return initiative;
     }
 
     public static InitiativeManagement createNotEndedInitiative(Long id) {

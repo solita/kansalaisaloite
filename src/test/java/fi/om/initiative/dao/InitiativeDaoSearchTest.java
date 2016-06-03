@@ -1,7 +1,6 @@
 package fi.om.initiative.dao;
 
 import com.google.common.collect.Lists;
-import fi.om.initiative.conf.IntegrationTestConfiguration;
 import fi.om.initiative.dto.InitURI;
 import fi.om.initiative.dto.InitiativeSettings;
 import fi.om.initiative.dto.LanguageCode;
@@ -16,18 +15,15 @@ import fi.om.initiative.dto.search.InitiativeSearch;
 import fi.om.initiative.dto.search.OrderBy;
 import fi.om.initiative.dto.search.SearchView;
 import fi.om.initiative.dto.search.Show;
+import fi.om.initiative.service.EmailSpyConfiguration;
 import fi.om.initiative.util.OptionalHashMap;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
-
 import java.util.List;
 
 import static fi.om.initiative.util.Locales.asLocalizedString;
@@ -40,9 +36,8 @@ import static org.junit.Assert.assertThat;
  * Note that some of these tests are not necessary because of
  * fi.om.initiative.service.InitiativeServiceFindPageTest
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes={IntegrationTestConfiguration.class})
-public class InitiativeDaoSearchTest {
+
+public class InitiativeDaoSearchTest extends EmailSpyConfiguration {
 
     @Resource
     private InitiativeDao initiativeDao;
@@ -109,13 +104,11 @@ public class InitiativeDaoSearchTest {
                 new TestHelper.InitiativeDraft(userId)
                         .withState(InitiativeState.REVIEW)
         );
-        initiativeDao.insertAuthor(notPublicOwnInitiative, userId, createAuthor(userId));
 
         Long publicOwnInitiative = testHelper.create(
                 new TestHelper.InitiativeDraft(userId)
                         .withState(InitiativeState.ACCEPTED)
         );
-        initiativeDao.insertAuthor(publicOwnInitiative, userId, createAuthor(userId));
 
         Long notPublicNotOwnInitiative = testHelper.create(
                 new TestHelper.InitiativeDraft(anotherUserId)

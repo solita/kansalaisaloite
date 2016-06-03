@@ -1,8 +1,6 @@
 package fi.om.initiative.service;
 
 import com.google.common.collect.Lists;
-import com.mysema.commons.lang.Assert;
-import fi.om.initiative.conf.IntegrationTestConfiguration;
 import fi.om.initiative.dao.InitiativeDao;
 import fi.om.initiative.dao.InitiativeDaoTest;
 import fi.om.initiative.dao.NotFoundException;
@@ -13,29 +11,21 @@ import fi.om.initiative.dto.author.Author;
 import fi.om.initiative.dto.initiative.InitiativeManagement;
 import fi.om.initiative.dto.initiative.InitiativePublic;
 import fi.om.initiative.dto.initiative.InitiativeState;
-import fi.om.initiative.util.ReviewHistoryType;
 import fi.om.initiative.util.SnapshotCreator;
 import mockit.Expectations;
 import mockit.Mocked;
 import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Errors;
 import org.springframework.validation.SmartValidator;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 import static junit.framework.Assert.*;
-import static junit.framework.Assert.assertSame;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes={IntegrationTestConfiguration.class})
+
 public class InitiativeServiceTest extends ServiceTestBase {
     
     @Mocked InitiativeDao initiativeDao;

@@ -45,8 +45,8 @@
             <p><@u.messageHTML "initiative.waitingForOm.noDate" args /></p>
         </#if>
         
-        <a href="#" class="small-button green hidden om-accept-initiative"><span class="small-icon save-and-send"><@u.message "initiative.acceptInitiative.btn" /></span></a>
-        <a href="#" class="small-button red hidden om-reject-initiative"><@u.message "initiative.rejectInitiative.btn" /></a>
+        <a href="#" class="small-button green hidden-nojs om-accept-initiative"><span class="small-icon save-and-send"><@u.message "initiative.acceptInitiative.btn" /></span></a>
+        <a href="#" class="small-button red hidden-nojs om-reject-initiative"><@u.message "initiative.rejectInitiative.btn" /></a>
     </#assign>
     
     <@u.systemMessageHTML initiativeWaitingForOM "info" />

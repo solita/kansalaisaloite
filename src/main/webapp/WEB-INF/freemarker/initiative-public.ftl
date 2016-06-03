@@ -92,7 +92,7 @@
     
     <#-- BOTTOM CONTRIBUTION -->
     <#if showInfoMsg>
-        <div class="system-msg msg-summary">
+        <div class="system-msg msg-summary hidden-xs hidden-sm">
             <@m.initiativeVote />
             <@m.votingSuspended />
             <@m.votingEnded />

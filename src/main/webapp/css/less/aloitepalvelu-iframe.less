@@ -14,6 +14,7 @@ body {
     font-family: "PT Sans", "Trebuchet MS", Helvetica, sans-serif;
     color:@bodyColor;
     background: #fff;
+    font-size:100%;
 }
 
 .container {
@@ -36,7 +37,7 @@ body {
     display:none;
 }
 html.no-js {
-    .hidden, .help, .close-msg {
+    .hidden-nojs, .help, .close-msg {
         display:none;
     }
 }
@@ -628,9 +629,12 @@ a.block-link {
 }
 
 .input-block-content {
-    width: 585px;
+    width: 72%;
     position:relative;
     margin-top:2em;
+    @media @xs, @sm {
+        width: 100%;
+    }
 }
 
 .initiative-finance-url-area, .initiative-external-support-count {
@@ -907,7 +911,6 @@ h1 {
 }
 .extra-info {
     display:block;
-    margin:-1em 0 1em 0;
 }
 
 
@@ -1045,20 +1048,3 @@ h4 {
         }
     }
 }
-
-@media @narrow {
-    .support-vote-graph {
-
-        .update-info {
-            margin-left: 0;
-        }
-
-    }
-}
-
-@media @xnarrow {
-    h1 {
-        font-size: 1.2em;
-    }
-}
-

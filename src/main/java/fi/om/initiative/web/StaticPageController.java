@@ -1,6 +1,7 @@
 package fi.om.initiative.web;
 
 import fi.om.initiative.dto.initiative.InitiativeInfo;
+import fi.om.initiative.dto.search.OrderBy;
 import fi.om.initiative.service.InitiativeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -49,7 +50,9 @@ public class StaticPageController extends BaseController {
     }
 
     @RequestMapping(API)
-    public String api() {
+    public String api(Model model) {
+
+        model.addAttribute("orderByValues", OrderBy.values());
         return Views.API_VIEW;
     }
 }

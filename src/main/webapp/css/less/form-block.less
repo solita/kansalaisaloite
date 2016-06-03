@@ -5,6 +5,9 @@
     background: #fff url("@{imagesPath}/input-block-extra-bg.png?version=${timestamp}") repeat-y top right;
     border-left: 4px solid @mainColor;
     padding:20px 25px 0 55px;
+    @media @xs, @sm {
+        border: 0;
+    }
 
     &.view {
         z-index:3;
@@ -25,6 +28,14 @@
         font-weight:normal;
         //text-shadow: #0b3911 1px 1px 1px;
     }
+    @media @md {
+        background: #fff url("@{imagesPath}/input-block-extra-bg.png?version=${timestamp}") repeat-y 514px;
+    }
+    @media @xs, @sm {
+        padding: 10px;
+        background: white;
+    }
+
 }
 
 .input-block-content, .input-block-extra, .input-block-action {
@@ -32,9 +43,16 @@
 }
 
 .input-block-content {
-    width: 585px;
+    width: 609px;
     position:relative;
     margin-top:2em;
+    @media @md {
+        width: 447px;
+    }
+    @media @xs, @sm {
+        width: 100%;
+        background: white;
+    }
 }
 
 .initiative-finance-url-area, .initiative-external-support-count {
@@ -45,8 +63,8 @@
 .input-block-extra {
     position:absolute;
     top:-6px;
-    right:-306px;
-    width: 235px;
+    right: -262px;
+    width: 268px;
     margin:0 0px 0px 10px;
     padding: 10px 0px 20px 33px;
     height:0;
@@ -60,6 +78,25 @@
         p {
             margin: 0px 0px 1em 0px;
         }
+    }
+
+    @media @sm, @md {
+        right: -222px;
+        width: 228px;
+    }
+
+    @media @xs, @sm {
+        position: relative;
+        height: auto;
+        top: auto;
+        right: auto;
+        width: 100%;
+        font-size: 80%;
+        border-left: 8px solid @mainColorLight;
+        margin: 0 0px 10px 10px;
+        padding: 10px 10px 5px 15px;
+        float: none !important;
+        background: none;
     }
 
 }
@@ -119,12 +156,18 @@
 
 .initiative-content-row {
     border-bottom: 1px solid @borderGray;
+    @media @xs, @sm {
+        border-bottom: 2px solid @borderGrayLight;
+    }
     margin-bottom: 0.7em;
     padding-bottom: 0.7em;
 
     .header {
         display: block;
         font-weight: bold;
+        @media @xs, @sm {
+            font-size: 16px;
+        }
     }
 
     &.last{

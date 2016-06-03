@@ -1,7 +1,6 @@
 package fi.om.initiative.service;
 
 import com.google.common.collect.Lists;
-import fi.om.initiative.conf.IntegrationTestConfiguration;
 import fi.om.initiative.dao.InitiativeDao;
 import fi.om.initiative.dao.TestHelper;
 import fi.om.initiative.dto.*;
@@ -18,12 +17,8 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
-
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -33,9 +28,8 @@ import static fi.om.initiative.util.Locales.asLocalizedString;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes={IntegrationTestConfiguration.class})
-public class SupportVoteServiceIntegrationTest {
+
+public class SupportVoteServiceIntegrationTest extends EmailSpyConfiguration{
 
     @Resource
     InitiativeDao initiativeDao;

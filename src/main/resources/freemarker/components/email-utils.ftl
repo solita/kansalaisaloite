@@ -1,5 +1,4 @@
 <#import "/spring.ftl" as spring />
-<#import "utils.ftl" as u />
 
 <#escape x as x?html> 
 

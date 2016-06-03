@@ -14,7 +14,7 @@
     <div class="support-vote-graph">
     	<h3 class="inline-header">
             <@u.message key="graph.title" />
-            <span id="internal-support-count-${initiative.id?c}" class="vote-count-container">
+            <span id="internal-support-count-${initiative.id?c}">
                 <span class="vote-count">${initiative.supportCount!""}</span>
             </span>
         </h3>
@@ -64,7 +64,7 @@
         <#assign supportCountConfirmedByVRK = initiative.verifiedSupportCount gt 0/>
         <#assign verifiedExternalSupportCount = initiative.verifiedSupportCount - initiative.supportCount />
 
-        <p>
+        <p class="supportCount">
 
             <#if supportCountConfirmedByVRK>
 
@@ -100,7 +100,7 @@
 
     <#-- Show refresh-button only when voting is in progress -->
 	        <#if votingInfo?? && votingInfo.votingInProggress>
-	            <span class="js-update-support-count icon-small refresh push rounded trigger-tooltip hidden" data-id="${initiative.id?c}" data-target-total="support-count-${initiative.id?c}" data-target-internal="internal-support-count-${initiative.id?c}" title="<@u.message "initiative.supportCount.refresh" />"></span>
+	            <span class="js-update-support-count icon-small refresh push rounded trigger-tooltip hidden-nojs" data-id="${initiative.id?c}" data-target-total="support-count-${initiative.id?c}" data-target-internal="internal-support-count-${initiative.id?c}" title="<@u.message "initiative.supportCount.refresh" />"></span>
 	        </#if>
         </p>
 	</#if>

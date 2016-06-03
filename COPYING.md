@@ -9,6 +9,8 @@ terms of the Apache License Version 2.0. See LICENSE. Note that the software dep
     Freemarker                      BSD-Style                               http://freemarker.org/LICENSE.txt
     Jmockit                         MIT
     Ehcache                         Apache 2.0
+    flywaydb                        Apache License 2.0
+    hamcrest                        BSD 3-Clause                  
     Guava                           Apache 2.0
     Joda-time                       Apache 2.0
     Google findbugs                 Apache 2.0
@@ -34,6 +36,7 @@ terms of the Apache License Version 2.0. See LICENSE. Note that the software dep
     ----------------------
     Javascript libraries:
     ----------------------
+    Bootstrap                       MIT
     Dirtyforms                      MIT
     Jsrender                        MIT
     Jquery-cookie                   MIT

@@ -1,13 +1,10 @@
 package fi.om.initiative.dao;
 
-import fi.om.initiative.conf.IntegrationTestConfiguration;
 import fi.om.initiative.dto.initiative.InitiativeState;
+import fi.om.initiative.service.EmailSpyConfiguration;
 import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -18,9 +15,7 @@ import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNull.nullValue;
 import static org.junit.Assert.assertThat;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes={IntegrationTestConfiguration.class})
-public class SupportVoteDaoImplTest {
+public class SupportVoteDaoImplTest extends EmailSpyConfiguration {
 
     @Resource
     SupportVoteDao supportVoteDao;

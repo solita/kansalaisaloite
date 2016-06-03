@@ -1,34 +1,28 @@
 package fi.om.initiative.dao;
 
-import fi.om.initiative.conf.IntegrationTestConfiguration;
-import fi.om.initiative.conf.IntegrationTestConfiguration;
 import fi.om.initiative.dto.ReviewHistoryRow;
+import fi.om.initiative.service.EmailSpyConfiguration;
 import fi.om.initiative.util.ReviewHistoryType;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-
 import java.util.List;
 
-//import static fi.om.initiative.util.MaybeMatcher.isNotPresent;
-//import static fi.om.initiative.util.MaybeMatcher.isPresent;
-//import static org.hamcrest.Matchers.hasSize;
-//import static org.hamcrest.Matchers.is;
 import static fi.om.initiative.util.MaybeMatcher.isNotPresent;
 import static fi.om.initiative.util.MaybeMatcher.isPresent;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes={IntegrationTestConfiguration.class})
+//import static fi.om.initiative.util.MaybeMatcher.isNotPresent;
+//import static fi.om.initiative.util.MaybeMatcher.isPresent;
+//import static org.hamcrest.Matchers.hasSize;
+//import static org.hamcrest.Matchers.is;
+
 @Transactional(readOnly = false)
-public class JdbcReviewHistoryDaoTest {
+public class JdbcReviewHistoryDaoTest extends EmailSpyConfiguration {
 
     @Resource
     TestHelper testHelper;

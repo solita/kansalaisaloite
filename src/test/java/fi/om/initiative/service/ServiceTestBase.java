@@ -11,7 +11,7 @@ import org.joda.time.LocalDate;
 
 import static fi.om.initiative.util.Locales.asLocalizedString;
 
-public class ServiceTestBase {
+public abstract class ServiceTestBase extends EmailSpyConfiguration{
     
     final LocalDate DOB = new LocalDate().minusYears(20);
     

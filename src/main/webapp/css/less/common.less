@@ -39,11 +39,10 @@
     display:none;
 }
 html.no-js {
-    .hidden, .help, .close-msg {
+    .hidden-nojs, .help, .close-msg {
         display:none;
     }
 }
-
 
 .expose-mask {
     z-index:999;
@@ -60,6 +59,19 @@ html.no-js {
     clear: both;
 }
 
+.close {
+    float: none;
+    font-size: 16px;
+    font-weight: normal;
+    line-height: 1;
+    color: @link;
+    text-shadow: 0;
+    opacity: 1;
+    &:hover {
+        color: @linkHover;
+        opacity: 1;
+    }
+}
 
 img { max-width:100%; height:auto; }
 img.borders {
@@ -78,6 +90,7 @@ a {
 a:hover {
     color: @linkHover;
     outline:none;
+    text-decoration: none !important;
 }
 
 a:active {

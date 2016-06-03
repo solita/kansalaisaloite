@@ -3,9 +3,12 @@ package fi.om.initiative.service;
 import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.mysema.commons.lang.Assert;
+import fi.om.initiative.dto.Follower;
+import fi.om.initiative.dto.InitiativeSettings;
 import fi.om.initiative.dto.Invitation;
 import fi.om.initiative.dto.author.Author;
 import fi.om.initiative.dto.author.AuthorInfo;
@@ -23,13 +26,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 
 import javax.annotation.Resource;
 import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
-
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
@@ -44,6 +44,8 @@ public class EmailServiceImpl implements EmailService {
     @Resource MessageSource messageSource;
     @Resource JavaMailSender javaMailSender;
     @Resource HashCreator hashCreator;
+    @Resource InitiativeSettings initiativeSettings;
+
     private static final Logger log = LoggerFactory.getLogger(EmailServiceImpl.class);
 
     private final String baseURL;
@@ -62,7 +64,7 @@ public class EmailServiceImpl implements EmailService {
             return super.toString().toLowerCase();
         }
     }
-    
+
     public EmailServiceImpl(FreeMarkerConfigurer freemarkerConfig, MessageSource messageSource, JavaMailSender javaMailSender, 
                         String baseURL, String defaultReplyTo, String sendToOM, String sendToVRK, 
                         int invitationExpirationDays, String testSendTo, boolean testConsoleOutput) {
@@ -188,7 +190,7 @@ public class EmailServiceImpl implements EmailService {
     public void sendAuthorRemovedInfoToVEVs(InitiativeManagement initiative, Author removedAuthor, List<String> authorEmails) {
         sendAuthorStatusInfoToVEVs(initiative, removedAuthor, authorEmails, EmailMessageType.AUTHOR_REMOVED);
     }
-    
+
     private void sendAuthorStatusInfoToVEVs(InitiativeManagement initiative, Author changedAuthor, List<String> authorEmails, EmailMessageType emailMessageType) {
         Assert.notNull(initiative, "initiative");
         Assert.notNull(changedAuthor, "changedAuthor");
@@ -222,6 +224,16 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
+    public void sendFollowConfirmationEmail(InitiativeManagement initiative, String email, String unsubscribeHash) {
+        Map<String, Object> dataMap = initMap(initiative);
+        dataMap.put("unsubscribeHash", unsubscribeHash);
+
+        sendEmail(email, null, getEmailSubject("follow.confirmed"), "follow-confirmed", dataMap);
+
+    }
+
+
+    @Override
     public void sendStatusInfoToVEVs(InitiativeManagement initiative, EmailMessageType emailMessageType) {
         Assert.notNull(initiative, "initiative");
         
@@ -230,9 +242,56 @@ public class EmailServiceImpl implements EmailService {
             dataMap.put("stateComment", initiative.getStateComment());
             dataMap.put("acceptanceIdentifier", initiative.getAcceptanceIdentifier());
         }
-        
+        if (emailMessageType == EmailMessageType.VOTING_HALFWAY) {
+            dataMap.put("percentFromGoal", percentageOfRequiredVoteCount(initiative));
+        }
+
         sendStatusInfoToVEVs(initiative, getConfirmedAuthorEmails(initiative.getAuthors()), emailMessageType, dataMap);
     }
+
+    @Override
+    public void sendStatusInfoToFollowers(InitiativeManagement initiative, EmailMessageType emailMessageType, List<Follower> followers) {
+
+        Map<String, Object> baseDataMap = initMap(initiative);
+
+        addEnum(EmailMessageType.class, baseDataMap);
+        baseDataMap.put("emailMessageType", emailMessageType);
+        if(emailMessageType.equals(EmailMessageType.VOTING_HALFWAY)) {
+            baseDataMap.put("percentFromGoal", percentageOfRequiredVoteCount(initiative));
+        }
+
+        ImmutableMap<String, Object> dataMap = new ImmutableMap.Builder<String, Object>().putAll(baseDataMap).build();
+
+        String emailSubject = getEmailSubject("status.info." + emailMessageType);
+
+
+
+        for (Follower follower : followers) {
+            ImmutableMap<String, Object> dataMapWithUnsubscribeHash = new ImmutableMap.Builder<String, Object>()
+                    .putAll(dataMap)
+                    .put("unsubscribeHash", follower.unsubscribeHash)
+                    .build();
+            sendEmail(follower.email, null, emailSubject, "status-info-to-vev", dataMapWithUnsubscribeHash);
+        }
+
+        // Fuuuuu. Want immutability.
+
+        // (run!
+        //   #(send-email
+        //     (:email %)
+        //     email-subject
+        //     "status-info-to-vev"
+        //     (merge
+        //       (initMap initiative)
+        //       (select-keys % [:unsubscribeHash])))
+        //   followers)
+
+    }
+
+    private float percentageOfRequiredVoteCount(InitiativeManagement initiative) {
+        return  (initiative.getTotalSupportCount() * 100.0f) / initiativeSettings.getRequiredVoteCount();
+    }
+
 
     private void sendStatusInfoToVEVs(InitiativeBase initiative, List<String> authorEmails, EmailMessageType emailMessageType, Map<String, Object> dataMap) {
         Assert.notNull(initiative, "initiative");
@@ -263,8 +322,10 @@ public class EmailServiceImpl implements EmailService {
     }
     
     private Map<String, Object> initMap(InitiativeBase initiative, AuthorInfo currentAuthor) {
+
         Map<String, Object> dataMap = new HashMap<String, Object>();
         dataMap.put("baseURL", baseURL);
+        dataMap.put("initiativeSettings", initiativeSettings);
         dataMap.put("urlsFi", Urls.get(Locales.LOCALE_FI));
         dataMap.put("urlsSv", Urls.get(Locales.LOCALE_SV));
         dataMap.put("summaryMethod", SummaryMethod.INSTANCE);
@@ -309,9 +370,9 @@ public class EmailServiceImpl implements EmailService {
     private void sendEmail(String sendTo, String replyTo, String subject, String templateName,  Map<String, Object> dataMap) {
         Assert.notNull(sendTo, "sendTo");
 
-        String text = processTemplate(templateName + "-text", dataMap); 
-        String html = processTemplate(templateName + "-html", dataMap); 
-        
+        String text = processTemplate(templateName + "-text", dataMap);
+        String html = processTemplate(templateName + "-html", dataMap);
+
         text = stripTextRows(text, 2);
         
         if (testSendTo != null) {
@@ -334,19 +395,17 @@ public class EmailServiceImpl implements EmailService {
             return;
         }
 
-        MimeMessage message = javaMailSender.createMimeMessage();
+        EmailHelper emailHelper = new EmailHelper();
         try {
-            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
-            helper.setTo(sendTo);
-            helper.setFrom(defaultReplyTo); //to avoid spam filters
-            helper.setReplyTo(replyTo);
-            helper.setSubject(subject);
-            helper.setText(text, html);
+            emailHelper.setTo(sendTo);
+            emailHelper.setFrom(defaultReplyTo); //to avoid spam filters
+            emailHelper.setReplyTo(replyTo);
+            emailHelper.setSubject(subject);
+            emailHelper.setText(text, html);
+            EmailSender.send(emailHelper, javaMailSender);
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }
-
-        javaMailSender.send(message);
         log.info("Email message sent to " + sendTo + ": " + subject);
     }
 
@@ -365,11 +424,6 @@ public class EmailServiceImpl implements EmailService {
         } catch (TemplateException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    @Override
-    public void sendVRKResolutionToVEVs(InitiativeManagement initiative) {
-        sendStatusInfoToVEVs(initiative, EmailMessageType.VRK_RESOLUTION);
     }
 
     private String stripTextRows(String text, int maxEmptyRows) {

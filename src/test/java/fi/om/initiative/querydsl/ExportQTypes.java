@@ -1,24 +1,21 @@
 package fi.om.initiative.querydsl;
 
+import com.mysema.query.sql.Configuration;
+import com.mysema.query.sql.codegen.DefaultNamingStrategy;
+import com.mysema.query.sql.codegen.MetaDataExporter;
+import fi.om.initiative.conf.JdbcConfiguration;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.PropertySource;
+
+import javax.sql.DataSource;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.sql.Connection;
 import java.sql.SQLException;
-
-import javax.sql.DataSource;
-
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.PropertySource;
-
-import com.mysema.query.sql.Configuration;
-import com.mysema.query.sql.codegen.DefaultNamingStrategy;
-import com.mysema.query.sql.codegen.MetaDataExporter;
-
-import fi.om.initiative.conf.JdbcConfiguration;
 
 public class ExportQTypes {
 
@@ -28,7 +25,7 @@ public class ExportQTypes {
 
     @org.springframework.context.annotation.Configuration
     @Import(JdbcConfiguration.class)
-    @PropertySource("classpath:test.properties")
+    @PropertySource("classpath:default.properties")
     public static class StandaloneJdbcConfiguration {
     }
 

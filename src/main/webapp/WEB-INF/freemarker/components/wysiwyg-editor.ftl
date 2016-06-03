@@ -44,16 +44,16 @@
         <@requestMessage requestMessages />
     </#if>
 
-    <div class="editor-buttons left view-mode bootstrap-icons hidden">
+    <div class="editor-buttons left view-mode bootstrap-icons hidden-nojs">
         <a class="btn" href="${urls.help(helpPage)}"><i class="icon-chevron-left"></i>&nbsp;&nbsp;<@u.message "editor.returnToView" /></a>
     </div>
 
-    <div class="editor-buttons bootstrap-icons edit-mode hidden js-hide">
+    <div class="editor-buttons bootstrap-icons edit-mode hidden-nojs js-hide">
         <a class="btn btn-success js-wysihtml5-save js-submit" data-form="wysihtml5-form" href="#"><i class="icon-ok icon-white"></i>&nbsp;&nbsp;<@u.message "editor.save-draft" /></a>
         <a class="btn" href="${springMacroRequestContext.requestUri}"><@u.message "editor.cancel-edit" /></a>
     </div>
 
-    <div class="editor-buttons bootstrap-icons view-mode hidden">
+    <div class="editor-buttons bootstrap-icons view-mode hidden-nojs">
         <a class="btn btn-primary js-wysihtml5-edit" href="#"><i class="icon-pencil icon-white"></i>&nbsp;&nbsp;<@u.message "editor.edit" /></a>
         
         <span class="dropdown">
@@ -111,7 +111,7 @@
 -->
 <#macro confirmModal id name>
 
-    <div class="bootstrap-${id} bootstrap-icons modal hide fade"> 
+    <div class="bootstrap-${id} bootstrap-icons modal fade">
         <div class="modal-header"> 
             <a class="close" data-dismiss="modal">&times;</a> 
             <h4><@u.message "editor."+id /></h4> 

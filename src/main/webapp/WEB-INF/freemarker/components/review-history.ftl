@@ -15,7 +15,7 @@
 			<@u.systemMessage path="review.history.info" type="info" showClose=false />
 
 			<div class="toggle-container">
-				<div class="js-open-block hidden">
+				<div class="js-open-block hidden-nojs">
 	                <a class="small-button gray js-btn-open-block" data-open-block="js-block-container" href="#"><span class="small-icon save-and-send"><@u.message "review.history.add.comment" /></span></a>
 	            </div>
 				
@@ -24,12 +24,12 @@
 		                <input type="hidden" name="CSRFToken" value="${CSRFToken}"/>
 		
 		                <div class="input-block-content no-top-margin">
-		                    <textarea class="collapse" name="${UrlConstants.ACTION_MODERATOR_ADD_COMMENT}" maxlength="${InitiativeConstants.STATE_COMMENT_MAX?string("#")}"></textarea>
+		                    <textarea class="" name="${UrlConstants.ACTION_MODERATOR_ADD_COMMENT}" maxlength="${InitiativeConstants.STATE_COMMENT_MAX?string("#")}"></textarea>
 		                </div>
 
 		                <div class="input-block-content">
 		                    <button type="submit" name="${UrlConstants.ACTION_COMMENT_BY_OM}" value="true" class="small-button"><span class="small-icon save-and-send"><@u.message "review.history.add.comment" /></span></button>
-		                    <a href="#" class="push js-btn-close-block hidden"><@u.message "action.cancel" /></a>
+		                    <a href="#" class="push js-btn-close-block hidden-nojs"><@u.message "action.cancel" /></a>
 		                </div>
 		            </form>
 	            </div>
