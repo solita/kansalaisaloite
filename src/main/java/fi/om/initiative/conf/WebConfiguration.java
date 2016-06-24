@@ -82,6 +82,11 @@ public class WebConfiguration extends WebMvcConfigurationSupport {
             return new TestDataController();
         }
 
+        @Bean
+        public KapaController kapaController() {
+            return new KapaController();
+        }
+
     }
 
 
