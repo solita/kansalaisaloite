@@ -19,9 +19,6 @@
                 <#list footerLinks as footerLink>
                     <li><span class="triangle-right"></span> <a href="${urls.help(footerLink.uri)}">${footerLink.subject}</a></li>
                 </#list>
-                  <li><span class="triangle-right"></span> <a href="#">Henkilötietojen suoja ja tietoturva</a></li>
-                  <li><span class="triangle-right"></span> <a href="#">Yhteystiedot</a></li>
-                  <li><span class="triangle-right"></span> <a href="#">Briefly in English</a></li>
             </ul>
         </div>
       <a href="#header-tools" accesskey="3" id="back-to-top"><@u.message "accesskey.backToTop" /></a>

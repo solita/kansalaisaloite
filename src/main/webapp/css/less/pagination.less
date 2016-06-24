@@ -13,15 +13,14 @@
         margin-bottom:-1em;
         padding-bottom:0.5em;
         border-bottom: 1px solid @borderGray;
-        @media @xs, @sm {
-            border: 0;
-            margin-bottom: 1em;
+        width: 100%;
+        @media @sm, @xs {
+            display: none;
         }
     }
     &.bottom {
         margin-top:0;
-        //padding-top:0.5em;
-        //border-top: 1px solid @borderGray;
+        width: 100%;
     }
 
     .pagination-limiter {

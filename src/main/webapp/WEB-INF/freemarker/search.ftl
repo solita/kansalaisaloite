@@ -35,8 +35,6 @@
            <span class="switch-view hidden-xs"><a href="${urls.searchOwnOnly()}"><@u.message "user.myInitiatives"/></a></span>
         </#if>
     </h1>
-
-    <br/>
     
     <#--
      * Search filter and sort states
@@ -120,9 +118,9 @@
      *  - Do not display in OWN initiatives view.
     -->
     <#if searchMode != "own">
-        <@p.pagination currentSearch.limit!500 currentSearch.offset!0 "top" />
+      <@p.pagination currentSearch.limit!500 currentSearch.offset!0 "top" />
     </#if>
-    
+
     
     <#--
      * Toggle initiatives that have under 50 support votes
