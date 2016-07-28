@@ -41,6 +41,7 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static fi.om.initiative.dto.EditMode.CURRENT_AUTHOR;
 import static fi.om.initiative.dto.EditMode.FULL;
@@ -382,13 +383,10 @@ public class InitiativeServiceImpl implements InitiativeService {
     public List<InitiativeInfo> findInitiativesWithUnremovedVotes(Period beforeDeadLine) {
         userService.getUserInRole(Role.OM);
         List<InitiativeInfo> initiatives = initiativeDao.findInitiativesWithUnremovedVotes();
-        for (int i = initiatives.size() - 1; i >= 0; i--) {
-            InitiativeInfo initiative = initiatives.get(i);
-            if (!initiative.isVotesRemovalEndDateNear(LocalDate.now(), initiativeSettings.getVotesRemovalDuration(), beforeDeadLine)) {
-                initiatives.remove(i);
-            }
-        }
-        return initiatives;
+
+        return initiatives.stream()
+                .filter(a -> a.isVotesRemovalEndDateNear(LocalDate.now(), initiativeSettings.getVotesRemovalDuration(), beforeDeadLine))
+                .collect(Collectors.toList());
     }
 
     @Cacheable("frontPageInitiatives")
