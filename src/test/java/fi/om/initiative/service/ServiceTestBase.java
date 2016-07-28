@@ -8,6 +8,7 @@ import fi.om.initiative.dto.initiative.InitiativePublic;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
+import org.joda.time.Period;
 
 import static fi.om.initiative.util.Locales.asLocalizedString;
 
@@ -46,7 +47,7 @@ public abstract class ServiceTestBase extends EmailSpyConfiguration{
 
     final InitiativePublic INITIATIVE_PUBLIC = new InitiativePublic(INITIATIVE_MANAGEMENT);
 
-    final InitiativeSettings INITIATIVE_SETTINGS = new InitiativeSettings(1, 1, 2, Days.days(1), Days.days(3), Days.days(4), Days.days(5), Days.days(6), Days.days(7));
+    final InitiativeSettings INITIATIVE_SETTINGS = new InitiativeSettings(1, 50, 50000, Period.months(1), Days.days(3), Days.days(4), Days.days(5), Days.days(6), Days.days(7));
 
     final InitiativeManagement INITIATIVE_MANAGEMENT_CONSTANT = InitiativeDaoTest.createNotEndedInitiativeWithConstantContent();
 }

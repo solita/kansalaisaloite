@@ -111,4 +111,33 @@ public class InitiativeSearch {
     public boolean isViewOm() {
         return searchView == SearchView.om;
     }
+
+    // For testing and mocking
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        InitiativeSearch that = (InitiativeSearch) o;
+
+        if (searchView != that.searchView) return false;
+        if (offset != null ? !offset.equals(that.offset) : that.offset != null) return false;
+        if (limit != null ? !limit.equals(that.limit) : that.limit != null) return false;
+        if (orderBy != that.orderBy) return false;
+        if (show != that.show) return false;
+        return minSupportCount != null ? minSupportCount.equals(that.minSupportCount) : that.minSupportCount == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = searchView != null ? searchView.hashCode() : 0;
+        result = 31 * result + (offset != null ? offset.hashCode() : 0);
+        result = 31 * result + (limit != null ? limit.hashCode() : 0);
+        result = 31 * result + (orderBy != null ? orderBy.hashCode() : 0);
+        result = 31 * result + (show != null ? show.hashCode() : 0);
+        result = 31 * result + (minSupportCount != null ? minSupportCount.hashCode() : 0);
+        return result;
+    }
 }

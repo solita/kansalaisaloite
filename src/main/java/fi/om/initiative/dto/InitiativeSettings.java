@@ -1,7 +1,6 @@
 package fi.om.initiative.dto;
 
 import fi.om.initiative.dto.initiative.InitiativeManagement;
-import org.joda.time.DurationFieldType;
 import org.joda.time.LocalDate;
 import org.joda.time.ReadablePeriod;
 
@@ -63,9 +62,6 @@ public class InitiativeSettings {
 
     public ReadablePeriod getRequiredMinSupportCountDuration() {
 
-
-        int kuukaudet = requiredMinSupportCountDuration.get(DurationFieldType.months());
-
         return requiredMinSupportCountDuration;
     }
 
@@ -107,36 +103,20 @@ public class InitiativeSettings {
             this.startDateNotBefore = LocalDate.now().minus(requiredMinSupportCountDuration);
         }
 
-//        @Override
-//        // This is for testing/mocking purposes
-//        public boolean equals(Object obj) {
-//
-//            if (obj == null || obj.getClass() != this.getClass())
-//                return false;
-//
-//            MinSupportCountSettings that = (MinSupportCountSettings) obj;
-//
-//            return (that.startDateNotBefore.equals(this.startDateNotBefore)
-//                    && that.requiredMinSupportCountForSearch == this.requiredMinSupportCountForSearch
-//                    && that.requiredMinSupportCountDuration.equals(requiredMinSupportCountDuration));
-//
-//        }
-
+        // For testing and mocking
 
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
-            if (!(o instanceof MinSupportCountSettings)) return false;
+            if (o == null || getClass() != o.getClass()) return false;
 
             MinSupportCountSettings that = (MinSupportCountSettings) o;
 
             if (requiredMinSupportCountForSearch != that.requiredMinSupportCountForSearch) return false;
             if (requiredMinSupportCountDuration != null ? !requiredMinSupportCountDuration.equals(that.requiredMinSupportCountDuration) : that.requiredMinSupportCountDuration != null)
                 return false;
-            if (startDateNotBefore != null ? !startDateNotBefore.equals(that.startDateNotBefore) : that.startDateNotBefore != null)
-                return false;
+            return startDateNotBefore != null ? startDateNotBefore.equals(that.startDateNotBefore) : that.startDateNotBefore == null;
 
-            return true;
         }
 
         @Override

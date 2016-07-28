@@ -1,5 +1,6 @@
 package fi.om.initiative.service;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.mysema.commons.lang.Assert;
 import fi.om.initiative.dao.FollowInitiativeDao;
@@ -751,8 +752,6 @@ public class InitiativeServiceImpl implements InitiativeService {
         InitiativeManagement persistedInitiative = initiativeDao.getInitiativeForManagement(initiative.getId(), true);
         ManagementSettings managementSettings = initiativeSettings.getManagementSettings(persistedInitiative, user);
 
-
-        System.out.println(managementSettings.isAllowRespondByVRK());
         if (managementSettings.isAllowRespondByVRK() && validate(initiative, user, bindingResult, VRK.class)) {
             initiativeDao.updateVRKResolution(
                     initiative.getId(), 
@@ -822,4 +821,22 @@ public class InitiativeServiceImpl implements InitiativeService {
         }
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public List<InitiativeInfo> getUsersInitiatives(String ssn) {
+
+        User userBySsn = userService.getUserBySsn(ssn);
+        if (userBySsn != null) {
+            InitiativeSearch search = new InitiativeSearch();
+            search.setSearchView(SearchView.own);
+            InitiativeSettings.MinSupportCountSettings minSupportCountSettings = initiativeSettings.getMinSupportCountSettings();
+            return initiativeDao.findInitiatives(
+                    search,
+                    userBySsn.getId(),
+                    minSupportCountSettings)
+                    .list;
+
+        }
+        return Lists.newArrayList();
+    }
 }

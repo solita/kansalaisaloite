@@ -6,11 +6,16 @@ import fi.om.initiative.dao.InitiativeDaoTest;
 import fi.om.initiative.dao.NotFoundException;
 import fi.om.initiative.dao.ReviewHistoryDao;
 import fi.om.initiative.dto.EditMode;
+import fi.om.initiative.dto.InitiativeSettings;
 import fi.om.initiative.dto.Invitation;
 import fi.om.initiative.dto.author.Author;
+import fi.om.initiative.dto.initiative.InitiativeInfo;
 import fi.om.initiative.dto.initiative.InitiativeManagement;
 import fi.om.initiative.dto.initiative.InitiativePublic;
 import fi.om.initiative.dto.initiative.InitiativeState;
+import fi.om.initiative.dto.search.InitiativeSearch;
+import fi.om.initiative.dto.search.InitiativeSublistWithTotalCount;
+import fi.om.initiative.dto.search.SearchView;
 import fi.om.initiative.util.SnapshotCreator;
 import mockit.Expectations;
 import mockit.Mocked;
@@ -24,6 +29,8 @@ import org.springframework.validation.SmartValidator;
 import java.util.List;
 
 import static junit.framework.Assert.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
 
 
 public class InitiativeServiceTest extends ServiceTestBase {
@@ -34,6 +41,7 @@ public class InitiativeServiceTest extends ServiceTestBase {
     @Mocked EmailService emailService; 
     @Mocked Errors errors;
 
+    @Autowired InitiativeSettings initiativeSettings;
     @Autowired EncryptionService encryptionService;
     @Autowired SmartValidator validator;
 
@@ -104,6 +112,22 @@ public class InitiativeServiceTest extends ServiceTestBase {
         assertNotNull(result.getCurrentAuthor());
 
         // No additional verifications
+    }
+
+    @Test
+    public void Get_users_initiatives() {
+
+        final List<InitiativeInfo> initiatives = Lists.newArrayList(new InitiativeInfo(0L));
+
+        new Expectations() {{
+            InitiativeSearch initiativeSearch = new InitiativeSearch();
+            initiativeSearch.setSearchView(SearchView.own);
+            userService.getUserBySsn(REGISTERED_USER.getSsn()); result = REGISTERED_USER;
+            initiativeDao.findInitiatives(initiativeSearch, REGISTERED_USER.getId(), initiativeSettings.getMinSupportCountSettings()); result = new InitiativeSublistWithTotalCount(initiatives, 0);
+        }};
+
+        assertThat(initiativeService.getUsersInitiatives(REGISTERED_USER.getSsn()), is(initiatives));
+
     }
     
     @Test(expected=NotFoundException.class)

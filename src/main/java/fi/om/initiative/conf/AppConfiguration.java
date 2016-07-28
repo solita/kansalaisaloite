@@ -294,6 +294,11 @@ public class AppConfiguration {
     public HashCreator hashCreator() {
         return new HashCreator(env.getProperty(PropertyNames.saltForHashing));
     }
+
+    @Bean(name = "kapaHashCreator")
+    public HashCreator kapaHashCreator() {
+        return new HashCreator(env.getProperty(PropertyNames.kapaSaltForHashing));
+    }
     
     @Bean
     public FlowStateAnalyzer flowStateAnalyzer() {

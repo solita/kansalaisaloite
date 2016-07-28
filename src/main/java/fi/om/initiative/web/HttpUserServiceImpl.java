@@ -71,7 +71,13 @@ public class HttpUserServiceImpl implements HttpUserService {
         
         return user;
     }
-    
+
+    @Override
+    public User getUserBySsn(String ssn) {
+        String ssnHash = encryptionService.registeredUserHash(ssn);
+        return userDao.getRegisteredUser(ssnHash);
+    }
+
     @Override
     public void verifyCSRFToken(HttpServletRequest request) {
         if (getCurrentUser(false).isAuthenticated()) {

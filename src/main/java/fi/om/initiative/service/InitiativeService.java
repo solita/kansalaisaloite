@@ -66,5 +66,7 @@ public interface InitiativeService {
 
     void endInitiative(Long initiativeId);
 
-   List<String> checkProposalAndRationalForLinks(InitiativeManagement initiative);
+    List<String> checkProposalAndRationalForLinks(InitiativeManagement initiative);
+
+    List<InitiativeInfo> getUsersInitiatives(String ssn);
 }

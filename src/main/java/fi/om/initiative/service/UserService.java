@@ -11,6 +11,8 @@ import fi.om.initiative.dto.User;
  */
 public interface UserService {
 
+    User getUserBySsn(String ssn);
+
     User getCurrentUser();
     
     User getCurrentUser(boolean verifyCSRF);

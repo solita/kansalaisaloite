@@ -347,6 +347,11 @@ public class InitiativeServiceFindPageTest extends EmailSpyConfiguration {
     private class UserServiceFake implements UserService{
 
         @Override
+        public User getUserBySsn(String ssn) {
+            throw new RuntimeException("Not implemented");
+        }
+
+        @Override
         public User getCurrentUser() {
             throw new RuntimeException("Not implemented");
         }

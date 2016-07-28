@@ -6,6 +6,8 @@ public final class PropertyNames {
 
     public static final String saltForHashing = "salt.for.hashing";
 
+    public static final String kapaSaltForHashing = "salt.for.hashing.kapa";
+
     public static final String omImageDirection = "om.image.directory";
 
     public static final String baseURL = "app.baseURL";

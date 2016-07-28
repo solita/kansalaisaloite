@@ -21,8 +21,16 @@ public class HashCreator {
         return toShortSha1(id.toString() + hash);
     }
 
+    public String hash(String value) {
+        return toSha1(hash + value);
+    }
+
     public boolean isHash(Long id, String expectedHash) {
         return hash(id).equals(expectedHash);
+    }
+
+    public boolean isHash(String value, String expectedHash) {
+        return hash(value).equals(expectedHash);
     }
 
     public boolean isNotHash(Long id, String expectedHash) {
@@ -31,6 +39,10 @@ public class HashCreator {
 
     private static String toShortSha1(String password)
     {
+        return toSha1(password).substring(0, 12);
+    }
+
+    private static String toSha1(String password) {
         String sha1;
         try
         {
@@ -43,7 +55,7 @@ public class HashCreator {
         {
             throw new RuntimeException(e);
         }
-        return sha1.substring(0, 12);
+        return sha1;
     }
 
     private static String byteToHex(final byte[] hash)

@@ -1,9 +1,5 @@
 package fi.om.initiative.dao;
 
-import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.google.common.base.Function;
 import com.mysema.commons.lang.Assert;
 import com.mysema.query.Tuple;
@@ -12,9 +8,11 @@ import com.mysema.query.sql.dml.SQLUpdateClause;
 import com.mysema.query.sql.postgres.PostgresQuery;
 import com.mysema.query.sql.postgres.PostgresQueryFactory;
 import com.mysema.query.types.QTuple;
-
 import fi.om.initiative.dto.User;
 import fi.om.initiative.sql.QInituser;
+import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
+import org.springframework.transaction.annotation.Transactional;
 
 @SQLExceptionTranslated
 public class UserDaoImpl implements UserDao {
@@ -71,10 +69,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     @Transactional(readOnly=false)
     public User loginRegisteredUser(String ssnHash) {
-        PostgresQuery qry = queryFactory.from(qUser)
-                .where(qUser.hash.eq(ssnHash));
-
-        User user = tupleToUser.apply(qry.uniqueResult(new QTuple(qUser.all())));
+        User user = getRegisteredUser(ssnHash);
         if (user != null) {
             SQLUpdateClause update = queryFactory.update(qUser);
             update.set(qUser.lastlogin, new DateTime());
@@ -85,7 +80,14 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    @Transactional(readOnly=false)
+    public User getRegisteredUser(String ssnHash) {
+        PostgresQuery qry = queryFactory.from(qUser)
+                .where(qUser.hash.eq(ssnHash));
+
+        return tupleToUser.apply(qry.uniqueResult(new QTuple(qUser.all())));
+    }
+
+    @Override
     public void setUserRoles(Long userId, boolean vrk, boolean om) {
         Assert.notNull(userId, "userId");
         SQLUpdateClause update = queryFactory.update(qUser);
