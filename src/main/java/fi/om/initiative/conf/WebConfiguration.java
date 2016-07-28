@@ -3,7 +3,7 @@ package fi.om.initiative.conf;
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.cfg.DatabindVersion;
+import com.fasterxml.jackson.databind.cfg.PackageVersion;
 import com.google.common.base.Optional;
 import com.google.common.base.Strings;
 import fi.om.initiative.conf.WebConfiguration.WebDevConfiguration;
@@ -250,7 +250,7 @@ public class WebConfiguration extends WebMvcConfigurationSupport {
 
             @Override
             public Version version() {
-                return DatabindVersion.instance.version();
+                return PackageVersion.VERSION;
             }
 
             @Override
