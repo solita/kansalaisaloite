@@ -69,4 +69,7 @@ public interface InitiativeService {
     List<String> checkProposalAndRationalForLinks(InitiativeManagement initiative);
 
     List<InitiativeInfo> getUsersInitiatives(String ssn);
+
+    void followInitiative(long initiativeId, FollowInitiativeDto followInitiativeDto, BindingResult bindingResult);
+
 }

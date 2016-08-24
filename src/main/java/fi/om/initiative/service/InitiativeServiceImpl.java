@@ -837,4 +837,13 @@ public class InitiativeServiceImpl implements InitiativeService {
         }
         return Lists.newArrayList();
     }
+
+    @Override
+    public void followInitiative(long initiativeId, FollowInitiativeDto followInitiativeDto, BindingResult bindingResult) {
+        validator.validate(followInitiativeDto, bindingResult);
+        if (!bindingResult.hasErrors()) {
+            System.out.println("TODO!");
+
+        }
+    }
 }

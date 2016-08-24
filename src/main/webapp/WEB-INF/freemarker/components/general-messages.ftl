@@ -1,5 +1,4 @@
 <#import "/spring.ftl" as spring />
-<#import "forms.ftl" as f />
 <#import "utils.ftl" as u />
 
 <#escape x as x?html>
@@ -139,7 +138,6 @@
             </#if>
             <a href="${urls.vote(initiative.id)}" class="small-button green" title="<@u.message "vote.btn" />"><span class="small-icon save-and-send"><@u.message "vote.btn" /></span></a>
 
-
         </#assign>
         <@u.systemMessageHTML votingInfoMessage "info" />
 
@@ -215,6 +213,19 @@
     </#assign>
     <@u.systemMessageHTML html=supportStatementsRemovedHTML type="info" cssClass="printable" />
 </#if>
+</#macro>
+
+<#macro followInitiative>
+    <#--following enabled, not sent to parliament, etc.-->
+    <#if true>
+    <div class="system-msg msg-info">
+        <a class="js-follow trigger-tooltip"  href="?follow=true#follow-form" title="<@u.message "followInitiative.tooltip" />">
+            <span class="icon-small icon-16 envelope margin-right"></span>
+            <@u.message "action.follow" />
+        </a>
+    </div>
+
+    </#if>
 </#macro>
 
 

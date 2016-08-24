@@ -51,7 +51,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 @Controller
 public class InitiativeController extends BaseController {
 
-    private final Logger log = LoggerFactory.getLogger(InitiativeController.class); 
+    private final Logger log = LoggerFactory.getLogger(InitiativeController.class);
 
     private static final String ATTR_INVITATION_CODE = "invitationCode";
 
@@ -170,21 +170,21 @@ public class InitiativeController extends BaseController {
         Urls urls = Urls.get(locale);
         model.addAttribute(ALT_URI_ATTR, urls.alt().view(id));
         initiative.assignId(id);
-        
+
         if (initiativeService.updateVRKResolution(initiative, bindingResult)) {
             return redirectWithMessage(urls.view(id), RequestMessage.SAVE_VRK_RESOLUTION, request);
         } else {
             return managementView(model, initiativeService.getInitiativeForManagement(id), bindingResult, NONE, request, null);
         }
     }
-    
+
     @RequestMapping(value={ VIEW_FI, VIEW_SV }, method=POST, params=ACTION_SEND_INVITATIONS)
     public String sendInvitations(@PathVariable Long id, Model model, Locale locale, HttpServletRequest request) {
         Urls urls = Urls.get(locale);
 
         return sendInvitations(id, urls, NONE, model, RequestMessage.SEND_INVITATIONS, null, locale, request);
     }
-    
+
     private String sendInvitations(Long initiativeId, Urls urls, EditMode editMode, Model model, RequestMessage successMessage, RequestMessage fallbackMessage, Locale locale, HttpServletRequest request) {
         if (initiativeService.sendInvitations(initiativeId)) {
             return redirectWithMessage(urls.view(initiativeId), successMessage, request);
@@ -228,7 +228,7 @@ public class InitiativeController extends BaseController {
         return SEARCH_VIEW;
  //       }
     }
-    
+
     /*
      * View  
      */
@@ -236,6 +236,7 @@ public class InitiativeController extends BaseController {
     public String view(@PathVariable("id") Long initiativeId,
                        @PathVariable("hash") String hash,
                        @RequestParam(value = HISTORY_ITEM_PARAMETER, required = false) Long historyItemId,
+                       @ModelAttribute("followInitiative") FollowInitiativeDto followInitiativeDto,
                        Model model, Locale locale, HttpServletRequest request) {
         Urls urls = Urls.get(locale);
         model.addAttribute(ALT_URI_ATTR, urls.alt().view(initiativeId, hash));
@@ -284,9 +285,31 @@ public class InitiativeController extends BaseController {
     }
 
     @RequestMapping(value={ VIEW_FI, VIEW_SV }, method=GET)
-    public String view(@PathVariable("id") Long initiativeId, @RequestParam(value = HISTORY_ITEM_PARAMETER, required = false) Long historyItemId, Model model, Locale locale, HttpServletRequest request) {
+    public String view(@PathVariable("id") Long initiativeId,
+                       @RequestParam(value = HISTORY_ITEM_PARAMETER, required = false) Long historyItemId,
+                       @ModelAttribute("followInitiative") FollowInitiativeDto followInitiativeDto,
+                       Model model, Locale locale, HttpServletRequest request) {
 
-        return view(initiativeId, null, historyItemId, model, locale, request);
+        return view(initiativeId, null, historyItemId, followInitiativeDto, model, locale, request);
+    }
+
+    @RequestMapping(value = { VIEW_FI, VIEW_SV }, method = RequestMethod.POST, params = "action-follow")
+    public String followInitiative(@PathVariable("id") long initiativeId,
+                                   @ModelAttribute("followInitiative") FollowInitiativeDto followInitiativeDto, Model model, BindingResult bindingResult, Locale locale, HttpServletRequest request) {
+        // return followInitiative(initiativeId, null, null, model, bindingResult, locale, request);
+
+        // if validation fails
+        // This also validates the data. For some reason @Valid did not work.
+        initiativeService.followInitiative(initiativeId, followInitiativeDto, bindingResult);
+
+        if (bindingResult.hasErrors()) {
+            return view(initiativeId, null, null, followInitiativeDto, model, locale, request);
+        }
+        else {
+            return redirectWithMessage(Urls.get(locale).view(initiativeId), RequestMessage.FOLLOW_ACCEPTED, request);
+        }
+
+
     }
 
     @ModelAttribute
@@ -317,8 +340,8 @@ public class InitiativeController extends BaseController {
 
         return contextRelativeRedirect(urls.view(initiativeId, hash));
     }
-    
-    
+
+
     @RequestMapping(value={ VIEW_HASH_FI, VIEW_HASH_SV }, method=POST, params=ACTION_DECLINE_INVITATION)
     public String declineInvitationPost(@PathVariable("id") Long initiativeId,
                                         @PathVariable("hash") String hash,
@@ -348,13 +371,13 @@ public class InitiativeController extends BaseController {
         if (Strings.isNullOrEmpty(invitationCode)) {
             return contextRelativeRedirect(urls.view(initiativeId));
         }
-        
+
         Invitation invitation = initiativeService.getInvitation(initiativeId, invitationCode);
          if (invitation == null) { // missing, used or expired invitation
             clearSessionInvitationCode(initiativeId, request);
             return redirectWithMessage(urls.view(initiativeId, hash), RequestMessage.OPEN_INVITATION_FAILED, request);
         }
-            
+
         Author author = getCurrentAuthor(initiativeId, user.getId());
         if (author != null) {
             author.setInitiator(author.isInitiator() || invitation.isInitiator());
@@ -366,7 +389,7 @@ public class InitiativeController extends BaseController {
 
         return acceptInvitationView(initiativeId, invitation, author, model, hash);
     }
-    
+
     @RequestMapping(value={ VIEW_HASH_FI, VIEW_HASH_SV }, method=POST, params=ACTION_ACCEPT_INVITATION)
     public String acceptInvitationPost(@PathVariable("id") Long initiativeId,
                                        @PathVariable("hash") String hash,
@@ -382,42 +405,42 @@ public class InitiativeController extends BaseController {
             return acceptInvitationView(initiativeId, invitation, author, model, hash);
         }
     }
-    
+
     @RequestMapping(value={ VIEW_FI, VIEW_SV }, method=POST, params=ACTION_CONFIRM_CURRENT_AUTHOR)
     public String confirmCurrentAuthorPost(@PathVariable("id") Long initiativeId, Locale locale, HttpServletRequest request) {
         Urls urls = Urls.get(locale);
-        
+
         initiativeService.confirmCurrentAuthor(initiativeId);
-        
+
         return redirectWithMessage(urls.view(initiativeId), RequestMessage.CONFIRM_CURRENT_AUTHOR, request);
     }
-    
+
     @RequestMapping(value={ VIEW_FI, VIEW_SV }, method=POST, params=ACTION_DELETE_CURRENT_AUTHOR)
     public String deleteCurrentAuthorPost(@PathVariable("id") Long initiativeId, Locale locale, HttpServletRequest request) {
         Urls urls = Urls.get(locale);
-        
+
         initiativeService.deleteCurrentAuthor(initiativeId);
-        
+
         return redirectWithMessage(urls.view(initiativeId), RequestMessage.DELETE_CURRENT_AUTHOR, request);
     }
 
     @RequestMapping(value={ VIEW_FI, VIEW_SV }, method=POST, params=ACTION_SEND_TO_OM)
     public String sendToOMPost(@PathVariable("id") Long initiativeId, Model model, Locale locale, HttpServletRequest request) {
         Urls urls = Urls.get(locale);
-        
+
         initiativeService.sendToOM(initiativeId);
 
         return redirectWithMessage(urls.view(initiativeId), RequestMessage.SEND_TO_OM, request);
     }
 
     @RequestMapping(value={ VIEW_FI, VIEW_SV }, method=POST, params=ACTION_ACCEPT_BY_OM)
-    public String acceptByOm(@PathVariable("id") Long initiativeId, @RequestParam(value="comment", required=false) String comment, 
+    public String acceptByOm(@PathVariable("id") Long initiativeId, @RequestParam(value="comment", required=false) String comment,
             @RequestParam(value="acceptanceIdentifier", required=false) String acceptanceIdentifier, Locale locale, HttpServletRequest request) {
-        
+
         Urls urls = Urls.get(locale);
-        
+
         initiativeService.respondByOm(initiativeId, true, comment, acceptanceIdentifier);
-        
+
         return redirectWithMessage(urls.view(initiativeId), RequestMessage.ACCEPT_BY_OM, request);
     }
 
@@ -441,7 +464,7 @@ public class InitiativeController extends BaseController {
     @RequestMapping(value={ VIEW_FI, VIEW_SV }, method=POST, params=ACTION_REJECT_BY_OM)
     public String rejectByOm(@PathVariable("id") Long initiativeId, @RequestParam(value="comment", required=false) String comment, Locale locale, HttpServletRequest request) {
         Urls urls = Urls.get(locale);
-        
+
         initiativeService.respondByOm(initiativeId, false, comment, null);
         return redirectWithMessage(urls.view(initiativeId), RequestMessage.REJECT_BY_OM, request);
     }
@@ -555,7 +578,7 @@ public class InitiativeController extends BaseController {
         response.getOutputStream().write(bytes);
 
     }
-    
+
     @RequestMapping(value={ IFRAME_FI, IFRAME_SV }, method=GET)
     public String iFrame(@PathVariable("id") Long initiativeId, Model model, Locale locale, HttpServletRequest request) {
     	InitiativePublic initiative = initiativeService.getInitiativeForPublic(initiativeId, null);
@@ -621,7 +644,7 @@ public class InitiativeController extends BaseController {
     private void clearSessionInvitationCode(Long initiativeId, HttpServletRequest request) {
         setSessionInvitationCode(initiativeId, null, request);
     }
-    
+
     private void setSessionInvitationCode(Long initiativeId, String invitationCode, HttpServletRequest request) {
         HttpSession session = request.getSession(true);
         String attributeName = invitationCodeSessionAttribute(initiativeId);
@@ -631,11 +654,11 @@ public class InitiativeController extends BaseController {
             session.setAttribute(attributeName, invitationCode);
         }
     }
-    
+
     private String invitationCodeSessionAttribute(Long initiativeId) {
         return ATTR_INVITATION_CODE + ":" + initiativeId;
     }
-    
+
     private void addVotingInfo(InitiativeBase initiative, Model model) {
         model.addAttribute(ATTR_VOTING_INFO, supportVoteService.getVotingInfo(initiative));
         model.addAttribute("supportCountData", supportVoteService.getSupportVotesPerDateJson(initiative.getId()));
@@ -650,19 +673,19 @@ public class InitiativeController extends BaseController {
         model.addAttribute("invitation", invitation);
         model.addAttribute("currentAuthor", author);
         model.addAttribute("initiative", initiativeService.getInitiativeForPublic(initiativeId, hash));
-        
+
         return ACCEPT_INVITATION_VIEW;
     }
 
     private String managementView(Model model, InitiativeManagement initiative, BindingResult bindingResult, EditMode editMode, HttpServletRequest request, Long historyItemId) {
         Author currentAuthor = initiative.getCurrentAuthor();
         model.addAttribute("currentAuthor", currentAuthor);
-        
+
         User currentUser = userService.getUserInRole(Role.AUTHENTICATED);
         addVotingInfo(initiative, model);
 
         ManagementSettings managementSettings  = initiativeSettings.getManagementSettings(initiative, editMode, currentUser);
-        
+
         if (managementSettings.isAllowConfirmCurrentAuthor()) {
             model.addAttribute("initiative", new InitiativePublic(initiative));
 
@@ -681,7 +704,7 @@ public class InitiativeController extends BaseController {
             } else {
                 model.addAttribute("supportVoteBatches", Collections.EMPTY_LIST);
             }
-            
+
             if (currentAuthor != null) {
                 return INITIATIVE_AUTHOR;
             } else if (currentUser.isOm()) {
