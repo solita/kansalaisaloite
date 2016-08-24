@@ -784,11 +784,11 @@
     // Follow initiative modal opener
     $('.js-follow').click(function () {
       generateModal(modalData.followForm(), "full");
-      return false
+      return false;
     });
 
     // Follow initiative form auto-open on errors or link
-    if( typeof modalData !== 'undefined' && typeof modalData.followFormAutoLoad !== 'undefined' ){
+    if (typeof modalData !== 'undefined' && typeof modalData.followFormAutoLoad !== 'undefined') {
       generateModal(modalData.followFormAutoLoad(), 'minimal');
     }
 
