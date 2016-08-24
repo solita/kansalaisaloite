@@ -103,6 +103,11 @@ public class FollowService {
         return true;
     }
 
+    @Transactional
+    public void unFollowInitiative(long id, String unsubscribeHash) {
+        followInitiativeDao.removeFollow(id, unsubscribeHash);
+    }
+
     @Transactional(readOnly = true)
     public void sendEmailsHalfwayBetweenForStillRunningInitiatives(LocalDate today) {
 

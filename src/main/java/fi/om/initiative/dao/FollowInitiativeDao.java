@@ -9,7 +9,7 @@ public interface FollowInitiativeDao {
 
     void addFollow(Long initiativeId, Follower follower);
 
-    void removeFollow(String hash);
+    void removeFollow(Long initiativeId, String hash);
 
     List<Follower> listFollowers(Long initiativeId);
 }

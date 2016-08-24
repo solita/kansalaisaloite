@@ -73,11 +73,12 @@ public class JdbcFollowInitiativeDaoTest extends EmailSpyConfiguration {
     public void remove_follow() {
 
         followInitiativeDao.addFollow(initiativeId, new Follower(TESTEMAIL, RANDOM_HASH));
+        followInitiativeDao.addFollow(initiativeId, new Follower(TESTEMAIL+"2", RANDOM_HASH+"2"));
+
+        assertThat(followInitiativeDao.listFollowers(initiativeId), hasSize(2));
+
+        followInitiativeDao.removeFollow(initiativeId, RANDOM_HASH);
 
         assertThat(followInitiativeDao.listFollowers(initiativeId), hasSize(1));
-
-        followInitiativeDao.removeFollow(RANDOM_HASH);
-
-        assertThat(followInitiativeDao.listFollowers(initiativeId), hasSize(0));
     }
 }

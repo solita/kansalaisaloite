@@ -301,12 +301,8 @@ public class InitiativeController extends BaseController {
     @RequestMapping(value = { VIEW_FI, VIEW_SV }, method = RequestMethod.POST, params = "action-follow")
     public String followInitiative(@PathVariable("id") long initiativeId,
                                    @ModelAttribute("followInitiative") FollowInitiativeDto followInitiativeDto, Model model, BindingResult bindingResult, Locale locale, HttpServletRequest request) {
-        // return followInitiative(initiativeId, null, null, model, bindingResult, locale, request);
-
-        // if validation fails
         // This also validates the data. For some reason @Valid did not work.
         followService.followInitiative(initiativeId, followInitiativeDto, bindingResult);
-
 
         if (bindingResult.hasErrors()) {
             return view(initiativeId, null, null, followInitiativeDto, model, locale, request);
@@ -314,8 +310,16 @@ public class InitiativeController extends BaseController {
         else {
             return redirectWithMessage(Urls.get(locale).view(initiativeId), RequestMessage.FOLLOW_ACCEPTED, request);
         }
+    }
 
+    @RequestMapping(value = { UNSUBSCRIBE_FOLLOW_FI, UNSUBSCRIBE_FOLLOW_SV}, method = GET)
+    public String unsubscribeFollowing(@PathVariable("id") Long initiativeId,
+                                       @PathVariable("hash") String unsubscribeHash,
+                                       Locale locale,
+                                       HttpServletRequest request) {
 
+        followService.unFollowInitiative(initiativeId, unsubscribeHash);
+        return redirectWithMessage(Urls.get(locale).view(initiativeId), RequestMessage.FOLLOW_CANCELLED, request);
     }
 
     @ModelAttribute

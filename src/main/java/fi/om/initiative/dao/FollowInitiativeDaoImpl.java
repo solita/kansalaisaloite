@@ -33,9 +33,10 @@ public class FollowInitiativeDaoImpl implements  FollowInitiativeDao{
     }
 
     @Override
-    public void removeFollow(String hash) {
+    public void removeFollow(Long initiativeId, String hash) {
         queryFactory.delete(QFollowInitiative.followInitiative)
                 .where(QFollowInitiative.followInitiative.unsubscribeHash.eq(hash))
+                .where(QFollowInitiative.followInitiative.initiativeId.eq(initiativeId))
                 .execute();
 
     }
