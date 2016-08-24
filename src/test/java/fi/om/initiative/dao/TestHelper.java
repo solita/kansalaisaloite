@@ -309,13 +309,15 @@ public class TestHelper {
     }
 
     @Transactional(readOnly = false)
-    public void addFollower(Long initiative, String email) {
+    public String addFollower(Long initiative, String email) {
+        String unsubscribeHash = randomAlphabetic(20);
         queryFactory.insert(QFollowInitiative.followInitiative)
                 .set(QFollowInitiative.followInitiative.initiativeId, initiative)
                 .set(QFollowInitiative.followInitiative.email, email)
-                .set(QFollowInitiative.followInitiative.unsubscribeHash, randomAlphabetic(20))
+                .set(QFollowInitiative.followInitiative.unsubscribeHash, unsubscribeHash)
                 .execute();
 
+        return unsubscribeHash;
     }
 
     public static class InitiativeDraft {

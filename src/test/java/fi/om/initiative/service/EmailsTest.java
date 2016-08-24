@@ -21,10 +21,14 @@ import org.springframework.validation.DirectFieldBindingResult;
 import org.springframework.validation.Errors;
 
 import javax.annotation.Resource;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
+import static org.hamcrest.core.StringContains.containsString;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
@@ -363,7 +367,8 @@ public class EmailsTest extends EmailSpyConfiguration {
         assertTrue(followService.followInitiative(initiativeId, followInitiativeDto, emailValidationErrors(followInitiativeDto)));
 
         assertSentEmailCount(1);
-        assertSentEmail("follower@example.com", "Olet tilannut aloitteen sähköpostitiedotteet / SV Olet tilannut aloitteen sähköpostitiedotteet");
+        assertSentEmail("follower@example.com", "Olet tilannut aloitteen sähköpostitiedotteet / SV Olet tilannut aloitteen sähköpostitiedotteet",
+                "localhost:8095/fi/unsubscribe");
 
     }
 
@@ -390,7 +395,8 @@ public class EmailsTest extends EmailSpyConfiguration {
 
         assertSentEmail(FOLLOWER_EMAIL, "Kannatusten kerääminen on nyt puolivälissä / Insamling av stödförklaringar är halvvägs",
                 "Aloite on kerännyt 5,000 kannatusilmoitusta, joista 5,000 kpl kansalaisaloite.fi-palvelussa ja 0 kpl muilla menetelmillä",
-                "Keruuaika päättyy 1.6.2016. Edetäkseen eduskunnan käsittelyyn aloitteen tulee kerätä vähintään 50,000 kannatusilmoitusta kuuden kuukauden aikana."
+                "Keruuaika päättyy 1.6.2016. Edetäkseen eduskunnan käsittelyyn aloitteen tulee kerätä vähintään 50,000 kannatusilmoitusta kuuden kuukauden aikana.",
+                "Sait tämän viestin, koska"
 //                "Tämä on " +String.valueOf((int)(5000.0 / 50000 * 100))+ " prosenttia kokonaistavoitteesta"
 
         );
@@ -404,6 +410,41 @@ public class EmailsTest extends EmailSpyConfiguration {
 
         assertHalfwayEmailsAreSentOnlyForDate(notificationDate, 2, startDate.minusMonths(1), endDate.plusMonths(1));
 
+    }
+
+    @Test
+    public void follower_email_contains_unsubscribe_link() {
+
+
+        final Long initiative = testHelper.create(
+                new TestHelper.InitiativeDraft(userId, AUTHOR_EMAIL)
+                        .withState(InitiativeState.ACCEPTED)
+                        .withSupportCount(50001)
+
+        );
+
+        String unsubscribeHash = testHelper.addFollower(initiative, FOLLOWER_EMAIL);
+
+        testHelper.createSupport(initiative, LocalDate.now());
+
+        // When sent to VRK: Assert that emails to VRK and follower are sent
+
+        supportVoteService.sendToVRK(initiative);
+
+
+        Optional<EmailHelper> emailToFollower = getAllSentEmails().stream().filter(a -> a.to.equals(FOLLOWER_EMAIL)).findFirst();
+        Optional<EmailHelper> mailToAuthor = getAllSentEmails().stream().filter(a -> a.to.equals(AUTHOR_EMAIL)).findFirst();
+
+        assertThat(emailToFollower.isPresent(), is(true));
+        assertThat(mailToAuthor.isPresent(), is(true));
+
+        assertThat(emailToFollower.get().html, containsString("olet tilannut aloitteen sähköposti-ilmoitukset"));
+        assertThat(emailToFollower.get().html, containsString("http://localhost:8095/fi/unsubscribe/" + initiative + "/" + unsubscribeHash));
+        assertThat(emailToFollower.get().html, containsString("http://localhost:8095/sv/unsubscribe/" + initiative + "/" + unsubscribeHash));
+
+        assertThat(mailToAuthor.get().html, not(containsString("olet tilannut aloitteen sähköposti-ilmoitukset")));
+        assertThat(mailToAuthor.get().html, not(containsString("http://localhost:8095/fi/unsubscribe/" + initiative + "/" + unsubscribeHash)));
+        assertThat(mailToAuthor.get().html, not(containsString("http://localhost:8095/sv/unsubscribe/" + initiative + "/" + unsubscribeHash)));
     }
 
 

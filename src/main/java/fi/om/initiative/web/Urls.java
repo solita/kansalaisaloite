@@ -73,6 +73,10 @@ public final class Urls {
     
     public static final String LOGOUT_SV =       "/sv/logout";
 
+    public static final String UNSUBSCRIBE_FOLLOW_FI = "/fi/unsubscribe/{id}/{hash}";
+
+    public static final String UNSUBSCRIBE_FOLLOW_SV = "/sv/unsubscribe/{id}/{hash}";
+
     public static final String VIEW_FI = CREATE_FI + "/" + ID_PARAMETER;
 
     public static final String VIEW_SV = CREATE_SV + "/" + ID_PARAMETER;
@@ -306,6 +310,12 @@ public final class Urls {
     
     public String initiative(Long initiativeId) {
         return baseUrl + INITIATIVE.replace(ID_PARAMETER, initiativeId.toString());
+    }
+
+    public String unsubscribeFollowing(Long initiativeId, String unsubscribeHash) {
+        return getLocalizedPageUrl(UNSUBSCRIBE_FOLLOW_FI, UNSUBSCRIBE_FOLLOW_SV)
+                .replace(ID_PARAMETER, initiativeId.toString())
+                .replace(HASH_PARAMETER, unsubscribeHash);
     }
     
     public String initiatives() {

@@ -6,10 +6,10 @@
 <@eb.initiativeDetails "fi" "text" />
 
 Olet tilannut aloitteen sähköpostitiedotteet
-Saat viestin sähköpostiisi, kun aloite etenee tai päättyy.
+Saat tietoa aloitten etenemisestä sähköpostiisi siihen asti, kunnes se on toimitettu eduskunnan käsittelyyn.
 
-<@eb.abstract "sv" "text" />
 
+<@eb.emailBottom "fi" "text" />
 
 ---------------------------------------
 
@@ -17,6 +17,6 @@ Saat viestin sähköpostiisi, kun aloite etenee tai päättyy.
 
 
 SV Olet tilannut aloitteen sähköpostitiedotteet
-SV Saat viestin sähköpostiisi, kun aloite etenee tai päättyy.
+SV Saat tietoa aloitten etenemisestä sähköpostiisi siihen asti, kunnes se on toimitettu eduskunnan käsittelyyn.
 
-<@eb.abstract "sv" "text" />
+<@eb.emailBottom "sv" "text" />

@@ -13,20 +13,18 @@
         <@eb.emailTemplate "fi" titleFi>
             <@eb.initiativeDetails "fi" "html"/>
 
-        <p>Olet tilannut aloitteen sähköpostitiedotteet</p>
-        <p>Saat viestin sähköpostiisi, kun aloite etenee tai päättyy.</p>
+        <p>Saat tietoa aloitten etenemisestä sähköpostiisi siihen asti, kunnes se on toimitettu eduskunnan käsittelyyn.</p>
 
-            <@eb.abstract "fi" "html" />
+            <@eb.emailBottom "fi" "html" />
         </@eb.emailTemplate>
 
     <#-- SWEDISH -->
         <@eb.emailTemplate "sv" titleSv>
             <@eb.initiativeDetails "sv" "html" />
 
-        <p>SV Olet tilannut aloitteen sähköpostitiedotteet</p>
-        <p>SV Saat viestin sähköpostiisi, kun aloite etenee tai päättyy.</p>
+        <p>SV Saat tietoa aloitten etenemisestä sähköpostiisi siihen asti, kunnes se on toimitettu eduskunnan käsittelyyn.</p>
 
-            <@eb.abstract "sv" "html" />
+            <@eb.emailBottom "sv" "html" />
         </@eb.emailTemplate>
 
     </@el.emailHtml>
