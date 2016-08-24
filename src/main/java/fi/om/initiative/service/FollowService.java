@@ -93,7 +93,7 @@ public class FollowService {
         }
 
         try {
-            String unsubscribeHash = new HashCreator(followInitiativeDto.getEmail()).hash(id);
+            String unsubscribeHash = RandomHashCreator.randomString(40);
             followInitiativeDao.addFollow(id, new Follower(followInitiativeDto.getEmail(), unsubscribeHash));
             emailService.sendFollowConfirmationEmail(initiativeDao.getInitiativeForManagement(id, false), followInitiativeDto.getEmail(), unsubscribeHash);
         } catch (DuplicateException e) {

@@ -10,10 +10,7 @@ import fi.om.initiative.dto.initiative.*;
 import fi.om.initiative.dto.search.*;
 import fi.om.initiative.json.SupportCount;
 import fi.om.initiative.pdf.SupportStatementPdfGenerator;
-import fi.om.initiative.service.AuthenticationRequiredException;
-import fi.om.initiative.service.InitiativeService;
-import fi.om.initiative.service.Role;
-import fi.om.initiative.service.SupportVoteService;
+import fi.om.initiative.service.*;
 import fi.om.initiative.util.Locales;
 import fi.om.initiative.util.Maybe;
 import fi.om.initiative.util.ReviewHistoryDiff;
@@ -59,15 +56,23 @@ public class InitiativeController extends BaseController {
 
     private ObjectMapper objectMapper = new ObjectMapper();
 
-    @Resource InitiativeService initiativeService;
+    @Resource
+    private InitiativeService initiativeService;
 
-    @Resource SupportVoteService supportVoteService;
+    @Resource
+    private SupportVoteService supportVoteService;
 
-    @Resource InitiativeSettings initiativeSettings;
+    @Resource
+    private InitiativeSettings initiativeSettings;
 
-    @Resource MessageSource messageSource;
+    @Resource
+    private MessageSource messageSource;
 
-    @Resource SupportStatementPdfGenerator supportStatementPdfGenerator;
+    @Resource
+    private SupportStatementPdfGenerator supportStatementPdfGenerator;
+
+    @Resource
+    private FollowService followService;
 
     public InitiativeController() {
         super(true);
@@ -300,7 +305,8 @@ public class InitiativeController extends BaseController {
 
         // if validation fails
         // This also validates the data. For some reason @Valid did not work.
-        initiativeService.followInitiative(initiativeId, followInitiativeDto, bindingResult);
+        followService.followInitiative(initiativeId, followInitiativeDto, bindingResult);
+
 
         if (bindingResult.hasErrors()) {
             return view(initiativeId, null, null, followInitiativeDto, model, locale, request);
