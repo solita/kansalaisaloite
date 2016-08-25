@@ -80,21 +80,8 @@ public class HttpUserServiceImpl implements HttpUserService {
 
     @Override
     public void verifyCSRFToken(HttpServletRequest request) {
-        if (getCurrentUser(false).isAuthenticated()) {
-            Cookie cookie = WebUtils.getCookie(request, CSRF_TOKEN_NAME);
-            
-            if (cookie == null) {
-                throw new CSRFException("CSRF cookie missing");
-            }
-            
-            String cookieToken = cookie.getValue();
-            String sessionToken = (String) getExistingSession(request).getAttribute(CSRF_TOKEN_NAME);
-            
-            // Just to be sure no one has hijacked our session 
-            if (cookieToken == null || !cookieToken.equals(sessionToken)) {
-                throw new CSRFException("CSRF session token missing or doesn't match cookie");
-            }
-            
+        if (csrfRequired(request)) {
+            String sessionToken = getSessionCSRFToken(request);
             // Double Submit Cookie
             if ("POST".equalsIgnoreCase(request.getMethod())) {
                 String requestToken = request.getParameter(CSRF_TOKEN_NAME);
@@ -107,12 +94,41 @@ public class HttpUserServiceImpl implements HttpUserService {
         }
     }
 
-    private void createCSRFToken(HttpServletRequest request, HttpServletResponse response) {
-        String csrfToken = encryptionService.randomToken(CSRF_TOKEN_LENGTH);
-        setCookie(CSRF_TOKEN_NAME, csrfToken, request, response);
-        getExistingSession(request).setAttribute(CSRF_TOKEN_NAME, csrfToken);
+    private String getSessionCSRFToken(HttpServletRequest request) {
+        Cookie cookie = WebUtils.getCookie(request, CSRF_TOKEN_NAME);
+
+        if (cookie == null) {
+            throw new CSRFException("CSRF cookie missing");
+        }
+
+        String cookieToken = cookie.getValue();
+        String sessionToken = (String) getExistingSession(request).getAttribute(CSRF_TOKEN_NAME);
+
+        // Just to be sure no one has hijacked our session
+        if (cookieToken == null || !cookieToken.equals(sessionToken)) {
+            throw new CSRFException("CSRF session token missing or doesn't match cookie");
+        }
+        return sessionToken;
     }
-    
+
+    private boolean csrfRequired(HttpServletRequest request) {
+        return getCurrentUser(false).isAuthenticated()
+                || ("POST".equals(request.getMethod())
+                && !((request.getRequestURI().equals(Urls.LOGIN_FI)) || request.getRequestURI().equals(Urls.LOGIN_SV)));
+    }
+
+    public String createCSRFToken(HttpServletResponse response, HttpSession existingSession) {
+        String csrfToken = encryptionService.randomToken(CSRF_TOKEN_LENGTH);
+        setCookie(CSRF_TOKEN_NAME, csrfToken, response);
+        existingSession.setAttribute(CSRF_TOKEN_NAME, csrfToken);
+        return csrfToken;
+    }
+
+    private String createCSRFToken(HttpServletRequest request, HttpServletResponse response) {
+        HttpSession existingSession = getExistingSession(request);
+        return createCSRFToken(response, existingSession);
+    }
+
     @Override
     public void logout(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = getOptionalSession(request);
@@ -120,16 +136,29 @@ public class HttpUserServiceImpl implements HttpUserService {
             session.invalidate();
         }
     }
-    
-    private void setCookie(String name, String value, HttpServletRequest request, HttpServletResponse response) {
-        // We have to write this cookie directly to header because javax.servlet.http.Cookie does not support httpOnly
-        response.setHeader("Set-Cookie", name + "=" + value + "; Path=/; "+ (disableSecureCookie ? "" : "Secure; ")+ "HttpOnly");
+
+    @Override
+    public String getOrCreateCSRFToken(HttpSession session, HttpServletResponse response) {
+
+        String csrfAttribute =  (String) session.getAttribute(CSRF_TOKEN_NAME);
+        if (csrfAttribute != null) {
+            return csrfAttribute;
+        } else {
+            return createCSRFToken(response, session);
+        }
+    }
+
+    private void setCookie(String name, String value, HttpServletResponse response) {
+        Cookie cookie = new Cookie(name, value);
+        cookie.setSecure(!disableSecureCookie);
+        cookie.setHttpOnly(true);
+        response.addCookie(cookie);
     }
 
     @Override
-    public void prepareForLogin(HttpServletRequest request) {
+    public HttpSession prepareForLogin(HttpServletRequest request) {
         // Create new session
-        request.getSession(true);
+        return request.getSession(true);
     }
     
     /* (non-Javadoc)
@@ -197,7 +226,6 @@ public class HttpUserServiceImpl implements HttpUserService {
             throw new AuthenticationRequiredException();
         }
     }
-    
     @Override
     public void requireUserInRole(Role... roles) {
         getUserInRole(roles);
