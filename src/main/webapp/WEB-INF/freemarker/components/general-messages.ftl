@@ -219,7 +219,7 @@
     <#--following enabled, not sent to parliament, etc.-->
     <#if true>
     <div class="system-msg msg-info">
-        <a class="js-follow trigger-tooltip"  href="?follow=true#follow-form" title="<@u.message "followInitiative.tooltip" />">
+        <a style="display:none" class="js-follow trigger-tooltip"  href="?follow=true#follow-form" title="<@u.message "followInitiative.tooltip" />">
             <span class="icon-small icon-16 envelope margin-right"></span>
             <@u.message "action.follow" />
         </a>

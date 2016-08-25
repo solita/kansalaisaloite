@@ -782,10 +782,14 @@
     });
 
     // Follow initiative modal opener
-    $('.js-follow').click(function () {
-      generateModal(modalData.followForm(), "full");
-      return false;
-    });
+    $('.js-follow').show()
+      .click(function () {
+        generateModal(modalData.followForm(), "full");
+        $.post("/session", function (data) {
+          $("#CSRFToken").val(data);
+        });
+        return false;
+      });
 
     // Follow initiative form auto-open on errors or link
     if (typeof modalData !== 'undefined' && typeof modalData.followFormAutoLoad !== 'undefined') {

@@ -35,7 +35,7 @@
 
             <div class="input-block-content">
                 <@f.textField path="followInitiative.email" required="" optional=true cssClass="large" maxLength=InitiativeConstants.AUTHOR_EMAIL_MAX />
-                <input type="hidden" name="CSRFToken" value="${CSRFToken!''}"/>
+                <input type="hidden" id="CSRFToken" name="CSRFToken"/>
             </div>
             <button id="participate" type="submit"  value="true" name="action-follow" class="small-button"><span class="small-icon save-and-send"><@u.message "action.save" /></span></button>
             <a href="${springMacroRequestContext.requestUri}" class="push close"><@u.message "action.cancel" /></a>
