@@ -52,7 +52,7 @@
         <noscript>
             <link rel="stylesheet" type="text/css" media="screen" href="${urls.baseUrl}/css/aloitepalvelu.css" />
         </noscript>
-        <link rel="stylesheet/less" type="text/css" media="screen" href="/css/aloitepalvelu-iframe.less" />
+        <link rel="stylesheet/less" type="text/css" media="screen" href="/css/less/aloitepalvelu-iframe.less" />
 
         <script>
           less = {
@@ -66,7 +66,7 @@
             rootpath: "/css/"
           };
         </script>
-        <script src="${urls.baseUrl}/js/less.min.js" type="text/javascript"></script>
+        <script src="${urls.baseUrl}/js/less-1.7.5.min.js" type="text/javascript"></script>
     </#if>
 
 </head>
