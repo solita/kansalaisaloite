@@ -91,7 +91,7 @@
 
     <#if votingInfo?? && votingInfo.votingInProggress || initiative.totalSupportCount gt 0>
 	    <div class="view-block">
-		    <@m.initiativeVoteInfo />
+		    <@m.initiativeVoteInfo false/>
 		    <#if supportCountData??><@m.supportCountGraph supportCountData /></#if>
 		</div>
 	</#if>
