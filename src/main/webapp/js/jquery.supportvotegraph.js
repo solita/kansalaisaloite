@@ -353,7 +353,7 @@
   }
 
   function dailyGoal(settings) {
-    var endDate = moment(settings.data.startDate).add(6, 'months');
+    var endDate = moment(settings.data.endDate);
     var votingDays = moment(endDate).diff(moment(settings.data.startDate), 'days') + 1;
     if (votingDays <= 0) {
       return 0;
@@ -450,7 +450,11 @@
     }
 
     // Draw X labels
-    if (!settings.zoomed) {
+    // By default, calculate labels for 1 month period until 6 months.
+    // If we are zooming OR the initiative has ended before the normal scheduled end-time,
+    // use custom functionality for calculating the labels.
+    if (!settings.zoomed
+        && moment(settings.data.startDate).add("months", 6).diff(settings.data.endDate) == 0) {
       for (i = 0; i < 7; i++) {
         r.text(leftgutter + 2 + ((width - leftgutter - X) / 6) * i, height - 6, moment(settings.data.startDate).add('months', i).format(dateFormat)).attr((i < 6) ? (i === 0 ? txtLabelLeft : txtLabel) : txtLabelRight).toBack();
       }
