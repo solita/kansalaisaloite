@@ -7,6 +7,7 @@ public enum InitiativeState {
      * Every save confirms current author.
      */
     DRAFT,
+
     /**
      * Intivations have been sent. Waiting for organizers to organize.
      * 
@@ -18,6 +19,7 @@ public enum InitiativeState {
      * If there's enough VEVs, allows sending to OM.
      */
     PROPOSAL,
+
     /**
      * Sent to review at OM.
      * <ul>
@@ -26,22 +28,24 @@ public enum InitiativeState {
      * <li>If accepted, moves to ACCEPTED state</li>
      * </ul> 
      */
-    REVIEW, 
+    REVIEW,
+
     /**
-     * Ready to receive support votes as of startDate.  
-     * <ul>
-     * <li>Pending invitations removed.</li>
-     * <li>Unconfirmed VEVs removed.</li>
-     * <li>Indexed for public visibility when support vote threshold reached.</li>
-     * </ul>
+     * Accepted by OM - not sent to parliament.
+     * Ready to receive support votes as of startDate until endDate.
+     * Initiative also ends if less than 50 supports in the first month.
+     * Note that there is no ENDED state - initiative has endDate and might also end
+     * after 1month if it has less than 50 supports.
      */
     ACCEPTED,
+
     /**
-     * Out of our hands: sent forward etc.
+     * Marked as sent to parliament
      */
     DONE,
+
     /**
-     * Out of our hands: expired, rejected, etc.
+     * Currently this is actually not featured at all.
      */
     CANCELED;
 
