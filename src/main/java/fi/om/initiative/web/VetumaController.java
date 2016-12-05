@@ -51,7 +51,7 @@ public class VetumaController extends BaseLoginController {
     }
 
     @RequestMapping(value={SAML_FI, SAML_SV}, method=GET)
-    public ModelAndView samlLoginGet(@RequestParam(required = false) String target, HttpServletRequest request, HttpSession session, Locale locale, Model model) {
+    public ModelAndView samlLoginGet(@RequestParam(required = false) String target, HttpServletRequest request, Locale locale) {
         User user = userService.getCurrentUser();
         if (user.isAuthenticated()) {
             return new ModelAndView(redirect(target));
@@ -66,36 +66,42 @@ public class VetumaController extends BaseLoginController {
      */
     @RequestMapping(value={LOGIN_FI, LOGIN_SV}, method=GET)
     public ModelAndView loginGet(@RequestParam(required=false) String target,  HttpServletRequest request, HttpSession session, Locale locale, Model model) {
-        Urls urls = Urls.get(locale);
-        
-        target = getValidLoginTarget(target, urls);
-
-        User user = userService.getCurrentUser();
-        if (user.isAuthenticated()) {
-            return new ModelAndView(redirect(target));
-        } else {
-            userService.prepareForLogin(request);
-            session.setAttribute(TARGET_SESSION_PARAM, target);
-            
-            // Clone defaults
-            VetumaLoginRequest vetumaRequest = loginRequestDefaults.clone();
-            
-            // Set request specific fields
-            vetumaRequest.setTimestamp(new DateTime());
-            vetumaRequest.setLG(locale.getLanguage());
-            vetumaRequest.setRETURL(urls.login());
-            vetumaRequest.setCANURL(urls.login());
-            vetumaRequest.setERRURL(urls.login());
-            
-            // Assign MAC
-            String mac = encryptionService.vetumaMAC(vetumaRequest.toMACString());
-            vetumaRequest.setMAC(mac);
-            
-            model.addAttribute("vetumaRequest", vetumaRequest);
-            model.addAttribute("vetumaURL", vetumaURL);
-            
-            return new ModelAndView(VETUMA_LOGIN_VIEW) ;
+        if (environmentSettings.samlEnabled) {
+            return samlLoginGet(target, request, locale);
         }
+        else {
+            Urls urls = Urls.get(locale);
+
+            target = getValidLoginTarget(target, urls);
+
+            User user = userService.getCurrentUser();
+            if (user.isAuthenticated()) {
+                return new ModelAndView(redirect(target));
+            } else {
+                userService.prepareForLogin(request);
+                session.setAttribute(TARGET_SESSION_PARAM, target);
+
+                // Clone defaults
+                VetumaLoginRequest vetumaRequest = loginRequestDefaults.clone();
+
+                // Set request specific fields
+                vetumaRequest.setTimestamp(new DateTime());
+                vetumaRequest.setLG(locale.getLanguage());
+                vetumaRequest.setRETURL(urls.login());
+                vetumaRequest.setCANURL(urls.login());
+                vetumaRequest.setERRURL(urls.login());
+
+                // Assign MAC
+                String mac = encryptionService.vetumaMAC(vetumaRequest.toMACString());
+                vetumaRequest.setMAC(mac);
+
+                model.addAttribute("vetumaRequest", vetumaRequest);
+                model.addAttribute("vetumaURL", vetumaURL);
+
+                return new ModelAndView(VETUMA_LOGIN_VIEW) ;
+            }
+        }
+
     }
 
     @RequestMapping(value={LOGIN_FI, LOGIN_SV}, method=POST)

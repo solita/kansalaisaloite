@@ -22,7 +22,7 @@ public class StartJetty {
 
     public static void main(String[] args) throws Throwable {
         System.setProperty(PropertyNames.optimizeResources, "false");
-        startService(8090, "dev,disableSecureCookie").join();
+        startService(8090, "vetumamock,disableSecureCookie").join();
 
     }
     
