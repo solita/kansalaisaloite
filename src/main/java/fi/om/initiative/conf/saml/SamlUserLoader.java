@@ -1,5 +1,6 @@
 package fi.om.initiative.conf.saml;
 
+import fi.om.initiative.dto.User;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.saml.SAMLCredential;
 import org.springframework.security.saml.userdetails.SAMLUserDetailsService;
@@ -40,6 +41,6 @@ public class SamlUserLoader implements SAMLUserDetailsService {
         // TODO: What if not finnish citizen? This seems to return null for test users.
         String finnishCitizen = credential.getAttributeAsString("urn:oid:1.2.246.517.2002.2.26");
 
-        return new SamlUser(ssn, address, firstName, lastName, municipalityNumber, municipalityName, municipalityName);
+        return new SamlUser(User.validateSSN(ssn), address, firstName, lastName, municipalityNumber, municipalityName, municipalityName);
     }
 }
