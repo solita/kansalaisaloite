@@ -151,6 +151,7 @@ public class HttpUserServiceImpl implements HttpUserService {
     private void setCookie(String name, String value, HttpServletResponse response) {
         Cookie cookie = new Cookie(name, value);
         cookie.setSecure(!disableSecureCookie);
+        cookie.setPath("/");
         cookie.setHttpOnly(true);
         response.addCookie(cookie);
     }

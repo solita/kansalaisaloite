@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EntityDescriptor  xmlns="urn:oasis:names:tc:SAML:2.0:metadata"
+                   xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
+                   xmlns:shibmd="urn:mace:shibboleth:metadata:1.0"
+                   xmlns:xml="http://www.w3.org/XML/1998/namespace"
+                   xmlns:mdui="urn:oasis:names:tc:SAML:metadata:ui"
+                   entityID="https://testi.apro.tunnistus.fi/idp1">
+    <IDPSSODescriptor WantAuthnRequestsSigned="true" protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+        <Extensions>
+            <shibmd:Scope regexp="false">testi.apro.tunnistus.fi</shibmd:Scope>
+            <mdui:UIInfo>
+                <mdui:DisplayName xml:lang="fi">Apro test IdP FI</mdui:DisplayName>
+                <mdui:DisplayName xml:lang="en">Apro test IdP EN</mdui:DisplayName>
+                <mdui:DisplayName xml:lang="sv">Apro test IdP SV</mdui:DisplayName>
+                <mdui:Description xml:lang="fi">Apro test environment IdP FI</mdui:Description>
+                <mdui:Description xml:lang="en">Apro test environment IdP EN</mdui:Description>
+                <mdui:Description xml:lang="sv">Apro test environment IdP SV</mdui:Description>
+                <mdui:Logo height="70" width="229">https://testi.apro.tunnistus.fi/static/images/kapa.png</mdui:Logo>
+            </mdui:UIInfo>
+        </Extensions>
+        <KeyDescriptor use="signing">
+            <ds:KeyInfo>
+                <ds:X509Data>
+                    <ds:X509Certificate>
+MIIDXDCCAkQCCQCDUeJYOWhkWTANBgkqhkiG9w0BAQsFADBwMQswCQYDVQQGEwJGSTEQMA4GA1UECAwHVXVzaW1hYTERMA8GA1UEBwwISGVsc2lua2kxETAPBgNVBAoMCEFwcm90ZXN0MREwDwYDVQQLDAhBcHJvdGVzdDEWMBQGA1UEAwwNQXBybyB0ZXN0IElkUDAeFw0xNjA1MzAwNzUzMjdaFw0xODA1MzAwNzUzMjdaMHAxCzAJBgNVBAYTAkZJMRAwDgYDVQQIDAdVdXNpbWFhMREwDwYDVQQHDAhIZWxzaW5raTERMA8GA1UECgwIQXByb3Rlc3QxETAPBgNVBAsMCEFwcm90ZXN0MRYwFAYDVQQDDA1BcHJvIHRlc3QgSWRQMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtdWsokhQRyMJDCW0eQMBdk/d5CH7xDokPKwsHti5PmBeaUS894FM58QMtKfTX0BwNFQLhGK5QcrOE3PrcAKMF12sBjjF2EFjs3UKmRVuUulOihZkIFTl731BaBCgO/Xyc/K0ghkv7dkc+EvKqQwlhCpQM0FDa1cfZXJcii4RceFQ8mm5P+qTDalYhmrqeXFlXGIKlEnCqBbusFKiIGTeZ2wu2yrNiyZ/6KSviLed8sHgLDuZmC3i/Ohp+iJFtxe3c8sh+KOf7bTXAMJaQSEbadBRZxdEM09ebiGDRU+Rg3naugPfHoLwLrR+F0IioUxl2DSEZUNZkT6GRtozoeUGaQIDAQABMA0GCSqGSIb3DQEBCwUAA4IBAQCW2F65D7QWGMG8qP98HTG6vUtcvzEEeJSluSaHQATN7Q80pCglJC2akuFtgflwH8Bu+pW9hCzritmoRRP6o5KqxlBCagzv9ozpTKbqqAcwYpK+2f6ZonAlVXTdQYOO6PMdfn9E0MNpq+9lvuM9a3oHoCA5dXxm74uCE+SO3wTWuEeOztHzo09K3EpH+GUzZ3rf3mfIqFICSb+szfPWuj8FUnCVYpGlMssMHnjXYryRHxz7EDMQk4I3Y10q+7N3XaWSajOQm7fi2P8GE1WZwxbUWLcr3i6vm2L3DLmtA/LzrD1n0w9sxGQIer/Jmnytc24qNxeXoMap8AdoPr9Yx+yL
+                    </ds:X509Certificate>
+                </ds:X509Data>
+            </ds:KeyInfo>
+        </KeyDescriptor>
+        <SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://testi.apro.tunnistus.fi/idp/profile/SAML2/POST/SLO"/>
+        <SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="https://testi.apro.tunnistus.fi/idp/profile/SAML2/Redirect/SLO"/>
+        <NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:transient</NameIDFormat>
+        <SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://testi.apro.tunnistus.fi/idp/profile/SAML2/POST/SSO"/>
+        <SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="https://testi.apro.tunnistus.fi/idp/profile/SAML2/Redirect/SSO"/>
+    </IDPSSODescriptor>
+    <Organization>
+        <OrganizationName xml:lang="fi">Väestörekisterikeskus</OrganizationName>
+        <OrganizationName xml:lang="en">Population Register Centre</OrganizationName>
+        <OrganizationName xml:lang="sv">Befolkningsregistercentralen</OrganizationName>
+        <OrganizationDisplayName xml:lang="fi">Kapa Apro development FI</OrganizationDisplayName>
+        <OrganizationDisplayName xml:lang="en">Kapa Apro development EN</OrganizationDisplayName>
+        <OrganizationDisplayName xml:lang="sv">Kapa Apro development SV</OrganizationDisplayName>
+        <OrganizationURL xml:lang="fi">http://vm.fi/palveluarkkitehtuuri</OrganizationURL>
+        <OrganizationURL xml:lang="en">http://vm.fi/en/frontpage</OrganizationURL>
+        <OrganizationURL xml:lang="sv">http://vm.fi/sv/framsida</OrganizationURL>
+    </Organization>
+    <ContactPerson contactType="technical">
+        <GivenName>KAPA</GivenName>
+        <SurName>Asiakaspalvelu</SurName>
+        <EmailAddress>mailto:kapa-asiakaspalvelu@vrk.fi</EmailAddress>
+    </ContactPerson>
+</EntityDescriptor>

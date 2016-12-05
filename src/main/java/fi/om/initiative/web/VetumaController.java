@@ -50,6 +50,17 @@ public class VetumaController extends BaseLoginController {
         this.vetumaURL = vetumaURL;
     }
 
+    @RequestMapping(value={SAML_FI, SAML_SV}, method=GET)
+    public ModelAndView samlLoginGet(@RequestParam(required = false) String target, HttpServletRequest request, HttpSession session, Locale locale, Model model) {
+        User user = userService.getCurrentUser();
+        if (user.isAuthenticated()) {
+            return new ModelAndView(redirect(target));
+        } else {
+            userService.prepareForLogin(request);
+            return new ModelAndView(redirect(Urls.get(locale).getBaseUrl() + "/saml/login?target=" + Urls.urlEncode(target)));
+        }
+    }
+
     /*
      * Login
      */

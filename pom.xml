@@ -200,6 +200,26 @@
             <artifactId>spring-context-support</artifactId>
             <version>3.2.0.RELEASE</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>4.1.1.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+            <version>4.1.1.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security.extensions</groupId>
+            <artifactId>spring-security-saml2-core</artifactId>
+            <version>1.0.2.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>4.1.1.RELEASE</version>
+        </dependency>
 
         <dependency>
             <groupId>com.googlecode.owasp-java-html-sanitizer</groupId>
@@ -337,6 +357,7 @@
                 <filtering>true</filtering>
                 <excludes>
                     <exclude>pdf/*</exclude>
+                    <exclude>**.*.jks</exclude>
                 </excludes>
             </resource>
             <resource>
@@ -344,6 +365,7 @@
                 <filtering>false</filtering>
                 <includes>
                     <include>pdf/*</include>
+                    <include>**.*.jks</include>
                 </includes>
             </resource>
             <!-- Minify plugin exports minified css files under target/tmp.

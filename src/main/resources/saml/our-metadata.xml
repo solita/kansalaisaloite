@@ -1,0 +1,95 @@
+<md:EntityDescriptor xmlns:xml="http://www.w3.org/XML/1998/namespace" xmlns:mdattr="urn:oasis:names:tc:SAML:metadata:attribute" xmlns:mdui="urn:oasis:names:tc:SAML:metadata:ui" xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion" xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" entityID="%(BASE_URL)/">
+    <md:Extensions>
+        <mdattr:EntityAttributes xmlns:mdattr="urn:oasis:names:tc:SAML:metadata:attribute">
+            <saml:Attribute xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion" Name="FinnishAuthMethod" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri">
+                <saml:AttributeValue xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string">urn:oid:1.2.246.517.3002.110.1</saml:AttributeValue>
+                <saml:AttributeValue xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string">urn:oid:1.2.246.517.3002.110.2</saml:AttributeValue>
+                <saml:AttributeValue xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string">urn:oid:1.2.246.517.3002.110.3</saml:AttributeValue>
+            </saml:Attribute>
+        </mdattr:EntityAttributes>
+    </md:Extensions>
+    <md:SPSSODescriptor AuthnRequestsSigned="true" protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+        <md:Extensions>
+            <mdui:UIInfo>
+                <mdui:DisplayName xml:lang="fi">Kansalaisaloite.fi</mdui:DisplayName>
+                <mdui:DisplayName xml:lang="sv">Medborgarinitiativ.fi</mdui:DisplayName>
+
+                <mdui:Logo height="72" width="349">%(BASE_URL)/img/kansalaisaloite-logo-fi.svg</mdui:Logo>
+                <mdui:Description xml:lang="fi">Kansalaisaloitepalvelu</mdui:Description>
+                <mdui:Description xml:lang="sv">Medborgarinitiativ</mdui:Description>
+                <mdui:PrivacyStatementURL xml:lang="fi">
+                    %(BASE_URL)/fi/ohjeet/palvelun-kayttoehdot
+                </mdui:PrivacyStatementURL>
+                <mdui:PrivacyStatementURL xml:lang="sv">
+                    %(BASE_URL)/sv/anvisningar/anvandarvillkor-for-webbtjansten
+                </mdui:PrivacyStatementURL>
+            </mdui:UIInfo>
+        </md:Extensions>
+        <md:KeyDescriptor>
+            <ds:KeyInfo>
+                <ds:X509Data>
+                    <ds:X509Certificate>
+                        %(PUBLIC_CERT)
+                    </ds:X509Certificate>
+                </ds:X509Data>
+            </ds:KeyInfo>
+        </md:KeyDescriptor>
+        <md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="%(BASE_URL)/saml/SingleLogout"/>
+        <md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="%(BASE_URL)/saml/SingleLogout"/>
+        <md:NameIDFormat>
+            urn:oasis:names:tc:SAML:2.0:nameid-format:transient
+        </md:NameIDFormat>
+        <md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="%(BASE_URL)/saml/SSO" index="1" isDefault="true"/>
+        <md:AttributeConsumingService index="1" isDefault="true">
+            <md:ServiceName xml:lang="fi">Kansalaisaloite</md:ServiceName>
+            <md:ServiceName xml:lang="sv">Medborgarinitiativ</md:ServiceName>
+            <md:RequestedAttribute FriendlyName="displayName" Name="urn:oid:2.16.840.1.113730.3.1.241" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
+            <md:RequestedAttribute FriendlyName="cn" Name="urn:oid:2.5.4.3" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
+            <md:RequestedAttribute FriendlyName="givenName" Name="urn:oid:2.5.4.42" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
+            <md:RequestedAttribute FriendlyName="FirstName" Name="http://eidas.europa.eu/attributes/naturalperson/CurrentGivenName" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
+            <md:RequestedAttribute FriendlyName="sn" Name="urn:oid:2.5.4.4" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
+            <md:RequestedAttribute FriendlyName="mail" Name="urn:oid:0.9.2342.19200300.100.1.3" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
+            <md:RequestedAttribute FriendlyName="nationalIdentificationNumber" Name="urn:oid:1.2.246.21" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
+            <md:RequestedAttribute FriendlyName="KotikuntaKuntanumero" Name="urn:oid:1.2.246.517.2002.2.18" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
+            <md:RequestedAttribute FriendlyName="KotikuntaKuntaS" Name="urn:oid:1.2.246.517.2002.2.19" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
+            <md:RequestedAttribute FriendlyName="KotikuntaKuntaR" Name="urn:oid:1.2.246.517.2002.2.20" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
+            <md:RequestedAttribute FriendlyName="VakinainenKotimainenLahiosoiteS" Name="urn:oid:1.2.246.517.2002.2.4" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
+            <md:RequestedAttribute FriendlyName="VakinainenKotimainenLahiosoiteR" Name="urn:oid:1.2.246.517.2002.2.5" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
+            <md:RequestedAttribute FriendlyName="VakinainenKotimainenLahiosoitePostinumero" Name="urn:oid:1.2.246.517.2002.2.6" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
+            <md:RequestedAttribute FriendlyName="VakinainenKotimainenLahiosoitePostitoimipaikkaS" Name="urn:oid:1.2.246.517.2002.2.7" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
+            <md:RequestedAttribute FriendlyName="VakinainenKotimainenLahiosoitePostitoimipaikkaR" Name="urn:oid:1.2.246.517.2002.2.8" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
+            <md:RequestedAttribute FriendlyName="VakinainenUlkomainenLahiosoite" Name="urn:oid:1.2.246.517.2002.2.11" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
+            <md:RequestedAttribute FriendlyName="VakinainenUlkomainenLahiosoitePaikkakuntaJaValtioS" Name="urn:oid:1.2.246.517.2002.2.12" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
+            <md:RequestedAttribute FriendlyName="VakinainenUlkomainenLahiosoitePaikkakuntaJaValtioR" Name="urn:oid:1.2.246.517.2002.2.13" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
+            <md:RequestedAttribute FriendlyName="VakinainenUlkomainenLahiosoitePaikkakuntaJaValtioSelvakielinen" Name="urn:oid:1.2.246.517.2002.2.14" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
+            <md:RequestedAttribute FriendlyName="VakinainenUlkomainenLahiosoiteValtiokoodi3" Name="urn:oid:1.2.246.517.2002.2.15" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
+            <md:RequestedAttribute FriendlyName="TilapainenKotimainenLahiosoiteLahiosoiteS" Name="urn:oid:1.2.246.517.2002.2.31" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
+            <md:RequestedAttribute FriendlyName="TilapainenKotimainenLahiosoiteLahiosoiteR" Name="urn:oid:1.2.246.517.2002.2.32" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
+            <md:RequestedAttribute FriendlyName="TilapainenKotimainenLahiosoitePostinumero" Name="urn:oid:1.2.246.517.2002.2.33" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
+            <md:RequestedAttribute FriendlyName="TilapainenKotimainenLahiosoitePostitoimipaikkaS" Name="urn:oid:1.2.246.517.2002.2.34" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
+            <md:RequestedAttribute FriendlyName="TilapainenKotimainenLahiosoitePostitoimipaikkaR" Name="urn:oid:1.2.246.517.2002.2.35" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
+            <md:RequestedAttribute FriendlyName="TurvakieltoTieto" Name="urn:oid:1.2.246.517.2002.2.27" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
+        </md:AttributeConsumingService>
+    </md:SPSSODescriptor>
+    <md:Organization>
+        <md:OrganizationName xml:lang="fi">Oikeusministerio</md:OrganizationName>
+        <md:OrganizationName xml:lang="sv">Justitieministeriet</md:OrganizationName>
+        <md:OrganizationName xml:lang="en">Ministry of Justice</md:OrganizationName>
+        <md:OrganizationDisplayName xml:lang="fi">Oikeusministerio</md:OrganizationDisplayName>
+        <md:OrganizationDisplayName xml:lang="sv">Justitieministeriet</md:OrganizationDisplayName>
+        <md:OrganizationDisplayName xml:lang="en">Ministry of Justice</md:OrganizationDisplayName>
+        <md:OrganizationURL xml:lang="fi">http://www.oikeusministerio.fi/</md:OrganizationURL>
+        <md:OrganizationURL xml:lang="sv">http://www.oikeusministerio.fi/sv/index.html</md:OrganizationURL>
+        <md:OrganizationURL xml:lang="en">http://www.oikeusministerio.fi/en/index.html</md:OrganizationURL>
+    </md:Organization>
+    <md:ContactPerson contactType="technical">
+        <md:GivenName>Pauli</md:GivenName>
+        <md:SurName>Karpanoja</md:SurName>
+        <md:EmailAddress>mailto:pauli.karpanoja@solita.fi</md:EmailAddress>
+    </md:ContactPerson>
+    <md:ContactPerson contactType="support">
+        <md:GivenName>Anneli</md:GivenName>
+        <md:SurName>Salomaa</md:SurName>
+        <md:EmailAddress>mailto:anneli.salomaa@om.fi</md:EmailAddress>
+    </md:ContactPerson>
+</md:EntityDescriptor>

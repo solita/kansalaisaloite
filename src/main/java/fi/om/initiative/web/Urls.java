@@ -65,6 +65,10 @@ public final class Urls {
 
     public static final String LOGIN_SV =        "/sv/login";
 
+    public static final String SAML_FI =        "/fi/saml";
+
+    public static final String SAML_SV =        "/sv/saml";
+
     public static final String VETUMA_ERROR_FI = "/fi/loginerror";
 
     public static final String VETUMA_ERROR_SV = "/sv/loginerror";
@@ -459,7 +463,7 @@ public final class Urls {
     }
 
 
-    private static String urlEncode(String s) {
+    public static String urlEncode(String s) {
         if (s == null) {
             return "";
         } else {

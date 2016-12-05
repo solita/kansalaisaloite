@@ -70,6 +70,7 @@ public class BaseController {
         model.addAttribute("infoRibbon", InfoRibbon.getCachedInfoRibbonText(locale));
         model.addAttribute("footerLinks", footerLinkProvider.getFooterLinks(locale));
         model.addAttribute("superSearchEnabled", urls.getSuperSearchUrl()!=null);
+        model.addAttribute("samlEnabled", environmentSettings.samlEnabled);
 
         try {
             model.addAttribute("UrlConstants", freemarkerObjectWrapper.getStaticModels().get(Urls.class.getName()));
