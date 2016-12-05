@@ -37,6 +37,9 @@ public class SamlUserLoader implements SAMLUserDetailsService {
         String ssn = credential.getAttributeAsString("urn:oid:1.2.246.21");
         String address = streetAddress + " " + postalCode + " " + postOffice;
 
+        // TODO: What if not finnish citizen? This seems to return null for test users.
+        String finnishCitizen = credential.getAttributeAsString("urn:oid:1.2.246.517.2002.2.26");
+
         return new SamlUser(ssn, address, firstName, lastName, municipalityNumber, municipalityName, municipalityName);
     }
 }
