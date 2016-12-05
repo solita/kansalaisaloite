@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.net.URL;
 
 public class RedirectingAuthenticationFailureHandler implements AuthenticationFailureHandler {
 
@@ -24,8 +25,12 @@ public class RedirectingAuthenticationFailureHandler implements AuthenticationFa
 
         String targetUri = TargetStoringFilter.popTarget(request, response);
 
+        // Strip get parameters from redirect on failure to prevent re-login-loop
+        // when users cancels login on eg. voting
+        String path = new URL(baseUrl + targetUri).getPath();
+
         new DefaultRedirectStrategy()
-                .sendRedirect(request, response, baseUrl + targetUri);
+                .sendRedirect(request, response, baseUrl + path);
 
     }
 }

@@ -1,7 +1,7 @@
 <#import "components/layout.ftl" as l />
 <#import "components/utils.ftl" as u />
 
-<#escape x as x?html> 
+<#escape x as x?html>
 <@l.main "page.createNew">
 
     <h1><@u.message "page.beforeCreate" /></h1>
@@ -22,7 +22,7 @@
                   <li><@u.message "beforeCreate.authenticateAndCreate.step-2" /></li>
                   <li><@u.message "beforeCreate.authenticateAndCreate.step-3" /></li>
                 </ol>
-                <a href="${urls.login(urls.createNew())}" class="block-link"><@u.message "beforeCreate.authenticateAndCreate.btn" /></a>
+                <a href="${urls.login(springMacroRequestContext.requestUri)}" class="block-link"><@u.message "beforeCreate.authenticateAndCreate.btn" /></a>
               </div>
               <div class="col-sm-6">
                 <h2><@u.message "beforeCreate.howToCreate.title" /></h2>
@@ -35,4 +35,4 @@
       </div>
     </div>
 </@l.main>
-</#escape> 
+</#escape>

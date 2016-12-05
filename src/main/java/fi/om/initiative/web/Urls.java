@@ -405,6 +405,10 @@ public final class Urls {
         return baseUrl + url;
     }
 
+    public String samlLogout(String target) {
+        return baseUrl +"/saml/logout?target=" + urlEncode(Strings.isNullOrEmpty(target) ? "" : target);
+    }
+
     public String logout() {
         return getLocalizedPageUrl(LOGOUT_FI, LOGOUT_SV);
     }

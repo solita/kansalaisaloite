@@ -14,7 +14,7 @@
 
     <br/><br/>
 
-    <h2><@u.message "error.404.title.sv"/></h2>
+    <h1><@u.message "error.404.title.sv"/></h1>
     <p><@u.messageHTML key="error.404.description.sv" args=[urls.baseUrl] /></p>
 
 </@l.error>
