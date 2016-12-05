@@ -68,6 +68,7 @@
             <md:RequestedAttribute FriendlyName="TilapainenKotimainenLahiosoitePostinumero" Name="urn:oid:1.2.246.517.2002.2.33" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
             <md:RequestedAttribute FriendlyName="TilapainenKotimainenLahiosoitePostitoimipaikkaS" Name="urn:oid:1.2.246.517.2002.2.34" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
             <md:RequestedAttribute FriendlyName="TilapainenKotimainenLahiosoitePostitoimipaikkaR" Name="urn:oid:1.2.246.517.2002.2.35" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
+            <md:RequestedAttribute FriendlyName="SuomenKansalaisuusTietokoodi" Name="urn:oid:1.2.246.517.2002.2.26" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
             <md:RequestedAttribute FriendlyName="TurvakieltoTieto" Name="urn:oid:1.2.246.517.2002.2.27" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
         </md:AttributeConsumingService>
     </md:SPSSODescriptor>
