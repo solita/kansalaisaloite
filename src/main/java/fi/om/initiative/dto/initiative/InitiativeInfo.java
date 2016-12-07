@@ -143,6 +143,10 @@ public class InitiativeInfo {
     public void assignEndDate(LocalDate startDate, ReadablePeriod votingDuration) {
         this.endDate = getEndDateForPeriod(startDate, votingDuration);
     }
+
+    public LocalizedInitiativeUrl getUrl() {
+        return new LocalizedInitiativeUrl(id);
+    }
     
     public LanguageCode getPrimaryLanguage() {
         return primaryLanguage;

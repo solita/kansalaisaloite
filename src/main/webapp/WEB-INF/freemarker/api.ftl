@@ -78,6 +78,37 @@ The list includes only initiatives with at least 50 support counts by default. T
       <td>B</td>
       <td>URI of this public initiative</td>
     </tr>
+
+    <tr>
+        <td class="apiExample">&nbsp;&nbsp;"<b>url</b>":{</td>
+        <td>Object</td>
+        <td>B</td>
+        <td>URL:s to initiatives public page</td>
+    </tr>
+    <tr>
+        <td class="apiExample">
+            &nbsp;&nbsp;&nbsp;&nbsp;"<b>fi</b>":"https://www.kansalaisaloite.fi/fi/aloite/1234",
+        <td>String</td>
+        <td>B</td>
+        <td>Finnish URL
+        </td>
+    </tr>
+    <tr>
+        <td class="apiExample">
+            &nbsp;&nbsp;&nbsp;&nbsp;"<b>sv</b>":"https://www.kansalaisaloite.fi/sv/initiativ/1234",
+        <td>String</td>
+        <td>B</td>
+        <td>Swedish URL
+        </td>
+    </tr>
+    <tr>
+        <td class="apiExample">&nbsp;&nbsp;},</td>
+        <td></td>
+        <td></td>
+        <td>
+        </td>
+    </tr>
+
     <tr>
       <td class="apiExample">
         &nbsp;&nbsp;"<b>modified</b>":"2012-11-01T13:50:30+02:00",
