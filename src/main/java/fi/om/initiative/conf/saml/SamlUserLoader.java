@@ -32,7 +32,7 @@ public class SamlUserLoader implements SAMLUserDetailsService {
         String postOffice = credential.getAttributeAsString("urn:oid:1.2.246.517.2002.2.7");
         String municipalityNumber = credential.getAttributeAsString("urn:oid:1.2.246.517.2002.2.18");
         String municipalityName = credential.getAttributeAsString("urn:oid:1.2.246.517.2002.2.19");
-        String firstName = credential.getAttributeAsString("urn:oid:2.5.4.42");
+        String firstNames = credential.getAttributeAsString("urn:oid:2.5.4.3");
         String lastName = credential.getAttributeAsString("urn:oid:2.5.4.4");
 
         String ssn = credential.getAttributeAsString("urn:oid:1.2.246.21");
@@ -41,6 +41,6 @@ public class SamlUserLoader implements SAMLUserDetailsService {
         // TODO: What if not finnish citizen? This seems to return null for test users.
         String finnishCitizen = credential.getAttributeAsString("urn:oid:1.2.246.517.2002.2.26");
 
-        return new SamlUser(User.validateSSN(ssn), address, firstName, lastName, municipalityNumber, municipalityName, municipalityName);
+        return new SamlUser(User.validateSSN(ssn), address, firstNames, lastName, municipalityNumber, municipalityName, municipalityName);
     }
 }
