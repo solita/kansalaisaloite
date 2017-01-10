@@ -405,6 +405,10 @@ public final class Urls {
         return baseUrl + url;
     }
 
+    public String samlLogout() {
+        return samlLogout(this == SV ? FRONT_SV : FRONT_FI);
+    }
+
     public String samlLogout(String target) {
         return baseUrl +"/saml/logout?target=" + urlEncode(Strings.isNullOrEmpty(target) ? "" : target);
     }

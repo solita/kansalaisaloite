@@ -231,7 +231,7 @@
 				                <#if currentUser.om><li><a href="${urls.searchOmView()}"><@u.message "user.omSearchView"/></a></li></#if>
 				                <#-- Registered = Authenticated and has initiatives (except OM/VRK-users) -->
 				                <#if currentUser.registered><li><a href="${urls.searchOwnOnly()}"><@u.message "user.myInitiatives"/></a></li></#if>
-                                <li><a href="<#if samlEnabled>${urls.samlLogout(springMacroRequestContext.requestUri)}<#else>${urls.logout()}</#if>" id="logout"><@u.message "common.logout"/></a></li>
+                                <li><a href="${urls.samlLogout(springMacroRequestContext.requestUri)}" id="logout"><@u.message "common.logout"/></a></li>
 				            </ul>
 				        <#else>
 				            <a href="${urls.login(springMacroRequestContext.requestUri)}" title="<@u.message "common.login"/>" class="header-tool-link login"><@u.message "common.login"/></a>
@@ -286,7 +286,7 @@
                             <#if currentUser.registered>
                               <a class="btn btn-default" href="${urls.searchOwnOnly()}"><@u.message "user.myInitiatives"/></a>
                             </#if>
-                            <a class="btn btn-default" href="${urls.logout()}" >
+                            <a class="btn btn-default" href="${urls.samlLogout()}" >
                               <@u.message "common.logout"/>
                               <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
                             </a>

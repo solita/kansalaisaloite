@@ -232,7 +232,7 @@
                     </#if>
                     <#-- Voted successfully -->
                     <#if requestMessage == "success.confirm-vote">
-                        <a href="${urls.logout()}" class="small-button gray"><span class="small-icon logout"><@message "common.logout" /></span></a><a href="${urls.baseUrl}/${locale}" class="small-button gray push close"><@message "modal.continueBrowsing" /></a>
+                        <a href="${urls.samlLogout()}" class="small-button gray"><span class="small-icon logout"><@message "common.logout" /></span></a><a href="${urls.baseUrl}/${locale}" class="small-button gray push close"><@message "modal.continueBrowsing" /></a>
                     </#if>
                     
                 </@compress>
