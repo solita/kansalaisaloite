@@ -184,7 +184,7 @@
             <#if sentTo == "show"><p>Tämä viesti on lähetetty kaikille yllä mainitun aloitteen vireillepanijoille, edustajille ja varaedustajille.</p></#if>
             <p style="margin:1em 0 0.5em 0;">Aloitteesi sijaitsee osoitteessa: <@eu.link viewUrlFi /></p>
             <#if unsubscribeHash??>
-                <p>Sait tämän viestin, koska olet tilannut aloitteen sähköposti-ilmoitukset. Jos et halua saada näitä ilmoituksia enää, voit perua tilauksen <@eu.link urlsFi.unsubscribeFollowing(initiative.id, unsubscribeHash) "tästä"/></p>
+                <p>Sait tämän viestin, koska olet tilannut aloitteen sähköposti-ilmoitukset. Jos et halua saada näitä ilmoituksia enää, voit perua tilauksen <@eu.link urlsFi.unsubscribeFollowing(initiative.id, unsubscribeHash) "tästä"/>.</p>
             </#if>
         <#else>
             <#if sentTo == "show">Tämä viesti on lähetetty kaikille yllä mainitun aloitteen vireillepanijoille, edustajille ja varaedustajille.
@@ -201,7 +201,7 @@
             <#if sentTo == "show"><p>Detta meddelande har skickats till alla initiativtagare, företrädare och ersättare för initiativet ovan.</p></#if>
             <p style="margin:1em 0 0.5em 0;">Ditt initiativ finns på adressen: <@eu.link viewUrlSv /></p>
             <#if unsubscribeHash??>
-            <p>SV Sait tämän viestin, koska olet tilannut aloitteen sähköposti-ilmoitukset. Jos et halua saada näitä ilmoituksia enää, voit perua tilauksen <@eu.link urlsSv.unsubscribeFollowing(initiative.id, unsubscribeHash) "tästä"/></p>
+            <p>Du fick detta meddelande för att du har beställt e-postmeddelanden med information om initiativet. Om du inte vill ha dessa meddelanden kan du annullera beställningen <@eu.link urlsSv.unsubscribeFollowing(initiative.id, unsubscribeHash) "här"/>.</p>
             </#if>
 
         <#else>
@@ -211,7 +211,7 @@
             ${viewUrlSv}
 
             <#if unsubscribeHash??>
-            SV Sait tämän viestin, koska olet tilannut aloitteen sähköposti-ilmoitukset. Jos et halua saada näitä ilmoituksia enää, voit perua tilauksen linkistä ${urlsSv.unsubscribeFollowing(initiative.id, unsubscribeHash)}
+            Du fick detta meddelande för att du har beställt e-postmeddelanden med information om initiativet. Om du inte vill ha dessa meddelanden kan du annullera beställningen ${urlsSv.unsubscribeFollowing(initiative.id, unsubscribeHash)}
             </#if>
         </#if>    
     </#if>        

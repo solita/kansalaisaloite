@@ -5,7 +5,7 @@
 <#escape x as x?html>
 
     <#assign titleFi="Olet tilannut aloitteen sähköpostitiedotteet" />
-    <#assign titleSv="SV Olet tilannut aloitteen sähköpostitiedotteet" />
+    <#assign titleSv="Du har beställt e-postmeddelanden med information om initiativet" />
 
     <@el.emailHtml "" titleFi>
 
@@ -22,7 +22,7 @@
         <@eb.emailTemplate "sv" titleSv>
             <@eb.initiativeDetails "sv" "html" />
 
-        <p>SV Saat tietoa aloitten etenemisestä sähköpostiisi siihen asti, kunnes se on toimitettu eduskunnan käsittelyyn.</p>
+        <p>Du får information om hur initiativet framskrider tills det har skickats till riksdagen för behandling.</p>
 
             <@eb.emailBottom "sv" "html" />
         </@eb.emailTemplate>
