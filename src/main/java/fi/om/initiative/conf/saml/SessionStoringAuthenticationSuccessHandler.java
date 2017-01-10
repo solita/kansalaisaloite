@@ -38,6 +38,6 @@ public class SessionStoringAuthenticationSuccessHandler implements Authenticatio
         );
 
         new DefaultRedirectStrategy()
-                .sendRedirect(request, response, baseUri + TargetStoringFilter.popTarget(request, response));
+                .sendRedirect(request, response, baseUri + TargetStoringFilter.popCookieTarget(request, response));
     }
 }

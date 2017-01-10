@@ -173,8 +173,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 XSAny vetuma = new XSAnyBuilder().buildObject(new QName("urn:vetuma:SAML:2.0:extensions", "vetuma"));
                 XSAny language = new XSAnyBuilder().buildObject(new QName("urn:vetuma:SAML:2.0:extensions", "LG"));
 
-                String sessionTarget = TargetStoringFilter.peekTarget(((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest());
-                language.setTextContent(sessionTarget != null && sessionTarget.startsWith(Urls.FRONT_SV) ? "sv" : "fi");
+                String idpLanguageFromTarget = TargetStoringFilter.getRequestParamTarget(((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest())
+                        .map(t -> t.startsWith(Urls.FRONT_SV) ? "sv" : "fi")
+                        .orElse("fi");
+
+                language.setTextContent(idpLanguageFromTarget);
                 extensions.getUnknownXMLObjects().add(vetuma);
                 vetuma.getUnknownXMLObjects().add(language);
                 return extensions;

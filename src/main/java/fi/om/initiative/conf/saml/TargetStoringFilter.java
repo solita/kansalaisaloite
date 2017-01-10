@@ -23,15 +23,16 @@ class TargetStoringFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
-        String[] targets = request.getParameterMap().get("target");
-        if (targets != null) {
-            Arrays.stream(targets)
-                    .findFirst()
-                    .ifPresent(target -> ((HttpServletResponse) response).addCookie(targetCookie(target)));
-        }
+        getRequestParamTarget(request)
+                .ifPresent(target -> ((HttpServletResponse) response).addCookie(targetCookie(target)));
 
         chain.doFilter(request, response);
 
+    }
+
+    public static Optional<String> getRequestParamTarget(ServletRequest request) {
+        return Arrays.stream(Optional.ofNullable(request.getParameterMap().get("target")).orElse(new String[]{}))
+                .findFirst();
     }
 
     private static Cookie targetCookie(String target) {
@@ -48,8 +49,8 @@ class TargetStoringFilter implements Filter {
         return cookie;
     }
 
-    public static String popTarget(HttpServletRequest request, HttpServletResponse response) {
-        Optional<String> optionalTarget = optionalTarget(request);
+    public static String popCookieTarget(HttpServletRequest request, HttpServletResponse response) {
+        Optional<String> optionalTarget = targetFromCookies(request);
         optionalTarget.ifPresent((__) -> response.addCookie(deleteCookie()));
         return optionalTarget.orElse(Urls.FRONT_FI);
     }
@@ -59,12 +60,7 @@ class TargetStoringFilter implements Filter {
 
     }
 
-    public static String peekTarget(HttpServletRequest request) {
-        return optionalTarget(request)
-                .orElse(Urls.FRONT_FI);
-    }
-
-    private static Optional<String> optionalTarget(HttpServletRequest request) {
+    private static Optional<String> targetFromCookies(HttpServletRequest request) {
         return Arrays.stream(request.getCookies())
                 .filter(a -> a.getName().equals(TARGET_COOKIE_NAME))
                 .findFirst()
