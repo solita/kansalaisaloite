@@ -16,7 +16,7 @@ Saat tietoa aloitten etenemisestä sähköpostiisi siihen asti, kunnes se on toi
 <@eb.initiativeDetails "sv" "text" />
 
 
-SV Olet tilannut aloitteen sähköpostitiedotteet
-SV Saat tietoa aloitten etenemisestä sähköpostiisi siihen asti, kunnes se on toimitettu eduskunnan käsittelyyn.
+Du har beställt e-postmeddelanden med information om initiativet
+Du får information om hur initiativet framskrider tills det har skickats till riksdagen för behandling.
 
 <@eb.emailBottom "sv" "text" />
