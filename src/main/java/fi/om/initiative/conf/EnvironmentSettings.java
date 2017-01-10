@@ -10,7 +10,7 @@ public class EnvironmentSettings {
     public final String appVersion;
     public final String commitHash;
     public final Optional<Integer> omPiwikId;
-    public final boolean samlEnabled;
+    private boolean samlEnabled;
 
     public EnvironmentSettings(String appEnvironment, Boolean optimizeResources, String resourcesVersion, String appVersion, String commitHash, Optional<Integer> omPiwikId, boolean samlEnabled) {
 
@@ -21,6 +21,14 @@ public class EnvironmentSettings {
         this.commitHash = commitHash;
         this.omPiwikId = omPiwikId;
         this.samlEnabled = samlEnabled;
+    }
+
+    public boolean isSamlEnabled() {
+        return samlEnabled;
+    }
+
+    public void enableSaml(boolean enabled) {
+        this.samlEnabled = enabled;
     }
 
 }
