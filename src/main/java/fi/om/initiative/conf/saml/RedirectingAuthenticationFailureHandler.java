@@ -1,5 +1,7 @@
 package fi.om.initiative.conf.saml;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
@@ -11,6 +13,8 @@ import java.io.IOException;
 import java.net.URL;
 
 public class RedirectingAuthenticationFailureHandler implements AuthenticationFailureHandler {
+
+    private final Logger log = LoggerFactory.getLogger(RedirectingAuthenticationFailureHandler.class);
 
     private String baseUrl;
 
@@ -29,6 +33,8 @@ public class RedirectingAuthenticationFailureHandler implements AuthenticationFa
         // IDP Currently does not tell us if the user has cancelled the authentication or there were failures during it.
         // Currently we just have to trust that IDP shows some nice error for the user if the authentication fails,
         // because we do not have any way to tell if the authentication was failed or cancelled.
+
+        log.warn("Login failed / cancelled", exception);
 
         String path = new URL(baseUrl + targetUri).getPath();
 
