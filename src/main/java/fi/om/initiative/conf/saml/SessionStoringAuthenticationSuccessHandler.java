@@ -32,7 +32,7 @@ public class SessionStoringAuthenticationSuccessHandler implements Authenticatio
                 user.getSsn(),
                 user.getFirstNames(),
                 user.getLastName(),
-                true,
+                user.isFinnishCitizen(),
                 new LocalizedString(user.getMunicipalityNameFi(), user.getMunicipalityNameSv()),
                 request, response
         );

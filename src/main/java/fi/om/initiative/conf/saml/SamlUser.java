@@ -16,7 +16,9 @@ public class SamlUser {
 
     private String municipalityNameSv;
 
-    public SamlUser(String ssn, String address, String firstNames, String lastName, String municipalityCode, String municipalityNameFi, String municipalityNameSv) {
+    private boolean finnishCitizen;
+
+    public SamlUser(String ssn, String address, String firstNames, String lastName, String municipalityCode, String municipalityNameFi, String municipalityNameSv, boolean finnishCitizen) {
         this.ssn = ssn;
         this.address = address;
         this.firstNames = firstNames;
@@ -24,6 +26,7 @@ public class SamlUser {
         this.municipalityCode = municipalityCode;
         this.municipalityNameFi = municipalityNameFi;
         this.municipalityNameSv = municipalityNameSv;
+        this.finnishCitizen = finnishCitizen;
     }
 
     public String getSsn() {
@@ -52,5 +55,9 @@ public class SamlUser {
 
     public String getMunicipalityNameSv() {
         return municipalityNameSv;
+    }
+
+    public boolean isFinnishCitizen() {
+        return finnishCitizen;
     }
 }
