@@ -1,5 +1,6 @@
 package fi.om.initiative.web;
 
+import fi.om.initiative.service.Role;
 import fi.om.initiative.service.StatusService;
 import fi.om.initiative.util.Locales;
 import org.opensaml.saml2.metadata.provider.AbstractReloadingMetadataProvider;
@@ -35,7 +36,6 @@ public class StatusPageController extends BaseController {
     @RequestMapping(value=STATUS, method=GET)
     public String statusGet(Model model,
                             @RequestParam(value="ribbon", required=false) String ribbon,
-                            @RequestParam(value="saml", required = false) Boolean saml,
                             HttpServletRequest request) throws URISyntaxException, KeyManagementException, NoSuchAlgorithmException, MetadataProviderException {
 
         model.addAttribute("applicationInfoRows", statusService.getApplicationInfo());
@@ -49,10 +49,6 @@ public class StatusPageController extends BaseController {
             InfoRibbon.refreshInfoRibbonTexts();
             model.addAttribute("infoRibbon", InfoRibbon.getCachedInfoRibbonText(Locales.LOCALE_FI));
             idpMetadataProvider.refresh();
-        }
-
-        if (saml != null) {
-            environmentSettings.enableSaml(saml);
         }
 
         return STATUS_VIEW;

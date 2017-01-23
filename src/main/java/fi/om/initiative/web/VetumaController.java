@@ -66,7 +66,7 @@ public class VetumaController extends BaseLoginController {
      */
     @RequestMapping(value={LOGIN_FI, LOGIN_SV}, method=GET)
     public ModelAndView loginGet(@RequestParam(required=false) String target,  HttpServletRequest request, HttpSession session, Locale locale, Model model) {
-        if (environmentSettings.isSamlEnabled()) {
+        if (environmentSettings.samlEnabled) {
             return samlLoginGet(target, request, locale);
         }
         else {
