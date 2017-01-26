@@ -57,6 +57,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.inject.Inject;
+import javax.xml.XMLConstants;
 import javax.xml.namespace.QName;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -87,9 +88,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public StaticBasicParserPool parserPool() {
         StaticBasicParserPool staticBasicParserPool = new StaticBasicParserPool();
 
-        HashMap<String, Boolean> newFeatures = Maps.newHashMap();
-        newFeatures.put("http://apache.org/xml/features/dom/defer-node-expansion", false);
-        staticBasicParserPool.setBuilderFeatures(newFeatures);
+        // https://github.com/spring-projects/spring-security-saml/commit/925c8925fa0d0645d7b177b6e65cfb920fc6782f
+        // org.opensaml.xml.encryption.Decrypter.buildParserPool()
+        // Even though most of these are default, let's just define them so
+        // there's a little smaller change of screwing things up if any new features are introduced later.
+
+        Map<String, Boolean> features = new HashMap<>();
+
+        staticBasicParserPool.setNamespaceAware(true);
+        features.put("http://apache.org/xml/features/dom/defer-node-expansion", Boolean.FALSE);
+        staticBasicParserPool.setExpandEntityReferences(false);
+        features.put(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+        features.put("http://apache.org/xml/features/disallow-doctype-decl", true);
+
+        staticBasicParserPool.setBuilderFeatures(features);
         return staticBasicParserPool;
     }
 
