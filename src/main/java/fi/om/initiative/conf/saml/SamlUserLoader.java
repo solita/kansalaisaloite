@@ -8,6 +8,8 @@ import org.springframework.security.saml.userdetails.SAMLUserDetailsService;
 
 public class SamlUserLoader implements SAMLUserDetailsService {
 
+    public static final String FINNISH_CITIZEN_FLAG = "1";
+
     @Override
     public SamlUser loadUserBySAML(SAMLCredential credential) throws UsernameNotFoundException {
 
@@ -32,7 +34,7 @@ public class SamlUserLoader implements SAMLUserDetailsService {
         String postOffice = credential.getAttributeAsString("urn:oid:1.2.246.517.2002.2.7");
         String municipalityNumber = credential.getAttributeAsString("urn:oid:1.2.246.517.2002.2.18");
         String municipalityName = credential.getAttributeAsString("urn:oid:1.2.246.517.2002.2.19");
-        String firstNames = credential.getAttributeAsString("urn:oid:2.5.4.3");
+        String firstNames = credential.getAttributeAsString("http://eidas.europa.eu/attributes/naturalperson/CurrentGivenName");
         String lastName = credential.getAttributeAsString("urn:oid:2.5.4.4");
 
         String ssn = credential.getAttributeAsString("urn:oid:1.2.246.21");
@@ -40,6 +42,6 @@ public class SamlUserLoader implements SAMLUserDetailsService {
 
         String finnishCitizen = credential.getAttributeAsString("urn:oid:1.2.246.517.2002.2.26");
 
-        return new SamlUser(User.validateSSN(ssn), address, firstNames, lastName, municipalityNumber, municipalityName, municipalityName, "1".equals(finnishCitizen));
+        return new SamlUser(User.validateSSN(ssn), address, firstNames, lastName, municipalityNumber, municipalityName, municipalityName, FINNISH_CITIZEN_FLAG.equals(finnishCitizen));
     }
 }
