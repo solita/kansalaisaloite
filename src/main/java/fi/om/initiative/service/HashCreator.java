@@ -9,10 +9,6 @@ public class HashCreator {
 
     private final String hash;
 
-    public HashCreator() {
-        this.hash = "moimoi";
-    }
-
     public HashCreator(String hash) {
         this.hash = hash;
     }
