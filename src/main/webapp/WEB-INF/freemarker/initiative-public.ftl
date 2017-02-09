@@ -25,23 +25,25 @@
 </#if>
 
 <#assign showFollow = initiative.state = InitiativeState.ACCEPTED/>
-<#assign showNoJSFollofForm = showFollow && ((RequestParameters['formError']?? && RequestParameters['formError'] == "follow") || (RequestParameters['follow']?? && RequestParameters['follow'] == "true"))/>
+<#assign showFollowFormAlreadyOpen = showFollow && ((RequestParameters['formError']?? && RequestParameters['formError'] == "follow") || (RequestParameters['follow']?? && RequestParameters['follow'] == "true"))/>
 
-    <#if showFollow && followInitiative??>
-        <#assign followInitiativeFormHTML><@compress single_line=true>
-            <@u.message key="followInitiative.text"/>
-        <form action="${springMacroRequestContext.requestUri}?formError=follow" method="POST">
-        <#--<input type="hidden" name="CSRFToken" value="${CSRFToken}"/>-->
+<#if showFollow && followInitiative??>
+    <#assign followInitiativeFormHTML><@compress single_line=true>
+        <@u.message key="followInitiative.text"/>
+    <form action="${springMacroRequestContext.requestUri}?formError=follow" method="POST">
 
-            <div class="input-block-content">
-                <@f.textField path="followInitiative.email" required="" optional=true cssClass="large" maxLength=InitiativeConstants.AUTHOR_EMAIL_MAX />
-                <input type="hidden" id="CSRFToken" name="CSRFToken"/>
-            </div>
-            <button id="participate" type="submit"  value="true" name="action-follow" class="small-button"><span class="small-icon save-and-send"><@u.message "action.save" /></span></button>
-            <a href="${springMacroRequestContext.requestUri}" class="push close"><@u.message "action.cancel" /></a>
-        </form>
-        </@compress></#assign>
-    </#if>
+        <@f.errorsSummary "followInitiative.*" "followInitiative."/>
+
+        <div class="input-block-content">
+            <@f.textField path="followInitiative.email" required="" optional=true cssClass="large" maxLength=InitiativeConstants.AUTHOR_EMAIL_MAX showErrors=false/>
+            <input type="hidden" id="CSRFToken" name="CSRFToken" value="${CSRFToken!""}"/>
+        </div>
+        <button id="participate" type="submit"  value="true" name="action-follow" class="small-button"><span class="small-icon save-and-send"><@u.message "action.save" /></span></button>
+        <a href="${springMacroRequestContext.requestUri}" class="push close"><@u.message "action.cancel" /></a>
+        <div class="g-recaptcha" data-sitekey="${recaptchaSiteKey}"></div>
+    </form>
+    </@compress></#assign>
+</#if>
 
 
 <@l.main page pageTitle>
@@ -98,14 +100,6 @@
             <@m.votingEnded />
             <@m.supportStatementsRemoved />
             <@m.followInitiative />
-            <#if showNoJSFollofForm>
-                <#noescape><noscript>
-                    <h3 id="follow-form"><@u.message "action.follow"></@u.message></h3>
-                    <div class="form-container cf top-margin">
-                        <p>${followInitiativeFormHTML!""}</p>
-                    </div>
-                </noscript></#noescape>
-            </#if>
         </div>
     </#if>
     <#if topContribution??><#noescape>${topContribution}</#noescape></#if>
@@ -192,7 +186,7 @@
             content:   '<#noescape>${followInitiativeFormHTML?replace("'","&#39;")}</#noescape>'
         }]
     };
-    <#if showNoJSFollofForm>
+    <#if showFollowFormAlreadyOpen>
     modalData.followFormAutoLoad = modalData.followForm;
     </#if>
 
@@ -200,6 +194,10 @@
 
 
 </script>
+
+<#if showFollowFormAlreadyOpen>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+</#if>
 
 </@l.main>
 </#escape>

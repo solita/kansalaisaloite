@@ -76,13 +76,15 @@
  * @param fieldType text, date, email, ...
  * 
 -->
-<#macro textField path required optional cssClass="" attributes="" maxLength="" fieldType="text">
-    <@spring.bind path />  
+<#macro textField path required optional cssClass="" attributes="" maxLength="" fieldType="text" showErrors=true>
+    <@spring.bind path />
     <@localizePath path spring.status.value />
     
     <@formLabel pathLocale required optional>
         <@spring.bind pathLocale />
-        <@showError />
+        <#if showErrors>
+            <@showError />
+        </#if>
         <@spring.formInput pathLocale, 'class="'+cssClass+'" maxlength="'+maxLength+'" '+attributes fieldType />
     </@formLabel>
 
@@ -90,7 +92,9 @@
         <div class="alt-lang pullup ${altLangClass}">
             <@u.message pathAltLocale/>
             <@spring.bind pathAltLocale />
-            <@showError />
+            <#if showErrors>
+                <@showError />
+            </#if>
             <@spring.formInput pathAltLocale, 'class="'+cssClass+'"' fieldType />
         </div>
     </#if>
@@ -114,6 +118,10 @@
     <@showError cssClass=cssErrorClass />
     
     <@spring.formInput pathLocale, 'class="'+cssClass+'" maxlength="'+maxLength+'" '+attributes />
+</#macro>
+
+<#macro errorsSummary path prefix>
+    <@u.errorsSummary  path=path prefix=prefix/>
 </#macro>
 
 <#--

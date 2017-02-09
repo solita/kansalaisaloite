@@ -32,7 +32,7 @@ public class FollowServiceTest extends EmailSpyConfiguration {
         FollowInitiativeDto followInitiativeDto = new FollowInitiativeDto();
         followInitiativeDto.setEmail("INVALID EMAIL");
 
-        assertFalse(followService.followInitiative(initiativeId, followInitiativeDto, emailValidationErrors(followInitiativeDto)));
+        assertFalse(followService.followInitiative(initiativeId, followInitiativeDto, emailValidationErrors(followInitiativeDto), null));
 
         assertSentEmailCount(0);
     }
@@ -45,7 +45,7 @@ public class FollowServiceTest extends EmailSpyConfiguration {
         FollowInitiativeDto followInitiativeDto = new FollowInitiativeDto();
         followInitiativeDto.setEmail("follower@example.com");
 
-        assertTrue(followService.followInitiative(initiativeId, followInitiativeDto, emailValidationErrors(followInitiativeDto)));
+        assertTrue(followService.followInitiative(initiativeId, followInitiativeDto, emailValidationErrors(followInitiativeDto), null));
 
         assertSentEmailCount(1);
         assertSentEmail("follower@example.com", "Olet tilannut aloitteen sähköpostitiedotteet / SV Olet tilannut aloitteen sähköpostitiedotteet");

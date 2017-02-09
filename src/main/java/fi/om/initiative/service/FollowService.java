@@ -17,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.SmartValidator;
 
 import javax.annotation.Resource;
@@ -38,6 +39,9 @@ public class FollowService {
 
     @Resource
     private SmartValidator validator;
+
+    @Resource
+    private RecaptchaVerifier recaptchaVerifier;
 
     private final Logger log = LoggerFactory.getLogger(FollowService.class);
 
@@ -85,17 +89,26 @@ public class FollowService {
     }
 
     @Transactional
-    public boolean followInitiative(long id, FollowInitiativeDto followInitiativeDto, BindingResult bindingResult) {
+    public boolean followInitiative(long id, FollowInitiativeDto followInitiativeDto, BindingResult bindingResult, String gRecaptchaResponse) {
+
         validator.validate(followInitiativeDto, bindingResult);
 
         if (bindingResult.hasErrors()) {
             return false;
         }
 
+        recaptchaVerifier.verify(gRecaptchaResponse, bindingResult);
+
+        if (bindingResult.hasErrors()) {
+            return false;
+        }
+
         try {
+
             String unsubscribeHash = RandomHashCreator.randomString(40);
             followInitiativeDao.addFollow(id, new Follower(followInitiativeDto.getEmail(), unsubscribeHash));
             emailService.sendFollowConfirmationEmail(initiativeDao.getInitiativeForManagement(id, false), followInitiativeDto.getEmail(), unsubscribeHash);
+            log.info("Follow added for initiative {} with email {}", id, followInitiativeDto.getEmail());
         } catch (DuplicateException e) {
             log.warn("Duplicate following on " + id + ": " + followInitiativeDto.getEmail());
         }

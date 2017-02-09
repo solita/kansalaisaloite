@@ -1,5 +1,6 @@
 package fi.om.initiative.web;
 
+import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import fi.om.initiative.conf.EnvironmentSettings;
@@ -71,6 +72,7 @@ public class BaseController {
         model.addAttribute("footerLinks", footerLinkProvider.getFooterLinks(locale));
         model.addAttribute("superSearchEnabled", urls.getSuperSearchUrl()!=null);
         model.addAttribute("samlEnabled", environmentSettings.samlEnabled);
+        model.addAttribute("recaptchaSiteKey", environmentSettings.recaptchaSiteKey);
 
         try {
             model.addAttribute("UrlConstants", freemarkerObjectWrapper.getStaticModels().get(Urls.class.getName()));

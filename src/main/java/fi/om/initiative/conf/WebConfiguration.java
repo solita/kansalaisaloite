@@ -99,7 +99,8 @@ public class WebConfiguration extends WebMvcConfigurationSupport {
                 appVersion(env),
                 commitHash(env),
                 omPiwicId(env),
-                Boolean.valueOf(env.getRequiredProperty("saml.login.enabled")));
+                Boolean.valueOf(env.getRequiredProperty("saml.login.enabled")),
+                env.getProperty(PropertyNames.recaptchaSiteKey));
 
     }
 

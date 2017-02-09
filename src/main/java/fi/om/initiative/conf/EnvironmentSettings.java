@@ -11,8 +11,9 @@ public class EnvironmentSettings {
     public final String commitHash;
     public final Optional<Integer> omPiwikId;
     public final boolean samlEnabled;
+    public final String recaptchaSiteKey;
 
-    public EnvironmentSettings(String appEnvironment, Boolean optimizeResources, String resourcesVersion, String appVersion, String commitHash, Optional<Integer> omPiwikId, boolean samlEnabled) {
+    public EnvironmentSettings(String appEnvironment, Boolean optimizeResources, String resourcesVersion, String appVersion, String commitHash, Optional<Integer> omPiwikId, boolean samlEnabled, String recaptchaSiteKey) {
 
         this.appEnvironment = appEnvironment;
         this.optimizeResources = optimizeResources;
@@ -21,6 +22,7 @@ public class EnvironmentSettings {
         this.commitHash = commitHash;
         this.omPiwikId = omPiwikId;
         this.samlEnabled = samlEnabled;
+        this.recaptchaSiteKey = recaptchaSiteKey;
     }
 
 }

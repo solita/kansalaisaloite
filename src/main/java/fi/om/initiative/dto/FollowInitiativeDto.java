@@ -1,5 +1,6 @@
 package fi.om.initiative.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import fi.om.initiative.dto.author.ContactInfo;
 import org.hibernate.validator.constraints.NotEmpty;
 

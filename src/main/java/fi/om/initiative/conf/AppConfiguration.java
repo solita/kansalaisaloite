@@ -43,6 +43,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 
@@ -421,6 +422,13 @@ public class AppConfiguration {
                 pdf_fi,
                 pdf_sv
                 );
+    }
+
+    @Bean
+    public RecaptchaVerifier recaptchaVerifier() {
+        return new RecaptchaVerifier("https://www.google.com/recaptcha/api/siteverify",
+                env.getProperty(PropertyNames.recaptchaApiSecret),
+                new RestTemplate());
     }
 
     @PostConstruct

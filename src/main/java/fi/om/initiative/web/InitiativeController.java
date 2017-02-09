@@ -300,9 +300,10 @@ public class InitiativeController extends BaseController {
 
     @RequestMapping(value = { VIEW_FI, VIEW_SV }, method = RequestMethod.POST, params = "action-follow")
     public String followInitiative(@PathVariable("id") long initiativeId,
+                                   @RequestParam(value = "g-recaptcha-response", required = false) String gRecaptchaResponse,
                                    @ModelAttribute("followInitiative") FollowInitiativeDto followInitiativeDto, Model model, BindingResult bindingResult, Locale locale, HttpServletRequest request) {
         // This also validates the data. For some reason @Valid did not work.
-        followService.followInitiative(initiativeId, followInitiativeDto, bindingResult);
+        followService.followInitiative(initiativeId, followInitiativeDto, bindingResult, gRecaptchaResponse);
 
         if (bindingResult.hasErrors()) {
             return view(initiativeId, null, null, followInitiativeDto, model, locale, request);

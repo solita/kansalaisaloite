@@ -100,4 +100,8 @@ public final class PropertyNames {
 
     public static final String appEnvironment = "app.environment";
 
+    public static final String recaptchaApiSecret = "recaptcha.api.secret";
+
+    public static final String recaptchaSiteKey = "recaptcha.site.key";
+
 }
