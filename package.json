@@ -1,0 +1,9 @@
+{
+  "name": "Kansalaisaloite",
+  "version": "0.0.1",
+  "devDependencies": {
+    "grunt": "~1.0.1",
+    "grunt-contrib-watch": "~1.0.0",
+    "grunt-shell": "~2.1.0"
+  }
+}
