@@ -788,7 +788,7 @@
         $.post("/session", function (data) {
           $("#CSRFToken").val(data);
           var captchaUrl = "https://www.google.com/recaptcha/api.js?hl=" + $('html').attr('lang');
-          $('head').append("<script src='"+captchaUrl+"'></script>");
+          $('head').append("<script src='" + captchaUrl + "'></script>");
         });
         return false;
       });
