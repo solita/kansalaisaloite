@@ -48,7 +48,7 @@ public class FollowServiceTest extends EmailSpyConfiguration {
         assertTrue(followService.followInitiative(initiativeId, followInitiativeDto, emailValidationErrors(followInitiativeDto), null));
 
         assertSentEmailCount(1);
-        assertSentEmail("follower@example.com", "Olet tilannut aloitteen sähköpostitiedotteet / SV Olet tilannut aloitteen sähköpostitiedotteet");
+        assertSentEmail("follower@example.com", "Olet tilannut aloitteen sähköpostitiedotteet / Du har beställt e-postmeddelanden med information om initiativet");
 
     }
 
