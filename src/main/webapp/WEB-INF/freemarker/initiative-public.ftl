@@ -196,7 +196,7 @@
 </script>
 
 <#if showFollowFormAlreadyOpen>
-    <script src='https://www.google.com/recaptcha/api.js'></script>
+    <script src='https://www.google.com/recaptcha/api.js?hl=${locale}'></script>
 </#if>
 
 </@l.main>

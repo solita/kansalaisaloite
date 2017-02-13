@@ -787,7 +787,8 @@
         generateModal(modalData.followForm(), "full");
         $.post("/session", function (data) {
           $("#CSRFToken").val(data);
-          $('head').append("<script src='https://www.google.com/recaptcha/api.js'></script>");
+          var captchaUrl = "https://www.google.com/recaptcha/api.js?hl=" + $('html').attr('lang');
+          $('head').append("<script src='"+captchaUrl+"'></script>");
         });
         return false;
       });
