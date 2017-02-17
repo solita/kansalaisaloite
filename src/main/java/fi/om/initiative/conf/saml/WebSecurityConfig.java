@@ -266,7 +266,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public ExtendedMetadata extendedMetadata() {
         ExtendedMetadata extendedMetadata = new ExtendedMetadata();
         extendedMetadata.setIdpDiscoveryEnabled(false);
-        extendedMetadata.setSignMetadata(false);
+        extendedMetadata.setSignMetadata(true);
+        extendedMetadata.setRequireLogoutRequestSigned(true);
+        extendedMetadata.setRequireLogoutResponseSigned(true);
 
         return extendedMetadata;
     }
