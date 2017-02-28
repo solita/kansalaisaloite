@@ -88,6 +88,11 @@
         <md:SurName>Karpanoja</md:SurName>
         <md:EmailAddress>mailto:pauli.karpanoja@solita.fi</md:EmailAddress>
     </md:ContactPerson>
+    <md:ContactPerson contactType="technical">
+        <md:GivenName>Solita</md:GivenName>
+        <md:SurName>Solita</md:SurName>
+        <md:EmailAddress>mailto:aloitepalvelut@solita.fi</md:EmailAddress>
+    </md:ContactPerson>
     <md:ContactPerson contactType="support">
         <md:GivenName>Anneli</md:GivenName>
         <md:SurName>Salomaa</md:SurName>
