@@ -261,7 +261,7 @@
                 <#assign progressBarTooltip><@u.messageHTML key="searchResults.initiative.bar.votingEnded" args=[totalSupportCount] /></#assign>
               </#if>
 
-                        <span class="progress-bars trigger-tooltip" title="${progressBarTooltip}">
+                        <span class="progress-bars">
                             <span class="bar-container count ${(totalSupportCount < requiredVoteCount)?string("","completed")}">
                                 <#assign countWidth = (100-100*totalSupportCount/requiredVoteCount) />
                               <#if countWidth lt 0>
