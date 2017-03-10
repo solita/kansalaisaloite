@@ -160,7 +160,7 @@
       myConsole = console;
     }
 
- 
+
 
     /**
      * Common helpers
@@ -368,24 +368,23 @@
       };
 
 
-      // Matches with data-name of the help-icon and the class-name of the help-text container
-        $('.help').hover(function (e) {
-            console.log(e);
-            if (e.type == 'mouseenter') {
-                var help, $thisHelp;
-                help = $(this).data('name');
-                $thisHelp = $('.input-block-extra.' + help);
-                // Leave the help open if toggled by hovering
-                toggleHelpTexts($thisHelp, false);
-            }
-        }).click(function () {
-            var help, $thisHelp;
-            help = $(this).data('name');
-            $thisHelp = $('.input-block-extra.' + help);
+        // Matches with data-name of the help-icon and the class-name of the help-text container
+      $('.help').hover(function (e) {
+        if (e.type === 'mouseenter') {
+          var help, $thisHelp;
+          help = $(this).data('name');
+          $thisHelp = $('.input-block-extra.' + help);
+          // Leave the help open if toggled by hovering
+          toggleHelpTexts($thisHelp, false);
+        }
+      }).click(function () {
+        var help, $thisHelp;
+        help = $(this).data('name');
+        $thisHelp = $('.input-block-extra.' + help);
 
-            // Close the help if triggered from click
-            toggleHelpTexts($thisHelp, true);
-        });
+        // Close the help if triggered from click
+        toggleHelpTexts($thisHelp, true);
+      });
 
       // Matches class-name "input-block-extra" within the same block
       $('input[type=text],input[type=checkbox],input[type=radio],textarea').on('focus', function () {
