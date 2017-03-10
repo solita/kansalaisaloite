@@ -369,16 +369,26 @@
 
 
       // Matches with data-name of the help-icon and the class-name of the help-text container
-      $('.help').click(function () {
-        var help, $thisHelp;
-        help = $(this).data('name');
-        $thisHelp = $('.input-block-extra.' + help);
+        $('.help').hover(function (e) {
+            console.log(e);
+            if (e.type == 'mouseenter') {
+                var help, $thisHelp;
+                help = $(this).data('name');
+                $thisHelp = $('.input-block-extra.' + help);
+                // Leave the help open if toggled by hovering
+                toggleHelpTexts($thisHelp, false);
+            }
+        }).click(function () {
+            var help, $thisHelp;
+            help = $(this).data('name');
+            $thisHelp = $('.input-block-extra.' + help);
 
-        toggleHelpTexts($thisHelp, true);
-      });
+            // Close the help if triggered from click
+            toggleHelpTexts($thisHelp, true);
+        });
 
       // Matches class-name "input-block-extra" within the same block
-      $('input[type=text],textarea').on('focus', function () {
+      $('input[type=text],input[type=checkbox],input[type=radio],textarea').on('focus', function () {
         var $thisHelp = $(this).parents('.input-block-content:first').find('.input-block-extra:first');
         toggleHelpTexts($thisHelp, false);
       });

@@ -212,7 +212,7 @@
 -->
 <#macro helpText path noscript="" href="">
     <#if noscript!="noscript">
-    <span class="icon-small help trigger-tooltip hidden-nojs" title="<@u.message path+".iconTitle" />" data-name="${path!""}"></span>
+    <span class="icon-small help hidden-nojs" title="<@u.message path+".iconTitle" />" data-name="${path!""}"></span>
     </#if>    
     <div class="input-block-extra ${path!""} js-hide ${(noscript="noscript")?string('','hidden-nojs')}">
         <div class="input-block-extra-content">
