@@ -905,7 +905,7 @@
     $('.trigger-tooltip[title]').tooltip({
       animation: true,
       effect: 'fade',
-      placement: 'top right',
+      placement: 'bottom',
       offset: [-6, 0],
       trigger: 'hover',
       predelay: 500 // Small delay before showing tooltip for more relaxed behaviour.
