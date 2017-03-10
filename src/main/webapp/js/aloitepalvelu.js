@@ -387,7 +387,7 @@
       });
 
       // Matches class-name "input-block-extra" within the same block
-      $('input[type=text],input[type=checkbox],input[type=radio],textarea').on('focus', function () {
+      $('#form-initiative input[type=text],#form-initiative input[type=checkbox],#form-initiative input[type=radio],#form-initiative textarea').on('focus', function () {
         var $thisHelp = $(this).parents('.input-block-content:first').find('.input-block-extra:first');
         toggleHelpTexts($thisHelp, false);
       });
