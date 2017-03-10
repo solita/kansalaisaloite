@@ -23,7 +23,7 @@
 
 <@l.main "page.search" pageTitle!"">
 
-    <h1>
+    <h1 class="name">
         ${pageTitle} <span class="icon-small help-tooltip pull-down trigger-tooltip hidden-xs" title="<@u.message key="initiative.search.${searchMode}.description" args=[minSupportCountForSearch!""] />" ></span>
         <#if currentUser.om && !currentSearch.viewOm>
            <span class="switch-view hidden-xs"><a href="${urls.searchOmView()}"><@u.message "user.omSearchView"/></a></span>
