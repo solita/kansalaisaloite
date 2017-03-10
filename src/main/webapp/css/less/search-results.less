@@ -75,7 +75,11 @@
     }
 
     li {
+
         overflow:visible;
+        @media @xs, @sm {
+            overflow:hidden;
+        }
         position:relative;
         display:block;
         border-bottom:1px solid #ddd;
