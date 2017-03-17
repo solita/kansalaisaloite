@@ -10,20 +10,17 @@ public class SamlUser {
 
     private String lastName;
 
-    private String municipalityCode;
-
     private String municipalityNameFi;
 
     private String municipalityNameSv;
 
     private boolean finnishCitizen;
 
-    public SamlUser(String ssn, String address, String firstNames, String lastName, String municipalityCode, String municipalityNameFi, String municipalityNameSv, boolean finnishCitizen) {
+    public SamlUser(String ssn, String address, String firstNames, String lastName, String municipalityNameFi, String municipalityNameSv, boolean finnishCitizen) {
         this.ssn = ssn;
         this.address = address;
         this.firstNames = firstNames;
         this.lastName = lastName;
-        this.municipalityCode = municipalityCode;
         this.municipalityNameFi = municipalityNameFi;
         this.municipalityNameSv = municipalityNameSv;
         this.finnishCitizen = finnishCitizen;
@@ -43,10 +40,6 @@ public class SamlUser {
 
     public String getLastName() {
         return lastName;
-    }
-
-    public String getMunicipalityCode() {
-        return municipalityCode;
     }
 
     public String getMunicipalityNameFi() {

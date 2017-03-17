@@ -1,5 +1,6 @@
 package fi.om.initiative.conf.saml;
 
+import java.util.Optional;
 import fi.om.initiative.dto.User;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.saml.SAMLCredential;
@@ -9,6 +10,9 @@ import org.springframework.security.saml.userdetails.SAMLUserDetailsService;
 public class SamlUserLoader implements SAMLUserDetailsService {
 
     public static final String FINNISH_CITIZEN_FLAG = "1";
+
+    protected static final String MISSING_MUNICIPALITY_FI = "Kotikunta ei tiedossa";
+    protected static final String MISSING_MUNICIPALITY_SV = "Hemkommun saknas";
 
     @Override
     public SamlUser loadUserBySAML(SAMLCredential credential) throws UsernameNotFoundException {
@@ -32,8 +36,10 @@ public class SamlUserLoader implements SAMLUserDetailsService {
         String streetAddress = credential.getAttributeAsString("urn:oid:1.2.246.517.2002.2.4");
         String postalCode = credential.getAttributeAsString("urn:oid:1.2.246.517.2002.2.6");
         String postOffice = credential.getAttributeAsString("urn:oid:1.2.246.517.2002.2.7");
-        String municipalityNumber = credential.getAttributeAsString("urn:oid:1.2.246.517.2002.2.18");
-        String municipalityName = credential.getAttributeAsString("urn:oid:1.2.246.517.2002.2.19");
+        String municipalityNameFi = firstNotEmpty(credential.getAttributeAsString("urn:oid:1.2.246.517.2002.2.19"), MISSING_MUNICIPALITY_FI);
+        // TODO: Use this when we get this from IDP.
+//        String municipalityNameSv = firstNotEmpty(credential.getAttributeAsString("urn:oid:1.2.246.517.2002.2.20"), MISSING_MUNICIPALITY_SV);
+        String municipalityNameSv = firstNotEmpty(credential.getAttributeAsString("urn:oid:1.2.246.517.2002.2.19"), MISSING_MUNICIPALITY_SV);
         String firstNames = credential.getAttributeAsString("http://eidas.europa.eu/attributes/naturalperson/CurrentGivenName");
         String lastName = credential.getAttributeAsString("urn:oid:2.5.4.4");
 
@@ -42,6 +48,12 @@ public class SamlUserLoader implements SAMLUserDetailsService {
 
         String finnishCitizen = credential.getAttributeAsString("urn:oid:1.2.246.517.2002.2.26");
 
-        return new SamlUser(User.validateSSN(ssn), address, firstNames, lastName, municipalityNumber, municipalityName, municipalityName, FINNISH_CITIZEN_FLAG.equals(finnishCitizen));
+        return new SamlUser(User.validateSSN(ssn), address, firstNames, lastName, municipalityNameFi, municipalityNameSv, FINNISH_CITIZEN_FLAG.equals(finnishCitizen));
+    }
+
+    private static String firstNotEmpty(String value, String valueIfEmpty) {
+        return Optional.ofNullable(value)
+                .filter(v -> v.trim().length() != 0)
+                .orElse(valueIfEmpty);
     }
 }
