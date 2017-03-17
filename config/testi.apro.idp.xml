@@ -1,28 +1,99 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<EntityDescriptor  xmlns="urn:oasis:names:tc:SAML:2.0:metadata"
-                   xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
-                   xmlns:shibmd="urn:mace:shibboleth:metadata:1.0"
-                   xmlns:xml="http://www.w3.org/XML/1998/namespace"
-                   xmlns:mdui="urn:oasis:names:tc:SAML:metadata:ui"
-                   entityID="https://testi.apro.tunnistus.fi/idp1">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><EntityDescriptor xmlns="urn:oasis:names:tc:SAML:2.0:metadata" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:mdui="urn:oasis:names:tc:SAML:metadata:ui" xmlns:shibmd="urn:mace:shibboleth:metadata:1.0" entityID="https://testi.apro.tunnistus.fi/idp1"><ds:Signature>
+    <ds:SignedInfo>
+        <ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+        <ds:SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"/>
+        <ds:Reference URI="">
+            <ds:Transforms>
+                <ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+                <ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+            </ds:Transforms>
+            <ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/>
+            <ds:DigestValue>6V+gzwL8nOtRilZqLbLVwMpvtEKCK1/v+x+Yr/GdZEU=</ds:DigestValue>
+        </ds:Reference>
+    </ds:SignedInfo>
+    <ds:SignatureValue>
+        GgDfkwJHiEPSBpFsqdfhYWeiBrU+KZkAeF4ljWBps1s1STLZfB83shu+zprO8buD6jhd9x5gztTU
+        RSdqO0caS9Jch8zpgyVKISZFiJ1Rimc3A0x7ZLQIhorM7wyiakCEWRYAtk/WEjDPM6andHJ4fzK+
+        5pY6+TOSZBt3hjWgIsbpWLtYYRAtFomRtRyiufx7oHl5uBCyF08Fvg+rkyWHuWNVcPqDWfCVDjnA
+        PPI4v0zhl4JySfc3rXQFrEOjznbFL3xlxXmESiPXpIDjmx5uqA57q3JXUaIx1Ft4MEghxVZYAIig
+        /4ik35mRYhYdArXJiqRakQPnpQRMPDf9tmVGOA==
+    </ds:SignatureValue>
+    <ds:KeyInfo>
+        <ds:KeyValue>
+            <ds:RSAKeyValue>
+                <ds:Modulus>
+                    nKNzRungkEHFNa13aJZpqb4P/kDw+s3PIeH6Q7gmEcaFOqMSKVE9d9zHBSQYTfhK86J7lpFgqs0r
+                    9rT/n3KWYFSVUjSLAwPFQ+naCBB1DBrUT/p8pSjGuOtTgCVpyCZnBKLZGNURhuXfeQG1JrK4agmA
+                    hfZvkhl+o9iAnOtOetMESndvjHJ7rMcmGlswJy3MEZMkEYmvCddvkhEgpblm3c+EtO9pvDfJVtqK
+                    KsvABK0lb9VSFVG0x6l0VCAWr0mQYg0jp7vyjlElcjwqUGFPJ51XIoqMG6/APv9TDBlBQdBEh93z
+                    DWLSmmuD1GX2So51rEVhLZ1VI/WlczP2DbeUFw==
+                </ds:Modulus>
+                <ds:Exponent>AQAB</ds:Exponent>
+            </ds:RSAKeyValue>
+        </ds:KeyValue>
+        <ds:X509Data>
+            <ds:X509Certificate>
+                MIIGpDCCBIygAwIBAgIEBgU/RjANBgkqhkiG9w0BAQsFADB0MQswCQYDVQQGEwJGSTEjMCEGA1UE
+                ChMaVmFlc3RvcmVraXN0ZXJpa2Vza3VzIFRFU1QxGDAWBgNVBAsTD1Rlc3RpdmFybWVudGVldDEm
+                MCQGA1UEAxMdVlJLIENBIGZvciBUZXN0IFB1cnBvc2VzIC0gRzMwHhcNMTcwMTMwMTIwMDAwWhcN
+                MTkwMTMwMTE1OTU5WjCBjjELMAkGA1UEBhMCRkkxEDAOBgNVBAgTB0ZpbmxhbmQxETAPBgNVBAcT
+                CEhlbHNpbmtpMR4wHAYDVQQKExVWYWVzdG9yZWtpc3RlcmlrZXNrdXMxGDAWBgNVBAsTD1Rlc3Rp
+                dmFybWVudGVldDEgMB4GA1UEAxMXdGVzdGkuYXByby50dW5uaXN0dXMuZmkwggEiMA0GCSqGSIb3
+                DQEBAQUAA4IBDwAwggEKAoIBAQCco3NG6eCQQcU1rXdolmmpvg/+QPD6zc8h4fpDuCYRxoU6oxIp
+                UT133McFJBhN+ErzonuWkWCqzSv2tP+fcpZgVJVSNIsDA8VD6doIEHUMGtRP+nylKMa461OAJWnI
+                JmcEotkY1RGG5d95AbUmsrhqCYCF9m+SGX6j2ICc60560wRKd2+McnusxyYaWzAnLcwRkyQRia8J
+                12+SESCluWbdz4S072m8N8lW2ooqy8AErSVv1VIVUbTHqXRUIBavSZBiDSOnu/KOUSVyPCpQYU8n
+                nVciiowbr8A+/1MMGUFB0ESH3fMNYtKaa4PUZfZKjnWsRWEtnVUj9aVzM/YNt5QXAgMBAAGjggIh
+                MIICHTAfBgNVHSMEGDAWgBRbzoacx1ND5gK5+3FsjG2jIOWx+DAdBgNVHQ4EFgQUq5ThkIXBvjOt
+                nrn3kTQUKvZv8zMwDgYDVR0PAQH/BAQDAgSwMIHXBgNVHSAEgc8wgcwwCAYGBACPegEHMIG/Bgkq
+                gXaEBWMKIgEwgbEwJwYIKwYBBQUHAgEWG2h0dHA6Ly93d3cuZmluZWlkLmZpL2Nwczk5LzCBhQYI
+                KwYBBQUHAgIweRp3VmFybWVubmVwb2xpdGlpa2thIG9uIHNhYXRhdmlsbGEgLSBDZXJ0aWZpa2F0
+                IHBvbGljeSBmaW5ucyAtIENlcnRpZmljYXRlIHBvbGljeSBpcyBhdmFpbGFibGUgaHR0cDovL3d3
+                dy5maW5laWQuZmkvY3BzOTkwIgYDVR0RBBswGYIXdGVzdGkuYXByby50dW5uaXN0dXMuZmkwDwYD
+                VR0TAQH/BAUwAwEBADA3BgNVHR8EMDAuMCygKqAohiZodHRwOi8vcHJveHkuZmluZWlkLmZpL2Ny
+                bC92cmt0cDNjLmNybDATBgNVHSUEDDAKBggrBgEFBQcDAjBuBggrBgEFBQcBAQRiMGAwMAYIKwYB
+                BQUHMAKGJGh0dHA6Ly9wcm94eS5maW5laWQuZmkvY2EvdnJrdHAzLmNydDAsBggrBgEFBQcwAYYg
+                aHR0cDovL29jc3B0ZXN0LmZpbmVpZC5maS92cmt0cDMwDQYJKoZIhvcNAQELBQADggIBAK/bGsgH
+                rE74eoJJ82R3D40i1zLUSV7/2VxS8aelbFR2xmHhFnHPptf5bIVhrHq7kgoxqvPKtNDxL9XseRkg
+                T6kULm9kqXvjU/mh4BSdWxOxJKswHmlFOspoBXp7/Se1q26UhQxh2XBAUt1Sq2eSImH8bRywbrLf
+                DHzDZ4TLwcxo2DT4zW4UhX8lKfrlFusqb13lWmkQw8+774eBHSrCSAZlK9qrGsb1SIbGc5n6n36t
+                TpVawlUGVTtZ62Ae86elex2MbQ+76Q7giNaW3hqb71iD1vRExNjER07RTYf8LdoWe+/gKE0Ivebf
+                36xGkKnc3h8W2g8ej0oyYgbel0fcALG8POAUDU/rJ0ql4BpZDn0xjuruFNLlwrbiwzBTs3TcXGH+
+                E+cNp4ByeuP9Bu8/DmUSvFl9egyNv/31/vwR5riJMysmXNZn63eH/JXmNYUpdSfRHZ67HrolanDk
+                KTOM/MjSnNNyrP1Yi0mw+nygirCOG2/Ru9KbbIN8g2YSoZisfgCo8Gzk26t+77AiCfCNQQ5A2OHe
+                BFVEgxq7a/LzRqjLmaqIIjVyeYEM+rTGR0/x9bPzaRx67be7BgBoYm1Q5uHfU1wbbAb0dIJA10W3
+                H3Ie7/OoWW3FXwbFn1IQAsJcPB12sw6nBKWCMxszhjzbiOKwmN6El+d9e0KeWt1FL+uS
+            </ds:X509Certificate>
+        </ds:X509Data>
+    </ds:KeyInfo>
+</ds:Signature>
     <IDPSSODescriptor WantAuthnRequestsSigned="true" protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
         <Extensions>
             <shibmd:Scope regexp="false">testi.apro.tunnistus.fi</shibmd:Scope>
             <mdui:UIInfo>
-                <mdui:DisplayName xml:lang="fi">Apro test IdP FI</mdui:DisplayName>
-                <mdui:DisplayName xml:lang="en">Apro test IdP EN</mdui:DisplayName>
-                <mdui:DisplayName xml:lang="sv">Apro test IdP SV</mdui:DisplayName>
-                <mdui:Description xml:lang="fi">Apro test environment IdP FI</mdui:Description>
-                <mdui:Description xml:lang="en">Apro test environment IdP EN</mdui:Description>
-                <mdui:Description xml:lang="sv">Apro test environment IdP SV</mdui:Description>
-                <mdui:Logo height="70" width="229">https://testi.apro.tunnistus.fi/static/images/kapa.png</mdui:Logo>
+                <mdui:DisplayName xml:lang="fi">Suomi.fi-tunnistus, testiympäristö</mdui:DisplayName>
+                <mdui:DisplayName xml:lang="en">Suomi.fi-identification, test environment</mdui:DisplayName>
+                <mdui:DisplayName xml:lang="sv">Suomi.fi-identifikation, testmiljö</mdui:DisplayName>
+                <mdui:Description xml:lang="fi">Suomi.fi-tunnistus, testiympäristö</mdui:Description>
+                <mdui:Description xml:lang="en">Suomi.fi-identification, test environment</mdui:Description>
+                <mdui:Description xml:lang="sv">Suomi.fi-identifikation, testmiljö</mdui:Description>
+                <mdui:Logo height="70" width="752">https://testi.apro.tunnistus.fi/resources/img/logo_fi.svg</mdui:Logo>
             </mdui:UIInfo>
         </Extensions>
         <KeyDescriptor use="signing">
             <ds:KeyInfo>
                 <ds:X509Data>
                     <ds:X509Certificate>
-MIIDXDCCAkQCCQCDUeJYOWhkWTANBgkqhkiG9w0BAQsFADBwMQswCQYDVQQGEwJGSTEQMA4GA1UECAwHVXVzaW1hYTERMA8GA1UEBwwISGVsc2lua2kxETAPBgNVBAoMCEFwcm90ZXN0MREwDwYDVQQLDAhBcHJvdGVzdDEWMBQGA1UEAwwNQXBybyB0ZXN0IElkUDAeFw0xNjA1MzAwNzUzMjdaFw0xODA1MzAwNzUzMjdaMHAxCzAJBgNVBAYTAkZJMRAwDgYDVQQIDAdVdXNpbWFhMREwDwYDVQQHDAhIZWxzaW5raTERMA8GA1UECgwIQXByb3Rlc3QxETAPBgNVBAsMCEFwcm90ZXN0MRYwFAYDVQQDDA1BcHJvIHRlc3QgSWRQMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtdWsokhQRyMJDCW0eQMBdk/d5CH7xDokPKwsHti5PmBeaUS894FM58QMtKfTX0BwNFQLhGK5QcrOE3PrcAKMF12sBjjF2EFjs3UKmRVuUulOihZkIFTl731BaBCgO/Xyc/K0ghkv7dkc+EvKqQwlhCpQM0FDa1cfZXJcii4RceFQ8mm5P+qTDalYhmrqeXFlXGIKlEnCqBbusFKiIGTeZ2wu2yrNiyZ/6KSviLed8sHgLDuZmC3i/Ohp+iJFtxe3c8sh+KOf7bTXAMJaQSEbadBRZxdEM09ebiGDRU+Rg3naugPfHoLwLrR+F0IioUxl2DSEZUNZkT6GRtozoeUGaQIDAQABMA0GCSqGSIb3DQEBCwUAA4IBAQCW2F65D7QWGMG8qP98HTG6vUtcvzEEeJSluSaHQATN7Q80pCglJC2akuFtgflwH8Bu+pW9hCzritmoRRP6o5KqxlBCagzv9ozpTKbqqAcwYpK+2f6ZonAlVXTdQYOO6PMdfn9E0MNpq+9lvuM9a3oHoCA5dXxm74uCE+SO3wTWuEeOztHzo09K3EpH+GUzZ3rf3mfIqFICSb+szfPWuj8FUnCVYpGlMssMHnjXYryRHxz7EDMQk4I3Y10q+7N3XaWSajOQm7fi2P8GE1WZwxbUWLcr3i6vm2L3DLmtA/LzrD1n0w9sxGQIer/Jmnytc24qNxeXoMap8AdoPr9Yx+yL
+                        MIIDXDCCAkQCCQCDUeJYOWhkWTANBgkqhkiG9w0BAQsFADBwMQswCQYDVQQGEwJGSTEQMA4GA1UECAwHVXVzaW1hYTERMA8GA1UEBwwISGVsc2lua2kxETAPBgNVBAoMCEFwcm90ZXN0MREwDwYDVQQLDAhBcHJvdGVzdDEWMBQGA1UEAwwNQXBybyB0ZXN0IElkUDAeFw0xNjA1MzAwNzUzMjdaFw0xODA1MzAwNzUzMjdaMHAxCzAJBgNVBAYTAkZJMRAwDgYDVQQIDAdVdXNpbWFhMREwDwYDVQQHDAhIZWxzaW5raTERMA8GA1UECgwIQXByb3Rlc3QxETAPBgNVBAsMCEFwcm90ZXN0MRYwFAYDVQQDDA1BcHJvIHRlc3QgSWRQMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtdWsokhQRyMJDCW0eQMBdk/d5CH7xDokPKwsHti5PmBeaUS894FM58QMtKfTX0BwNFQLhGK5QcrOE3PrcAKMF12sBjjF2EFjs3UKmRVuUulOihZkIFTl731BaBCgO/Xyc/K0ghkv7dkc+EvKqQwlhCpQM0FDa1cfZXJcii4RceFQ8mm5P+qTDalYhmrqeXFlXGIKlEnCqBbusFKiIGTeZ2wu2yrNiyZ/6KSviLed8sHgLDuZmC3i/Ohp+iJFtxe3c8sh+KOf7bTXAMJaQSEbadBRZxdEM09ebiGDRU+Rg3naugPfHoLwLrR+F0IioUxl2DSEZUNZkT6GRtozoeUGaQIDAQABMA0GCSqGSIb3DQEBCwUAA4IBAQCW2F65D7QWGMG8qP98HTG6vUtcvzEEeJSluSaHQATN7Q80pCglJC2akuFtgflwH8Bu+pW9hCzritmoRRP6o5KqxlBCagzv9ozpTKbqqAcwYpK+2f6ZonAlVXTdQYOO6PMdfn9E0MNpq+9lvuM9a3oHoCA5dXxm74uCE+SO3wTWuEeOztHzo09K3EpH+GUzZ3rf3mfIqFICSb+szfPWuj8FUnCVYpGlMssMHnjXYryRHxz7EDMQk4I3Y10q+7N3XaWSajOQm7fi2P8GE1WZwxbUWLcr3i6vm2L3DLmtA/LzrD1n0w9sxGQIer/Jmnytc24qNxeXoMap8AdoPr9Yx+yL
+                    </ds:X509Certificate>
+                </ds:X509Data>
+            </ds:KeyInfo>
+        </KeyDescriptor>
+        <KeyDescriptor use="signing">
+            <ds:KeyInfo>
+                <ds:X509Data>
+                    <ds:X509Certificate>
+                        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
                     </ds:X509Certificate>
                 </ds:X509Data>
             </ds:KeyInfo>
@@ -37,15 +108,20 @@ MIIDXDCCAkQCCQCDUeJYOWhkWTANBgkqhkiG9w0BAQsFADBwMQswCQYDVQQGEwJGSTEQMA4GA1UECAwH
         <OrganizationName xml:lang="fi">Väestörekisterikeskus</OrganizationName>
         <OrganizationName xml:lang="en">Population Register Centre</OrganizationName>
         <OrganizationName xml:lang="sv">Befolkningsregistercentralen</OrganizationName>
-        <OrganizationDisplayName xml:lang="fi">Kapa Apro development FI</OrganizationDisplayName>
-        <OrganizationDisplayName xml:lang="en">Kapa Apro development EN</OrganizationDisplayName>
-        <OrganizationDisplayName xml:lang="sv">Kapa Apro development SV</OrganizationDisplayName>
-        <OrganizationURL xml:lang="fi">http://vm.fi/palveluarkkitehtuuri</OrganizationURL>
-        <OrganizationURL xml:lang="en">http://vm.fi/en/frontpage</OrganizationURL>
-        <OrganizationURL xml:lang="sv">http://vm.fi/sv/framsida</OrganizationURL>
+        <OrganizationDisplayName xml:lang="fi">Väestörekisterikeskus</OrganizationDisplayName>
+        <OrganizationDisplayName xml:lang="en">Population Register Centre</OrganizationDisplayName>
+        <OrganizationDisplayName xml:lang="sv">Befolkningsregistercentralen</OrganizationDisplayName>
+        <OrganizationURL xml:lang="fi">http://vrk.fi</OrganizationURL>
+        <OrganizationURL xml:lang="en">http://vrk.fi</OrganizationURL>
+        <OrganizationURL xml:lang="sv">http://vrk.fi</OrganizationURL>
     </Organization>
     <ContactPerson contactType="technical">
-        <GivenName>KAPA</GivenName>
+        <GivenName>Suomi.fi-tunnistus</GivenName>
+        <SurName>Kayttoonotot</SurName>
+        <EmailAddress>mailto:tunnistus-kayttoonotot@vrk.fi</EmailAddress>
+    </ContactPerson>
+    <ContactPerson contactType="administrative">
+        <GivenName>KaPA</GivenName>
         <SurName>Asiakaspalvelu</SurName>
         <EmailAddress>mailto:kapa-asiakaspalvelu@vrk.fi</EmailAddress>
     </ContactPerson>
