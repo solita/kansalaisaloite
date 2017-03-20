@@ -1,5 +1,7 @@
 package fi.om.initiative.conf.saml;
 
+import java.util.Arrays;
+import java.util.Objects;
 import java.util.Optional;
 import fi.om.initiative.dto.User;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -36,10 +38,15 @@ public class SamlUserLoader implements SAMLUserDetailsService {
         String streetAddress = credential.getAttributeAsString("urn:oid:1.2.246.517.2002.2.4");
         String postalCode = credential.getAttributeAsString("urn:oid:1.2.246.517.2002.2.6");
         String postOffice = credential.getAttributeAsString("urn:oid:1.2.246.517.2002.2.7");
-        String municipalityNameFi = firstNotEmpty(credential.getAttributeAsString("urn:oid:1.2.246.517.2002.2.19"), MISSING_MUNICIPALITY_FI);
-        // TODO: Use this when we get this from IDP.
-//        String municipalityNameSv = firstNotEmpty(credential.getAttributeAsString("urn:oid:1.2.246.517.2002.2.20"), MISSING_MUNICIPALITY_SV);
-        String municipalityNameSv = firstNotEmpty(credential.getAttributeAsString("urn:oid:1.2.246.517.2002.2.19"), MISSING_MUNICIPALITY_SV);
+
+        String municipalityNameFi = firstNotEmpty(
+                credential.getAttributeAsString("urn:oid:1.2.246.517.2002.2.19") // Finnish city
+        ).orElse(MISSING_MUNICIPALITY_FI);
+        String municipalityNameSv = firstNotEmpty(
+                credential.getAttributeAsString("urn:oid:1.2.246.517.2002.2.20"), // Swedish city
+                credential.getAttributeAsString("urn:oid:1.2.246.517.2002.2.19") // Finnish city
+        ).orElse(MISSING_MUNICIPALITY_SV);
+
         String firstNames = credential.getAttributeAsString("http://eidas.europa.eu/attributes/naturalperson/CurrentGivenName");
         String lastName = credential.getAttributeAsString("urn:oid:2.5.4.4");
 
@@ -51,9 +58,10 @@ public class SamlUserLoader implements SAMLUserDetailsService {
         return new SamlUser(User.validateSSN(ssn), address, firstNames, lastName, municipalityNameFi, municipalityNameSv, FINNISH_CITIZEN_FLAG.equals(finnishCitizen));
     }
 
-    private static String firstNotEmpty(String value, String valueIfEmpty) {
-        return Optional.ofNullable(value)
+    static Optional<String> firstNotEmpty(String ... values) {
+        return Arrays.stream(values)
+                .filter(Objects::nonNull)
                 .filter(v -> v.trim().length() != 0)
-                .orElse(valueIfEmpty);
+                .findFirst();
     }
 }
