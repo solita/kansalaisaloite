@@ -82,13 +82,7 @@ public class WebConfiguration extends WebMvcConfigurationSupport {
             return new TestDataController();
         }
 
-        @Bean
-        public KapaController kapaController() {
-            return new KapaController();
-        }
-
     }
-
 
     @Bean
     public EnvironmentSettings environmentSettings() {
@@ -271,6 +265,11 @@ public class WebConfiguration extends WebMvcConfigurationSupport {
     @Bean
     public HttpMessageConverter<?> jsonpConverter() {
         return new JsonpMessageConverter<>(jsonConverter());
+    }
+
+    @Bean
+    public KapaController kapaController() {
+        return new KapaController();
     }
 
     @Bean
