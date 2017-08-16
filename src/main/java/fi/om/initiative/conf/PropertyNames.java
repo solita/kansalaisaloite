@@ -50,6 +50,10 @@ public final class PropertyNames {
     public static final String emailSmtpServer = "email.smtp.server";
 
     public static final String emailSmtpServerPort = "email.smtp.server.port";
+
+    public static final String emailSmtpUsername = "email.smtp.username";
+
+    public static final String emailSmtpPassword = "email.smtp.password";
     
     public static final String emailDefaultReplyTo = "email.default.reply-to";
     
