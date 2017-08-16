@@ -268,9 +268,13 @@ public class AppConfiguration {
     public JavaMailSender javaMailSender() {
         String smtpServer = env.getRequiredProperty(PropertyNames.emailSmtpServer);
         Integer smtpServerPort = env.getProperty(PropertyNames.emailSmtpServerPort, Integer.class, null);
-        
+        String smtpUserName = env.getProperty(PropertyNames.emailSmtpUsername);
+        String smtpPassword = env.getProperty(PropertyNames.emailSmtpPassword);
+
         JavaMailSenderImpl sender = new JavaMailSenderImpl();
         sender.setHost(smtpServer);
+        sender.setUsername(smtpUserName);
+        sender.setPassword(smtpPassword);
         if (smtpServerPort != null) { // otherwise use default port
             sender.setPort(smtpServerPort);
         }
