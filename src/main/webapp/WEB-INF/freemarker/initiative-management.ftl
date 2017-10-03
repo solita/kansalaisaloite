@@ -269,32 +269,8 @@
             content:    '<@u.messageHTML "modal.sessionHasEnded" />'
         }]
     };
-
-    var keepaliveTimeout, maxKeepAlive, maxTimes, i = 0;
-
-    keepaliveTimeout = 1000 * 60 * 3; // 3 minutes
-    maxKeepAlive = 1000 * 60 * 60 * 2; // 2 hours
-    maxTimes = maxKeepAlive / keepaliveTimeout; // 40 
-
-    function keepSessionAlive() {
-      $.post(
-          "${urls.baseUrl}${UrlConstants.KEEPALIVE}", 
-          "CSRFToken=${CSRFToken}",
-          function (ok) {
-              if (ok && i <= maxTimes) {
-                  setTimeout("keepSessionAlive()", keepaliveTimeout);
-                  i++;
-              } else {
-                  generateModal(modalData.sessionHasEnded(), 'minimal');
-              }
-          }
-      ).error(function () {
-          setTimeout("keepSessionAlive()", keepaliveTimeout);
-          i++;
-      });
-    }
-    setTimeout("keepSessionAlive()", keepaliveTimeout);
 </script>
+<span style="display:none" id="keepalive-poller" data-url="${urls.baseUrl}${UrlConstants.KEEPALIVE}" data-csrf="${CSRFToken}"></span>
 </#if>
     
 </@l.main>

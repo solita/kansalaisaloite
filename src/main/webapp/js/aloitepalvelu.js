@@ -1690,6 +1690,45 @@
       }
     }).trigger('resize');
 
+      var keepaliveElements = $("#keepalive-poller");
+      if (keepaliveElements.length != 0) {
+
+          var csrfToken = keepaliveElements[0].getAttribute("data-csrf");
+          var keepaliveUrl = keepaliveElements[0].getAttribute("data-url");
+
+          var keepaliveTimeout, maxKeepAlive, maxTimes, i = 0;
+
+          keepaliveTimeout = 1000 * 60 * 3; // 3 minutes
+          maxKeepAlive = 1000 * 60 * 60 * 2; // 2 hours
+          maxTimes = maxKeepAlive / keepaliveTimeout; // 40
+
+          var keepSessionAliveFn = function () {
+              $.post(keepaliveUrl,
+                  "CSRFToken=" + csrfToken,
+                  function (ok) {
+                      if (ok && i <= maxTimes) {
+                          setTimeout(keepSessionAliveFn, keepaliveTimeout);
+                          i++;
+                      } else {
+                          generateModal(modalData.sessionHasEnded(), 'minimal');
+                      }
+                  }
+              ).error(function () {
+                  // Something strange has happened. We don't know what, but
+                  // - the best guess is that session is expired or the user has logged in/out in another tab (csrf changed)
+                  // - if the server is restarted or down, all sessions would be cleared anyway
+                  // - if we get some random error, it's possible that the same error would appear when we try to save the changes
+                  // -> just show the modal so the users knows to save the changes to somewhere else before it's all gone
+                  generateModal(modalData.sessionHasEnded(), 'minimal');
+              });
+          };
+
+          if (keepaliveUrl && csrfToken) {
+              setTimeout(keepSessionAliveFn, keepaliveTimeout);
+          }
+
+      }
+
   });
 
 }());
