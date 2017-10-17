@@ -62,6 +62,8 @@ public class AuthorWebTest extends WebTestBase {
     private static final String MSG_SUCCESS_VOTES_REMOVED = "success.remove-support-votes";
     private static final String MSG_WARNING_CREATE_UNDER_AGED = "warning.adult-required-as-author";
     private static final String MSG_ERROR_VALIDATE_INITIATOR = "ValidAuthorRole.initiator";
+    private static final String MSG_ADD_ALT_VERSION = "altVersion.add";
+    private static final String MSG_CHANGE_LANGUAGE = "lang.alternative";
     
     private static final String TEST_INITIATIVE_TITLE = "Testiotsake";
     
@@ -90,6 +92,28 @@ public class AuthorWebTest extends WebTestBase {
         
         // Anna Creates initiative and sends invitation
         startNewInitiative("Anna Testi");
+        Fill_Initiative_And_Walk_Minimum_Flow();
+    }
+
+    @Test
+    public void Initiative_Translated_Version_OK() {
+        System.out.println("=== TEST: Initiative_Translated_Version_OK");
+        startNewInitiative("Anna Testi");
+        clickLinkContaining(getMessage(MSG_ADD_ALT_VERSION));
+        String nameSv = "Testiotsake ruotsiksi";
+        String proposalSv = "Sisältö ruotsiksi";
+        String rationaleSv = "Perustelut ruotsiksi";
+        inputText("name.sv", nameSv);
+        inputText("proposal.sv", proposalSv);
+        inputText("rationale.sv", rationaleSv);
+
+        Fill_Initiative_And_Walk_Minimum_Flow();
+        clickLinkContaining(getMessage(MSG_CHANGE_LANGUAGE));
+        assertTextByTag("p", proposalSv);
+        assertTextByTag("p", rationaleSv);
+    }
+
+    private void Fill_Initiative_And_Walk_Minimum_Flow() {
         String viewUrl = fillAndSaveInitiativeInFullEdit(false, true);
         String invitationLink = addAndSendInvitation();
         logoutUser();

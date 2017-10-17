@@ -126,13 +126,21 @@
             </#if>
         </div>
         
-        <#-- Initiative title -->
+        <#-- Initiative title fi -->
         <div class="input-block-content">
             <div class="initiative-header-area">        
                 <@f.helpText "helpName" />
-                <@f.textField path="initiative.name" required="required" cssClass="large" maxLength=InitiativeConstants.INITIATIVE_NAME_MAX?string("#") optional=true />
+                <@f.textField path="initiative.name.fi" required="required" cssClass="large" maxLength=InitiativeConstants.INITIATIVE_NAME_MAX?string("#") optional=true />
             </div>
         </div>
+
+        <#-- Initiative title sv -->
+            <div class="input-block-content alt-lang-initiative-content js-hide">
+                <div class="initiative-header-area">
+                    <@f.helpText "helpName" />
+                <@f.textField path="initiative.name.sv" required="required" cssClass="large" maxLength=InitiativeConstants.INITIATIVE_NAME_MAX?string("#") optional=true />
+                </div>
+            </div>
         
         <#-- Date -->
         <div class="input-block-content no-top-margin">
@@ -159,21 +167,37 @@
             </div>
         </div>
                  
-        <#-- Proposal -->
+        <#-- Proposal fi-->
         <div class="input-block-content">
             <div class="initiative-proposal-area">
                 <@f.helpText "helpProposal" />
                 <@f.warningText "linkWarning" />
-                <@f.textarea path="initiative.proposal" required="required" optional=true cssClass="textarea-tall" />
+                <@f.textarea path="initiative.proposal.fi" required="required" optional=true cssClass="textarea-tall" />
             </div>
-        </div>   
-            
-        <#-- Rationale -->
+        </div>
+        <#-- Proposal sv -->
+        <div class="input-block-content alt-lang-initiative-content js-hide">
+            <div class="initiative-proposal-area">
+                <@f.helpText "helpProposal" />
+                <@f.warningText "linkWarning" />
+                <@f.textarea path="initiative.proposal.sv" required="required" optional=true cssClass="textarea-tall" />
+            </div>
+        </div>
+
+        <#-- Rationale fi -->
         <div class="input-block-content">
             <div class="initiative-rationale-area">
                 <@f.helpText "helpRationale" />
                 <@f.warningText "linkWarning" />
-                <@f.textarea path="initiative.rationale" required="required" optional=false cssClass="textarea-tall" />
+                <@f.textarea path="initiative.rationale.fi" required="required" optional=false cssClass="textarea-tall" />
+            </div>
+        </div>
+        <#-- Rationale sv -->
+        <div class="input-block-content alt-lang-initiative-content js-hide">
+            <div class="initiative-rationale-area">
+                <@f.helpText "helpRationale" />
+                <@f.warningText "linkWarning" />
+                <@f.textarea path="initiative.rationale.sv" required="required" optional=false cssClass="textarea-tall" />
             </div>
         </div>
         

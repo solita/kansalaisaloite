@@ -596,6 +596,8 @@
           easing: 'easeOutExpo'
         });
 
+        $('.alt-lang-initiative-content').toggle();
+
         if (thisLink.data('translation')) {
           thisLink.attr('data-translation', 'false');
         } else {
