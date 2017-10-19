@@ -78,11 +78,6 @@
         <md:EmailAddress>mailto:janika.kaariainen@solita.fi</md:EmailAddress>
     </md:ContactPerson>
     <md:ContactPerson contactType="technical">
-        <md:GivenName>Pauli</md:GivenName>
-        <md:SurName>Karpanoja</md:SurName>
-        <md:EmailAddress>mailto:pauli.karpanoja@solita.fi</md:EmailAddress>
-    </md:ContactPerson>
-    <md:ContactPerson contactType="technical">
         <md:GivenName>Solita</md:GivenName>
         <md:SurName>Solita</md:SurName>
         <md:EmailAddress>mailto:aloitepalvelut@solita.fi</md:EmailAddress>
