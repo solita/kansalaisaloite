@@ -267,6 +267,9 @@ public class InitiativeController extends BaseController {
         // Management view for authors, om and vrk officials 
         else if (author != null || user.isOm() || user.isVrk()) {
             InitiativeManagement initiative = initiativeService.getInitiativeForManagement(initiativeId);
+            if (!(user.isOm() || user.isVrk())) {
+                initiative = doNotShowMiddleName(initiative);
+            }
 
             EditMode editMode;
             if (initiative.getState() == InitiativeState.DRAFT) {
@@ -280,7 +283,7 @@ public class InitiativeController extends BaseController {
         // Public view for anyone else
         else {
             InitiativePublic initiative = initiativeService.getInitiativeForPublic(initiativeId, hash);
-
+            initiative = doNotShowMiddleName(initiative);
             model.addAttribute("initiative", initiative);
             addVotingInfo(initiative, model);
 
@@ -289,12 +292,38 @@ public class InitiativeController extends BaseController {
 
     }
 
+    private InitiativeManagement doNotShowMiddleName(InitiativeManagement initiative) {
+        initiative.getAuthors()
+                .forEach(author -> author.assignFirstNames(getFirstOfFirstNames(author.getFirstNames())));
+        initiative.getCurrentAuthor().assignFirstNames(getFirstOfFirstNames(initiative.getCurrentAuthor().getFirstNames()));
+        initiative.getInitiators()
+                .forEach(initiator -> initiator.assignFirstNames(getFirstOfFirstNames(initiator.getFirstNames())));
+        initiative.getRepresentatives()
+                .forEach(representative -> representative.assignFirstNames(getFirstOfFirstNames(representative.getFirstNames())));
+        initiative.getReserves()
+                .forEach(reserve -> reserve.assignFirstNames(getFirstOfFirstNames(reserve.getFirstNames())));
+        return initiative;
+    }
+
+    private InitiativePublic doNotShowMiddleName(InitiativePublic initiative) {
+        initiative.getInitiators()
+                .forEach(initiator -> initiator.assignFirstNames(getFirstOfFirstNames(initiator.getFirstNames())));
+        initiative.getRepresentatives()
+                .forEach(representative -> representative.assignFirstNames(getFirstOfFirstNames(representative.getFirstNames())));
+        initiative.getReserves()
+                .forEach(reserve -> reserve.assignFirstNames(getFirstOfFirstNames(reserve.getFirstNames())));
+        return initiative;
+    }
+
+    private String getFirstOfFirstNames(String firstNames) {
+        return firstNames.split(" ")[0];
+    }
+
     @RequestMapping(value={ VIEW_FI, VIEW_SV }, method=GET)
     public String view(@PathVariable("id") Long initiativeId,
                        @RequestParam(value = HISTORY_ITEM_PARAMETER, required = false) Long historyItemId,
                        @ModelAttribute("followInitiative") FollowInitiativeDto followInitiativeDto,
                        Model model, Locale locale, HttpServletRequest request) {
-
         return view(initiativeId, null, historyItemId, followInitiativeDto, model, locale, request);
     }
 
