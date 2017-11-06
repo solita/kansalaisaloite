@@ -92,13 +92,16 @@ public class AuthorWebTest extends WebTestBase {
         
         // Anna Creates initiative and sends invitation
         startNewInitiative("Anna Testi");
-        Fill_Initiative_And_Walk_Minimum_Flow();
+        String viewUrl = fillAndSaveInitiativeInFullEdit(false, true);
+        Fill_Initiative_And_Walk_Minimum_Flow(viewUrl);
     }
 
     @Test
     public void Initiative_Translated_Version_OK() {
         System.out.println("=== TEST: Initiative_Translated_Version_OK");
         startNewInitiative("Anna Testi");
+        String viewUrl = fillAndSaveInitiativeInFullEdit(false, true);
+
         clickLinkContaining(getMessage(MSG_ADD_ALT_VERSION));
         String nameSv = "Testiotsake ruotsiksi";
         String proposalSv = "Sisältö ruotsiksi";
@@ -107,14 +110,14 @@ public class AuthorWebTest extends WebTestBase {
         inputText("proposal.sv", proposalSv);
         inputText("rationale.sv", rationaleSv);
 
-        Fill_Initiative_And_Walk_Minimum_Flow();
+        Fill_Initiative_And_Walk_Minimum_Flow(viewUrl);
+
         clickLinkContaining(getMessage(MSG_CHANGE_LANGUAGE));
         assertTextByTag("p", proposalSv);
         assertTextByTag("p", rationaleSv);
     }
 
-    private void Fill_Initiative_And_Walk_Minimum_Flow() {
-        String viewUrl = fillAndSaveInitiativeInFullEdit(false, true);
+    private void Fill_Initiative_And_Walk_Minimum_Flow(String viewUrl) {
         String invitationLink = addAndSendInvitation();
         logoutUser();
 
