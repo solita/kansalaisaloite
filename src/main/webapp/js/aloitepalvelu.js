@@ -576,7 +576,9 @@
       });
     }());
 
-
+    if ($('#show-alternative-lang') && $('#show-alternative-lang').data('translation')) {
+      $('.alt-lang-initiative-content').show();
+    }
 
     /**
      *

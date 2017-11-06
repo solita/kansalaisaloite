@@ -125,7 +125,8 @@
                 <a id="show-alternative-lang" class="show-alternative-lang hidden-nojs" data-alttext="<@u.message "altVersion.hide" />" data-translation="${initiative.hasTranslation(altLocale)?string('true','false')}" ><@u.message "altVersion.add" /></a>
             </#if>
         </div>
-        
+
+        <#if locale == "fi">
         <#-- Initiative title fi -->
         <div class="input-block-content">
             <div class="initiative-header-area">        
@@ -137,11 +138,29 @@
         <#-- Initiative title sv -->
             <div class="input-block-content alt-lang-initiative-content js-hide">
                 <div class="initiative-header-area">
-                    <@f.helpText "helpName" />
-                <@f.textField path="initiative.name.sv" required="required" cssClass="large" maxLength=InitiativeConstants.INITIATIVE_NAME_MAX?string("#") optional=true />
+                <@f.textField path="initiative.name.sv" required="" cssClass="large" maxLength=InitiativeConstants.INITIATIVE_NAME_MAX?string("#") optional=true />
                 </div>
             </div>
-        
+
+        <#else>
+
+        <#-- Initiative title sv -->
+            <div class="input-block-content">
+                <div class="initiative-header-area">
+                    <@f.helpText "helpName" />
+                    <@f.textField path="initiative.name.sv" required="required" cssClass="large" maxLength=InitiativeConstants.INITIATIVE_NAME_MAX?string("#") optional=true />
+                </div>
+            </div>
+
+        <#-- Initiative title fi -->
+            <div class="input-block-content alt-lang-initiative-content js-hide">
+                <div class="initiative-header-area">
+                <@f.textField path="initiative.name.fi" required="" cssClass="large" maxLength=InitiativeConstants.INITIATIVE_NAME_MAX?string("#") optional=true />
+                </div>
+            </div>
+        </#if>
+
+
         <#-- Date -->
         <div class="input-block-content no-top-margin">
             <div class="initiative-header-date-area">
@@ -166,7 +185,8 @@
                 <@f.radiobutton path="initiative.primaryLanguage" required="" options={locale?upper_case:"initiative.primaryLanguage."+locale, altLocale?upper_case:"initiative.primaryLanguage."+altLocale} attributes="" />
             </div>
         </div>
-                 
+
+        <#if locale == "fi">
         <#-- Proposal fi-->
         <div class="input-block-content">
             <div class="initiative-proposal-area">
@@ -178,28 +198,65 @@
         <#-- Proposal sv -->
         <div class="input-block-content alt-lang-initiative-content js-hide">
             <div class="initiative-proposal-area">
-                <@f.helpText "helpProposal" />
                 <@f.warningText "linkWarning" />
-                <@f.textarea path="initiative.proposal.sv" required="required" optional=true cssClass="textarea-tall" />
+                <@f.textarea path="initiative.proposal.sv" required="" optional=true cssClass="textarea-tall" />
             </div>
         </div>
 
+        <#else>
+
+        <#-- Proposal sv -->
+            <div class="input-block-content">
+                <div class="initiative-proposal-area">
+                    <@f.helpText "helpProposal" />
+                <@f.warningText "linkWarning" />
+                <@f.textarea path="initiative.proposal.sv" required="required" optional=true cssClass="textarea-tall" />
+                </div>
+            </div>
+        <#-- Proposal fi-->
+            <div class="input-block-content alt-lang-initiative-content js-hide">
+                <div class="initiative-proposal-area">
+                <@f.warningText "linkWarning" />
+                <@f.textarea path="initiative.proposal.fi" required="" optional=true cssClass="textarea-tall" />
+                </div>
+            </div>
+        </#if>
+
+        <#if locale == "fi">
         <#-- Rationale fi -->
-        <div class="input-block-content">
-            <div class="initiative-rationale-area">
-                <@f.helpText "helpRationale" />
-                <@f.warningText "linkWarning" />
-                <@f.textarea path="initiative.rationale.fi" required="required" optional=false cssClass="textarea-tall" />
+            <div class="input-block-content">
+                <div class="initiative-rationale-area">
+                    <@f.helpText "helpRationale" />
+                    <@f.warningText "linkWarning" />
+                    <@f.textarea path="initiative.rationale.fi" required="required" optional=false cssClass="textarea-tall" />
+                </div>
             </div>
-        </div>
         <#-- Rationale sv -->
-        <div class="input-block-content alt-lang-initiative-content js-hide">
-            <div class="initiative-rationale-area">
-                <@f.helpText "helpRationale" />
-                <@f.warningText "linkWarning" />
-                <@f.textarea path="initiative.rationale.sv" required="required" optional=false cssClass="textarea-tall" />
+            <div class="input-block-content alt-lang-initiative-content js-hide">
+                <div class="initiative-rationale-area">
+                    <@f.warningText "linkWarning" />
+                    <@f.textarea path="initiative.rationale.sv" required="" optional=false cssClass="textarea-tall" />
+                </div>
             </div>
-        </div>
+
+        <#else>
+
+        <#-- Rationale sv -->
+            <div class="input-block-content">
+                <div class="initiative-rationale-area">
+                    <@f.helpText "helpRationale" />
+                    <@f.warningText "linkWarning" />
+                    <@f.textarea path="initiative.rationale.sv" required="required" optional=false cssClass="textarea-tall" />
+                </div>
+            </div>
+        <#-- Rationale fi -->
+            <div class="input-block-content alt-lang-initiative-content js-hide">
+                <div class="initiative-rationale-area">
+                    <@f.warningText "linkWarning" />
+                    <@f.textarea path="initiative.rationale.fi" required="" optional=false cssClass="textarea-tall" />
+                </div>
+            </div>
+        </#if>
         
         <#if !managementSettings.editFull>
             <@buttons editWarning="BASIC" />
