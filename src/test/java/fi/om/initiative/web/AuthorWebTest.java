@@ -8,6 +8,7 @@ import fi.om.initiative.util.MutableObject;
 import mockit.Delegate;
 import mockit.NonStrictExpectations;
 import org.joda.time.LocalDate;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -98,8 +99,9 @@ public class AuthorWebTest extends WebTestBase {
     }
 
     @Test
+    @Ignore
     public void Initiative_Translated_Version_OK() {
-        /*
+        //This is ignored because HtmlUnitDriver cannot handle javascript properly
         System.out.println("=== TEST: Initiative_Translated_Version_OK");
         startNewInitiative("Anna Testi");
         String viewUrl = fillAndSaveInitiativeInFullEdit(false, true);
@@ -116,7 +118,7 @@ public class AuthorWebTest extends WebTestBase {
 
         clickLinkContaining(getMessage(MSG_CHANGE_LANGUAGE));
         assertTextByTag("p", proposalSv);
-        assertTextByTag("p", rationaleSv);*/
+        assertTextByTag("p", rationaleSv);
     }
 
     private void Fill_Initiative_And_Walk_Minimum_Flow(String viewUrl) {
