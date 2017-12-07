@@ -12,7 +12,6 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 
 import java.util.List;
 
@@ -101,7 +100,7 @@ public class AuthorWebTest extends WebTestBase {
     @Test
     @Ignore
     public void Initiative_Translated_Version_OK() {
-        //This is ignored because HtmlUnitDriver cannot handle javascript properly
+        //This is ignored because HtmlUnitDriver cannot handle javascript properly. Set test.web-driver=${web-driver:ff} when running this test
         System.out.println("=== TEST: Initiative_Translated_Version_OK");
         startNewInitiative("Anna Testi");
         String viewUrl = fillAndSaveInitiativeInFullEdit(false, true);
@@ -110,6 +109,7 @@ public class AuthorWebTest extends WebTestBase {
         String nameSv = "Testiotsake ruotsiksi";
         String proposalSv = "Sisältö ruotsiksi";
         String rationaleSv = "Perustelut ruotsiksi";
+        clickAllLinksContaining("Ruotsiksi");
         inputText("name.sv", nameSv);
         inputText("proposal.sv", proposalSv);
         inputText("rationale.sv", rationaleSv);

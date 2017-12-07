@@ -287,6 +287,15 @@ public abstract class WebTestBase {
         WebElement link = wait.until(ExpectedConditions.elementToBeClickable(By.partialLinkText(text)));
         link.click();
     }
+
+    protected void clickAllLinksContaining(String text) {
+        List<WebElement> elements = driver.findElements(By.partialLinkText(text));
+        elements.forEach(element -> {
+            WebDriverWait wait = new WebDriverWait(driver, 10);
+            WebElement link = wait.until(ExpectedConditions.elementToBeClickable(element));
+            link.click();
+        });
+    }
     
     protected WebElement getElemContaining(String text, String tagName) {
         List<WebElement> htmlElements = driver.findElements(By.tagName(tagName));

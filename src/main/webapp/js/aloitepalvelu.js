@@ -576,9 +576,6 @@
       });
     }());
 
-    if ($('#show-alternative-lang') && $('#show-alternative-lang').data('translation')) {
-      $('.alt-lang-initiative-content').show();
-    }
 
     /**
      *
@@ -587,9 +584,74 @@
      *
      * */
     (function () {
-      var $altLangLink = $('#show-alternative-lang');
+      function setUpTranslationTab($tabContent) {
+        var $proposalTabFi = $tabContent.find($('.tab-fi')),
+          $proposalTabSv = $tabContent.find($('.tab-sv')),
+          $proposalFi = $tabContent.find($('.tab-content-fi')),
+          $proposalSv = $tabContent.find($('.tab-content-sv'));
+
+        function showRightContent(tabFiClicked) {
+          var tabNotActive, tabActive, contentShow, contentHide;
+          if (tabFiClicked) {
+            tabNotActive = $proposalTabSv;
+            tabActive = $proposalTabFi;
+            contentShow = $proposalFi;
+            contentHide = $proposalSv;
+          } else {
+            tabNotActive = $proposalTabFi;
+            tabActive = $proposalTabSv;
+            contentShow = $proposalSv;
+            contentHide = $proposalFi;
+          }
+          tabNotActive.removeClass('active');
+          tabActive.addClass('active');
+          contentShow.show();
+          contentHide.hide();
+        }
+
+        $proposalTabFi.click(function () {
+          showRightContent(true);
+        });
+
+        $proposalTabSv.click(function () {
+          showRightContent(false);
+        });
+      }
+
+      $('.tab-content').each(function (i, obj) {
+        setUpTranslationTab($(obj));
+      });
+
+    }());
+
+    (function () {
+      var $altLangLink = $('#show-alternative-lang'),
+        tabMargins = false;
+
+      function toggleNavTabMargins(add) {
+        var $contents = $('.tab-content-sv, .tab-content-fi'),
+          $marginClass = "minimal-top-margin";
+
+        if (!add) {
+          if ($contents.hasClass($marginClass)) {
+            $contents.removeClass('minimal-top-margin');
+          }
+        } else {
+          if (!$contents.hasClass($marginClass)) {
+            $contents.addClass('minimal-top-margin');
+          }
+        }
+      }
+
+      if ($('#show-alternative-lang') && $('#show-alternative-lang').data('translation')) {
+        $('.alt-lang-initiative-content').show();
+        tabMargins = true;
+        toggleNavTabMargins(tabMargins);
+      }
 
       $altLangLink.click(function () {
+        tabMargins = !tabMargins;
+        toggleNavTabMargins(tabMargins);
         var thisLink = $(this);
         thisLink.switchContent();
 
@@ -603,7 +665,7 @@
         if (thisLink.data('translation')) {
           thisLink.attr('data-translation', 'false');
         } else {
-          thisLink.attr('data-translation', 'true');
+          thisLink.attr('data-translationdata-translation', 'true');
         }
 
         return false;
