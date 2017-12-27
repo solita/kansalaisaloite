@@ -182,7 +182,7 @@
             <div class="initiative-header-date-area">
                 <#assign href>${urls.help(HelpPage.INITIATIVE_STEPS.getUri(locale))}</#assign>
                 <@f.helpText path="helpDate" href=href />
-                <@f.textField path="initiative.startDate" fieldType="text" required="required" cssClass="datepicker" optional=false />
+                <@f.textField path="initiative.startDate" fieldType="text" required="required" cssClass="datepicker" optional=true />
             </div>
         </div>
               
