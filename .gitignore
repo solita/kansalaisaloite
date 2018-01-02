@@ -34,3 +34,5 @@ initiative-web.iml
 
 config/app.properties
 config/info-ribbon_*.txt
+
+logs/*
