@@ -142,7 +142,7 @@
         <@u.systemMessageHTML votingInfoMessage "info" />
 
         <#if initiative.supportStatementPdf>
-            <#assign infoMessageSupportStatementPdf><@u.messageHTML key="vote.info.supportStatementPdf" args=["#support-statement-pdf"] /></#assign>
+            <#assign infoMessageSupportStatementPdf><@u.messageHTML key="vote.info.supportStatementPdf" args=["${urls.supportStatementPdf(initiative.id)}"] /></#assign>
 
             <@u.systemMessageHTML infoMessageSupportStatementPdf "info" />
         </#if>
