@@ -35,10 +35,6 @@ public class SamlUserLoader implements SAMLUserDetailsService {
          urn:oid:1.2.246.21 | nationalIdentificationNumber | 210281-9988
          */
 
-        String streetAddress = credential.getAttributeAsString("urn:oid:1.2.246.517.2002.2.4");
-        String postalCode = credential.getAttributeAsString("urn:oid:1.2.246.517.2002.2.6");
-        String postOffice = credential.getAttributeAsString("urn:oid:1.2.246.517.2002.2.7");
-
         String municipalityNameFi = firstNotEmpty(
                 credential.getAttributeAsString("urn:oid:1.2.246.517.2002.2.19") // Finnish city
         ).orElse(MISSING_MUNICIPALITY_FI);
@@ -51,9 +47,10 @@ public class SamlUserLoader implements SAMLUserDetailsService {
         String lastName = credential.getAttributeAsString("urn:oid:2.5.4.4");
 
         String ssn = credential.getAttributeAsString("urn:oid:1.2.246.21");
-        String address = streetAddress + " " + postalCode + " " + postOffice;
 
         String finnishCitizen = credential.getAttributeAsString("urn:oid:1.2.246.517.2002.2.26");
+
+        String address = "";
 
         return new SamlUser(User.validateSSN(ssn), address, firstNames, lastName, municipalityNameFi, municipalityNameSv, FINNISH_CITIZEN_FLAG.equals(finnishCitizen));
     }

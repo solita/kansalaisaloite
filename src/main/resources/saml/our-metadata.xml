@@ -43,22 +43,12 @@
         <md:AttributeConsumingService index="1" isDefault="true">
             <md:ServiceName xml:lang="fi">Kansalaisaloite</md:ServiceName>
             <md:ServiceName xml:lang="sv">Medborgarinitiativ</md:ServiceName>
-            <md:RequestedAttribute FriendlyName="displayName" Name="urn:oid:2.16.840.1.113730.3.1.241" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
-            <md:RequestedAttribute FriendlyName="cn" Name="urn:oid:2.5.4.3" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
-            <md:RequestedAttribute FriendlyName="givenName" Name="urn:oid:2.5.4.42" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
             <md:RequestedAttribute FriendlyName="FirstName" Name="http://eidas.europa.eu/attributes/naturalperson/CurrentGivenName" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
             <md:RequestedAttribute FriendlyName="sn" Name="urn:oid:2.5.4.4" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
             <md:RequestedAttribute FriendlyName="nationalIdentificationNumber" Name="urn:oid:1.2.246.21" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
-            <md:RequestedAttribute FriendlyName="KotikuntaKuntanumero" Name="urn:oid:1.2.246.517.2002.2.18" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
             <md:RequestedAttribute FriendlyName="KotikuntaKuntaS" Name="urn:oid:1.2.246.517.2002.2.19" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
             <md:RequestedAttribute FriendlyName="KotikuntaKuntaR" Name="urn:oid:1.2.246.517.2002.2.20" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
-            <md:RequestedAttribute FriendlyName="VakinainenUlkomainenLahiosoite" Name="urn:oid:1.2.246.517.2002.2.11" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
-            <md:RequestedAttribute FriendlyName="VakinainenUlkomainenLahiosoitePaikkakuntaJaValtioS" Name="urn:oid:1.2.246.517.2002.2.12" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
-            <md:RequestedAttribute FriendlyName="VakinainenUlkomainenLahiosoitePaikkakuntaJaValtioR" Name="urn:oid:1.2.246.517.2002.2.13" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
-            <md:RequestedAttribute FriendlyName="VakinainenUlkomainenLahiosoitePaikkakuntaJaValtioSelvakielinen" Name="urn:oid:1.2.246.517.2002.2.14" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
-            <md:RequestedAttribute FriendlyName="VakinainenUlkomainenLahiosoiteValtiokoodi" Name="urn:oid:1.2.246.517.2002.2.15" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
             <md:RequestedAttribute FriendlyName="SuomenKansalaisuusTietokoodi" Name="urn:oid:1.2.246.517.2002.2.26" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
-            <md:RequestedAttribute FriendlyName="TurvakieltoTieto" Name="urn:oid:1.2.246.517.2002.2.27" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
         </md:AttributeConsumingService>
     </md:SPSSODescriptor>
     <md:Organization>
@@ -86,5 +76,15 @@
         <md:GivenName>Anneli</md:GivenName>
         <md:SurName>Salomaa</md:SurName>
         <md:EmailAddress>mailto:anneli.salomaa@om.fi</md:EmailAddress>
+    </md:ContactPerson>
+    <md:ContactPerson contactType="support">
+        <md:GivenName>Anu</md:GivenName>
+        <md:SurName>Koskinen</md:SurName>
+        <md:EmailAddress>mailto:anu.koskinen@om.fi</md:EmailAddress>
+    </md:ContactPerson>
+    <md:ContactPerson contactType="support">
+        <md:GivenName>Laura</md:GivenName>
+        <md:SurName>Nurminen</md:SurName>
+        <md:EmailAddress>mailto:laura.nurminen@om.fi</md:EmailAddress>
     </md:ContactPerson>
 </md:EntityDescriptor>
