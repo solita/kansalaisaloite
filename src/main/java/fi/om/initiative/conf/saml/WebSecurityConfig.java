@@ -120,11 +120,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         samlAuthenticationProvider.setForcePrincipalAsString(false);
         return samlAuthenticationProvider;
     }
-
+   
     // Provider of default SAML Context
     @Bean
     public SAMLContextProviderImpl contextProvider() throws MalformedURLException {
-        SAMLContextProviderLB samlContextProviderLB = new SAMLContextProviderLB();
+        MultiKeyDecrypterSAMLContextProvider samlContextProviderLB = new MultiKeyDecrypterSAMLContextProvider();
 
         // This is here because apparently spring saml expects ../saml/SSO request to use http if server is answering from http
         URL url = new URL(environment.getProperty("app.baseURL"));
