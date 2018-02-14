@@ -2,9 +2,7 @@ package fi.om.initiative.service;
 
 import fi.om.initiative.dto.*;
 import fi.om.initiative.dto.author.Author;
-import fi.om.initiative.dto.initiative.InitiativeInfo;
-import fi.om.initiative.dto.initiative.InitiativeManagement;
-import fi.om.initiative.dto.initiative.InitiativePublic;
+import fi.om.initiative.dto.initiative.*;
 import fi.om.initiative.dto.search.InitiativeSearch;
 import fi.om.initiative.dto.search.InitiativeSublistWithTotalCount;
 import fi.om.initiative.json.SupportCount;
@@ -17,6 +15,8 @@ import java.util.List;
 public interface InitiativeService {
 
     InitiativePublic getInitiativeForPublic(Long id);
+
+    InitiativePublicApi getInitiativeForPublicApi(Long id);
 
     InitiativePublic getInitiativeForPublic(Long initiativeId, String hash);
 
