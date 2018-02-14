@@ -9,10 +9,7 @@ import fi.om.initiative.dao.NotFoundException;
 import fi.om.initiative.dao.ReviewHistoryDao;
 import fi.om.initiative.dto.*;
 import fi.om.initiative.dto.author.Author;
-import fi.om.initiative.dto.initiative.InitiativeInfo;
-import fi.om.initiative.dto.initiative.InitiativeManagement;
-import fi.om.initiative.dto.initiative.InitiativePublic;
-import fi.om.initiative.dto.initiative.InitiativeState;
+import fi.om.initiative.dto.initiative.*;
 import fi.om.initiative.dto.search.InitiativeSearch;
 import fi.om.initiative.dto.search.InitiativeSublistWithTotalCount;
 import fi.om.initiative.dto.search.SearchView;
@@ -100,7 +97,25 @@ public class InitiativeServiceImpl implements InitiativeService {
     @Override
     @Transactional(readOnly = true)
     public InitiativePublic getInitiativeForPublic(Long initiativeId, String hash) {
-        InitiativePublic initiative = initiativeDao.getInitiativeForPublic(initiativeId);
+        return (InitiativePublic) getInitiativeForPublic(initiativeId, false, hash);
+    }
+
+    @Override
+    @Transactional(readOnly=true)
+    public InitiativePublicApi getInitiativeForPublicApi(Long id) {
+        return (InitiativePublicApi) getInitiativeForPublic(id, true, null);
+    }
+
+    @Transactional(readOnly = true)
+    InitiativeBase getInitiativeForPublic(Long initiativeId, Boolean forApi, String hash) {
+        InitiativeBase initiative;
+
+        if (forApi) {
+            initiative = initiativeDao.getInitiativeForPublicApi(initiativeId);
+        } else {
+            initiative = initiativeDao.getInitiativeForPublic(initiativeId);
+        }
+
         if (initiative == null) {
             throw new NotFoundException("initiative", initiativeId);
         } else {

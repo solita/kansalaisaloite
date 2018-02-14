@@ -563,11 +563,11 @@ public class InitiativeController extends BaseController {
     }
 
     @RequestMapping(value=INITIATIVE, method=GET, produces=JSON)
-    public @ResponseBody InitiativePublic jsonGet(@PathVariable Long id) {
-        return initiativeService.getInitiativeForPublic(id);
+    public @ResponseBody InitiativePublicApi jsonGet(@PathVariable Long id) {
+        return initiativeService.getInitiativeForPublicApi(id);
     }
     @RequestMapping(value=INITIATIVE, method=GET, produces=JSONP, params=JSONP_CALLBACK)
-    public @ResponseBody JsonpObject<InitiativePublic> jsonGet(@PathVariable Long id, @RequestParam(JSONP_CALLBACK) String callback) {
+    public @ResponseBody JsonpObject<InitiativePublicApi> jsonGet(@PathVariable Long id, @RequestParam(JSONP_CALLBACK) String callback) {
         return new JsonpObject<>(callback, jsonGet(id));
     }
 

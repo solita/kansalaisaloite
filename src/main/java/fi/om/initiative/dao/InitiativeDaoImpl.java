@@ -161,6 +161,24 @@ public class InitiativeDaoImpl implements InitiativeDao {
                 }
                 
             };
+
+    private static final MappingProjection<InitiativePublicApi> initiativePublicApiMapping =
+            new MappingProjection<InitiativePublicApi>(InitiativePublicApi.class, qInitiative.all()) {
+
+                private static final long serialVersionUID = -4987937445507942118L;
+
+                @Override
+                public InitiativePublicApi map(Tuple tuple) {
+                    if (tuple == null) {
+                        return null;
+                    }
+
+                    InitiativePublicApi initiative = new InitiativePublicApi(tuple.get(qInitiative.id));
+                    populate(initiative, tuple);
+                    return initiative;
+                }
+
+            };
             
     private static final MappingProjection<InitiativeManagement> initiativeManagementMapping = 
             new MappingProjection<InitiativeManagement>(InitiativeManagement.class, qInitiative.all()) {
@@ -366,6 +384,33 @@ public class InitiativeDaoImpl implements InitiativeDao {
         InitiativePublic initiative = mapInitiativeWithAuthors(qry, initiativePublicMapping, authorPublicMapping);
         if (initiative != null) {
             fetchLinks(initiative);
+        }
+        return initiative;
+    }
+
+    @Override
+    public InitiativePublicApi getInitiativeForPublicApi(Long id) {
+        PostgresQuery qry = queryFactory
+                .from(qInitiative)
+                .leftJoin(qInitiative._authorInitiativeIdFk, qAuthor)
+                .where(qInitiative.id.eq(id));
+
+        InitiativePublicApi initiative = getInitiativePublicApiWithoutAuthor(qry, initiativePublicApiMapping);
+
+        if (initiative != null) {
+            fetchLinks(initiative);
+        }
+        return initiative;
+    }
+
+    private <T extends InitiativeBase> T getInitiativePublicApiWithoutAuthor(PostgresQuery qry, MappingProjection<T> initiativeMapping) {
+        List<Tuple> rows = qry.list(new QTuple(initiativeMapping));
+        T initiative = null;
+
+        for (Tuple tuple : rows) {
+            if (initiative == null) {
+                initiative = tuple.get(initiativeMapping);
+            }
         }
         return initiative;
     }
