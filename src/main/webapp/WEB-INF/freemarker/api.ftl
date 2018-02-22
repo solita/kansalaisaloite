@@ -347,13 +347,6 @@ The list includes only initiatives with at least 50 support counts by default. T
       </td>
     </tr>
     <tr>
-        <td class="apiExample">&nbsp;&nbsp;},</td>
-        <td></td>
-        <td></td>
-        <td>
-        </td>
-    </tr>
-    <tr>
       <td class="apiExample">
 &nbsp;&nbsp;"<b>links</b>":[
       </td>
@@ -400,7 +393,7 @@ The list includes only initiatives with at least 50 support counts by default. T
     </tr>
     <tr>
       <td class="apiExample">
-&nbsp;&nbsp;]
+&nbsp;&nbsp;],
       </td>
       <td></td>
       <td></td>
@@ -408,7 +401,290 @@ The list includes only initiatives with at least 50 support counts by default. T
       </td>
     </tr>
     <tr>
-        <td class="apiExample">}</td>
+      <td class="apiExample">
+&nbsp;&nbsp;"<b>initiators</b>":[
+      </td>
+      <td>Array</td>
+      <td>D</td>
+      <td>Initiators of this initiative
+      </td>
+    </tr>
+    <tr>
+      <td class="apiExample">
+&nbsp;&nbsp;&nbsp;&nbsp;{
+      </td>
+      <td>Object</td>
+      <td>D</td>
+      <td>Initiator details
+      </td>
+    </tr>
+    <tr>
+      <td class="apiExample">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"<b>firstNames</b>":"John",
+      </td>
+      <td>String</td>
+      <td>D</td>
+      <td>First names of this initiator
+      </td>
+    </tr>
+    <tr>
+      <td class="apiExample">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"<b>lastName</b>":"Doe",
+      </td>
+      <td>String</td>
+      <td>D</td>
+      <td>Last name of this initiator
+      </td>
+    </tr>
+    <tr>
+      <td class="apiExample">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"<b>homeMunicipality</b>":{
+      </td>
+      <td>Object</td>
+      <td>D</td>
+      <td>Home municipality of this initiator
+      </td>
+    </tr>
+    <tr>
+      <td class="apiExample">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"<b>fi</b>":"Helsinki",
+      </td>
+      <td>String</td>
+      <td>D</td>
+      <td>Municipality name in Finnish
+      </td>
+    </tr>
+    <tr>
+      <td class="apiExample">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"<b>sv</b>":"Helsingfors"
+      </td>
+      <td>String</td>
+      <td>D</td>
+      <td>Municipality name in Swedish
+      </td>
+    </tr>
+    <tr>
+      <td class="apiExample">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+      </td>
+      <td></td>
+      <td></td>
+      <td>
+      </td>
+    </tr>
+    <tr>
+      <td class="apiExample">
+&nbsp;&nbsp;&nbsp;&nbsp;}
+      </td>
+      <td></td>
+      <td></td>
+      <td>
+      </td>
+    </tr>
+    <tr>
+      <td class="apiExample">
+&nbsp;&nbsp;],
+      </td>
+      <td></td>
+      <td></td>
+      <td>
+      </td>
+    </tr>
+    <tr>
+      <td class="apiExample" id="representativeDetails">
+&nbsp;&nbsp;"<b>representatives</b>":[
+      </td>
+      <td>Array</td>
+      <td>D</td>
+      <td>Representatives of this iniative
+      </td>
+    </tr>
+    <tr>
+      <td class="apiExample">
+&nbsp;&nbsp;&nbsp;&nbsp;{
+      </td>
+      <td>Object</td>
+      <td>D</td>
+      <td>Representative details
+      </td>
+    </tr>
+    <tr>
+      <td class="apiExample">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"<b>firstNames</b>":"Jane",
+      </td>
+      <td>String</td>
+      <td>D</td>
+      <td>First names of the representative
+      </td>
+    </tr>
+    <tr>
+      <td class="apiExample">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"<b>lastName</b>":"Doe",
+      </td>
+      <td>String</td>
+      <td>D</td>
+      <td>Last name of the representative
+      </td>
+    </tr>
+    <tr>
+      <td class="apiExample">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"<b>homeMunicipality</b>":{
+      </td>
+      <td>Object</td>
+      <td>D</td>
+      <td>Home municipality of the initiator
+      </td>
+    </tr>
+    <tr>
+      <td class="apiExample">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"<b>fi</b>":"Helsinki",
+      </td>
+      <td>String</td>
+      <td>D</td>
+      <td>Municipality name in Finnish
+      </td>
+    </tr>
+    <tr>
+      <td class="apiExample">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"<b>sv</b>":"Helsingfors"
+      </td>
+      <td>String</td>
+      <td>D</td>
+      <td>Municipality name in Swedish
+      </td>
+    </tr>
+    <tr>
+      <td class="apiExample">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},
+      </td>
+      <td></td>
+      <td></td>
+      <td>
+      </td>
+    </tr>
+    <tr>
+      <td class="apiExample">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"<b>contactInfo</b>":{
+      </td>
+      <td>Object</td>
+      <td>D</td>
+      <td>Contact information for the representative (one required)
+      </td>
+    </tr>
+    <tr>
+      <td class="apiExample">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"<b>email</b>":"firstname&nbsp;lastname&nbsp;&nbsp;domain&nbsp;fi",
+      </td>
+      <td>String</td>
+      <td>D</td>
+      <td>Email address of the representative. To make spammers lives even little more difficult, "." has been replaced with one and "@" with two whitespace characters</tt>
+      </td>
+    </tr>
+    <tr>
+      <td class="apiExample">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"<b>phone</b>":"09-123456",
+      </td>
+      <td>String</td>
+      <td>D</td>
+      <td>Phone number of the representative
+      </td>
+    </tr>
+    <tr>
+      <td class="apiExample">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"<b>address</b>":"PO BOX 25, FI-00023 Government"
+      </td>
+      <td>String</td>
+      <td>D</td>
+      <td>Contact address of the representative
+      </td>
+    </tr>
+    <tr>
+      <td class="apiExample">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+      </td>
+      <td></td>
+      <td></td>
+      <td>
+      </td>
+    </tr>
+    <tr>
+      <td class="apiExample">
+&nbsp;&nbsp;&nbsp;&nbsp;}
+      </td>
+      <td></td>
+      <td></td>
+      <td>
+      </td>
+    </tr>
+    <tr>
+      <td class="apiExample">
+&nbsp;&nbsp;],
+      </td>
+      <td></td>
+      <td></td>
+      <td>
+      </td>
+    </tr>
+    <tr>
+      <td class="apiExample">
+&nbsp;&nbsp;"<b>reserves</b>":[
+      </td>
+      <td>Object</td>
+      <td>D</td>
+      <td>Reserve representatives of this initiative
+      </td>
+    </tr>
+    <tr>
+      <td class="apiExample">
+&nbsp;&nbsp;&nbsp;&nbsp;{
+      </td>
+      <td>Object</td>
+      <td>D</td>
+      <td>Reserve representative details
+      </td>
+    </tr>
+    <tr>
+      <td class="apiExample">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...
+      </td>
+      <td></td>
+      <td></td>
+      <td>Same format as in <a href="#representativeDetails">representative details</a>
+      </td>
+    </tr>
+    <tr>
+      <td class="apiExample">
+&nbsp;&nbsp;&nbsp;&nbsp;}
+      </td>
+      <td></td>
+      <td></td>
+      <td>
+      </td>
+    </tr>
+    <tr>
+      <td class="apiExample">
+&nbsp;&nbsp;],
+      </td>
+      <td></td>
+      <td></td>
+      <td>
+      </td>
+    </tr>
+    <tr>
+      <td class="apiExample">
+&nbsp;&nbsp;},</td>
+      <td></td>
+      <td></td>
+      <td>
+      </td>
+    </tr>
+    <tr>
+      <td class="apiExample">
+}</td>
+      <td></td>
+      <td></td>
+      <td>
+      </td>
     </tr>
   </tbody>
 </table>
