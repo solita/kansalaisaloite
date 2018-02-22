@@ -18,8 +18,6 @@ public interface InitiativeDao {
 
     InitiativePublic getInitiativeForPublic(Long id);
 
-    InitiativePublicApi getInitiativeForPublicApi(Long id);
-
     InitiativeManagement getInitiativeForManagement(Long id, boolean forUpdate);
 
     Long create(InitiativeManagement initiative, Long userId);

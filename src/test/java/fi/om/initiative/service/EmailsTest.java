@@ -145,8 +145,8 @@ public class EmailsTest extends EmailSpyConfiguration {
 
         assertSentEmailCount(3);
         assertSentEmail("kansalaisaloite.tarkastus@om.fi", "Kansalaisaloite tarkastettavaksi: Testialoite / Ett medborgarinitiativ för granskning: Testialoite");
-        assertSentEmail("initiator@example.com", "Aloite on lähetetty tarkastettavaksi oikeusministeriöön / Medborgarinitiativet har skickats till justitieministeriet för granskning");
-        assertSentEmail("reserve@example.com", "Aloite on lähetetty tarkastettavaksi oikeusministeriöön / Medborgarinitiativet har skickats till justitieministeriet för granskning");
+        assertSentEmail("initiator@example.com", "Aloite on lähetetty tarkastettavaksi oikeusministeriön / Medborgarinitiativet har skickats till justitieministeriet för granskning");
+        assertSentEmail("reserve@example.com", "Aloite on lähetetty tarkastettavaksi oikeusministeriön / Medborgarinitiativet har skickats till justitieministeriet för granskning");
 
     }
 

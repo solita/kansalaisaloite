@@ -144,7 +144,7 @@
 
 <#elseif emailMessageType == EmailMessageType.SENT_TO_OM>
     <#-- TEXT -->
-    <#assign statusTitleFi>Kansalaisaloite on lähetetty tarkastettavaksi oikeusministeriöön</#assign>
+    <#assign statusTitleFi>Kansalaisloite on lähetetty tarkastettavaksi oikeusministeriöön</#assign>
     <#assign statusTitleSv>Medborgarinitiativet har skickats till justitieministeriet för granskning</#assign>
     <#assign statusInfoFi>
         Kansalaisloite on lähetetty oikeusministeriölle tarkastettavaksi.
