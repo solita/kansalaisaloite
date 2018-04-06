@@ -66,9 +66,6 @@
 
             <li>
                 <a href="http://www.vaalit.fi/${locale}"><@u.message "otherServices.vaalit"/></a>
-
-            <li>
-                <a href="http://www.yhdenvertaisuus.fi/${(locale == "sv")?string("vad_da_equality_fi","")}"><@u.message "otherServices.yhdenvertaisuus"/></a>
         </ul>
     </div>
 
