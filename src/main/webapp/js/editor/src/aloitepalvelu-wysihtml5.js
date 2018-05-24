@@ -72,7 +72,7 @@
           },
 	      "image": function(locale) {
 	        return "<li>" +
-	          "<div class='bootstrap-wysihtml5-insert-image-modal modal hide fade large'>" +
+	          "<div class='bootstrap-wysihtml5-insert-image-modal modal fade large' style='bottom: initial;'>" +
 	          "<div class='modal-header'>" +
 	          "<a class='close' data-dismiss='modal'>&times;</a>" +
 	          "<h4>" + locale.image.insert + "</h4>" +
@@ -95,7 +95,7 @@
 	      "link": function(locale, options) {
             var size = (options && options.size) ? ' btn-'+options.size : '';
             return "<li>" +
-              "<div class='bootstrap-wysihtml5-insert-link-modal modal hide fade'>" +
+              "<div class='bootstrap-wysihtml5-insert-link-modal modal fade' style='bottom: initial'>" +
                 "<div class='modal-header'>" +
                   "<a class='close' data-dismiss='modal'>&times;</a>" +
                   "<h4>" + locale.link.insert + "</h4>" +

@@ -54,7 +54,6 @@ bootWysiOverrides = {
 
     var insertImage = function() {
         var url = urlInput.val();
-        var tmpAlt = urlInput.data('title').split('.')[0];        // Remove file extensions as dots will be removed by WYSIHTML5
         var alt = altInput.val();
         urlInput.val(initialValue);
         self.editor.currentView.element.focus();
@@ -66,7 +65,7 @@ bootWysiOverrides = {
         // WYSIHTML5 overrides image's title-attribute with mouseovering the image if the title is empty
         // If user leaves alt-input empty, we will use images file name as title and alt attribute
         if ( alt === '') {
-          alt = tmpAlt;
+          alt = url.split(".")[0];
         }
 
         self.editor.composer.commands.exec("insertImage", { src: url, alt: alt, title: alt });
@@ -93,7 +92,7 @@ bootWysiOverrides = {
         var activeButton = $(this).hasClass("wysihtml5-command-active");
 
         if (!activeButton) {
-            self.editor.currentView.element.focus(false);
+            self.editor.currentView.element.focus({preventScroll: false});
             caretBookmark = self.editor.composer.selection.getBookmark();
             insertImageModal.appendTo('body').modal('show');
             insertImageModal.on('click.dismiss.modal', '[data-dismiss="modal"]', function(e) {
@@ -120,7 +119,7 @@ bootWysiOverrides = {
         var target = "_blank";
         var title = "Aukeaa uuteen ikkunaan";
         var rel = "external";
-        var isExternal = (relInput.attr('checked') === 'checked');
+        var isExternal = (relInput.prop('checked') === true);
         urlInput.val(initialValue);
         self.editor.currentView.element.focus();
 
@@ -174,7 +173,7 @@ bootWysiOverrides = {
         var activeButton = $(this).hasClass("wysihtml5-command-active");
 
         if (!activeButton) {
-            self.editor.currentView.element.focus(false);
+            self.editor.currentView.element.focus({preventScroll: false});
             caretBookmark = self.editor.composer.selection.getBookmark();
             insertLinkModal.appendTo('body').modal('show');
             insertLinkModal.on('click.dismiss.modal', '[data-dismiss="modal"]', function(e) {
