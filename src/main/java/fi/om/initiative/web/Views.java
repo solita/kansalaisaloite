@@ -43,6 +43,8 @@ public final class Views {
 
     public static final String ERROR_404_GLOBAL_VIEW = "error/404-global";
 
+    public static final String ERROR_INITIATIVE_DELETED_VIEW = "error/initiative-deleted";
+
     public static final String ERROR_VETUMA_VIEW ="error/vetuma";
 
     public static final String API_VIEW = "api";

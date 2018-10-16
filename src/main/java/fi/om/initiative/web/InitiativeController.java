@@ -32,9 +32,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 import static fi.om.initiative.dto.EditMode.FULL;
 import static fi.om.initiative.dto.EditMode.NONE;
@@ -234,6 +232,12 @@ public class InitiativeController extends BaseController {
  //       }
     }
 
+    private boolean initiativeDeleted(Long initiativeId) {
+        Set<Long> deletedInitiatives = new HashSet<>();
+        deletedInitiatives.add(3348L);
+        //For now we just hard code deleted initiatives
+        return deletedInitiatives.contains(initiativeId);
+    }
     /*
      * View  
      */
@@ -243,6 +247,10 @@ public class InitiativeController extends BaseController {
                        @RequestParam(value = HISTORY_ITEM_PARAMETER, required = false) Long historyItemId,
                        @ModelAttribute("followInitiative") FollowInitiativeDto followInitiativeDto,
                        Model model, Locale locale, HttpServletRequest request) {
+        if (initiativeDeleted(initiativeId)) {
+            return ERROR_INITIATIVE_DELETED_VIEW;
+        }
+
         Urls urls = Urls.get(locale);
         model.addAttribute(ALT_URI_ATTR, urls.alt().view(initiativeId, hash));
         model.addAttribute("idHash", hash);
