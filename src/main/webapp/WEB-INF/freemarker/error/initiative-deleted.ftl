@@ -10,12 +10,14 @@
     -->
 
     <h1><@u.message "error.initiative-deleted.title"/></h1>
-    <p><@u.messageHTML key="error.initiative-deleted.description"/></p>
+    <p><@u.messageHTML key="error.initiative-deleted.description1"/></p>
+    <p><@u.messageHTML key="error.initiative-deleted.description2" args=[urls.baseUrl] /></p>
 
     <br/><br/>
 
     <h1><@u.message "error.initiative-deleted.title.sv"/></h1>
-    <p><@u.messageHTML key="error.initiative-deleted.description.sv"/></p>
+    <p><@u.messageHTML key="error.initiative-deleted.description1.sv"/></p>
+    <p><@u.messageHTML key="error.initiative-deleted.description2.sv" args=[urls.baseUrl]/></p>
 
     </@l.error>
 </#escape>
