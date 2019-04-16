@@ -1,3 +1,5 @@
+# This is no longer the official repository and active development doesn't happen in this fork
+
 # What and why
 
 Kansalaisaloite.fi / Medborgarinitiativ.fi is a web service for launching citizens’ initiatives and collecting statements of support for these initiatives.  If an initiative gets 50000 statements of support the initiative’s organizer may submit the initiative to the Parliament for consideration.
